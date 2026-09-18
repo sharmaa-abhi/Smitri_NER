@@ -47,13 +47,13 @@ export default function HomePage() {
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-4xl sm:text-6xl lg:text-[64px] font-black text-slate-900 tracking-tight leading-[1.12]">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
               Stronger Memories, <br />
               <span className="text-gradient">Brighter Days</span>
             </h1>
 
             {/* Supporting Text */}
-            <p className="text-lg sm:text-xl text-slate-600 font-medium max-w-xl mx-auto lg:mx-0 leading-relaxed">
+            <p className="text-base sm:text-lg text-slate-600 font-medium max-w-xl mx-auto lg:mx-0 leading-relaxed">
               <strong className="text-slate-900 font-semibold">Smitri_NER</strong> is an AI-powered cognitive care platform designed to support elderly users through memory games, cognitive activities, personalized assistance, and caregiver support.
             </p>
 
