@@ -59,10 +59,10 @@ export default function ProfilePage() {
       {/* Header */}
       <div className="bg-white rounded-3xl p-6 sm:p-8 border-3 border-slate-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl sm:text-4xl font-black text-slate-900">
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900">
             Profile & Settings
           </h1>
-          <p className="text-lg text-slate-600 font-medium">
+          <p className="text-base text-slate-600 font-medium">
             Manage your personal preferences and caregiver contacts.
           </p>
         </div>

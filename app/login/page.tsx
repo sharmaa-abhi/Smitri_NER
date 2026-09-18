@@ -30,8 +30,8 @@ export default function LoginPage() {
           <div className="w-16 h-16 bg-blue-100 text-blue-800 rounded-2xl flex items-center justify-center mx-auto mb-3">
             <LogIn className="w-8 h-8" />
           </div>
-          <h1 className="text-3xl sm:text-4xl font-black text-slate-900">Welcome Back</h1>
-          <p className="text-lg text-slate-600 font-medium">
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900">Welcome Back</h1>
+          <p className="text-base text-slate-600 font-medium">
             Please log in to continue your memory wellness journey.
           </p>
         </div>

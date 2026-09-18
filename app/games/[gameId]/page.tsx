@@ -288,10 +288,10 @@ export default function GameArenaPage() {
             <ArrowLeft className="w-6 h-6" />
           </Link>
           <div>
-            <h1 className="text-3xl sm:text-4xl font-black text-slate-900">
+            <h1 className="text-2xl sm:text-3xl font-black text-slate-900">
               {currentInfo.title}
             </h1>
-            <p className="text-base text-slate-600 font-semibold">
+            <p className="text-sm sm:text-base text-slate-600 font-semibold">
               Difficulty: Level {difficulty} (Adaptive)
             </p>
           </div>

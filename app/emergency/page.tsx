@@ -62,10 +62,10 @@ export default function EmergencyPage() {
         </div>
 
         <div className="space-y-2">
-          <h1 className="text-3xl sm:text-5xl font-black text-rose-950">
+          <h1 className="text-2xl sm:text-3xl font-black text-rose-950">
             Emergency Support
           </h1>
-          <p className="text-xl sm:text-2xl text-rose-800 font-bold">
+          <p className="text-lg sm:text-xl text-rose-800 font-bold">
             Who would you like to contact?
           </p>
         </div>
