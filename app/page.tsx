@@ -28,15 +28,15 @@ export default function HomePage() {
   return (
     <div className="space-y-16 py-2 pb-20">
       {/* HERO CONTAINER */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-white via-sky-50/40 to-teal-50/30 border border-slate-200/90 rounded-[36px] sm:rounded-[44px] p-8 sm:p-14 lg:p-20 shadow-[0_8px_30px_rgb(0,0,0,0.04)] text-center">
+      <section className="relative overflow-hidden bg-gradient-to-b from-white via-sky-50/40 to-teal-50/30 border border-slate-200/90 rounded-3xl p-8 sm:p-14 lg:p-20 shadow-[0_8px_30px_rgb(0,0,0,0.04)] text-center">
         {/* Subtle decorative background gradient glows */}
         <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gradient-to-r from-sky-200/40 to-teal-200/30 blur-3xl pointer-events-none -z-10 rounded-full" />
 
         <div className="max-w-4xl mx-auto space-y-8">
           {/* Small Pill / Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-50 border border-teal-200/80 text-teal-800 text-xs sm:text-sm font-bold tracking-wide uppercase shadow-sm">
-            <Sparkles className="w-4 h-4 text-teal-600" />
-            <span>AI-POWERED COGNITIVE CARE</span>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-50 border border-teal-200/80 text-teal-800 text-xs sm:text-sm font-bold tracking-wide shadow-sm">
+            <Sparkles className="w-4 h-4 text-teal-700" />
+            <span>AI-powered cognitive care</span>
           </div>
 
           {/* Main Headline */}
@@ -63,10 +63,10 @@ export default function HomePage() {
             <button
               type="button"
               onClick={() => setShowDemoVideoModal(true)}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full text-lg font-bold text-slate-800 bg-white hover:bg-slate-50 border border-slate-300/90 shadow-sm hover:shadow transition-all"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full text-lg font-bold text-slate-900 bg-white hover:bg-slate-50 border border-slate-300/90 shadow-sm hover:shadow transition-all"
             >
               <span>Watch Demo</span>
-              <span className="text-teal-600 text-sm">▶</span>
+              <span className="text-teal-700 text-sm">▶</span>
             </button>
           </div>
 
@@ -87,7 +87,7 @@ export default function HomePage() {
               </div>
               <div>
                 <h2 className="text-lg font-black text-slate-900">Memory Games</h2>
-                <p className="text-sm font-semibold text-slate-500">Train & Improve</p>
+                <p className="text-sm font-semibold text-slate-600">Train & Improve</p>
               </div>
             </div>
 
@@ -98,7 +98,7 @@ export default function HomePage() {
               </div>
               <div>
                 <h2 className="text-lg font-black text-slate-900">Better Wellbeing</h2>
-                <p className="text-sm font-semibold text-slate-500">Stay Engaged</p>
+                <p className="text-sm font-semibold text-slate-600">Stay Engaged</p>
               </div>
             </div>
 
@@ -109,7 +109,7 @@ export default function HomePage() {
               </div>
               <div>
                 <h2 className="text-lg font-black text-slate-900">For a Brighter Future</h2>
-                <p className="text-sm font-semibold text-slate-500">Support Our Elders</p>
+                <p className="text-sm font-semibold text-slate-600">Support Our Elders</p>
               </div>
             </div>
           </div>
@@ -119,7 +119,7 @@ export default function HomePage() {
       {/* SECTION: FEATURES */}
       <section id="features" className="space-y-8 scroll-mt-24">
         <div className="text-center space-y-3 max-w-2xl mx-auto">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-50 text-sky-800 text-xs font-bold uppercase tracking-wider border border-sky-200">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-50 text-sky-700 text-xs font-bold tracking-wider border border-sky-200">
             Platform Capabilities
           </div>
           <h2 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
@@ -132,7 +132,7 @@ export default function HomePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {/* Feature 1 */}
-          <div className="bg-white rounded-[28px] p-8 border border-slate-200/90 shadow-sm hover:shadow-md transition-shadow space-y-4">
+          <div className="bg-white rounded-3xl p-8 border border-slate-200/90 shadow-sm hover:shadow-md transition-shadow space-y-4">
             <div className="w-12 h-12 rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center">
               <Brain className="w-6 h-6" />
             </div>
@@ -147,7 +147,7 @@ export default function HomePage() {
           </div>
 
           {/* Feature 2 */}
-          <div className="bg-white rounded-[28px] p-8 border border-slate-200/90 shadow-sm hover:shadow-md transition-shadow space-y-4">
+          <div className="bg-white rounded-3xl p-8 border border-slate-200/90 shadow-sm hover:shadow-md transition-shadow space-y-4">
             <div className="w-12 h-12 rounded-2xl bg-teal-100 text-teal-700 flex items-center justify-center">
               <Bell className="w-6 h-6" />
             </div>
@@ -162,15 +162,15 @@ export default function HomePage() {
           </div>
 
           {/* Feature 3 */}
-          <div className="bg-white rounded-[28px] p-8 border border-slate-200/90 shadow-sm hover:shadow-md transition-shadow space-y-4">
-            <div className="w-12 h-12 rounded-2xl bg-indigo-100 text-indigo-700 flex items-center justify-center">
+          <div className="bg-white rounded-3xl p-8 border border-slate-200/90 shadow-sm hover:shadow-md transition-shadow space-y-4">
+            <div className="w-12 h-12 rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center">
               <Activity className="w-6 h-6" />
             </div>
             <h3 className="text-2xl font-bold text-slate-900">Caregiver Observation</h3>
             <p className="text-slate-600 font-medium leading-relaxed">
               Family members and healthcare companions receive proactive alerts if a 3-day sustained performance shift or missed routine is detected.
             </p>
-            <Link href="/caregiver" className="inline-flex items-center gap-1.5 text-sm font-bold text-indigo-700 hover:text-indigo-800">
+            <Link href="/caregiver" className="inline-flex items-center gap-1.5 text-sm font-bold text-sky-700 hover:text-sky-800">
               <span>Open caregiver portal</span>
               <ChevronRight className="w-4 h-4" />
             </Link>
@@ -179,9 +179,9 @@ export default function HomePage() {
       </section>
 
       {/* SECTION: HOW IT WORKS */}
-      <section id="how-it-works" className="bg-white border border-slate-200 rounded-[36px] p-8 sm:p-12 lg:p-16 shadow-sm space-y-10 scroll-mt-24">
+      <section id="how-it-works" className="bg-white border border-slate-200 rounded-3xl p-8 sm:p-12 lg:p-16 shadow-sm space-y-10 scroll-mt-24">
         <div className="text-center space-y-3 max-w-2xl mx-auto">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-50 text-teal-800 text-xs font-bold uppercase tracking-wider border border-teal-200">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-50 text-teal-700 text-xs font-bold tracking-wider border border-teal-200">
             Workflow Overview
           </div>
           <h2 className="text-3xl sm:text-4xl font-black text-slate-900">
@@ -236,9 +236,9 @@ export default function HomePage() {
       </section>
 
       {/* SECTION: ABOUT & NORTH EASTERN REGION (NER) FOCUS */}
-      <section id="about" className="bg-gradient-to-br from-slate-900 to-slate-950 text-white rounded-[36px] p-8 sm:p-14 lg:p-16 space-y-8 scroll-mt-24">
+      <section id="about" className="bg-gradient-to-br from-slate-900 to-slate-950 text-white rounded-3xl p-8 sm:p-14 lg:p-16 space-y-8 scroll-mt-24">
         <div className="max-w-3xl space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-teal-500/20 text-teal-300 text-xs font-bold uppercase tracking-wider border border-teal-500/30">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-teal-500/20 text-teal-300 text-xs font-bold tracking-wider border border-teal-500/30">
             <Compass className="w-4 h-4" />
             <span>North Eastern Region (NER) Focus</span>
           </div>
@@ -252,26 +252,26 @@ export default function HomePage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4 border-t border-slate-800">
           <div className="flex items-start gap-3">
-            <WifiOff className="w-6 h-6 text-teal-400 flex-shrink-0 mt-1" />
+            <WifiOff className="w-6 h-6 text-teal-300 flex-shrink-0 mt-1" />
             <div>
-              <h4 className="font-bold text-white text-base">Offline-First Design</h4>
-              <p className="text-sm text-slate-400">Works reliably on local device storage even during intermittent connectivity.</p>
+              <h3 className="font-bold text-white text-base">Offline-First Design</h3>
+              <p className="text-sm text-slate-300">Works reliably on local device storage even during intermittent connectivity.</p>
             </div>
           </div>
 
           <div className="flex items-start gap-3">
             <PhoneCall className="w-6 h-6 text-sky-400 flex-shrink-0 mt-1" />
             <div>
-              <h4 className="font-bold text-white text-base">Direct SOS Link</h4>
-              <p className="text-sm text-slate-400">Single-click native cellular dial to local family or ambulance dispatch.</p>
+              <h3 className="font-bold text-white text-base">Direct SOS Link</h3>
+              <p className="text-sm text-slate-300">Single-click native cellular dial to local family or ambulance dispatch.</p>
             </div>
           </div>
 
           <div className="flex items-start gap-3">
-            <Stethoscope className="w-6 h-6 text-amber-400 flex-shrink-0 mt-1" />
+            <Stethoscope className="w-6 h-6 text-amber-300 flex-shrink-0 mt-1" />
             <div>
-              <h4 className="font-bold text-white text-base">Healthcare Readiness</h4>
-              <p className="text-sm text-slate-400">Structured data models mapped for upcoming ABDM & HL7 FHIR telehealth exchange.</p>
+              <h3 className="font-bold text-white text-base">Healthcare Readiness</h3>
+              <p className="text-sm text-slate-300">Structured data models mapped for upcoming ABDM & HL7 FHIR telehealth exchange.</p>
             </div>
           </div>
         </div>
@@ -281,14 +281,14 @@ export default function HomePage() {
       <section id="blog" className="space-y-6 scroll-mt-24">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-bold uppercase tracking-wider mb-2">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-bold tracking-wider mb-2">
               Wellness Resources
             </div>
             <h2 className="text-3xl sm:text-4xl font-black text-slate-900">
               Cognitive Wellness Articles
             </h2>
           </div>
-          <Link href="/dashboard" className="text-sm font-bold text-sky-700 hover:text-sky-900 inline-flex items-center gap-1">
+          <Link href="/dashboard" className="text-sm font-bold text-sky-700 hover:text-sky-800 inline-flex items-center gap-1">
             <span>Explore all insights</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
@@ -324,7 +324,7 @@ export default function HomePage() {
             </div>
             <div>
               <span className="text-xl font-black text-slate-900 block">Smitri_NER</span>
-              <span className="text-xs font-semibold text-slate-500">Cognitive Wellness & Memory Assistance</span>
+              <span className="text-xs font-semibold text-slate-600">Cognitive Wellness & Memory Assistance</span>
             </div>
           </div>
 
@@ -334,13 +334,13 @@ export default function HomePage() {
             <Link href="/reminders" className="hover:text-slate-900">Reminders</Link>
             <Link href="/progress" className="hover:text-slate-900">Progress</Link>
             <Link href="/caregiver" className="hover:text-slate-900">Caregiver</Link>
-            <Link href="/emergency" className="text-rose-600 hover:text-rose-700 font-bold">Emergency Help</Link>
+            <Link href="/emergency" className="text-rose-700 hover:text-rose-800 font-bold">Emergency Help</Link>
           </div>
         </div>
 
-        <div className="bg-slate-100 rounded-2xl p-4 text-xs font-medium text-slate-500 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border border-slate-200">
+        <div className="bg-slate-100 rounded-2xl p-4 text-xs font-medium text-slate-600 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border border-slate-200">
           <p>© 2026 Smitri_NER Platform. Prototype cognitive wellness system. Not intended for clinical or medical diagnosis.</p>
-          <p className="font-semibold text-slate-700">Contact: support@smitriner.care</p>
+          <p className="font-semibold text-slate-900">Contact: support@smitriner.care</p>
         </div>
       </footer>
 
@@ -350,12 +350,12 @@ export default function HomePage() {
           <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-xl w-full shadow-2xl border border-slate-200 space-y-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="text-teal-600 font-bold text-sm uppercase tracking-wider">Interactive Walkthrough</span>
+                <span className="text-teal-700 font-bold text-sm tracking-wider">Interactive Walkthrough</span>
               </div>
               <button
                 type="button"
                 onClick={() => setShowDemoVideoModal(false)}
-                className="p-2 rounded-full hover:bg-slate-100 text-slate-500"
+                className="p-2 rounded-full hover:bg-slate-100 text-slate-600"
               >
                 <X className="w-5 h-5" />
               </button>

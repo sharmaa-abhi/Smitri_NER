@@ -74,7 +74,7 @@ export default function Navbar() {
                 className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
                   isActive 
                     ? "bg-slate-900 text-white shadow-sm" 
-                    : "text-teal-800 bg-teal-50/70 hover:bg-teal-100"
+                    : "text-teal-700 bg-teal-50/70 hover:bg-teal-100"
                 }`}
               >
                 {item.name}
@@ -90,7 +90,7 @@ export default function Navbar() {
             className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-bold text-rose-700 bg-rose-50 border border-rose-200 hover:bg-rose-100 transition-colors"
             title="Emergency Support"
           >
-            <ShieldAlert className="w-4 h-4 text-rose-600" />
+            <ShieldAlert className="w-4 h-4 text-rose-700" />
             <span>SOS</span>
           </Link>
 
@@ -106,7 +106,7 @@ export default function Navbar() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-full text-slate-700 hover:bg-slate-100 transition-colors"
+            className="lg:hidden p-2 rounded-full text-slate-600 hover:bg-slate-100 transition-colors"
             aria-label="Toggle Navigation Menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -118,13 +118,13 @@ export default function Navbar() {
       {mobileMenuOpen && (
         <div className="lg:hidden mt-3 bg-white border border-slate-200 rounded-3xl p-6 shadow-xl space-y-4 animate-in fade-in zoom-in-95">
           <div className="space-y-1">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Navigation</span>
+            <span className="text-xs font-bold tracking-wider text-slate-600">Navigation</span>
             {mainNav.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="block px-4 py-2.5 rounded-xl text-base font-semibold text-slate-700 hover:bg-slate-50"
+                className="block px-4 py-2.5 rounded-xl text-base font-semibold text-slate-600 hover:bg-slate-50"
               >
                 {item.name}
               </Link>
@@ -132,14 +132,14 @@ export default function Navbar() {
           </div>
 
           <div className="border-t border-slate-100 pt-3 space-y-1">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Elderly & Caregiver Features</span>
+            <span className="text-xs font-bold tracking-wider text-slate-600">Elderly & Caregiver Features</span>
             <div className="grid grid-cols-2 gap-2 pt-1">
               {appNav.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="px-3 py-2 rounded-xl text-sm font-bold bg-slate-50 text-slate-800 hover:bg-slate-100 text-center"
+                  className="px-3 py-2 rounded-xl text-sm font-bold bg-slate-50 text-slate-900 hover:bg-slate-100 text-center"
                 >
                   {item.name}
                 </Link>
@@ -160,7 +160,7 @@ export default function Navbar() {
             <Link
               href="/profile"
               onClick={() => setMobileMenuOpen(false)}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-bold text-slate-700 bg-slate-100"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-bold text-slate-600 bg-slate-100"
             >
               <UserCircle className="w-4 h-4" />
               <span>Profile</span>
