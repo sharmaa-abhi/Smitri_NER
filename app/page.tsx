@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { 
   ArrowRight, 
@@ -15,10 +16,12 @@ import {
   Bell, 
   Compass, 
   ChevronRight, 
-  PhoneCall,
-  WifiOff,
-  Stethoscope,
-  X
+  PhoneCall, 
+  WifiOff, 
+  Stethoscope, 
+  Gamepad2,
+  Smile,
+  X 
 } from 'lucide-react';
 import VoiceButton from '@/components/VoiceButton';
 
@@ -27,96 +30,153 @@ export default function HomePage() {
 
   return (
     <div className="space-y-16 py-2 pb-20">
-      {/* HERO CONTAINER */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-white via-sky-50/40 to-teal-50/30 border border-slate-200/90 rounded-3xl p-8 sm:p-14 lg:p-20 shadow-[0_8px_30px_rgb(0,0,0,0.04)] text-center">
-        {/* Subtle decorative background gradient glows */}
-        <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gradient-to-r from-sky-200/40 to-teal-200/30 blur-3xl pointer-events-none -z-10 rounded-full" />
+      {/* ========================================================================= */}
+      {/* HERO CONTAINER (Large Rounded Container, Two-Column Desktop Layout)       */}
+      {/* ========================================================================= */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-white via-sky-50/40 to-teal-50/30 border border-slate-200/90 rounded-3xl p-8 sm:p-12 lg:p-16 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+        {/* Subtle decorative background gradient glow */}
+        <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[340px] bg-gradient-to-r from-sky-200/40 via-teal-200/30 to-sky-100/20 blur-3xl pointer-events-none -z-10 rounded-full" />
 
-        <div className="max-w-4xl mx-auto space-y-8">
-          {/* Small Pill / Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-50 border border-teal-200/80 text-teal-700 text-xs sm:text-sm font-bold tracking-wide shadow-sm">
-            <Sparkles className="w-4 h-4 text-teal-700" />
-            <span>AI-powered cognitive care</span>
-          </div>
-
-          {/* Main Headline */}
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-slate-900 tracking-tight leading-[1.15]">
-            Brighter Minds, <br className="hidden sm:inline" />
-            <span className="text-gradient">Healthier Tomorrows</span>
-          </h1>
-
-          {/* Supporting Text */}
-          <p className="text-lg sm:text-2xl text-slate-600 font-medium max-w-2xl mx-auto leading-relaxed">
-            <strong className="text-slate-900 font-semibold">Smitri_NER</strong> is an AI-powered platform designed to support elderly users with cognitive games, memory assistance, personalized activities, and caregiver support.
-          </p>
-
-          {/* Primary Action Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
-            <Link
-              href="/dashboard"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full text-lg font-extrabold text-white bg-gradient-to-r from-sky-600 to-teal-600 hover:from-sky-700 hover:to-teal-700 shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] active:scale-[0.98]"
-            >
-              <span>Get Started</span>
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-
-            <button
-              type="button"
-              onClick={() => setShowDemoVideoModal(true)}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full text-lg font-bold text-slate-900 bg-white hover:bg-slate-50 border border-slate-300/90 shadow-sm hover:shadow transition-all"
-            >
-              <span>Watch Demo</span>
-              <span className="text-teal-700 text-sm">▶</span>
-            </button>
-          </div>
-
-          {/* Voice Reading Assistance for Elderly Users */}
-          <div className="pt-2 flex justify-center">
-            <VoiceButton 
-              textToRead="Welcome to Smitri N E R. An AI-powered cognitive care and memory assistance platform designed for elderly users. Tap Get Started to enter your personalized dashboard."
-              buttonLabel="Listen to Introduction"
-            />
-          </div>
-
-          {/* BENEFIT HIGHLIGHTS BLOCKS (Horizontally aligned on desktop, stacked on mobile) */}
-          <div className="pt-10 border-t border-slate-200/80 grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-center text-left">
-            {/* Benefit 1 */}
-            <div className="flex items-center gap-4 bg-white/80 md:bg-transparent p-4 md:p-0 rounded-2xl border md:border-0 border-slate-200/60 shadow-sm md:shadow-none">
-              <div className="w-14 h-14 rounded-full bg-sky-100 text-sky-700 flex items-center justify-center flex-shrink-0">
-                <Brain className="w-7 h-7" />
-              </div>
-              <div>
-                <h2 className="text-lg font-black text-slate-900">Memory Games</h2>
-                <p className="text-sm font-semibold text-slate-600">Train & Improve</p>
-              </div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+          {/* LEFT SIDE: Headline, Badge, Supporting Text, Action Buttons */}
+          <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
+            {/* Small Pill / Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-50 border border-teal-200/80 text-teal-700 text-xs sm:text-sm font-bold tracking-wide shadow-sm">
+              <Sparkles className="w-4 h-4 text-teal-700" />
+              <span>AI-POWERED COGNITIVE CARE</span>
             </div>
 
-            {/* Desktop Vertical Separator */}
-            <div className="flex items-center gap-4 bg-white/80 md:bg-transparent p-4 md:p-0 rounded-2xl border md:border-0 border-slate-200/60 shadow-sm md:shadow-none md:border-l md:border-slate-200 md:pl-8">
-              <div className="w-14 h-14 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center flex-shrink-0">
-                <Heart className="w-7 h-7" />
-              </div>
-              <div>
-                <h2 className="text-lg font-black text-slate-900">Better Wellbeing</h2>
-                <p className="text-sm font-semibold text-slate-600">Stay Engaged</p>
-              </div>
+            {/* Main Headline */}
+            <h1 className="text-4xl sm:text-6xl lg:text-[64px] font-black text-slate-900 tracking-tight leading-[1.12]">
+              Stronger Memories, <br />
+              <span className="text-gradient">Brighter Days</span>
+            </h1>
+
+            {/* Supporting Text */}
+            <p className="text-lg sm:text-xl text-slate-600 font-medium max-w-xl mx-auto lg:mx-0 leading-relaxed">
+              <strong className="text-slate-900 font-semibold">Smitri_NER</strong> is an AI-powered platform designed to support elderly users with cognitive games, memory assistance, personalized activities, and caregiver support.
+            </p>
+
+            {/* Primary & Secondary Action Buttons */}
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+              <Link
+                href="/dashboard"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full text-lg font-extrabold text-white bg-gradient-to-r from-sky-600 to-teal-600 hover:from-sky-700 hover:to-teal-700 shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] active:scale-[0.98]"
+              >
+                <span>Get Started</span>
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+
+              <button
+                type="button"
+                onClick={() => setShowDemoVideoModal(true)}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full text-lg font-bold text-slate-900 bg-white hover:bg-slate-50 border border-slate-300/90 shadow-sm hover:shadow transition-all"
+              >
+                <span className="text-teal-700 text-sm">▶</span>
+                <span>Watch Demo</span>
+              </button>
             </div>
 
-            {/* Desktop Vertical Separator */}
-            <div className="flex items-center gap-4 bg-white/80 md:bg-transparent p-4 md:p-0 rounded-2xl border md:border-0 border-slate-200/60 shadow-sm md:shadow-none md:border-l md:border-slate-200 md:pl-8">
-              <div className="w-14 h-14 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center flex-shrink-0">
-                <Users className="w-7 h-7" />
+            {/* Senior Audio Voice Assistance */}
+            <div className="pt-2 flex justify-center lg:justify-start">
+              <VoiceButton 
+                textToRead="Welcome to Smitri N E R. An AI-powered cognitive care and memory assistance platform designed for elderly users. Tap Get Started to enter your personalized dashboard."
+                buttonLabel="Listen to Introduction"
+              />
+            </div>
+          </div>
+
+          {/* RIGHT SIDE: Elderly Care Hero Visual with Floating Feature Badges */}
+          <div className="lg:col-span-5 relative flex items-center justify-center">
+            {/* Visual Frame Container */}
+            <div className="relative w-full max-w-[420px] aspect-square rounded-3xl overflow-hidden border-4 border-white shadow-2xl bg-gradient-to-tr from-sky-100 via-white to-teal-100">
+              <Image
+                src="/hero_elderly_care.jpg"
+                alt="Active elderly senior smiling warmly in a serene, supportive home wellness environment"
+                fill
+                priority
+                className="object-cover object-center transform hover:scale-105 transition-transform duration-700"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 45vw, 420px"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/20 via-transparent to-transparent pointer-events-none" />
+            </div>
+
+            {/* Floating Feature Badge 1: Top Left - Play Cognitive Games */}
+            <div className="absolute -top-3 -left-3 sm:-left-6 bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-full border border-slate-200/90 shadow-lg flex items-center gap-2.5 animate-float-gentle">
+              <div className="w-8 h-8 rounded-full bg-sky-100 text-sky-700 flex items-center justify-center">
+                <Gamepad2 className="w-4 h-4" />
               </div>
-              <div>
-                <h2 className="text-lg font-black text-slate-900">For a Brighter Future</h2>
-                <p className="text-sm font-semibold text-slate-600">Support Our Elders</p>
+              <span className="text-xs sm:text-sm font-bold text-slate-900">Play Cognitive Games</span>
+            </div>
+
+            {/* Floating Feature Badge 2: Top Right - Boost Memory */}
+            <div className="absolute -top-3 -right-3 sm:-right-4 bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-full border border-slate-200/90 shadow-lg flex items-center gap-2.5 animate-float-gentle-alt">
+              <div className="w-8 h-8 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center">
+                <Brain className="w-4 h-4" />
               </div>
+              <span className="text-xs sm:text-sm font-bold text-slate-900">Boost Memory</span>
+            </div>
+
+            {/* Floating Feature Badge 3: Bottom Left - Better Wellbeing */}
+            <div className="absolute -bottom-3 -left-3 sm:-left-4 bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-full border border-slate-200/90 shadow-lg flex items-center gap-2.5 animate-float-gentle-alt">
+              <div className="w-8 h-8 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center">
+                <Heart className="w-4 h-4" />
+              </div>
+              <span className="text-xs sm:text-sm font-bold text-slate-900">Better Wellbeing</span>
+            </div>
+
+            {/* Floating Feature Badge 4: Bottom Right - Caregiver Support */}
+            <div className="absolute -bottom-3 -right-3 sm:-right-6 bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-full border border-slate-200/90 shadow-lg flex items-center gap-2.5 animate-float-gentle">
+              <div className="w-8 h-8 rounded-full bg-rose-100 text-rose-700 flex items-center justify-center">
+                <Users className="w-4 h-4" />
+              </div>
+              <span className="text-xs sm:text-sm font-bold text-slate-900">Caregiver Support</span>
+            </div>
+          </div>
+        </div>
+
+        {/* ========================================================================= */}
+        {/* BOTTOM BENEFIT STRIP (Horizontal on Desktop with Dividers, Stacked Mobile) */}
+        {/* ========================================================================= */}
+        <div className="mt-14 pt-10 border-t border-slate-200/80 grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-center text-left">
+          {/* BLOCK 1: Memory Games */}
+          <div className="flex items-center gap-4 bg-white/80 md:bg-transparent p-4 md:p-0 rounded-2xl border md:border-0 border-slate-200/60 shadow-sm md:shadow-none">
+            <div className="w-14 h-14 rounded-full bg-sky-100 text-sky-700 flex items-center justify-center flex-shrink-0">
+              <Brain className="w-7 h-7" />
+            </div>
+            <div>
+              <h2 className="text-lg font-black text-slate-900">Memory Games</h2>
+              <p className="text-sm font-semibold text-slate-600">Train & Improve</p>
+            </div>
+          </div>
+
+          {/* BLOCK 2: Better Wellbeing (with subtle vertical divider on desktop) */}
+          <div className="flex items-center gap-4 bg-white/80 md:bg-transparent p-4 md:p-0 rounded-2xl border md:border-0 border-slate-200/60 shadow-sm md:shadow-none md:border-l md:border-slate-200 md:pl-8">
+            <div className="w-14 h-14 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center flex-shrink-0">
+              <Heart className="w-7 h-7" />
+            </div>
+            <div>
+              <h2 className="text-lg font-black text-slate-900">Better Wellbeing</h2>
+              <p className="text-sm font-semibold text-slate-600">Stay Engaged</p>
+            </div>
+          </div>
+
+          {/* BLOCK 3: For a Brighter Future (with subtle vertical divider on desktop) */}
+          <div className="flex items-center gap-4 bg-white/80 md:bg-transparent p-4 md:p-0 rounded-2xl border md:border-0 border-slate-200/60 shadow-sm md:shadow-none md:border-l md:border-slate-200 md:pl-8">
+            <div className="w-14 h-14 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center flex-shrink-0">
+              <Users className="w-7 h-7" />
+            </div>
+            <div>
+              <h2 className="text-lg font-black text-slate-900">For a Brighter Future</h2>
+              <p className="text-sm font-semibold text-slate-600">Support Our Elders</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* SECTION: FEATURES */}
+      {/* ========================================================================= */}
+      {/* SECTION: FEATURES                                                         */}
+      {/* ========================================================================= */}
       <section id="features" className="space-y-8 scroll-mt-24">
         <div className="text-center space-y-3 max-w-2xl mx-auto">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-50 text-sky-700 text-xs font-bold tracking-wider border border-sky-200">
@@ -178,7 +238,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* SECTION: HOW IT WORKS */}
+      {/* ========================================================================= */}
+      {/* SECTION: HOW IT WORKS                                                     */}
+      {/* ========================================================================= */}
       <section id="how-it-works" className="bg-white border border-slate-200 rounded-3xl p-8 sm:p-12 lg:p-16 shadow-sm space-y-10 scroll-mt-24">
         <div className="text-center space-y-3 max-w-2xl mx-auto">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-50 text-teal-700 text-xs font-bold tracking-wider border border-teal-200">
@@ -235,7 +297,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* SECTION: ABOUT & NORTH EASTERN REGION (NER) FOCUS */}
+      {/* ========================================================================= */}
+      {/* SECTION: ABOUT & NORTH EASTERN REGION (NER) FOCUS                         */}
+      {/* ========================================================================= */}
       <section id="about" className="bg-gradient-to-br from-slate-900 to-slate-950 text-white rounded-3xl p-8 sm:p-14 lg:p-16 space-y-8 scroll-mt-24">
         <div className="max-w-3xl space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-teal-500/20 text-teal-300 text-xs font-bold tracking-wider border border-teal-500/30">
@@ -277,7 +341,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* SECTION: BLOG & HEALTHCARE TIPS */}
+      {/* ========================================================================= */}
+      {/* SECTION: BLOG & HEALTHCARE TIPS                                           */}
+      {/* ========================================================================= */}
       <section id="blog" className="space-y-6 scroll-mt-24">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div>
@@ -315,7 +381,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* FOOTER & CONTACT */}
+      {/* ========================================================================= */}
+      {/* FOOTER & CONTACT                                                          */}
+      {/* ========================================================================= */}
       <footer id="contact" className="border-t border-slate-200 pt-12 pb-8 space-y-8 scroll-mt-24">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="flex items-center gap-3">
@@ -344,7 +412,9 @@ export default function HomePage() {
         </div>
       </footer>
 
-      {/* Interactive Demo Video Modal */}
+      {/* ========================================================================= */}
+      {/* INTERACTIVE DEMO VIDEO / WALKTHROUGH MODAL                                */}
+      {/* ========================================================================= */}
       {showDemoVideoModal && (
         <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-xl w-full shadow-2xl border border-slate-200 space-y-6">

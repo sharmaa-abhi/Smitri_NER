@@ -16,6 +16,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  // Clean primary landing links matching reference navigation
   const mainNav = [
     { name: "Home", href: "/" },
     { name: "Features", href: "/#features" },
@@ -25,6 +26,7 @@ export default function Navbar() {
     { name: "Contact", href: "/#contact" },
   ];
 
+  // Application links available inside drawer / mobile menu
   const appNav = [
     { name: "Dashboard", href: "/dashboard" },
     { name: "Games", href: "/games" },
@@ -34,69 +36,41 @@ export default function Navbar() {
   ];
 
   return (
-    <header className="sticky top-4 z-50 px-4 sm:px-6 w-full max-w-7xl mx-auto mb-6">
-      <div className="bg-white/95 backdrop-blur-md border border-slate-200/80 rounded-full px-5 py-3 shadow-[0_4px_20px_rgba(0,0,0,0.04)] flex items-center justify-between transition-all">
+    <header className="sticky top-4 z-50 px-4 sm:px-6 w-full max-w-6xl mx-auto mb-6">
+      <div className="bg-white/95 backdrop-blur-md border border-slate-200/80 rounded-full px-5 py-2.5 shadow-[0_4px_20px_rgba(0,0,0,0.04)] flex items-center justify-between transition-all gap-4">
         {/* Left: Brand Logo + Name */}
         <Link 
           href="/" 
-          className="flex items-center gap-2.5 text-slate-900 group"
+          className="flex items-center gap-2.5 text-slate-900 group flex-shrink-0"
           aria-label="Smitri_NER Home"
         >
-          <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-sky-600 to-teal-500 text-white flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
-            <Brain className="w-5 h-5 text-white" />
+          <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-sky-600 to-teal-500 text-white flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+            <Brain className="w-4 h-4 text-white" />
           </div>
-          <div className="flex flex-col">
-            <div className="flex items-center gap-1">
-              <span className="text-xl font-extrabold tracking-tight text-slate-900">Smitri</span>
-              <span className="text-xs font-black px-1.5 py-0.5 rounded-md bg-teal-50 text-teal-700 border border-teal-200">NER</span>
-            </div>
+          <div className="flex items-center gap-1">
+            <span className="text-lg font-black tracking-tight text-slate-900">Smitri</span>
+            <span className="text-[10px] font-black px-1.5 py-0.5 rounded-md bg-teal-50 text-teal-700 border border-teal-200">NER</span>
           </div>
         </Link>
 
-        {/* Center: Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-1">
+        {/* Center: Clean Desktop Navigation (No extra pills breaking the pill circle) */}
+        <nav className="hidden md:flex items-center gap-1 lg:gap-2">
           {mainNav.map((item) => (
             <Link
               key={item.name}
               href={item.href}
-              className="px-4 py-2 rounded-full text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 transition-colors"
+              className="px-3.5 py-1.5 rounded-full text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 transition-colors"
             >
               {item.name}
             </Link>
           ))}
-          <div className="h-4 w-px bg-slate-200 mx-2" />
-          {appNav.map((item) => {
-            const isActive = pathname === item.href;
-            return (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
-                  isActive 
-                    ? "bg-slate-900 text-white shadow-sm" 
-                    : "text-teal-700 bg-teal-50/70 hover:bg-teal-100"
-                }`}
-              >
-                {item.name}
-              </Link>
-            );
-          })}
         </nav>
 
-        {/* Right CTA Actions */}
-        <div className="flex items-center gap-3">
-          <Link
-            href="/emergency"
-            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-bold text-rose-700 bg-rose-50 border border-rose-200 hover:bg-rose-100 transition-colors"
-            title="Emergency Support"
-          >
-            <ShieldAlert className="w-4 h-4 text-rose-700" />
-            <span>SOS</span>
-          </Link>
-
+        {/* Right: Clean Action Button (Perfect pill fit without overflow) */}
+        <div className="flex items-center gap-2 flex-shrink-0">
           <Link
             href="/dashboard"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold text-white bg-gradient-to-r from-sky-600 to-teal-600 hover:from-sky-700 hover:to-teal-700 shadow-md hover:shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98]"
+            className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-bold text-white bg-gradient-to-r from-sky-600 to-teal-600 hover:from-sky-700 hover:to-teal-700 shadow-md hover:shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98]"
           >
             <span>Get Started</span>
             <ArrowRight className="w-4 h-4" />
@@ -106,17 +80,17 @@ export default function Navbar() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-full text-slate-600 hover:bg-slate-100 transition-colors"
+            className="md:hidden p-2 rounded-full text-slate-600 hover:bg-slate-100 transition-colors"
             aria-label="Toggle Navigation Menu"
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile / Compact Menu Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden mt-3 bg-white border border-slate-200 rounded-3xl p-6 shadow-xl space-y-4 animate-in fade-in zoom-in-95">
+        <div className="md:hidden mt-3 bg-white border border-slate-200 rounded-3xl p-6 shadow-xl space-y-4 animate-in fade-in zoom-in-95">
           <div className="space-y-1">
             <span className="text-xs font-bold tracking-wider text-slate-600">Navigation</span>
             {mainNav.map((item) => (
@@ -124,7 +98,7 @@ export default function Navbar() {
                 key={item.name}
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="block px-4 py-2.5 rounded-xl text-base font-semibold text-slate-600 hover:bg-slate-50"
+                className="block px-4 py-2 rounded-xl text-base font-semibold text-slate-600 hover:bg-slate-50"
               >
                 {item.name}
               </Link>
