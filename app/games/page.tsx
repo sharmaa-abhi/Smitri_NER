@@ -47,10 +47,10 @@ export default function GamesHubPage() {
             <Sparkles className="w-4 h-4 text-amber-500" />
             <span>Daily Cognitive Quest</span>
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black text-slate-900">
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900">
             Cognitive Wellness Games
           </h1>
-          <p className="text-xl text-slate-600 font-medium">
+          <p className="text-base text-slate-600 font-medium">
             Choose a game below. Difficulty automatically adapts to provide a calm, relaxing challenge.
           </p>
         </div>

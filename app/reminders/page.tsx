@@ -103,10 +103,10 @@ export default function RemindersPage() {
             <Bell className="w-4 h-4 text-teal-700" />
             <span>Daily Routine Assistant</span>
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black text-slate-900">
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900">
             Daily Reminders
           </h1>
-          <p className="text-xl text-slate-600 font-medium">
+          <p className="text-base text-slate-600 font-medium">
             Tap the circular button to check off your medicines and activities.
           </p>
         </div>
