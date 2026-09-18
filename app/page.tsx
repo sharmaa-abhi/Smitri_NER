@@ -34,7 +34,7 @@ export default function HomePage() {
 
         <div className="max-w-4xl mx-auto space-y-8">
           {/* Small Pill / Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-50 border border-teal-200/80 text-teal-800 text-xs sm:text-sm font-bold tracking-wide shadow-sm">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-50 border border-teal-200/80 text-teal-700 text-xs sm:text-sm font-bold tracking-wide shadow-sm">
             <Sparkles className="w-4 h-4 text-teal-700" />
             <span>AI-powered cognitive care</span>
           </div>
@@ -140,7 +140,7 @@ export default function HomePage() {
             <p className="text-slate-600 font-medium leading-relaxed">
               Three interactive games (Memory Match, Sequence Memory, and Find the Different One) that tune difficulty automatically to keep tasks calm and rewarding.
             </p>
-            <Link href="/games" className="inline-flex items-center gap-1.5 text-sm font-bold text-sky-700 hover:text-sky-800">
+            <Link href="/games" className="inline-flex items-center gap-1.5 text-sm font-bold text-sky-700 hover:text-sky-700">
               <span>Explore games</span>
               <ChevronRight className="w-4 h-4" />
             </Link>
@@ -155,7 +155,7 @@ export default function HomePage() {
             <p className="text-slate-600 font-medium leading-relaxed">
               Large, high-contrast checklists for medication, hydration, and doctor visits, readable aloud via Web Speech API with a single tap.
             </p>
-            <Link href="/reminders" className="inline-flex items-center gap-1.5 text-sm font-bold text-teal-700 hover:text-teal-800">
+            <Link href="/reminders" className="inline-flex items-center gap-1.5 text-sm font-bold text-teal-700 hover:text-teal-700">
               <span>View daily routines</span>
               <ChevronRight className="w-4 h-4" />
             </Link>
@@ -170,7 +170,7 @@ export default function HomePage() {
             <p className="text-slate-600 font-medium leading-relaxed">
               Family members and healthcare companions receive proactive alerts if a 3-day sustained performance shift or missed routine is detected.
             </p>
-            <Link href="/caregiver" className="inline-flex items-center gap-1.5 text-sm font-bold text-sky-700 hover:text-sky-800">
+            <Link href="/caregiver" className="inline-flex items-center gap-1.5 text-sm font-bold text-sky-700 hover:text-sky-700">
               <span>Open caregiver portal</span>
               <ChevronRight className="w-4 h-4" />
             </Link>
@@ -288,7 +288,7 @@ export default function HomePage() {
               Cognitive Wellness Articles
             </h2>
           </div>
-          <Link href="/dashboard" className="text-sm font-bold text-sky-700 hover:text-sky-800 inline-flex items-center gap-1">
+          <Link href="/dashboard" className="text-sm font-bold text-sky-700 hover:text-sky-700 inline-flex items-center gap-1">
             <span>Explore all insights</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
@@ -334,7 +334,7 @@ export default function HomePage() {
             <Link href="/reminders" className="hover:text-slate-900">Reminders</Link>
             <Link href="/progress" className="hover:text-slate-900">Progress</Link>
             <Link href="/caregiver" className="hover:text-slate-900">Caregiver</Link>
-            <Link href="/emergency" className="text-rose-700 hover:text-rose-800 font-bold">Emergency Help</Link>
+            <Link href="/emergency" className="text-rose-700 hover:text-rose-700 font-bold">Emergency Help</Link>
           </div>
         </div>
 
