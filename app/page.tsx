@@ -54,7 +54,7 @@ export default function HomePage() {
 
             {/* Supporting Text */}
             <p className="text-lg sm:text-xl text-slate-600 font-medium max-w-xl mx-auto lg:mx-0 leading-relaxed">
-              <strong className="text-slate-900 font-semibold">Smitri_NER</strong> is an AI-powered platform designed to support elderly users with cognitive games, memory assistance, personalized activities, and caregiver support.
+              <strong className="text-slate-900 font-semibold">Smitri_NER</strong> is an AI-powered cognitive care platform designed to support elderly users through memory games, cognitive activities, personalized assistance, and caregiver support.
             </p>
 
             {/* Primary & Secondary Action Buttons */}

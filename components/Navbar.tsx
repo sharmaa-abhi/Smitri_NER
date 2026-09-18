@@ -55,15 +55,22 @@ export default function Navbar() {
 
         {/* Center: Clean Desktop Navigation (No extra pills breaking the pill circle) */}
         <nav className="hidden md:flex items-center gap-1 lg:gap-2">
-          {mainNav.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className="px-3.5 py-1.5 rounded-full text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 transition-colors"
-            >
-              {item.name}
-            </Link>
-          ))}
+          {mainNav.map((item) => {
+            const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={`px-3.5 py-1.5 rounded-full text-sm font-semibold transition-all ${
+                  isActive
+                    ? "bg-slate-900 text-white shadow-sm font-bold"
+                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/80"
+                }`}
+              >
+                {item.name}
+              </Link>
+            );
+          })}
         </nav>
 
         {/* Right: Clean Action Button (Perfect pill fit without overflow) */}
