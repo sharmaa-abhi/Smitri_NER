@@ -8,6 +8,7 @@ import {
   X, 
   ArrowRight, 
   Brain, 
+  Gamepad2,
   ShieldAlert, 
   UserCircle 
 } from "lucide-react";
@@ -16,9 +17,10 @@ export default function Navbar() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Clean primary landing links matching reference navigation
+  // Clean primary landing links with Games included
   const mainNav = [
     { name: "Home", href: "/" },
+    { name: "Games", href: "/games" },
     { name: "Features", href: "/#features" },
     { name: "How It Works", href: "/#how-it-works" },
     { name: "About", href: "/#about" },
@@ -53,24 +55,31 @@ export default function Navbar() {
           </div>
         </Link>
 
-        {/* Center: Clean Desktop Navigation (No extra pills breaking the pill circle) */}
-        <nav className="hidden md:flex items-center gap-1 lg:gap-2">
-          {mainNav.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className="px-3.5 py-1.5 rounded-full text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 transition-colors"
-            >
-              {item.name}
-            </Link>
-          ))}
+        {/* Center: Clean Desktop Navigation with Games */}
+        <nav className="hidden md:flex items-center gap-1 lg:gap-1.5">
+          {mainNav.map((item) => {
+            const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={`px-3 py-1.5 rounded-full text-sm font-semibold transition-all ${
+                  isActive
+                    ? "bg-slate-900 text-white shadow-sm font-bold"
+                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/80"
+                }`}
+              >
+                {item.name}
+              </Link>
+            );
+          })}
         </nav>
 
-        {/* Right: Clean Action Button (Perfect pill fit without overflow) */}
+        {/* Right: Action Button */}
         <div className="flex items-center gap-2 flex-shrink-0">
           <Link
             href="/dashboard"
-            className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-bold text-white bg-gradient-to-r from-sky-600 to-teal-600 hover:from-sky-700 hover:to-teal-700 shadow-md hover:shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98]"
+            className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full text-sm font-bold text-white bg-gradient-to-r from-sky-600 to-teal-600 hover:from-sky-700 hover:to-teal-700 shadow-md hover:shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98]"
           >
             <span>Get Started</span>
             <ArrowRight className="w-4 h-4" />
@@ -83,7 +92,7 @@ export default function Navbar() {
             className="md:hidden p-2 rounded-full text-slate-600 hover:bg-slate-100 transition-colors"
             aria-label="Toggle Navigation Menu"
           >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
       </div>
@@ -98,7 +107,7 @@ export default function Navbar() {
                 key={item.name}
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="block px-4 py-2 rounded-xl text-base font-semibold text-slate-600 hover:bg-slate-50"
+                className="block px-4 py-2.5 rounded-xl text-base font-semibold text-slate-600 hover:bg-slate-50"
               >
                 {item.name}
               </Link>

@@ -59,11 +59,11 @@ export default function ResultsPage() {
           <span>Exercise Completed</span>
         </div>
 
-        <h1 className="text-4xl sm:text-5xl font-black text-slate-900">
+        <h1 className="text-2xl sm:text-3xl font-black text-slate-900">
           Great Job Today!
         </h1>
 
-        <p className="text-xl text-slate-600 font-medium max-w-xl mx-auto">
+        <p className="text-base sm:text-lg text-slate-600 font-medium max-w-xl mx-auto">
           You completed <span className="font-bold text-slate-900">{session.gameTitle}</span> with calm focus and attention.
         </p>
 

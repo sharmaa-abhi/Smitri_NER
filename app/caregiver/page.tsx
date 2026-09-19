@@ -76,10 +76,10 @@ export default function CaregiverPortalPage() {
             <Stethoscope className="w-4 h-4" />
             <span>Caregiver & Healthcare Observation Console</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-black">
+          <h1 className="text-2xl sm:text-3xl font-black">
             Caregiver Dashboard
           </h1>
-          <p className="text-lg text-slate-300 font-medium">
+          <p className="text-base text-slate-300 font-medium">
             Monitoring cognitive performance trends and daily routine adherence for: <span className="text-white font-bold underline">{user.name}</span> (Age: {user.age}).
           </p>
         </div>

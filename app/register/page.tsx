@@ -46,8 +46,8 @@ export default function RegisterPage() {
           <div className="w-16 h-16 bg-teal-100 text-teal-800 rounded-2xl flex items-center justify-center mx-auto mb-3">
             <UserPlus className="w-8 h-8" />
           </div>
-          <h1 className="text-3xl sm:text-4xl font-black text-slate-900">Create Your Profile</h1>
-          <p className="text-lg text-slate-600 font-medium">
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900">Create Your Profile</h1>
+          <p className="text-base text-slate-600 font-medium">
             Simple setup so your loved ones and caregivers can support you.
           </p>
         </div>

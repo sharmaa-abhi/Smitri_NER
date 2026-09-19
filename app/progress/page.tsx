@@ -72,10 +72,10 @@ export default function ProgressPage() {
             <TrendingUp className="w-4 h-4 text-amber-700" />
             <span>Rhythm & Growth History</span>
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black text-slate-900">
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900">
             Your Progress & History
           </h1>
-          <p className="text-xl text-slate-600 font-medium">
+          <p className="text-base text-slate-600 font-medium">
             Celebrate your consistency and cognitive exercises over time.
           </p>
         </div>

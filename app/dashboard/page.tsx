@@ -106,12 +106,12 @@ export default function DashboardPage() {
       <div className="bg-white rounded-3xl p-6 sm:p-8 border-3 border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="space-y-2">
           <div className="flex items-center gap-3">
-            <span className="text-3xl">🌅</span>
-            <h1 className="text-3xl sm:text-4xl font-black text-slate-900">
+            <span className="text-2xl sm:text-3xl">🌅</span>
+            <h1 className="text-2xl sm:text-3xl font-black text-slate-900">
               Good Morning, {user.name}
             </h1>
           </div>
-          <p className="text-lg text-slate-600 font-medium">
+          <p className="text-base text-slate-600 font-medium">
             Here is your gentle cognitive wellness rhythm for today.
           </p>
         </div>
