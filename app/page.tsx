@@ -16,6 +16,7 @@ import {
   Bell, 
   Compass, 
   ChevronRight, 
+  ChevronLeft,
   PhoneCall, 
   WifiOff, 
   Stethoscope, 
@@ -29,17 +30,62 @@ const HERO_IMAGES = [
   {
     src: "/hero_elderly_care.jpg",
     alt: "Active elderly senior smiling warmly in a serene, supportive home wellness environment",
-    caption: "Holistic Cognitive Care"
+    caption: "1. Holistic Cognitive Care",
+    category: "Wellness"
   },
   {
     src: "/hero_elderly_activity.jpg",
     alt: "Smiling senior solving cognitive brain puzzles happily with tea",
-    caption: "Daily Brain Stimulation"
+    caption: "2. Brain & Puzzle Stimulation",
+    category: "Cognitive Training"
   },
   {
     src: "/hero_elderly_joy.jpg",
     alt: "Happy Indian grandfather and granddaughter playing interactive memory games together on tablet",
-    caption: "Family & Care Connection"
+    caption: "3. Family & Memory Connection",
+    category: "Family Bond"
+  },
+  {
+    src: "/hero_elderly_yoga.jpg",
+    alt: "Serene elderly woman practicing morning meditation and mindfulness yoga in sunlit garden",
+    caption: "4. Mindful Breathing & Yoga",
+    category: "Mindfulness"
+  },
+  {
+    src: "/hero_pic_5_reading.jpg",
+    alt: "Elderly person enjoying peaceful book reading and continuous mental learning",
+    caption: "5. Lifelong Reading & Focus",
+    category: "Focus & Reading"
+  },
+  {
+    src: "/hero_pic_6_grandparents.jpg",
+    alt: "Affectionate grandparents smiling happily and sharing warm nostalgic moments",
+    caption: "6. Loving Companion Care",
+    category: "Companionship"
+  },
+  {
+    src: "/hero_pic_7_naturewalk.jpg",
+    alt: "Seniors enjoying fresh morning air and revitalizing outdoor nature walk",
+    caption: "7. Outdoor Nature Mobility",
+    category: "Physical Vitality"
+  },
+  {
+    src: "/hero_pic_8_gardening.jpg",
+    alt: "Elderly person caring for potted plants and green gardening therapy",
+    caption: "8. Therapeutic Gardening",
+    category: "Sensory Therapy"
+  },
+  {
+    src: "/hero_pic_9_art_craft.jpg",
+    alt: "Senior citizen engaging creative fine motor skills with colors and craft",
+    caption: "9. Creative Expression & Art",
+    category: "Creative Arts"
+  },
+  {
+    src: "/hero_pic_10_social_tea.jpg",
+    alt: "Senior cheerful social conversation over morning tea and hearty laughter",
+    caption: "10. Social Connection & Laughter",
+    category: "Social Engagement"
   }
 ];
 
@@ -122,23 +168,49 @@ export default function HomePage() {
           {/* RIGHT SIDE: Elderly Care Hero Visual with Floating Feature Badges */}
           <div className="lg:col-span-5 relative flex flex-col items-center justify-center">
             {/* Visual Frame Container */}
-            <div className="relative w-full max-w-[390px] aspect-square rounded-3xl overflow-hidden border-4 border-white shadow-xl bg-gradient-to-tr from-sky-100 via-white to-teal-100">
+            <div className="group relative w-full max-w-[390px] aspect-square rounded-3xl overflow-hidden border-4 border-white shadow-xl bg-gradient-to-tr from-sky-100 via-white to-teal-100">
               <Image
                 src={HERO_IMAGES[currentImageIndex].src}
                 alt={HERO_IMAGES[currentImageIndex].alt}
                 fill
                 priority
-                className="object-cover object-center transform hover:scale-105 transition-all duration-700"
+                className="object-cover object-center transform group-hover:scale-105 transition-all duration-700"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 45vw, 390px"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 via-transparent to-transparent pointer-events-none" />
-              <div className="absolute bottom-3 left-3 bg-slate-900/70 backdrop-blur-md text-white text-[11px] font-semibold px-2.5 py-1 rounded-full border border-white/20 pointer-events-none">
-                {HERO_IMAGES[currentImageIndex].caption}
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent pointer-events-none" />
+              
+              {/* Category & Caption overlay */}
+              <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between pointer-events-none">
+                <div className="bg-slate-900/80 backdrop-blur-md text-white text-[11px] font-semibold px-3 py-1 rounded-full border border-white/20">
+                  {HERO_IMAGES[currentImageIndex].caption}
+                </div>
+                <div className="bg-white/90 backdrop-blur-md text-slate-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-slate-200">
+                  {currentImageIndex + 1} / 10
+                </div>
               </div>
+
+              {/* Prev / Next navigation buttons on hover */}
+              <button
+                type="button"
+                onClick={() => setCurrentImageIndex((prev) => (prev - 1 + HERO_IMAGES.length) % HERO_IMAGES.length)}
+                className="absolute left-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/80 hover:bg-white text-slate-800 flex items-center justify-center shadow-md backdrop-blur-sm transition-all opacity-80 hover:opacity-100 active:scale-95"
+                aria-label="Previous photo"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setCurrentImageIndex((prev) => (prev + 1) % HERO_IMAGES.length)}
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/80 hover:bg-white text-slate-800 flex items-center justify-center shadow-md backdrop-blur-sm transition-all opacity-80 hover:opacity-100 active:scale-95"
+                aria-label="Next photo"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
             </div>
 
-            {/* Visual Switcher / Indicator Dots for User Experience */}
-            <div className="flex items-center gap-2 mt-3 z-10" aria-label="Hero photo switcher">
+            {/* Visual Switcher / 10 Indicator Dots for User Experience */}
+            <div className="flex items-center gap-1.5 mt-3.5 z-10 max-w-full overflow-x-auto py-1 px-2" aria-label="Hero 10 photos switcher">
               {HERO_IMAGES.map((img, idx) => (
                 <button
                   key={img.src}
@@ -146,11 +218,11 @@ export default function HomePage() {
                   onClick={() => setCurrentImageIndex(idx)}
                   className={`transition-all rounded-full ${
                     idx === currentImageIndex 
-                      ? 'w-6 h-2 bg-teal-600 shadow-sm' 
-                      : 'w-2 h-2 bg-slate-300 hover:bg-slate-400'
+                      ? 'w-5 h-2 bg-teal-600 shadow-sm' 
+                      : 'w-2 h-2 bg-slate-300 hover:bg-teal-300'
                   }`}
                   aria-label={`Show picture ${idx + 1}`}
-                  title={`Picture ${idx + 1}: ${img.caption}`}
+                  title={`${img.caption}`}
                 />
               ))}
             </div>
