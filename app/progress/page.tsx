@@ -64,34 +64,34 @@ export default function ProgressPage() {
   const voiceSummary = `In your past ${timeRange} days of exercises, your average cognitive score is ${avgScore} out of 100, and your average accuracy is ${avgAccuracy} percent. Keep up your wonderful steady rhythm!`;
 
   return (
-    <div className="space-y-8 pb-16">
+    <div className="space-y-6 pb-16">
       {/* Header */}
-      <div className="bg-white rounded-3xl p-6 sm:p-8 border-3 border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 bg-amber-100 text-amber-900 px-3.5 py-1 rounded-full text-sm font-bold">
-            <TrendingUp className="w-4 h-4 text-amber-700" />
+      <div className="bg-white rounded-2xl p-5 sm:p-7 border border-slate-200/90 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="space-y-1.5">
+          <div className="inline-flex items-center gap-1.5 bg-amber-50 text-amber-900 px-3 py-1 rounded-full text-xs font-bold border border-amber-200">
+            <TrendingUp className="w-3.5 h-3.5 text-amber-700" />
             <span>Rhythm & Growth History</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900">
+          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
             Your Progress & History
           </h1>
-          <p className="text-base text-slate-600 font-medium">
+          <p className="text-xs sm:text-sm text-slate-600 font-medium">
             Celebrate your consistency and cognitive exercises over time.
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5">
           <VoiceButton
             textToRead={voiceSummary}
             buttonLabel="Read Progress"
           />
 
           {/* Range Switcher */}
-          <div className="flex bg-slate-100 p-1.5 rounded-2xl border border-slate-300">
+          <div className="flex bg-slate-100 p-1 rounded-xl border border-slate-200">
             <button
               type="button"
               onClick={() => setTimeRange('7')}
-              className={`px-5 py-2.5 rounded-xl font-black text-base transition-all ${
+              className={`px-3.5 py-1.5 rounded-lg font-bold text-xs transition-all ${
                 timeRange === '7' ? 'bg-blue-700 text-white shadow-sm' : 'text-slate-700 hover:text-blue-900'
               }`}
             >
@@ -100,7 +100,7 @@ export default function ProgressPage() {
             <button
               type="button"
               onClick={() => setTimeRange('30')}
-              className={`px-5 py-2.5 rounded-xl font-black text-base transition-all ${
+              className={`px-3.5 py-1.5 rounded-lg font-bold text-xs transition-all ${
                 timeRange === '30' ? 'bg-blue-700 text-white shadow-sm' : 'text-slate-700 hover:text-blue-900'
               }`}
             >
@@ -111,38 +111,38 @@ export default function ProgressPage() {
       </div>
 
       {/* Summary KPI Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <div className="bg-white rounded-3xl p-6 border-3 border-slate-200 shadow-md space-y-2">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-sm space-y-1.5">
           <div className="flex items-center justify-between text-slate-600">
-            <span className="text-sm font-bold uppercase tracking-wider">Average Score</span>
-            <Award className="w-6 h-6 text-blue-700" />
+            <span className="text-[11px] font-bold uppercase tracking-wider">Average Score</span>
+            <Award className="w-4 h-4 text-blue-700" />
           </div>
-          <div className="text-5xl font-black text-blue-900">{avgScore} <span className="text-2xl font-bold text-slate-500">/ 100</span></div>
-          <p className="text-base text-slate-600 font-medium">Steady focus across all games</p>
+          <div className="text-3xl sm:text-4xl font-black text-blue-900">{avgScore} <span className="text-base font-semibold text-slate-600">/ 100</span></div>
+          <p className="text-xs text-slate-600 font-medium">Steady focus across all games</p>
         </div>
 
-        <div className="bg-white rounded-3xl p-6 border-3 border-slate-200 shadow-md space-y-2">
+        <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-sm space-y-1.5">
           <div className="flex items-center justify-between text-slate-600">
-            <span className="text-sm font-bold uppercase tracking-wider">Average Accuracy</span>
-            <Target className="w-6 h-6 text-teal-700" />
+            <span className="text-[11px] font-bold uppercase tracking-wider">Average Accuracy</span>
+            <Target className="w-4 h-4 text-teal-700" />
           </div>
-          <div className="text-5xl font-black text-teal-900">{avgAccuracy}%</div>
-          <p className="text-base text-slate-600 font-medium">Careful and deliberate matching</p>
+          <div className="text-3xl sm:text-4xl font-black text-teal-900">{avgAccuracy}%</div>
+          <p className="text-xs text-slate-600 font-medium">Careful and deliberate matching</p>
         </div>
 
-        <div className="bg-white rounded-3xl p-6 border-3 border-slate-200 shadow-md space-y-2">
+        <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-sm space-y-1.5">
           <div className="flex items-center justify-between text-slate-600">
-            <span className="text-sm font-bold uppercase tracking-wider">Avg Response Time</span>
-            <Clock className="w-6 h-6 text-amber-700" />
+            <span className="text-[11px] font-bold uppercase tracking-wider">Avg Response Time</span>
+            <Clock className="w-4 h-4 text-amber-700" />
           </div>
-          <div className="text-5xl font-black text-amber-900">{avgResponse}s</div>
-          <p className="text-base text-slate-600 font-medium">Calm and comfortable speed</p>
+          <div className="text-3xl sm:text-4xl font-black text-amber-900">{avgResponse}s</div>
+          <p className="text-xs text-slate-600 font-medium">Calm and comfortable speed</p>
         </div>
       </div>
 
       {/* Chart 1: Daily Cognitive Score Trend */}
-      <div className="bg-white rounded-3xl p-6 sm:p-8 border-3 border-slate-200 shadow-md space-y-4">
-        <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
+      <div className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 shadow-sm space-y-3.5">
+        <h2 className="text-lg sm:text-xl font-bold text-slate-900">
           Cognitive Score Evolution ({timeRange}-Day View)
         </h2>
 

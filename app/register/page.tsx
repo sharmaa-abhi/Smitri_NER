@@ -42,88 +42,88 @@ export default function RegisterPage() {
   return (
     <div className="max-w-2xl mx-auto py-8">
       <div className="bg-white rounded-3xl p-8 sm:p-10 border-4 border-slate-200 shadow-xl space-y-8">
-        <div className="text-center space-y-2">
-          <div className="w-16 h-16 bg-teal-100 text-teal-800 rounded-2xl flex items-center justify-center mx-auto mb-3">
-            <UserPlus className="w-8 h-8" />
+        <div className="text-center space-y-1.5">
+          <div className="w-12 h-12 bg-teal-100 text-teal-800 rounded-xl flex items-center justify-center mx-auto mb-2">
+            <UserPlus className="w-6 h-6" />
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900">Create Your Profile</h1>
-          <p className="text-base text-slate-600 font-medium">
+          <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">Create Your Profile</h1>
+          <p className="text-xs sm:text-sm text-slate-600 font-medium">
             Simple setup so your loved ones and caregivers can support you.
           </p>
         </div>
 
-        <form onSubmit={handleRegister} className="space-y-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <label className="block text-xl font-bold text-slate-900">Full Name</label>
+        <form onSubmit={handleRegister} className="space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">Full Name</label>
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
                 placeholder="e.g. Kamla Devi"
-                className="w-full text-xl px-5 py-4 rounded-xl border-2 border-slate-300 focus:border-blue-600 focus:outline-none bg-slate-50 text-slate-900"
+                className="w-full text-sm sm:text-base px-4 py-3 rounded-xl border border-slate-300 focus:border-blue-600 focus:outline-none bg-slate-50 text-slate-900 placeholder:text-slate-600"
               />
             </div>
 
-            <div className="space-y-2">
-              <label className="block text-xl font-bold text-slate-900">Age</label>
+            <div className="space-y-1.5">
+              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">Age</label>
               <input
                 type="number"
                 value={age}
                 onChange={(e) => setAge(e.target.value)}
                 required
-                className="w-full text-xl px-5 py-4 rounded-xl border-2 border-slate-300 focus:border-blue-600 focus:outline-none bg-slate-50 text-slate-900"
+                className="w-full text-sm sm:text-base px-4 py-3 rounded-xl border border-slate-300 focus:border-blue-600 focus:outline-none bg-slate-50 text-slate-900 placeholder:text-slate-600"
               />
             </div>
           </div>
 
-          <div className="space-y-2">
-            <label className="block text-xl font-bold text-slate-900">Email Address</label>
+          <div className="space-y-1.5">
+            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">Email Address</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
               placeholder="e.g. kamla@example.com"
-              className="w-full text-xl px-5 py-4 rounded-xl border-2 border-slate-300 focus:border-blue-600 focus:outline-none bg-slate-50 text-slate-900"
+              className="w-full text-sm sm:text-base px-4 py-3 rounded-xl border border-slate-300 focus:border-blue-600 focus:outline-none bg-slate-50 text-slate-900 placeholder:text-slate-600"
             />
           </div>
 
-          <div className="space-y-2">
-            <label className="block text-xl font-bold text-slate-900">Password</label>
+          <div className="space-y-1.5">
+            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">Password</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full text-xl px-5 py-4 rounded-xl border-2 border-slate-300 focus:border-blue-600 focus:outline-none bg-slate-50 text-slate-900"
+              className="w-full text-sm sm:text-base px-4 py-3 rounded-xl border border-slate-300 focus:border-blue-600 focus:outline-none bg-slate-50 text-slate-900 placeholder:text-slate-600"
             />
           </div>
 
-          <div className="border-t-2 border-slate-200 pt-6 space-y-4">
-            <h3 className="text-xl font-black text-rose-900">Emergency & Caregiver Details</h3>
+          <div className="border-t border-slate-200 pt-4 space-y-3">
+            <h3 className="text-sm font-bold text-rose-900 uppercase tracking-wider">Emergency & Caregiver Details</h3>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="block text-lg font-bold text-slate-900">Caregiver Name</label>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-1.5">
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">Caregiver Name</label>
                 <input
                   type="text"
                   value={emergencyName}
                   onChange={(e) => setEmergencyName(e.target.value)}
                   placeholder="e.g. Rahul (Son)"
-                  className="w-full text-lg px-5 py-4 rounded-xl border-2 border-slate-300 focus:border-blue-600 focus:outline-none bg-slate-50 text-slate-900"
+                  className="w-full text-sm sm:text-base px-4 py-3 rounded-xl border border-slate-300 focus:border-blue-600 focus:outline-none bg-slate-50 text-slate-900 placeholder:text-slate-600"
                 />
               </div>
 
-              <div className="space-y-2">
-                <label className="block text-lg font-bold text-slate-900">Caregiver Phone</label>
+              <div className="space-y-1.5">
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">Caregiver Phone</label>
                 <input
                   type="tel"
                   value={emergencyPhone}
                   onChange={(e) => setEmergencyPhone(e.target.value)}
                   placeholder="e.g. +91 98765 43210"
-                  className="w-full text-lg px-5 py-4 rounded-xl border-2 border-slate-300 focus:border-blue-600 focus:outline-none bg-slate-50 text-slate-900"
+                  className="w-full text-sm sm:text-base px-4 py-3 rounded-xl border border-slate-300 focus:border-blue-600 focus:outline-none bg-slate-50 text-slate-900 placeholder:text-slate-600"
                 />
               </div>
             </div>
@@ -132,16 +132,16 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-4 px-6 bg-teal-600 hover:bg-teal-700 text-white rounded-2xl font-black text-2xl shadow-lg hover:shadow-xl transition-all border-2 border-teal-700 mt-4"
+            className="w-full py-3.5 px-5 bg-teal-600 hover:bg-teal-700 text-white rounded-xl font-bold text-base shadow-sm hover:shadow transition-all border border-teal-700 mt-2"
           >
             {loading ? "Creating Account..." : "Complete Registration"}
           </button>
         </form>
 
-        <div className="border-t-2 border-slate-100 pt-6 text-center space-y-3">
-          <p className="text-lg text-slate-700 font-medium">
+        <div className="border-t border-slate-100 pt-5 text-center space-y-2">
+          <p className="text-xs sm:text-sm text-slate-700 font-medium">
             Already registered?{" "}
-            <Link href="/login" className="text-blue-800 underline font-bold hover:text-blue-950">
+            <Link href="/login" className="text-blue-700 underline font-bold hover:text-blue-900">
               Log in here
             </Link>
           </p>

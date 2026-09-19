@@ -111,7 +111,7 @@ export default function VoiceButton({
           <button
             type="button"
             onClick={speakText}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-base transition-all border-2 ${
+            className={`flex items-center gap-2 px-3.5 py-2 rounded-xl font-semibold text-sm transition-all border-2 ${
               isSpeaking
                 ? "bg-amber-100 text-amber-700 border-amber-400"
                 : "bg-teal-50 hover:bg-teal-100 text-teal-700 border-teal-300"
@@ -121,12 +121,12 @@ export default function VoiceButton({
           >
             {isSpeaking ? (
               <>
-                <VolumeX className="w-5 h-5 text-amber-700" />
+                <VolumeX className="w-4 h-4 text-amber-700" />
                 <span>Stop Reading</span>
               </>
             ) : (
               <>
-                <Volume2 className="w-5 h-5 text-teal-700" />
+                <Volume2 className="w-4 h-4 text-teal-700" />
                 <span>{buttonLabel}</span>
               </>
             )}
@@ -137,7 +137,7 @@ export default function VoiceButton({
           <button
             type="button"
             onClick={toggleListening}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-base transition-all border-2 ${
+            className={`flex items-center gap-2 px-3.5 py-2 rounded-xl font-semibold text-sm transition-all border-2 ${
               isListening
                 ? "bg-rose-100 text-rose-700 border-rose-400 animate-pulse"
                 : "bg-sky-50 hover:bg-sky-100 text-sky-700 border-sky-300"
@@ -147,12 +147,12 @@ export default function VoiceButton({
           >
             {isListening ? (
               <>
-                <MicOff className="w-5 h-5 text-rose-700" />
+                <MicOff className="w-4 h-4 text-rose-700" />
                 <span>Listening...</span>
               </>
             ) : (
               <>
-                <Mic className="w-5 h-5 text-sky-700" />
+                <Mic className="w-4 h-4 text-sky-700" />
                 <span>Voice Command</span>
               </>
             )}
@@ -161,7 +161,7 @@ export default function VoiceButton({
       </div>
 
       {statusMessage && (
-        <span className="text-sm font-semibold text-slate-600 bg-slate-100 px-3 py-1 rounded-xl border border-slate-200 animate-fade-in">
+        <span className="text-xs font-semibold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-lg border border-slate-200 animate-fade-in">
           {statusMessage}
         </span>
       )}
