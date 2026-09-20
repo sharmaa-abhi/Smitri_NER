@@ -180,52 +180,13 @@ export default function HomePage() {
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent pointer-events-none" />
               
               {/* Category & Caption overlay */}
-              <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between pointer-events-none">
+              <div className="absolute bottom-3 left-3 right-3 flex items-center justify-start pointer-events-none">
                 <div className="bg-slate-900/80 backdrop-blur-md text-white text-[11px] font-semibold px-3 py-1 rounded-full border border-white/20">
                   {HERO_IMAGES[currentImageIndex].caption}
                 </div>
-                <div className="bg-white/90 backdrop-blur-md text-slate-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-slate-200">
-                  {currentImageIndex + 1} / 10
-                </div>
               </div>
-
-              {/* Prev / Next navigation buttons on hover */}
-              <button
-                type="button"
-                onClick={() => setCurrentImageIndex((prev) => (prev - 1 + HERO_IMAGES.length) % HERO_IMAGES.length)}
-                className="absolute left-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/80 hover:bg-white text-slate-800 flex items-center justify-center shadow-md backdrop-blur-sm transition-all opacity-80 hover:opacity-100 active:scale-95"
-                aria-label="Previous photo"
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setCurrentImageIndex((prev) => (prev + 1) % HERO_IMAGES.length)}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/80 hover:bg-white text-slate-800 flex items-center justify-center shadow-md backdrop-blur-sm transition-all opacity-80 hover:opacity-100 active:scale-95"
-                aria-label="Next photo"
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
             </div>
 
-            {/* Visual Switcher / 10 Indicator Dots for User Experience */}
-            <div className="flex items-center gap-1.5 mt-3.5 z-10 max-w-full overflow-x-auto py-1 px-2" aria-label="Hero 10 photos switcher">
-              {HERO_IMAGES.map((img, idx) => (
-                <button
-                  key={img.src}
-                  type="button"
-                  onClick={() => setCurrentImageIndex(idx)}
-                  className={`transition-all rounded-full ${
-                    idx === currentImageIndex 
-                      ? 'w-5 h-2 bg-teal-600 shadow-sm' 
-                      : 'w-2 h-2 bg-slate-300 hover:bg-teal-300'
-                  }`}
-                  aria-label={`Show picture ${idx + 1}`}
-                  title={`${img.caption}`}
-                />
-              ))}
-            </div>
 
             {/* Floating Feature Badge 1: Top Left - Play Cognitive Games */}
             <div className="absolute -top-3 -left-3 sm:-left-6 bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-full border border-slate-200/90 shadow-md flex items-center gap-2 animate-float-gentle">
