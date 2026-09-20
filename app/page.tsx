@@ -25,6 +25,7 @@ import {
   X 
 } from 'lucide-react';
 import VoiceButton from '@/components/VoiceButton';
+import ScrollReveal from '@/components/ScrollReveal';
 
 const HERO_IMAGES = [
   {
@@ -264,213 +265,241 @@ export default function HomePage() {
       {/* ========================================================================= */}
       {/* SECTION: FEATURES                                                         */}
       {/* ========================================================================= */}
-      <section id="features" className="space-y-7 scroll-mt-24">
-        <div className="text-center space-y-2.5 max-w-2xl mx-auto">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-50 text-sky-700 text-xs font-bold tracking-wider border border-sky-200">
-            Platform Capabilities
-          </div>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
-            Thoughtfully Crafted for Seniors
-          </h2>
-          <p className="text-sm sm:text-base text-slate-600 font-medium">
-            Designed specifically for elderly ease of use, with large touch targets, voice guidance, and non-intrusive caregiver monitoring.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-          {/* Feature 1 */}
-          <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-sm hover:shadow-md transition-shadow space-y-3.5">
-            <div className="w-11 h-11 rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center">
-              <Brain className="w-5 h-5" />
+      <ScrollReveal direction="up">
+        <section id="features" className="space-y-7 scroll-mt-24">
+          <div className="text-center space-y-2.5 max-w-2xl mx-auto">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-50 text-sky-700 text-xs font-bold tracking-wider border border-sky-200">
+              Platform Capabilities
             </div>
-            <h3 className="text-xl font-bold text-slate-900">Adaptive Cognitive Games</h3>
-            <p className="text-sm text-slate-600 font-medium leading-relaxed">
-              Three interactive games (Memory Match, Sequence Memory, and Find the Different One) that tune difficulty automatically to keep tasks calm and rewarding.
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
+              Thoughtfully Crafted for Seniors
+            </h2>
+            <p className="text-sm sm:text-base text-slate-600 font-medium">
+              Designed specifically for elderly ease of use, with large touch targets, voice guidance, and non-intrusive caregiver monitoring.
             </p>
-            <Link href="/games" className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-sky-700 hover:text-sky-700">
-              <span>Explore games</span>
-              <ChevronRight className="w-4 h-4" />
-            </Link>
           </div>
 
-          {/* Feature 2 */}
-          <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-sm hover:shadow-md transition-shadow space-y-3.5">
-            <div className="w-11 h-11 rounded-2xl bg-teal-100 text-teal-700 flex items-center justify-center">
-              <Bell className="w-5 h-5" />
-            </div>
-            <h3 className="text-xl font-bold text-slate-900">Daily Routine & Reminders</h3>
-            <p className="text-sm text-slate-600 font-medium leading-relaxed">
-              Large, high-contrast checklists for medication, hydration, and doctor visits, readable aloud via Web Speech API with a single tap.
-            </p>
-            <Link href="/reminders" className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-teal-700 hover:text-teal-700">
-              <span>View daily routines</span>
-              <ChevronRight className="w-4 h-4" />
-            </Link>
-          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            {/* Feature 1 */}
+            <ScrollReveal direction="up" delay={100}>
+              <div className="h-full bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-sm hover:shadow-md transition-all hover:-translate-y-1 space-y-3.5">
+                <div className="w-11 h-11 rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center">
+                  <Brain className="w-5 h-5" />
+                </div>
+                <h3 className="text-xl font-bold text-slate-900">Adaptive Cognitive Games</h3>
+                <p className="text-sm text-slate-600 font-medium leading-relaxed">
+                  Three interactive games (Memory Match, Sequence Memory, and Find the Different One) that tune difficulty automatically to keep tasks calm and rewarding.
+                </p>
+                <Link href="/games" className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-sky-700 hover:text-sky-700">
+                  <span>Explore games</span>
+                  <ChevronRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </ScrollReveal>
 
-          {/* Feature 3 */}
-          <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-sm hover:shadow-md transition-shadow space-y-3.5">
-            <div className="w-11 h-11 rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center">
-              <Activity className="w-5 h-5" />
-            </div>
-            <h3 className="text-xl font-bold text-slate-900">Caregiver Observation</h3>
-            <p className="text-sm text-slate-600 font-medium leading-relaxed">
-              Family members and healthcare companions receive proactive alerts if a 3-day sustained performance shift or missed routine is detected.
-            </p>
-            <Link href="/caregiver" className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-sky-700 hover:text-sky-700">
-              <span>Open caregiver portal</span>
-              <ChevronRight className="w-4 h-4" />
-            </Link>
+            {/* Feature 2 */}
+            <ScrollReveal direction="up" delay={200}>
+              <div className="h-full bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-sm hover:shadow-md transition-all hover:-translate-y-1 space-y-3.5">
+                <div className="w-11 h-11 rounded-2xl bg-teal-100 text-teal-700 flex items-center justify-center">
+                  <Bell className="w-5 h-5" />
+                </div>
+                <h3 className="text-xl font-bold text-slate-900">Daily Routine & Reminders</h3>
+                <p className="text-sm text-slate-600 font-medium leading-relaxed">
+                  Large, high-contrast checklists for medication, hydration, and doctor visits, readable aloud via Web Speech API with a single tap.
+                </p>
+                <Link href="/reminders" className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-teal-700 hover:text-teal-700">
+                  <span>View daily routines</span>
+                  <ChevronRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </ScrollReveal>
+
+            {/* Feature 3 */}
+            <ScrollReveal direction="up" delay={300}>
+              <div className="h-full bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-sm hover:shadow-md transition-all hover:-translate-y-1 space-y-3.5">
+                <div className="w-11 h-11 rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center">
+                  <Activity className="w-5 h-5" />
+                </div>
+                <h3 className="text-xl font-bold text-slate-900">Caregiver Observation</h3>
+                <p className="text-sm text-slate-600 font-medium leading-relaxed">
+                  Family members and healthcare companions receive proactive alerts if a 3-day sustained performance shift or missed routine is detected.
+                </p>
+                <Link href="/caregiver" className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-sky-700 hover:text-sky-700">
+                  <span>Open caregiver portal</span>
+                  <ChevronRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </ScrollReveal>
           </div>
-        </div>
-      </section>
+        </section>
+      </ScrollReveal>
 
       {/* ========================================================================= */}
       {/* SECTION: HOW IT WORKS                                                     */}
       {/* ========================================================================= */}
-      <section id="how-it-works" className="relative overflow-hidden bg-gradient-to-br from-blue-950 via-slate-900 to-indigo-950 border border-blue-900/60 rounded-3xl p-6 sm:p-10 lg:p-12 shadow-xl space-y-8 scroll-mt-24 text-white">
-        {/* Ambient background glow effect */}
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
+      <ScrollReveal direction="up">
+        <section id="how-it-works" className="relative overflow-hidden bg-gradient-to-br from-blue-950 via-slate-900 to-indigo-950 border border-blue-900/60 rounded-3xl p-6 sm:p-10 lg:p-12 shadow-xl space-y-8 scroll-mt-24 text-white">
+          {/* Ambient background glow effect */}
+          <div className="absolute -top-24 -right-24 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative text-center space-y-2.5 max-w-2xl mx-auto">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-blue-500/20 text-blue-300 text-xs font-bold tracking-wider border border-blue-500/30">
-            Workflow Overview
-          </div>
-          <h2 className="text-2xl sm:text-3xl font-black text-white">
-            How Smitri_NER Works
-          </h2>
-          <p className="text-sm sm:text-base text-blue-100/80 font-medium">
-            A continuous loop of gentle interaction, objective rhythm tracking, and caring support.
-          </p>
-        </div>
-
-        <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="space-y-2.5 p-4 sm:p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-blue-400/40 transition-colors">
-            <div className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xs shadow-md shadow-blue-500/20">
-              01
+          <div className="relative text-center space-y-2.5 max-w-2xl mx-auto">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-blue-500/20 text-blue-300 text-xs font-bold tracking-wider border border-blue-500/30">
+              Workflow Overview
             </div>
-            <h3 className="text-lg font-bold text-white">Easy Senior Input</h3>
-            <p className="text-xs sm:text-sm text-blue-200/70 font-medium leading-relaxed">
-              Elderly users interact through high-contrast buttons, touch-friendly grids, and voice prompts.
+            <h2 className="text-2xl sm:text-3xl font-black text-white">
+              How Smitri_NER Works
+            </h2>
+            <p className="text-sm sm:text-base text-blue-100/80 font-medium">
+              A continuous loop of gentle interaction, objective rhythm tracking, and caring support.
             </p>
           </div>
 
-          <div className="space-y-2.5 p-4 sm:p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-blue-400/40 transition-colors">
-            <div className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xs shadow-md shadow-blue-500/20">
-              02
-            </div>
-            <h3 className="text-lg font-bold text-white">Cognitive Stimulation</h3>
-            <p className="text-xs sm:text-sm text-blue-200/70 font-medium leading-relaxed">
-              Short, 2-minute memory challenges measure response speed, accuracy, and mistake recovery.
-            </p>
-          </div>
+          <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <ScrollReveal direction="up" delay={100}>
+              <div className="h-full space-y-2.5 p-4 sm:p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-blue-400/40 hover:-translate-y-1 transition-all">
+                <div className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xs shadow-md shadow-blue-500/20">
+                  01
+                </div>
+                <h3 className="text-lg font-bold text-white">Easy Senior Input</h3>
+                <p className="text-xs sm:text-sm text-blue-200/70 font-medium leading-relaxed">
+                  Elderly users interact through high-contrast buttons, touch-friendly grids, and voice prompts.
+                </p>
+              </div>
+            </ScrollReveal>
 
-          <div className="space-y-2.5 p-4 sm:p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-blue-400/40 transition-colors">
-            <div className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xs shadow-md shadow-blue-500/20">
-              03
-            </div>
-            <h3 className="text-lg font-bold text-white">Adaptive Difficulty</h3>
-            <p className="text-xs sm:text-sm text-blue-200/70 font-medium leading-relaxed">
-              Our rule-based engine dynamically scales grid size and speed so users never feel pressured.
-            </p>
-          </div>
+            <ScrollReveal direction="up" delay={200}>
+              <div className="h-full space-y-2.5 p-4 sm:p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-blue-400/40 hover:-translate-y-1 transition-all">
+                <div className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xs shadow-md shadow-blue-500/20">
+                  02
+                </div>
+                <h3 className="text-lg font-bold text-white">Cognitive Stimulation</h3>
+                <p className="text-xs sm:text-sm text-blue-200/70 font-medium leading-relaxed">
+                  Short, 2-minute memory challenges measure response speed, accuracy, and mistake recovery.
+                </p>
+              </div>
+            </ScrollReveal>
 
-          <div className="space-y-2.5 p-4 sm:p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-blue-400/40 transition-colors">
-            <div className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xs shadow-md shadow-blue-500/20">
-              04
-            </div>
-            <h3 className="text-lg font-bold text-white">Caregiver Connection</h3>
-            <p className="text-xs sm:text-sm text-blue-200/70 font-medium leading-relaxed">
-              Caregivers see real-time trends and receive gentle notifications if check-ins are needed.
-            </p>
+            <ScrollReveal direction="up" delay={300}>
+              <div className="h-full space-y-2.5 p-4 sm:p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-blue-400/40 hover:-translate-y-1 transition-all">
+                <div className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xs shadow-md shadow-blue-500/20">
+                  03
+                </div>
+                <h3 className="text-lg font-bold text-white">Adaptive Difficulty</h3>
+                <p className="text-xs sm:text-sm text-blue-200/70 font-medium leading-relaxed">
+                  Our rule-based engine dynamically scales grid size and speed so users never feel pressured.
+                </p>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal direction="up" delay={400}>
+              <div className="h-full space-y-2.5 p-4 sm:p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-blue-400/40 hover:-translate-y-1 transition-all">
+                <div className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xs shadow-md shadow-blue-500/20">
+                  04
+                </div>
+                <h3 className="text-lg font-bold text-white">Caregiver Connection</h3>
+                <p className="text-xs sm:text-sm text-blue-200/70 font-medium leading-relaxed">
+                  Caregivers see real-time trends and receive gentle notifications if check-ins are needed.
+                </p>
+              </div>
+            </ScrollReveal>
           </div>
-        </div>
-      </section>
+        </section>
+      </ScrollReveal>
 
       {/* ========================================================================= */}
       {/* SECTION: ABOUT & NORTH EASTERN REGION (NER) FOCUS                         */}
       {/* ========================================================================= */}
-      <section id="about" className="bg-gradient-to-br from-slate-900 to-slate-950 text-white rounded-3xl p-6 sm:p-10 lg:p-12 space-y-7 scroll-mt-24">
-        <div className="max-w-3xl space-y-3.5">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-teal-500/20 text-teal-300 text-xs font-bold tracking-wider border border-teal-500/30">
-            <Compass className="w-4 h-4" />
-            <span>North Eastern Region (NER) Focus</span>
-          </div>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-tight">
-            Bridging Care Across Remote & Rural Communities
-          </h2>
-          <p className="text-base sm:text-lg text-slate-300 font-medium leading-relaxed">
-            Smitri_NER is tailored to bridge the geographical challenges of the North Eastern Region. By supporting lightweight offline-friendly execution and multi-dialect voice assistance, families stay closely connected regardless of distance.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4 border-t border-slate-800">
-          <div className="flex items-start gap-3">
-            <WifiOff className="w-6 h-6 text-teal-300 flex-shrink-0 mt-1" />
-            <div>
-              <h3 className="font-bold text-white text-base">Offline-First Design</h3>
-              <p className="text-sm text-slate-300">Works reliably on local device storage even during intermittent connectivity.</p>
+      <ScrollReveal direction="up">
+        <section id="about" className="bg-gradient-to-br from-slate-900 to-slate-950 text-white rounded-3xl p-6 sm:p-10 lg:p-12 space-y-7 scroll-mt-24">
+          <div className="max-w-3xl space-y-3.5">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-teal-500/20 text-teal-300 text-xs font-bold tracking-wider border border-teal-500/30">
+              <Compass className="w-4 h-4" />
+              <span>North Eastern Region (NER) Focus</span>
             </div>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-tight">
+              Bridging Care Across Remote & Rural Communities
+            </h2>
+            <p className="text-base sm:text-lg text-slate-300 font-medium leading-relaxed">
+              Smitri_NER is tailored to bridge the geographical challenges of the North Eastern Region. By supporting lightweight offline-friendly execution and multi-dialect voice assistance, families stay closely connected regardless of distance.
+            </p>
           </div>
 
-          <div className="flex items-start gap-3">
-            <PhoneCall className="w-6 h-6 text-sky-400 flex-shrink-0 mt-1" />
-            <div>
-              <h3 className="font-bold text-white text-base">Direct SOS Link</h3>
-              <p className="text-sm text-slate-300">Single-click native cellular dial to local family or ambulance dispatch.</p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4 border-t border-slate-800">
+            <div className="flex items-start gap-3">
+              <WifiOff className="w-6 h-6 text-teal-300 flex-shrink-0 mt-1" />
+              <div>
+                <h3 className="font-bold text-white text-base">Offline-First Design</h3>
+                <p className="text-sm text-slate-300">Works reliably on local device storage even during intermittent connectivity.</p>
+              </div>
             </div>
-          </div>
 
-          <div className="flex items-start gap-3">
-            <Stethoscope className="w-6 h-6 text-amber-300 flex-shrink-0 mt-1" />
-            <div>
-              <h3 className="font-bold text-white text-base">Healthcare Readiness</h3>
-              <p className="text-sm text-slate-300">Structured data models mapped for upcoming ABDM & HL7 FHIR telehealth exchange.</p>
+            <div className="flex items-start gap-3">
+              <PhoneCall className="w-6 h-6 text-sky-400 flex-shrink-0 mt-1" />
+              <div>
+                <h3 className="font-bold text-white text-base">Direct SOS Link</h3>
+                <p className="text-sm text-slate-300">Single-click native cellular dial to local family or ambulance dispatch.</p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-3">
+              <Stethoscope className="w-6 h-6 text-amber-300 flex-shrink-0 mt-1" />
+              <div>
+                <h3 className="font-bold text-white text-base">Healthcare Readiness</h3>
+                <p className="text-sm text-slate-300">Structured data models mapped for upcoming ABDM & HL7 FHIR telehealth exchange.</p>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </ScrollReveal>
 
       {/* ========================================================================= */}
       {/* SECTION: BLOG & HEALTHCARE TIPS                                           */}
       {/* ========================================================================= */}
-      <section id="blog" className="space-y-6 scroll-mt-24">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-          <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-bold tracking-wider mb-2">
-              Wellness Resources
+      <ScrollReveal direction="up">
+        <section id="blog" className="space-y-6 scroll-mt-24">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div>
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-bold tracking-wider mb-2">
+                Wellness Resources
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
+                Cognitive Wellness Articles
+              </h2>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
-              Cognitive Wellness Articles
-            </h2>
-          </div>
-          <Link href="/dashboard" className="text-xs sm:text-sm font-bold text-sky-700 hover:text-sky-700 inline-flex items-center gap-1">
-            <span>Explore all insights</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white p-6 rounded-3xl border border-slate-200 space-y-3 shadow-sm">
-            <span className="text-xs font-bold text-teal-700 bg-teal-50 px-2.5 py-1 rounded-md border border-teal-200">Memory & Sleep</span>
-            <h3 className="text-lg font-bold text-slate-900">How 7 Hours of Sleep Protects Neural Recall in Seniors</h3>
-            <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">Simple evening routines to promote deeper, memory-consolidating sleep cycles.</p>
+            <Link href="/dashboard" className="text-xs sm:text-sm font-bold text-sky-700 hover:text-sky-700 inline-flex items-center gap-1">
+              <span>Explore all insights</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
 
-          <div className="bg-white p-6 rounded-3xl border border-slate-200 space-y-3 shadow-sm">
-            <span className="text-xs font-bold text-sky-700 bg-sky-50 px-2.5 py-1 rounded-md border border-sky-200">Hydration Tips</span>
-            <h3 className="text-lg font-bold text-slate-900">Why Water Intake Directly Affects Attention & Reaction Time</h3>
-            <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">Mild dehydration is one of the most common causes of morning cognitive fog.</p>
-          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <ScrollReveal direction="up" delay={100}>
+              <div className="h-full bg-white p-6 rounded-3xl border border-slate-200 space-y-3 shadow-sm hover:shadow-md transition-all hover:-translate-y-1">
+                <span className="text-xs font-bold text-teal-700 bg-teal-50 px-2.5 py-1 rounded-md border border-teal-200">Memory & Sleep</span>
+                <h3 className="text-lg font-bold text-slate-900">How 7 Hours of Sleep Protects Neural Recall in Seniors</h3>
+                <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">Simple evening routines to promote deeper, memory-consolidating sleep cycles.</p>
+              </div>
+            </ScrollReveal>
 
-          <div className="bg-white p-6 rounded-3xl border border-slate-200 space-y-3 shadow-sm">
-            <span className="text-xs font-bold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-md border border-amber-200">Caregiver Guidance</span>
-            <h3 className="text-lg font-bold text-slate-900">Comforting Communication: Encouraging Daily Mental Games</h3>
-            <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">How family members can make daily cognitive check-ins playful and stress-free.</p>
+            <ScrollReveal direction="up" delay={200}>
+              <div className="h-full bg-white p-6 rounded-3xl border border-slate-200 space-y-3 shadow-sm hover:shadow-md transition-all hover:-translate-y-1">
+                <span className="text-xs font-bold text-sky-700 bg-sky-50 px-2.5 py-1 rounded-md border border-sky-200">Hydration Tips</span>
+                <h3 className="text-lg font-bold text-slate-900">Why Water Intake Directly Affects Attention & Reaction Time</h3>
+                <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">Mild dehydration is one of the most common causes of morning cognitive fog.</p>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal direction="up" delay={300}>
+              <div className="h-full bg-white p-6 rounded-3xl border border-slate-200 space-y-3 shadow-sm hover:shadow-md transition-all hover:-translate-y-1">
+                <span className="text-xs font-bold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-md border border-amber-200">Caregiver Guidance</span>
+                <h3 className="text-lg font-bold text-slate-900">Comforting Communication: Encouraging Daily Mental Games</h3>
+                <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">How family members can make daily cognitive check-ins playful and stress-free.</p>
+              </div>
+            </ScrollReveal>
           </div>
-        </div>
-      </section>
+        </section>
+      </ScrollReveal>
 
       {/* ========================================================================= */}
       {/* FOOTER & CONTACT                                                          */}
