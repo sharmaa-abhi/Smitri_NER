@@ -328,56 +328,60 @@ export default function HomePage() {
       {/* ========================================================================= */}
       {/* SECTION: HOW IT WORKS                                                     */}
       {/* ========================================================================= */}
-      <section id="how-it-works" className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 lg:p-12 shadow-sm space-y-8 scroll-mt-24">
-        <div className="text-center space-y-2.5 max-w-2xl mx-auto">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-50 text-teal-700 text-xs font-bold tracking-wider border border-teal-200">
+      <section id="how-it-works" className="relative overflow-hidden bg-gradient-to-br from-blue-950 via-slate-900 to-indigo-950 border border-blue-900/60 rounded-3xl p-6 sm:p-10 lg:p-12 shadow-xl space-y-8 scroll-mt-24 text-white">
+        {/* Ambient background glow effect */}
+        <div className="absolute -top-24 -right-24 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="relative text-center space-y-2.5 max-w-2xl mx-auto">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-blue-500/20 text-blue-300 text-xs font-bold tracking-wider border border-blue-500/30">
             Workflow Overview
           </div>
-          <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
+          <h2 className="text-2xl sm:text-3xl font-black text-white">
             How Smitri_NER Works
           </h2>
-          <p className="text-sm sm:text-base text-slate-600 font-medium">
+          <p className="text-sm sm:text-base text-blue-100/80 font-medium">
             A continuous loop of gentle interaction, objective rhythm tracking, and caring support.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="space-y-2.5">
-            <div className="w-9 h-9 rounded-full bg-slate-900 text-white flex items-center justify-center font-black text-xs">
+        <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="space-y-2.5 p-4 sm:p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-blue-400/40 transition-colors">
+            <div className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xs shadow-md shadow-blue-500/20">
               01
             </div>
-            <h3 className="text-lg font-bold text-slate-900">Easy Senior Input</h3>
-            <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">
+            <h3 className="text-lg font-bold text-white">Easy Senior Input</h3>
+            <p className="text-xs sm:text-sm text-blue-200/70 font-medium leading-relaxed">
               Elderly users interact through high-contrast buttons, touch-friendly grids, and voice prompts.
             </p>
           </div>
 
-          <div className="space-y-2.5">
-            <div className="w-9 h-9 rounded-full bg-slate-900 text-white flex items-center justify-center font-black text-xs">
+          <div className="space-y-2.5 p-4 sm:p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-blue-400/40 transition-colors">
+            <div className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xs shadow-md shadow-blue-500/20">
               02
             </div>
-            <h3 className="text-lg font-bold text-slate-900">Cognitive Stimulation</h3>
-            <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">
+            <h3 className="text-lg font-bold text-white">Cognitive Stimulation</h3>
+            <p className="text-xs sm:text-sm text-blue-200/70 font-medium leading-relaxed">
               Short, 2-minute memory challenges measure response speed, accuracy, and mistake recovery.
             </p>
           </div>
 
-          <div className="space-y-2.5">
-            <div className="w-9 h-9 rounded-full bg-slate-900 text-white flex items-center justify-center font-black text-xs">
+          <div className="space-y-2.5 p-4 sm:p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-blue-400/40 transition-colors">
+            <div className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xs shadow-md shadow-blue-500/20">
               03
             </div>
-            <h3 className="text-lg font-bold text-slate-900">Adaptive Difficulty</h3>
-            <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">
+            <h3 className="text-lg font-bold text-white">Adaptive Difficulty</h3>
+            <p className="text-xs sm:text-sm text-blue-200/70 font-medium leading-relaxed">
               Our rule-based engine dynamically scales grid size and speed so users never feel pressured.
             </p>
           </div>
 
-          <div className="space-y-2.5">
-            <div className="w-9 h-9 rounded-full bg-slate-900 text-white flex items-center justify-center font-black text-xs">
+          <div className="space-y-2.5 p-4 sm:p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-blue-400/40 transition-colors">
+            <div className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xs shadow-md shadow-blue-500/20">
               04
             </div>
-            <h3 className="text-lg font-bold text-slate-900">Caregiver Connection</h3>
-            <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">
+            <h3 className="text-lg font-bold text-white">Caregiver Connection</h3>
+            <p className="text-xs sm:text-sm text-blue-200/70 font-medium leading-relaxed">
               Caregivers see real-time trends and receive gentle notifications if check-ins are needed.
             </p>
           </div>
