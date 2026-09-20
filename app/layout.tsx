@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Smitri_NER - AI-Powered Cognitive Care & Memory Assistance for Seniors",
@@ -13,8 +20,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className="min-h-screen bg-[#FAFCFD] text-[#0A192F] flex flex-col antialiased">
+    <html lang="en" className={`scroll-smooth ${inter.variable}`}>
+      <body className="min-h-screen bg-[#FAFCFD] text-[#0A192F] font-sans flex flex-col antialiased">
         <Navbar />
         <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6">
           {children}

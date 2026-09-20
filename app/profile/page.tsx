@@ -57,12 +57,12 @@ export default function ProfilePage() {
   return (
     <div className="max-w-2xl mx-auto space-y-8 py-6 pb-16">
       {/* Header */}
-      <div className="bg-white rounded-3xl p-6 sm:p-8 border-3 border-slate-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-white rounded-2xl p-5 sm:p-7 border border-slate-200/90 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900">
+          <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
             Profile & Settings
           </h1>
-          <p className="text-base text-slate-600 font-medium">
+          <p className="text-xs sm:text-sm text-slate-600 font-medium">
             Manage your personal preferences and caregiver contacts.
           </p>
         </div>
@@ -73,92 +73,92 @@ export default function ProfilePage() {
         />
       </div>
 
-      <div className="bg-white rounded-3xl p-8 border-4 border-slate-200 shadow-xl space-y-6">
+      <div className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200/90 shadow-lg space-y-5">
         {saved && (
-          <div className="bg-emerald-100 border-2 border-emerald-400 p-4 rounded-2xl flex items-center gap-3 text-emerald-900 font-bold text-lg">
-            <CheckCircle2 className="w-6 h-6 text-emerald-700" />
+          <div className="bg-emerald-50 border border-emerald-300 p-3.5 rounded-xl flex items-center gap-2.5 text-emerald-900 font-bold text-sm">
+            <CheckCircle2 className="w-5 h-5 text-emerald-600" />
             <span>Profile information updated successfully!</span>
           </div>
         )}
 
-        <form onSubmit={handleSave} className="space-y-6">
-          <div className="space-y-2">
-            <label className="block text-xl font-bold text-slate-900">Full Name</label>
+        <form onSubmit={handleSave} className="space-y-4">
+          <div className="space-y-1.5">
+            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">Full Name</label>
             <input
               type="text"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="w-full text-xl px-5 py-4 rounded-xl border-2 border-slate-300 focus:border-blue-600 focus:outline-none bg-slate-50 text-slate-900"
+              className="w-full text-sm sm:text-base px-4 py-3 rounded-xl border border-slate-300 focus:border-blue-600 focus:outline-none bg-slate-50 text-slate-900 placeholder:text-slate-600"
             />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <label className="block text-xl font-bold text-slate-900">Age</label>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">Age</label>
               <input
                 type="number"
                 value={formData.age}
                 onChange={(e) => setFormData({ ...formData, age: parseInt(e.target.value) || 68 })}
-                className="w-full text-xl px-5 py-4 rounded-xl border-2 border-slate-300 focus:border-blue-600 focus:outline-none bg-slate-50 text-slate-900"
+                className="w-full text-sm sm:text-base px-4 py-3 rounded-xl border border-slate-300 focus:border-blue-600 focus:outline-none bg-slate-50 text-slate-900 placeholder:text-slate-600"
               />
             </div>
 
-            <div className="space-y-2">
-              <label className="block text-xl font-bold text-slate-900">Preferred Language</label>
+            <div className="space-y-1.5">
+              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">Preferred Language</label>
               <input
                 type="text"
                 value={formData.preferredLanguage}
                 onChange={(e) => setFormData({ ...formData, preferredLanguage: e.target.value })}
-                className="w-full text-xl px-5 py-4 rounded-xl border-2 border-slate-300 focus:border-blue-600 focus:outline-none bg-slate-50 text-slate-900"
+                className="w-full text-sm sm:text-base px-4 py-3 rounded-xl border border-slate-300 focus:border-blue-600 focus:outline-none bg-slate-50 text-slate-900 placeholder:text-slate-600"
               />
             </div>
           </div>
 
-          <div className="space-y-2">
-            <label className="block text-xl font-bold text-slate-900">Email Address</label>
+          <div className="space-y-1.5">
+            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">Email Address</label>
             <input
               type="email"
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              className="w-full text-xl px-5 py-4 rounded-xl border-2 border-slate-300 focus:border-blue-600 focus:outline-none bg-slate-50 text-slate-900"
+              className="w-full text-sm sm:text-base px-4 py-3 rounded-xl border border-slate-300 focus:border-blue-600 focus:outline-none bg-slate-50 text-slate-900 placeholder:text-slate-600"
             />
           </div>
 
-          <div className="border-t-2 border-slate-200 pt-6 space-y-4">
-            <h3 className="text-2xl font-black text-rose-900">Emergency & Caregiver Contact</h3>
+          <div className="border-t border-slate-200 pt-4 space-y-3">
+            <h3 className="text-sm font-bold text-rose-900 uppercase tracking-wider">Emergency & Caregiver Contact</h3>
 
-            <div className="space-y-2">
-              <label className="block text-lg font-bold text-slate-900">Caregiver Name</label>
+            <div className="space-y-1.5">
+              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">Caregiver Name</label>
               <input
                 type="text"
                 value={formData.emergencyName}
                 onChange={(e) => setFormData({ ...formData, emergencyName: e.target.value })}
-                className="w-full text-lg px-5 py-4 rounded-xl border-2 border-slate-300 focus:border-blue-600 focus:outline-none bg-slate-50 text-slate-900"
+                className="w-full text-sm sm:text-base px-4 py-3 rounded-xl border border-slate-300 focus:border-blue-600 focus:outline-none bg-slate-50 text-slate-900 placeholder:text-slate-600"
               />
             </div>
 
-            <div className="space-y-2">
-              <label className="block text-lg font-bold text-slate-900">Caregiver Phone Number</label>
+            <div className="space-y-1.5">
+              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">Caregiver Phone Number</label>
               <input
                 type="tel"
                 value={formData.emergencyPhone}
                 onChange={(e) => setFormData({ ...formData, emergencyPhone: e.target.value })}
-                className="w-full text-lg px-5 py-4 rounded-xl border-2 border-slate-300 focus:border-blue-600 focus:outline-none bg-slate-50 text-slate-900"
+                className="w-full text-sm sm:text-base px-4 py-3 rounded-xl border border-slate-300 focus:border-blue-600 focus:outline-none bg-slate-50 text-slate-900 placeholder:text-slate-600"
               />
             </div>
           </div>
 
           <button
             type="submit"
-            className="w-full py-5 px-6 bg-blue-700 hover:bg-blue-800 text-white rounded-2xl font-black text-2xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 border-2 border-blue-900 mt-4"
+            className="w-full py-3.5 px-5 bg-blue-700 hover:bg-blue-800 text-white rounded-xl font-bold text-base shadow-sm hover:shadow transition-all flex items-center justify-center gap-2 border border-blue-900 mt-2"
           >
-            <Save className="w-6 h-6" />
+            <Save className="w-5 h-5" />
             <span>Save Profile Settings</span>
           </button>
         </form>
 
-        <div className="border-t-2 border-slate-100 pt-6 text-center text-slate-500 font-semibold flex items-center justify-center gap-2">
-          <ShieldCheck className="w-5 h-5 text-teal-600" />
+        <div className="border-t border-slate-100 pt-4 text-center text-slate-500 font-medium text-xs flex items-center justify-center gap-1.5">
+          <ShieldCheck className="w-4 h-4 text-teal-600" />
           <span>Your data is stored securely on this device.</span>
         </div>
       </div>
