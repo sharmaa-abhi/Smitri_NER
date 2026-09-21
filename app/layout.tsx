@@ -22,7 +22,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`scroll-smooth ${inter.variable}`}>
-      <body className="min-h-screen bg-[#FAFCFD] text-[#0A192F] font-sans flex flex-col antialiased">
+      <body className="min-h-screen bg-[#FAFCFD] text-slate-900 font-sans flex flex-col antialiased">
         <ScrollProgressBar />
         <Navbar />
         <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6">
