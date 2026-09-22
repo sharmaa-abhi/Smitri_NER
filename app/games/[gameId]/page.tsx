@@ -357,14 +357,13 @@ export default function GameArenaPage() {
   // ---------------- GAME 4 LOGIC: GROCERY BASKET RECALL ----------------
   const setupGroceryBasket = (diff: number) => {
     const targetCount = diff === 1 ? 3 : diff === 2 ? 4 : 5;
-    const shuffled = [...GROCERY_ITEMS].sort(() => Math.random() - 0.5);
+    // O(N) Linear Fisher-Yates shuffle
+    const shuffled = shuffleArray(GROCERY_ITEMS);
     const targets = shuffled.slice(0, targetCount);
     setBasketTargetItems(targets);
 
-    // Provide 6-8 choices on shelf
-    const shelfPool = [...targets, ...shuffled.slice(targetCount, targetCount + 3)].sort(
-      () => Math.random() - 0.5
-    );
+    // O(N) Linear pool creation
+    const shelfPool = shuffleArray([...targets, ...shuffled.slice(targetCount, targetCount + 3)]);
     setBasketOptions(shelfPool.map((item) => ({ ...item, selected: false })));
 
     setIsMemorizingBasket(true);
@@ -385,7 +384,9 @@ export default function GameArenaPage() {
     if (isMemorizingBasket || gameFinished) return;
     setTotalAttempts((prev) => prev + 1);
 
-    const isTarget = basketTargetItems.some((t) => t.name === name);
+    // O(1) target lookup via Set
+    const targetSet = new Set(basketTargetItems.map((t) => t.name));
+    const isTarget = targetSet.has(name);
     const updated = basketOptions.map((opt) =>
       opt.name === name ? { ...opt, selected: !opt.selected } : opt
     );
@@ -396,7 +397,7 @@ export default function GameArenaPage() {
     }
 
     const selectedTargetCount = updated.filter(
-      (opt) => opt.selected && basketTargetItems.some((t) => t.name === opt.name)
+      (opt) => opt.selected && targetSet.has(opt.name)
     ).length;
 
     if (selectedTargetCount === basketTargetItems.length) {
@@ -428,8 +429,8 @@ export default function GameArenaPage() {
       positions.push({ x: Math.max(10, Math.min(85, x)), y: Math.max(10, Math.min(85, y)) });
     }
 
-    // Shuffle positions so numbers appear randomly on screen
-    const shuffledPositions = [...positions].sort(() => Math.random() - 0.5);
+    // O(N) linear shuffle for positions
+    const shuffledPositions = shuffleArray(positions);
 
     const list = Array.from({ length: totalCount }, (_, i) => ({
       num: i + 1,
@@ -477,7 +478,8 @@ export default function GameArenaPage() {
     // 3x3 grid (9 cells: 0 to 8)
     const litCount = diff === 1 ? 3 : diff === 2 ? 4 : 5;
     const allCells = Array.from({ length: 9 }, (_, i) => i);
-    const chosen = [...allCells].sort(() => Math.random() - 0.5).slice(0, litCount);
+    // O(N) linear shuffle
+    const chosen = sampleArray(allCells, litCount);
     setMatrixTargetCells(chosen);
     setMatrixSelectedCells([]);
     setIsShowingMatrixPattern(true);
@@ -524,14 +526,14 @@ export default function GameArenaPage() {
     const promptItem = SOUND_PAIRS[(roundNum - 1) % SOUND_PAIRS.length];
     setCurrentSoundPrompt(promptItem);
 
-    // Combine correct with decoys
-    const options = [
+    // O(N) linear shuffle for options
+    const options = shuffleArray([
       { icon: promptItem.icon, isCorrect: true },
       ...promptItem.decoys.slice(0, diff === 1 ? 3 : diff === 2 ? 5 : 5).map((icon) => ({
         icon,
         isCorrect: false,
       })),
-    ].sort(() => Math.random() - 0.5);
+    ]);
 
     setSoundRoundOptions(options);
 
@@ -575,7 +577,8 @@ export default function GameArenaPage() {
 
     // Level 1: 2 choices, Level 2: 3 choices, Level 3: 4 choices
     const decoyCount = diff === 1 ? 1 : diff === 2 ? 2 : 3;
-    const opts = [q.timeString, ...q.decoys.slice(0, decoyCount)].sort(() => Math.random() - 0.5);
+    // O(N) linear shuffle
+    const opts = shuffleArray([q.timeString, ...q.decoys.slice(0, decoyCount)]);
     setClockOptions(opts);
   };
 
@@ -606,7 +609,8 @@ export default function GameArenaPage() {
 
     // Level 1: 2 choices, Level 2: 3 choices, Level 3: 4 choices
     const decoyCount = diff === 1 ? 1 : diff === 2 ? 2 : 3;
-    const opts = [q.answer, ...q.decoys.slice(0, decoyCount)].sort(() => Math.random() - 0.5);
+    // O(N) linear shuffle
+    const opts = shuffleArray([q.answer, ...q.decoys.slice(0, decoyCount)]);
     setRhymeOptions(opts);
 
     // Speak prompt aloud
