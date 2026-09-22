@@ -212,7 +212,4 @@ export default function CaregiverPortalPage() {
       </ScrollReveal>
     </div>
   );
-}iv>
-    </div>
-  );
 }
