@@ -241,9 +241,16 @@ export function getDb(): DatabaseSchema {
     return initialData;
   }
 
+  const stat = fs.statSync(DB_PATH);
+  if (cachedDb && cachedMtime === stat.mtimeMs) {
+    return cachedDb;
+  }
+
   const raw = fs.readFileSync(DB_PATH, 'utf-8');
   try {
-    return JSON.parse(raw);
+    cachedDb = JSON.parse(raw);
+    cachedMtime = stat.mtimeMs;
+    return cachedDb!;
   } catch {
     return {
       users: [],
@@ -254,9 +261,19 @@ export function getDb(): DatabaseSchema {
   }
 }
 
+// Memory cache variables for O(1) database access
+let cachedDb: DatabaseSchema | null = null;
+let cachedMtime: number = 0;
+
 export function saveDb(data: DatabaseSchema): void {
   if (!fs.existsSync(DB_DIR)) {
     fs.mkdirSync(DB_DIR, { recursive: true });
   }
   fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2), 'utf-8');
+  cachedDb = data;
+  try {
+    cachedMtime = fs.statSync(DB_PATH).mtimeMs;
+  } catch {
+    cachedMtime = Date.now();
+  }
 }
