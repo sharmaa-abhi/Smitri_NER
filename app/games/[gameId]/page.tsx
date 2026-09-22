@@ -1046,6 +1046,125 @@ export default function GameArenaPage() {
             </div>
           </div>
         )}
+
+        {/* ===================== GAME 8 ARENA: CLOCK FACE MATCH ===================== */}
+        {gameId === 'clock-reading' && currentClockQuestion && (
+          <div className="space-y-6 w-full max-w-xl text-center">
+            <div className="inline-flex items-center gap-2 bg-cyan-100 text-cyan-950 px-4 py-1.5 rounded-full font-bold text-sm">
+              <Clock className="w-4 h-4 text-cyan-700" />
+              <span>Time Check {clockRound} of 3</span>
+            </div>
+
+            <div className="space-y-1">
+              <h3 className="text-2xl sm:text-3xl font-black text-slate-900">
+                What time does the clock show?
+              </h3>
+              <p className="text-xs sm:text-sm font-semibold text-cyan-800">
+                Hint: {currentClockQuestion.label}
+              </p>
+            </div>
+
+            {/* SVG Analog Clock Face */}
+            <div className="flex justify-center py-2">
+              <div className="relative w-48 h-48 sm:w-56 sm:h-56 bg-slate-50 rounded-full border-4 border-slate-800 shadow-xl flex items-center justify-center">
+                {/* 12, 3, 6, 9 markers */}
+                <span className="absolute top-2 font-black text-slate-700 text-lg">12</span>
+                <span className="absolute right-3 font-black text-slate-700 text-lg">3</span>
+                <span className="absolute bottom-2 font-black text-slate-700 text-lg">6</span>
+                <span className="absolute left-3 font-black text-slate-700 text-lg">9</span>
+
+                {/* Clock Hands SVG */}
+                {(() => {
+                  const hourAngle = ((currentClockQuestion.hours % 12) + currentClockQuestion.minutes / 60) * 30;
+                  const minuteAngle = currentClockQuestion.minutes * 6;
+
+                  return (
+                    <svg className="w-full h-full" viewBox="0 0 200 200">
+                      {/* Hour Hand */}
+                      <line
+                        x1="100"
+                        y1="100"
+                        x2="100"
+                        y2="52"
+                        stroke="#1e293b"
+                        strokeWidth="7"
+                        strokeLinecap="round"
+                        transform={`rotate(${hourAngle} 100 100)`}
+                      />
+                      {/* Minute Hand */}
+                      <line
+                        x1="100"
+                        y1="100"
+                        x2="100"
+                        y2="30"
+                        stroke="#0891b2"
+                        strokeWidth="5"
+                        strokeLinecap="round"
+                        transform={`rotate(${minuteAngle} 100 100)`}
+                      />
+                      {/* Center Pin */}
+                      <circle cx="100" cy="100" r="6" fill="#0891b2" />
+                    </svg>
+                  );
+                })()}
+              </div>
+            </div>
+
+            {/* Digital Time Options */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3.5 pt-2 max-w-md mx-auto">
+              {clockOptions.map((timeOpt, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => handleClockOptionClick(timeOpt)}
+                  className="py-3.5 px-4 bg-slate-50 hover:bg-cyan-50 border-3 border-slate-300 hover:border-cyan-500 rounded-2xl font-black text-lg sm:text-xl text-slate-800 shadow-sm hover:scale-105 active:scale-95 transition-all"
+                >
+                  {timeOpt}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ===================== GAME 9 ARENA: RHYME & PROVERB COMPLETION ===================== */}
+        {gameId === 'rhyme-completion' && currentRhymeQuestion && (
+          <div className="space-y-6 w-full max-w-xl text-center">
+            <div className="inline-flex items-center gap-2 bg-violet-100 text-violet-950 px-4 py-1.5 rounded-full font-bold text-sm">
+              <Sparkles className="w-4 h-4 text-violet-700" />
+              <span>Rhyme {rhymeRound} of 3</span>
+            </div>
+
+            <div className="bg-violet-50/80 border-2 border-violet-200 rounded-3xl p-6 sm:p-7 shadow-inner space-y-3">
+              <p className="text-xl sm:text-2xl font-bold text-slate-800 leading-relaxed">
+                &ldquo;{currentRhymeQuestion.prefix}&rdquo;
+              </p>
+              <span className="inline-block bg-white text-violet-800 font-black text-xs sm:text-sm px-3 py-1 rounded-full border border-violet-300">
+                Hint: {currentRhymeQuestion.hint}
+              </span>
+            </div>
+
+            <div className="flex justify-center">
+              <VoiceButton
+                textToRead={`${currentRhymeQuestion.prefix}... What word completes the rhyme?`}
+                buttonLabel="Hear Phrase"
+              />
+            </div>
+
+            {/* Choice Words */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3.5 pt-2 max-w-md mx-auto">
+              {rhymeOptions.map((word, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => handleRhymeOptionClick(word)}
+                  className="py-4 px-4 bg-slate-50 hover:bg-violet-50 border-3 border-slate-300 hover:border-violet-500 rounded-2xl font-black text-lg sm:text-xl text-slate-900 shadow-sm hover:scale-105 active:scale-95 transition-all"
+                >
+                  {word}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {submitting && (
