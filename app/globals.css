@@ -19,6 +19,18 @@
     --text-4xl: 2.25rem;   /* 36px */
     --text-5xl: 2.75rem;   /* 44px */
     
+    /* Semantic Text Colour System Tokens */
+    --text-primary: #0F172A;       /* Slate 900: High-contrast primary headings */
+    --text-secondary: #475569;     /* Slate 600: Readable body & description text */
+    --text-muted: #64748B;         /* Slate 500: Low-emphasis metadata */
+    --text-accent-teal: #0F766E;   /* Teal 700: Cognitive care / brand accent */
+    --text-accent-sky: #0369A1;    /* Sky 700: Interactive actions & links */
+    --text-accent-amber: #B45309;  /* Amber 700: Wellbeing & alerts */
+    --text-accent-rose: #BE123C;   /* Rose 700: Emergency & critical actions */
+    --text-inverse: #FFFFFF;       /* White: Text on dark/saturated surfaces */
+    --text-inverse-muted: #CBD5E1; /* Slate 300: Supporting text on dark surfaces */
+    --text-inverse-accent: #5EEAD4;/* Teal 300: Accent tags on dark surfaces */
+
     /* Proportional Line Heights */
     --leading-tight: 1.15;
     --leading-snug: 1.25;

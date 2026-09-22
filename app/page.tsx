@@ -123,7 +123,7 @@ export default function HomePage() {
             {/* Small Pill / Badge */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-teal-50 border border-teal-200/80 text-teal-700 text-xs font-bold tracking-wide shadow-sm">
               <Sparkles className="w-3.5 h-3.5 text-teal-700" />
-              <span>AI-POWERED COGNITIVE CARE</span>
+              <span>AI-powered cognitive care</span>
             </div>
 
             {/* Main Headline */}
@@ -344,13 +344,13 @@ export default function HomePage() {
           <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative text-center space-y-2.5 max-w-2xl mx-auto">
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-blue-500/20 text-blue-300 text-xs font-bold tracking-wider border border-blue-500/30">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-blue-500/20 text-teal-300 text-xs font-bold tracking-wider border border-blue-500/30">
               Workflow Overview
             </div>
             <h2 className="text-2xl sm:text-3xl font-black text-white">
               How Smitri_NER Works
             </h2>
-            <p className="text-sm sm:text-base text-blue-100/80 font-medium">
+            <p className="text-sm sm:text-base text-slate-300 font-medium">
               A continuous loop of gentle interaction, objective rhythm tracking, and caring support.
             </p>
           </div>
@@ -362,7 +362,7 @@ export default function HomePage() {
                   01
                 </div>
                 <h3 className="text-lg font-bold text-white">Easy Senior Input</h3>
-                <p className="text-xs sm:text-sm text-blue-200/70 font-medium leading-relaxed">
+                <p className="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed">
                   Elderly users interact through high-contrast buttons, touch-friendly grids, and voice prompts.
                 </p>
               </div>
@@ -374,7 +374,7 @@ export default function HomePage() {
                   02
                 </div>
                 <h3 className="text-lg font-bold text-white">Cognitive Stimulation</h3>
-                <p className="text-xs sm:text-sm text-blue-200/70 font-medium leading-relaxed">
+                <p className="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed">
                   Short, 2-minute memory challenges measure response speed, accuracy, and mistake recovery.
                 </p>
               </div>
@@ -386,7 +386,7 @@ export default function HomePage() {
                   03
                 </div>
                 <h3 className="text-lg font-bold text-white">Adaptive Difficulty</h3>
-                <p className="text-xs sm:text-sm text-blue-200/70 font-medium leading-relaxed">
+                <p className="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed">
                   Our rule-based engine dynamically scales grid size and speed so users never feel pressured.
                 </p>
               </div>
@@ -398,7 +398,7 @@ export default function HomePage() {
                   04
                 </div>
                 <h3 className="text-lg font-bold text-white">Caregiver Connection</h3>
-                <p className="text-xs sm:text-sm text-blue-200/70 font-medium leading-relaxed">
+                <p className="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed">
                   Caregivers see real-time trends and receive gentle notifications if check-ins are needed.
                 </p>
               </div>
@@ -435,7 +435,7 @@ export default function HomePage() {
             </div>
 
             <div className="flex items-start gap-3">
-              <PhoneCall className="w-6 h-6 text-sky-400 flex-shrink-0 mt-1" />
+              <PhoneCall className="w-6 h-6 text-teal-300 flex-shrink-0 mt-1" />
               <div>
                 <h3 className="font-bold text-white text-base">Direct SOS Link</h3>
                 <p className="text-sm text-slate-300">Single-click native cellular dial to local family or ambulance dispatch.</p>
@@ -443,7 +443,7 @@ export default function HomePage() {
             </div>
 
             <div className="flex items-start gap-3">
-              <Stethoscope className="w-6 h-6 text-amber-300 flex-shrink-0 mt-1" />
+              <Stethoscope className="w-6 h-6 text-teal-300 flex-shrink-0 mt-1" />
               <div>
                 <h3 className="font-bold text-white text-base">Healthcare Readiness</h3>
                 <p className="text-sm text-slate-300">Structured data models mapped for upcoming ABDM & HL7 FHIR telehealth exchange.</p>
@@ -460,7 +460,7 @@ export default function HomePage() {
         <section id="blog" className="space-y-6 scroll-mt-24">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-bold tracking-wider mb-2">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-xs font-bold tracking-wider mb-2">
                 Wellness Resources
               </div>
               <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
@@ -556,11 +556,11 @@ export default function HomePage() {
               <p className="text-slate-600 text-sm font-medium leading-relaxed">
                 Experience the complete live workflow designed for seniors:
               </p>
-              <ul className="space-y-2 text-sm text-slate-700 font-medium">
-                <li className="flex items-center gap-2">✓ <strong>Easy Input:</strong> Large cards, voice assistance, high contrast</li>
-                <li className="flex items-center gap-2">✓ <strong>Cognitive Games:</strong> Memory Match, Sequence & Odd-one-out</li>
-                <li className="flex items-center gap-2">✓ <strong>Adaptive Engine:</strong> Calibrated difficulty recommendation</li>
-                <li className="flex items-center gap-2">✓ <strong>Caregiver View:</strong> 7-day trend & sustained decline detection</li>
+              <ul className="space-y-2 text-sm text-slate-600 font-medium">
+                <li className="flex items-center gap-2">✓ <strong className="text-slate-900">Easy Input:</strong> Large cards, voice assistance, high contrast</li>
+                <li className="flex items-center gap-2">✓ <strong className="text-slate-900">Cognitive Games:</strong> Memory Match, Sequence & Odd-one-out</li>
+                <li className="flex items-center gap-2">✓ <strong className="text-slate-900">Adaptive Engine:</strong> Calibrated difficulty recommendation</li>
+                <li className="flex items-center gap-2">✓ <strong className="text-slate-900">Caregiver View:</strong> 7-day trend & sustained decline detection</li>
               </ul>
             </div>
 
@@ -575,7 +575,7 @@ export default function HomePage() {
               <button
                 type="button"
                 onClick={() => setShowDemoVideoModal(false)}
-                className="px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold"
+                className="px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl font-bold"
               >
                 Close
               </button>

@@ -1,7 +1,18 @@
 "use client";
 
 import Link from 'next/link';
-import { Play, Sparkles, Brain, Shapes, Eye, ArrowRight, Award } from 'lucide-react';
+import { 
+  Play, 
+  Sparkles, 
+  Brain, 
+  Shapes, 
+  Eye, 
+  ShoppingBag, 
+  Hash, 
+  Grid3X3, 
+  Volume2, 
+  Award 
+} from 'lucide-react';
 import VoiceButton from '@/components/VoiceButton';
 
 export default function GamesHubPage() {
@@ -36,6 +47,46 @@ export default function GamesHubPage() {
       difficulty: 'Adaptive (Level 1-3)',
       audioInstruction: 'Welcome to Find the Different One. Look carefully at the icons and tap the one that does not match the rest.',
     },
+    {
+      id: 'grocery-basket',
+      title: 'Grocery Basket Recall',
+      desc: 'Remember items placed in your daily market basket. Encourages short-term verbal recall and everyday recognition.',
+      icon: ShoppingBag,
+      color: 'bg-emerald-600',
+      tag: 'Verbal Memory',
+      difficulty: 'Adaptive (Level 1-3)',
+      audioInstruction: 'Welcome to Grocery Basket Recall. Memorize the items in your basket, then pick them out from the market shelves.',
+    },
+    {
+      id: 'number-trail',
+      title: 'Number Trail',
+      desc: 'Follow the river stones by tapping numbers in rising order. Strengthens sequencing, mental agility, and motor control.',
+      icon: Hash,
+      color: 'bg-indigo-600',
+      tag: 'Numerical Order',
+      difficulty: 'Adaptive (Level 1-3)',
+      audioInstruction: 'Welcome to Number Trail. Look at the numbered circles and tap them in order, starting from 1 upward.',
+    },
+    {
+      id: 'pattern-match',
+      title: 'Matrix Pattern Recall',
+      desc: 'Observe illuminated squares on a grid and replicate where they were. Boosts spatial memory and orientation.',
+      icon: Grid3X3,
+      color: 'bg-purple-600',
+      tag: 'Spatial Memory',
+      difficulty: 'Adaptive (Level 1-3)',
+      audioInstruction: 'Welcome to Matrix Pattern Recall. Watch the glowing squares on the grid, then tap those exact locations.',
+    },
+    {
+      id: 'sound-word-match',
+      title: 'Word & Sound Association',
+      desc: 'Listen to the spoken prompt and choose the matching picture. Enhances auditory comprehension and semantic connections.',
+      icon: Volume2,
+      color: 'bg-rose-600',
+      tag: 'Auditory & Semantic',
+      difficulty: 'Adaptive (Level 1-3)',
+      audioInstruction: 'Welcome to Word and Sound Association. Listen to the spoken cue or tap the sound button, then select the matching picture.',
+    },
   ];
 
   return (
@@ -45,18 +96,18 @@ export default function GamesHubPage() {
         <div className="space-y-1.5">
           <div className="inline-flex items-center gap-1.5 bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-xs font-bold border border-blue-200">
             <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-            <span>Daily Cognitive Quest</span>
+            <span>Daily Cognitive Quests • 7 Games Available</span>
           </div>
           <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
             Cognitive Wellness Games
           </h1>
           <p className="text-xs sm:text-sm text-slate-600 font-medium max-w-xl">
-            Choose a game below. Difficulty automatically adapts to provide a calm, relaxing challenge.
+            Choose a game below. Difficulty automatically adapts to provide a calm, relaxing challenge tailored to your pace.
           </p>
         </div>
 
         <VoiceButton
-          textToRead="Here are your daily cognitive games: Memory Match, Sequence Memory, and Find the Different One. Tap any game to start playing."
+          textToRead="Here are your daily cognitive games: Memory Match, Sequence Memory, Find the Different One, Grocery Basket Recall, Number Trail, Matrix Pattern Recall, and Word and Sound Association. Tap any game to begin."
           buttonLabel="Read Games List"
         />
       </div>
