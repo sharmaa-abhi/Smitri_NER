@@ -198,8 +198,8 @@ export default function GameArenaPage() {
       // Level 1: 4 pairs (8 cards), Level 2: 6 pairs (12 cards), Level 3: 8 pairs (16 cards)
       const pairCount = diff === 1 ? 4 : diff === 2 ? 6 : 8;
       const selected = ICONS_BANK.slice(0, pairCount);
-      const deck = [...selected, ...selected]
-        .sort(() => Math.random() - 0.5)
+      // O(N) Fisher-Yates shuffle replacing O(N log N) .sort()
+      const deck = shuffleArray([...selected, ...selected])
         .map((icon, id) => ({ id, icon, flipped: false, matched: false }));
       setCards(deck);
       setFlippedCards([]);
