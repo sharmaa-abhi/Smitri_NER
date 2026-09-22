@@ -28,11 +28,21 @@ export async function POST(req: Request) {
     const db = getDb();
     const userId = db.users[0]?.id || 'user_kamla';
 
+    const gameTitlesMap: Record<string, string> = {
+      'memory-match': 'Memory Match',
+      'sequence-memory': 'Sequence Memory',
+      'different-one': 'Find the Different One',
+      'grocery-basket': 'Grocery Basket Recall',
+      'number-trail': 'Number Trail',
+      'pattern-match': 'Matrix Pattern Recall',
+      'sound-word-match': 'Daily Word & Sound Match',
+    };
+
     const newSession: GameSession = {
       id: `s-${Date.now()}`,
       userId,
       gameId,
-      gameTitle: gameTitle || 'Cognitive Quest',
+      gameTitle: gameTitle || gameTitlesMap[gameId] || 'Cognitive Quest',
       score: evaluation.score,
       accuracy,
       responseTimeSec,

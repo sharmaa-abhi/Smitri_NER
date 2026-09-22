@@ -15,7 +15,14 @@ export interface User {
 export interface GameSession {
   id: string;
   userId: string;
-  gameId: 'memory-match' | 'sequence-memory' | 'different-one';
+  gameId: 
+    | 'memory-match' 
+    | 'sequence-memory' 
+    | 'different-one' 
+    | 'grocery-basket' 
+    | 'number-trail' 
+    | 'pattern-match' 
+    | 'sound-word-match';
   gameTitle: string;
   score: number;
   accuracy: number;
