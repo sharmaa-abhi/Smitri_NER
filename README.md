@@ -29,7 +29,7 @@ The application adheres to senior-first accessibility principles:
 | **Floating Rounded Header** | Responsive navbar with brand logo, smooth navigation, quick SOS button, and mobile drawer | [`Navbar.tsx`](file:///c:/Users/ABHI%20SHARMA/OneDrive/Desktop/smitri/components/Navbar.tsx) |
 | **Landing Hero** | "Brighter Minds, Healthier Tomorrows" with pill badge, video demo modal, and 3 benefit highlights | [`/`](file:///c:/Users/ABHI%20SHARMA/OneDrive/Desktop/smitri/app/page.tsx) |
 | **Senior Dashboard** | Displays Today's Cognitive Score, Completed Exercises, Next Reminder, 7-Day Trend Chart, and Voice Summary | [`/dashboard`](file:///c:/Users/ABHI%20SHARMA/OneDrive/Desktop/smitri/app/dashboard/page.tsx) |
-| **Cognitive Games Hub** | Access to 7 senior-friendly games with audio instructions and adaptive difficulty | [`/games`](file:///c:/Users/ABHI%20SHARMA/OneDrive/Desktop/smitri/app/games/page.tsx) |
+| **Cognitive Games Hub** | Access to 9 senior-friendly games with audio instructions and adaptive difficulty | [`/games`](file:///c:/Users/ABHI%20SHARMA/OneDrive/Desktop/smitri/app/games/page.tsx) |
 | **1. Memory Match** | Card pair matching with response timer, mistake count, and adaptive grid sizing | [`/games/memory-match`](file:///c:/Users/ABHI%20SHARMA/OneDrive/Desktop/smitri/app/games/[gameId]/page.tsx) |
 | **2. Sequence Memory** | Simon-says light recall puzzle with color flash sequence and pattern reproduction | [`/games/sequence-memory`](file:///c:/Users/ABHI%20SHARMA/OneDrive/Desktop/smitri/app/games/[gameId]/page.tsx) |
 | **3. Find Different One**| Visual attention odd-one-out selection across 3 progressive rounds | [`/games/different-one`](file:///c:/Users/ABHI%20SHARMA/OneDrive/Desktop/smitri/app/games/[gameId]/page.tsx) |
@@ -37,6 +37,8 @@ The application adheres to senior-first accessibility principles:
 | **5. Number Trail** | Trail Making Test (TMT) inspired sequential number stepping in ascending order | [`/games/number-trail`](file:///c:/Users/ABHI%20SHARMA/OneDrive/Desktop/smitri/app/games/[gameId]/page.tsx) |
 | **6. Matrix Pattern Recall** | Spatial working memory grid recall of illuminated matrix tiles | [`/games/pattern-match`](file:///c:/Users/ABHI%20SHARMA/OneDrive/Desktop/smitri/app/games/[gameId]/page.tsx) |
 | **7. Word & Sound Match** | Auditory & semantic association connecting spoken audio cues to visual concepts | [`/games/sound-word-match`](file:///c:/Users/ABHI%20SHARMA/OneDrive/Desktop/smitri/app/games/[gameId]/page.tsx) |
+| **8. Clock Face Match** | Visuospatial orientation and daily routine analog clock reading | [`/games/clock-reading`](file:///c:/Users/ABHI%20SHARMA/OneDrive/Desktop/smitri/app/games/[gameId]/page.tsx) |
+| **9. Rhyme & Proverb Complete**| Linguistic fluency and semantic memory retrieval through classic comforting phrases | [`/games/rhyme-completion`](file:///c:/Users/ABHI%20SHARMA/OneDrive/Desktop/smitri/app/games/[gameId]/page.tsx) |
 | **Performance Engine** | Rule-based scoring: 50% accuracy + 30% speed + 20% completion (0-100 scale) | [`scoring.ts`](file:///c:/Users/ABHI%20SHARMA/OneDrive/Desktop/smitri/lib/scoring.ts) |
 | **Adaptive Difficulty** | Dynamic recalibration (Levels 1-3) with supportive, non-pressuring voice feedback | [`/results`](file:///c:/Users/ABHI%20SHARMA/OneDrive/Desktop/smitri/app/results/page.tsx) |
 | **Daily Reminders** | Medicine, water, exercise, and doctor appointments checklist with modal addition | [`/reminders`](file:///c:/Users/ABHI%20SHARMA/OneDrive/Desktop/smitri/app/reminders/page.tsx) |

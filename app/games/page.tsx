@@ -11,6 +11,8 @@ import {
   Hash, 
   Grid3X3, 
   Volume2, 
+  Clock,
+  BookOpen,
   Award 
 } from 'lucide-react';
 import VoiceButton from '@/components/VoiceButton';
@@ -87,6 +89,26 @@ export default function GamesHubPage() {
       difficulty: 'Adaptive (Level 1-3)',
       audioInstruction: 'Welcome to Word and Sound Association. Listen to the spoken cue or tap the sound button, then select the matching picture.',
     },
+    {
+      id: 'clock-reading',
+      title: 'Clock Face Match',
+      desc: 'Read the gentle analog clock hands and pick the correct daily routine time. Grounding for time orientation.',
+      icon: Clock,
+      color: 'bg-cyan-600',
+      tag: 'Time Orientation',
+      difficulty: 'Adaptive (Level 1-3)',
+      audioInstruction: 'Welcome to Clock Face Match. Look at the clock hands and select the matching digital time.',
+    },
+    {
+      id: 'rhyme-completion',
+      title: 'Rhyme & Word Complete',
+      desc: 'Complete classic comfort proverbs and rhymes with the missing word. Stimulates verbal fluency and recall.',
+      icon: BookOpen,
+      color: 'bg-violet-600',
+      tag: 'Verbal Fluency',
+      difficulty: 'Adaptive (Level 1-3)',
+      audioInstruction: 'Welcome to Rhyme and Word Complete. Listen to the phrase and choose the word that completes the rhyme.',
+    },
   ];
 
   return (
@@ -96,7 +118,7 @@ export default function GamesHubPage() {
         <div className="space-y-1.5">
           <div className="inline-flex items-center gap-1.5 bg-blue-50 text-blue-800 px-3 py-1 rounded-full text-xs font-bold border border-blue-200">
             <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-            <span>Daily Cognitive Quests • 7 Games Available</span>
+            <span>Daily Cognitive Quests • 9 Games Available</span>
           </div>
           <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
             Cognitive Wellness Games
@@ -107,7 +129,7 @@ export default function GamesHubPage() {
         </div>
 
         <VoiceButton
-          textToRead="Here are your daily cognitive games: Memory Match, Sequence Memory, Find the Different One, Grocery Basket Recall, Number Trail, Matrix Pattern Recall, and Word and Sound Association. Tap any game to begin."
+          textToRead="Here are your 9 daily cognitive games: Memory Match, Sequence Memory, Find the Different One, Grocery Basket Recall, Number Trail, Matrix Pattern Recall, Word and Sound Association, Clock Face Match, and Rhyme Completion. Tap any game to begin."
           buttonLabel="Read Games List"
         />
       </div>

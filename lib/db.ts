@@ -22,7 +22,9 @@ export interface GameSession {
     | 'grocery-basket' 
     | 'number-trail' 
     | 'pattern-match' 
-    | 'sound-word-match';
+    | 'sound-word-match'
+    | 'clock-reading'
+    | 'rhyme-completion';
   gameTitle: string;
   score: number;
   accuracy: number;

@@ -23,6 +23,27 @@ import VoiceButton from '@/components/VoiceButton';
 // Everyday senior friendly emojis
 const ICONS_BANK = ['🍎', '🌸', '🚗', '☀️', '☕', '🐱', '🔔', '🏠', '🍇', '🎈', '⭐', '🌈'];
 
+/**
+ * In-place Fisher-Yates Shuffle Algorithm: O(N) linear time complexity
+ * Replaces non-uniform O(N log N) Array.sort(() => Math.random() - 0.5)
+ */
+function shuffleArray<T>(array: T[]): T[] {
+  const result = [...array];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+
+/**
+ * Reservoir Sample Algorithm: O(k) selection without full array sorting
+ */
+function sampleArray<T>(array: T[], count: number): T[] {
+  const shuffled = shuffleArray(array);
+  return shuffled.slice(0, count);
+}
+
 // Market grocery pool for Game 4
 const GROCERY_ITEMS = [
   { name: 'Fresh Milk', icon: '🥛' },
@@ -44,6 +65,49 @@ const SOUND_PAIRS = [
   { prompt: 'Fresh Rainfall Drops', soundText: 'Calm pitter-patter sound of cooling raindrops', icon: '🌧️', decoys: ['☀️', '🔔', '🎈'] },
   { prompt: 'Bright Warm Sunshine', soundText: 'Warm golden sun shining high in the blue sky', icon: '☀️', decoys: ['🌙', '🌧️', '☕'] },
   { prompt: 'Comfortable Sweet Home', soundText: 'Peaceful home with loved ones and cozy warmth', icon: '🏠', decoys: ['🚗', '🍎', '⭐'] },
+];
+
+// Clock Face Times pool for Game 8
+const CLOCK_QUESTIONS = [
+  { hours: 7, minutes: 0, timeString: '7:00 AM', label: 'Morning Chai & Awakening', decoys: ['9:00 AM', '6:30 AM', '11:00 AM'] },
+  { hours: 12, minutes: 30, timeString: '12:30 PM', label: 'Afternoon Nourishing Lunch', decoys: ['1:30 PM', '11:30 AM', '2:00 PM'] },
+  { hours: 4, minutes: 0, timeString: '4:00 PM', label: 'Evening Garden Walk', decoys: ['3:00 PM', '5:30 PM', '6:00 PM'] },
+  { hours: 9, minutes: 0, timeString: '9:00 PM', label: 'Night Rest & Sleep', decoys: ['8:30 PM', '10:00 PM', '7:00 PM'] },
+  { hours: 8, minutes: 15, timeString: '8:15 AM', label: 'Morning Medicine & Breakfast', decoys: ['7:15 AM', '9:30 AM', '8:45 AM'] },
+];
+
+// Rhyme & Proverb pool for Game 9
+const RHYME_QUESTIONS = [
+  { 
+    prefix: 'Early to bed and early to rise, makes a person healthy, wealthy, and...', 
+    answer: 'Wise', 
+    decoys: ['Strong', 'Bright', 'Kind'],
+    hint: 'Rhymes with "Rise"'
+  },
+  { 
+    prefix: 'A stitch in time saves...', 
+    answer: 'Nine', 
+    decoys: ['Five', 'Ten', 'All'],
+    hint: 'Famous old saying for saving effort'
+  },
+  { 
+    prefix: 'Laughter is the best...', 
+    answer: 'Medicine', 
+    decoys: ['Exercise', 'Song', 'Story'],
+    hint: 'Heals the spirit and heart'
+  },
+  { 
+    prefix: 'An apple a day keeps the doctor...', 
+    answer: 'Away', 
+    decoys: ['Happy', 'Near', 'Smiling'],
+    hint: 'Rhymes with "Day"'
+  },
+  { 
+    prefix: 'Where there is love, there is...', 
+    answer: 'Peace', 
+    decoys: ['Noise', 'Fear', 'Doubt'],
+    hint: 'Calmness in the home'
+  },
 ];
 
 export default function GameArenaPage() {
@@ -98,6 +162,16 @@ export default function GameArenaPage() {
   const [currentSoundPrompt, setCurrentSoundPrompt] = useState<typeof SOUND_PAIRS[0] | null>(null);
   const [soundRoundOptions, setSoundRoundOptions] = useState<Array<{ icon: string; isCorrect: boolean }>>([]);
 
+  // ==================== GAME 8: CLOCK READING STATE ====================
+  const [clockRound, setClockRound] = useState<number>(1);
+  const [currentClockQuestion, setCurrentClockQuestion] = useState<typeof CLOCK_QUESTIONS[0] | null>(null);
+  const [clockOptions, setClockOptions] = useState<string[]>([]);
+
+  // ==================== GAME 9: RHYME COMPLETION STATE =================
+  const [rhymeRound, setRhymeRound] = useState<number>(1);
+  const [currentRhymeQuestion, setCurrentRhymeQuestion] = useState<typeof RHYME_QUESTIONS[0] | null>(null);
+  const [rhymeOptions, setRhymeOptions] = useState<string[]>([]);
+
   // Timer Tick
   useEffect(() => {
     if (gameFinished) return;
@@ -124,8 +198,8 @@ export default function GameArenaPage() {
       // Level 1: 4 pairs (8 cards), Level 2: 6 pairs (12 cards), Level 3: 8 pairs (16 cards)
       const pairCount = diff === 1 ? 4 : diff === 2 ? 6 : 8;
       const selected = ICONS_BANK.slice(0, pairCount);
-      const deck = [...selected, ...selected]
-        .sort(() => Math.random() - 0.5)
+      // O(N) Fisher-Yates shuffle replacing O(N log N) .sort()
+      const deck = shuffleArray([...selected, ...selected])
         .map((icon, id) => ({ id, icon, flipped: false, matched: false }));
       setCards(deck);
       setFlippedCards([]);
@@ -146,6 +220,10 @@ export default function GameArenaPage() {
       setupPatternMatch(diff);
     } else if (gameId === 'sound-word-match') {
       setupSoundWordMatch(diff, 1);
+    } else if (gameId === 'clock-reading') {
+      setupClockReading(diff, 1);
+    } else if (gameId === 'rhyme-completion') {
+      setupRhymeCompletion(diff, 1);
     }
   };
 
@@ -279,14 +357,13 @@ export default function GameArenaPage() {
   // ---------------- GAME 4 LOGIC: GROCERY BASKET RECALL ----------------
   const setupGroceryBasket = (diff: number) => {
     const targetCount = diff === 1 ? 3 : diff === 2 ? 4 : 5;
-    const shuffled = [...GROCERY_ITEMS].sort(() => Math.random() - 0.5);
+    // O(N) Linear Fisher-Yates shuffle
+    const shuffled = shuffleArray(GROCERY_ITEMS);
     const targets = shuffled.slice(0, targetCount);
     setBasketTargetItems(targets);
 
-    // Provide 6-8 choices on shelf
-    const shelfPool = [...targets, ...shuffled.slice(targetCount, targetCount + 3)].sort(
-      () => Math.random() - 0.5
-    );
+    // O(N) Linear pool creation
+    const shelfPool = shuffleArray([...targets, ...shuffled.slice(targetCount, targetCount + 3)]);
     setBasketOptions(shelfPool.map((item) => ({ ...item, selected: false })));
 
     setIsMemorizingBasket(true);
@@ -307,7 +384,9 @@ export default function GameArenaPage() {
     if (isMemorizingBasket || gameFinished) return;
     setTotalAttempts((prev) => prev + 1);
 
-    const isTarget = basketTargetItems.some((t) => t.name === name);
+    // O(1) target lookup via Set
+    const targetSet = new Set(basketTargetItems.map((t) => t.name));
+    const isTarget = targetSet.has(name);
     const updated = basketOptions.map((opt) =>
       opt.name === name ? { ...opt, selected: !opt.selected } : opt
     );
@@ -318,7 +397,7 @@ export default function GameArenaPage() {
     }
 
     const selectedTargetCount = updated.filter(
-      (opt) => opt.selected && basketTargetItems.some((t) => t.name === opt.name)
+      (opt) => opt.selected && targetSet.has(opt.name)
     ).length;
 
     if (selectedTargetCount === basketTargetItems.length) {
@@ -350,8 +429,8 @@ export default function GameArenaPage() {
       positions.push({ x: Math.max(10, Math.min(85, x)), y: Math.max(10, Math.min(85, y)) });
     }
 
-    // Shuffle positions so numbers appear randomly on screen
-    const shuffledPositions = [...positions].sort(() => Math.random() - 0.5);
+    // O(N) linear shuffle for positions
+    const shuffledPositions = shuffleArray(positions);
 
     const list = Array.from({ length: totalCount }, (_, i) => ({
       num: i + 1,
@@ -399,7 +478,8 @@ export default function GameArenaPage() {
     // 3x3 grid (9 cells: 0 to 8)
     const litCount = diff === 1 ? 3 : diff === 2 ? 4 : 5;
     const allCells = Array.from({ length: 9 }, (_, i) => i);
-    const chosen = [...allCells].sort(() => Math.random() - 0.5).slice(0, litCount);
+    // O(N) linear shuffle
+    const chosen = sampleArray(allCells, litCount);
     setMatrixTargetCells(chosen);
     setMatrixSelectedCells([]);
     setIsShowingMatrixPattern(true);
@@ -446,14 +526,14 @@ export default function GameArenaPage() {
     const promptItem = SOUND_PAIRS[(roundNum - 1) % SOUND_PAIRS.length];
     setCurrentSoundPrompt(promptItem);
 
-    // Combine correct with decoys
-    const options = [
+    // O(N) linear shuffle for options
+    const options = shuffleArray([
       { icon: promptItem.icon, isCorrect: true },
       ...promptItem.decoys.slice(0, diff === 1 ? 3 : diff === 2 ? 5 : 5).map((icon) => ({
         icon,
         isCorrect: false,
       })),
-    ].sort(() => Math.random() - 0.5);
+    ]);
 
     setSoundRoundOptions(options);
 
@@ -489,6 +569,82 @@ export default function GameArenaPage() {
     }
   };
 
+  // ---------------- GAME 8 LOGIC: CLOCK READING MATCH ----------------
+  const setupClockReading = (diff: number, roundNum: number) => {
+    setClockRound(roundNum);
+    const q = CLOCK_QUESTIONS[(roundNum - 1) % CLOCK_QUESTIONS.length];
+    setCurrentClockQuestion(q);
+
+    // Level 1: 2 choices, Level 2: 3 choices, Level 3: 4 choices
+    const decoyCount = diff === 1 ? 1 : diff === 2 ? 2 : 3;
+    // O(N) linear shuffle
+    const opts = shuffleArray([q.timeString, ...q.decoys.slice(0, decoyCount)]);
+    setClockOptions(opts);
+  };
+
+  const handleClockOptionClick = (chosenTime: string) => {
+    if (gameFinished || !currentClockQuestion) return;
+    setTotalAttempts((prev) => prev + 1);
+
+    if (chosenTime === currentClockQuestion.timeString) {
+      if (clockRound >= 3) {
+        finishGame({
+          accuracy: Math.max(60, 100 - mistakes * 12),
+          mistakes,
+          totalAttempts: totalAttempts + 1,
+        });
+      } else {
+        setupClockReading(difficulty, clockRound + 1);
+      }
+    } else {
+      setMistakes((prev) => prev + 1);
+    }
+  };
+
+  // ---------------- GAME 9 LOGIC: RHYME & PROVERB COMPLETION ----------
+  const setupRhymeCompletion = (diff: number, roundNum: number) => {
+    setRhymeRound(roundNum);
+    const q = RHYME_QUESTIONS[(roundNum - 1) % RHYME_QUESTIONS.length];
+    setCurrentRhymeQuestion(q);
+
+    // Level 1: 2 choices, Level 2: 3 choices, Level 3: 4 choices
+    const decoyCount = diff === 1 ? 1 : diff === 2 ? 2 : 3;
+    // O(N) linear shuffle
+    const opts = shuffleArray([q.answer, ...q.decoys.slice(0, decoyCount)]);
+    setRhymeOptions(opts);
+
+    // Speak prompt aloud
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      try {
+        window.speechSynthesis.cancel();
+        const ut = new SpeechSynthesisUtterance(`${q.prefix}... What is the missing word?`);
+        ut.rate = 0.85;
+        window.speechSynthesis.speak(ut);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  };
+
+  const handleRhymeOptionClick = (chosenWord: string) => {
+    if (gameFinished || !currentRhymeQuestion) return;
+    setTotalAttempts((prev) => prev + 1);
+
+    if (chosenWord === currentRhymeQuestion.answer) {
+      if (rhymeRound >= 3) {
+        finishGame({
+          accuracy: Math.max(60, 100 - mistakes * 12),
+          mistakes,
+          totalAttempts: totalAttempts + 1,
+        });
+      } else {
+        setupRhymeCompletion(difficulty, rhymeRound + 1);
+      }
+    } else {
+      setMistakes((prev) => prev + 1);
+    }
+  };
+
   // ---------------- FINISH & SAVE RESULT ----------------
   const finishGame = async (stats: { accuracy: number; mistakes: number; totalAttempts: number }) => {
     setGameFinished(true);
@@ -502,6 +658,8 @@ export default function GameArenaPage() {
       'number-trail': 'Number Trail',
       'pattern-match': 'Matrix Pattern Recall',
       'sound-word-match': 'Daily Word & Sound Match',
+      'clock-reading': 'Clock Face Match',
+      'rhyme-completion': 'Rhyme & Word Completion',
     };
 
     const payload = {
@@ -559,6 +717,14 @@ export default function GameArenaPage() {
     'sound-word-match': {
       title: 'Daily Word & Sound Match',
       instruction: 'Listen to the spoken audio cue or tap the speaker button, then choose the picture that matches the description.',
+    },
+    'clock-reading': {
+      title: 'Clock Face Match',
+      instruction: 'Look at the analog clock hands representing a familiar daily moment, and select the matching digital time.',
+    },
+    'rhyme-completion': {
+      title: 'Rhyme & Word Completion',
+      instruction: 'Listen to the classic phrase or proverb, and tap the missing word that completes the rhythm.',
     },
   };
 
@@ -900,6 +1066,125 @@ export default function GameArenaPage() {
                   aria-label="Selection option"
                 >
                   {opt.icon}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ===================== GAME 8 ARENA: CLOCK FACE MATCH ===================== */}
+        {gameId === 'clock-reading' && currentClockQuestion && (
+          <div className="space-y-6 w-full max-w-xl text-center">
+            <div className="inline-flex items-center gap-2 bg-cyan-100 text-cyan-950 px-4 py-1.5 rounded-full font-bold text-sm">
+              <Clock className="w-4 h-4 text-cyan-700" />
+              <span>Time Check {clockRound} of 3</span>
+            </div>
+
+            <div className="space-y-1">
+              <h3 className="text-2xl sm:text-3xl font-black text-slate-900">
+                What time does the clock show?
+              </h3>
+              <p className="text-xs sm:text-sm font-semibold text-cyan-800">
+                Hint: {currentClockQuestion.label}
+              </p>
+            </div>
+
+            {/* SVG Analog Clock Face */}
+            <div className="flex justify-center py-2">
+              <div className="relative w-48 h-48 sm:w-56 sm:h-56 bg-slate-50 rounded-full border-4 border-slate-800 shadow-xl flex items-center justify-center">
+                {/* 12, 3, 6, 9 markers */}
+                <span className="absolute top-2 font-black text-slate-700 text-lg">12</span>
+                <span className="absolute right-3 font-black text-slate-700 text-lg">3</span>
+                <span className="absolute bottom-2 font-black text-slate-700 text-lg">6</span>
+                <span className="absolute left-3 font-black text-slate-700 text-lg">9</span>
+
+                {/* Clock Hands SVG */}
+                {(() => {
+                  const hourAngle = ((currentClockQuestion.hours % 12) + currentClockQuestion.minutes / 60) * 30;
+                  const minuteAngle = currentClockQuestion.minutes * 6;
+
+                  return (
+                    <svg className="w-full h-full" viewBox="0 0 200 200">
+                      {/* Hour Hand */}
+                      <line
+                        x1="100"
+                        y1="100"
+                        x2="100"
+                        y2="52"
+                        stroke="#1e293b"
+                        strokeWidth="7"
+                        strokeLinecap="round"
+                        transform={`rotate(${hourAngle} 100 100)`}
+                      />
+                      {/* Minute Hand */}
+                      <line
+                        x1="100"
+                        y1="100"
+                        x2="100"
+                        y2="30"
+                        stroke="#0891b2"
+                        strokeWidth="5"
+                        strokeLinecap="round"
+                        transform={`rotate(${minuteAngle} 100 100)`}
+                      />
+                      {/* Center Pin */}
+                      <circle cx="100" cy="100" r="6" fill="#0891b2" />
+                    </svg>
+                  );
+                })()}
+              </div>
+            </div>
+
+            {/* Digital Time Options */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3.5 pt-2 max-w-md mx-auto">
+              {clockOptions.map((timeOpt, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => handleClockOptionClick(timeOpt)}
+                  className="py-3.5 px-4 bg-slate-50 hover:bg-cyan-50 border-3 border-slate-300 hover:border-cyan-500 rounded-2xl font-black text-lg sm:text-xl text-slate-800 shadow-sm hover:scale-105 active:scale-95 transition-all"
+                >
+                  {timeOpt}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ===================== GAME 9 ARENA: RHYME & PROVERB COMPLETION ===================== */}
+        {gameId === 'rhyme-completion' && currentRhymeQuestion && (
+          <div className="space-y-6 w-full max-w-xl text-center">
+            <div className="inline-flex items-center gap-2 bg-violet-100 text-violet-950 px-4 py-1.5 rounded-full font-bold text-sm">
+              <Sparkles className="w-4 h-4 text-violet-700" />
+              <span>Rhyme {rhymeRound} of 3</span>
+            </div>
+
+            <div className="bg-violet-50/80 border-2 border-violet-200 rounded-3xl p-6 sm:p-7 shadow-inner space-y-3">
+              <p className="text-xl sm:text-2xl font-bold text-slate-800 leading-relaxed">
+                &ldquo;{currentRhymeQuestion.prefix}&rdquo;
+              </p>
+              <span className="inline-block bg-white text-violet-800 font-black text-xs sm:text-sm px-3 py-1 rounded-full border border-violet-300">
+                Hint: {currentRhymeQuestion.hint}
+              </span>
+            </div>
+
+            <div className="flex justify-center">
+              <VoiceButton
+                textToRead={`${currentRhymeQuestion.prefix}... What word completes the rhyme?`}
+                buttonLabel="Hear Phrase"
+              />
+            </div>
+
+            {/* Choice Words */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3.5 pt-2 max-w-md mx-auto">
+              {rhymeOptions.map((word, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => handleRhymeOptionClick(word)}
+                  className="py-4 px-4 bg-slate-50 hover:bg-violet-50 border-3 border-slate-300 hover:border-violet-500 rounded-2xl font-black text-lg sm:text-xl text-slate-900 shadow-sm hover:scale-105 active:scale-95 transition-all"
+                >
+                  {word}
                 </button>
               ))}
             </div>
