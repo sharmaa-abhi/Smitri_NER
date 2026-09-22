@@ -15,6 +15,7 @@ import {
   ArrowRight
 } from 'lucide-react';
 import VoiceButton from '@/components/VoiceButton';
+import ScrollReveal from '@/components/ScrollReveal';
 import {
   ResponsiveContainer,
   LineChart,

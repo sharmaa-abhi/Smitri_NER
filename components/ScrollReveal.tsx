@@ -19,6 +19,12 @@ export default function ScrollReveal({
   const domRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Immediate visibility fallback for above-the-fold or non-supporting environments
+    if (typeof window === "undefined" || !("IntersectionObserver" in window)) {
+      setIsVisible(true);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -31,8 +37,8 @@ export default function ScrollReveal({
         });
       },
       {
-        threshold: 0.12,
-        rootMargin: "0px 0px -40px 0px",
+        threshold: 0.05,
+        rootMargin: "0px 0px -20px 0px",
       }
     );
 
