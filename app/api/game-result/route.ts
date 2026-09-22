@@ -63,10 +63,13 @@ export async function POST(req: Request) {
       user.difficultyLevel = evaluation.recommendedDifficulty;
     }
 
-    // Check for sustained decline across last scores
-    const recentScores = db.gameSessions
-      .filter(s => s.userId === userId)
-      .map(s => s.score);
+    // Fast O(1) backward extraction of last 3 user scores without O(N) full array filter
+    const recentScores: number[] = [];
+    for (let i = db.gameSessions.length - 1; i >= 0 && recentScores.length < 3; i--) {
+      if (db.gameSessions[i].userId === userId) {
+        recentScores.unshift(db.gameSessions[i].score);
+      }
+    }
 
     const declineAnalysis = analyzeSustainedDecline(recentScores);
     if (declineAnalysis.hasDecline) {
