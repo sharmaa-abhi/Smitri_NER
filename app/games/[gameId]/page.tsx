@@ -199,6 +199,10 @@ export default function GameArenaPage() {
       setupPatternMatch(diff);
     } else if (gameId === 'sound-word-match') {
       setupSoundWordMatch(diff, 1);
+    } else if (gameId === 'clock-reading') {
+      setupClockReading(diff, 1);
+    } else if (gameId === 'rhyme-completion') {
+      setupRhymeCompletion(diff, 1);
     }
   };
 
