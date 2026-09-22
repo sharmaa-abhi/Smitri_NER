@@ -36,6 +36,8 @@ export async function POST(req: Request) {
       'number-trail': 'Number Trail',
       'pattern-match': 'Matrix Pattern Recall',
       'sound-word-match': 'Daily Word & Sound Match',
+      'clock-reading': 'Clock Face Match',
+      'rhyme-completion': 'Rhyme & Word Completion',
     };
 
     const newSession: GameSession = {
