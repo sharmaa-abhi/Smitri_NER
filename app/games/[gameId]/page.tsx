@@ -546,6 +546,80 @@ export default function GameArenaPage() {
     }
   };
 
+  // ---------------- GAME 8 LOGIC: CLOCK READING MATCH ----------------
+  const setupClockReading = (diff: number, roundNum: number) => {
+    setClockRound(roundNum);
+    const q = CLOCK_QUESTIONS[(roundNum - 1) % CLOCK_QUESTIONS.length];
+    setCurrentClockQuestion(q);
+
+    // Level 1: 2 choices, Level 2: 3 choices, Level 3: 4 choices
+    const decoyCount = diff === 1 ? 1 : diff === 2 ? 2 : 3;
+    const opts = [q.timeString, ...q.decoys.slice(0, decoyCount)].sort(() => Math.random() - 0.5);
+    setClockOptions(opts);
+  };
+
+  const handleClockOptionClick = (chosenTime: string) => {
+    if (gameFinished || !currentClockQuestion) return;
+    setTotalAttempts((prev) => prev + 1);
+
+    if (chosenTime === currentClockQuestion.timeString) {
+      if (clockRound >= 3) {
+        finishGame({
+          accuracy: Math.max(60, 100 - mistakes * 12),
+          mistakes,
+          totalAttempts: totalAttempts + 1,
+        });
+      } else {
+        setupClockReading(difficulty, clockRound + 1);
+      }
+    } else {
+      setMistakes((prev) => prev + 1);
+    }
+  };
+
+  // ---------------- GAME 9 LOGIC: RHYME & PROVERB COMPLETION ----------
+  const setupRhymeCompletion = (diff: number, roundNum: number) => {
+    setRhymeRound(roundNum);
+    const q = RHYME_QUESTIONS[(roundNum - 1) % RHYME_QUESTIONS.length];
+    setCurrentRhymeQuestion(q);
+
+    // Level 1: 2 choices, Level 2: 3 choices, Level 3: 4 choices
+    const decoyCount = diff === 1 ? 1 : diff === 2 ? 2 : 3;
+    const opts = [q.answer, ...q.decoys.slice(0, decoyCount)].sort(() => Math.random() - 0.5);
+    setRhymeOptions(opts);
+
+    // Speak prompt aloud
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      try {
+        window.speechSynthesis.cancel();
+        const ut = new SpeechSynthesisUtterance(`${q.prefix}... What is the missing word?`);
+        ut.rate = 0.85;
+        window.speechSynthesis.speak(ut);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  };
+
+  const handleRhymeOptionClick = (chosenWord: string) => {
+    if (gameFinished || !currentRhymeQuestion) return;
+    setTotalAttempts((prev) => prev + 1);
+
+    if (chosenWord === currentRhymeQuestion.answer) {
+      if (rhymeRound >= 3) {
+        finishGame({
+          accuracy: Math.max(60, 100 - mistakes * 12),
+          mistakes,
+          totalAttempts: totalAttempts + 1,
+        });
+      } else {
+        setupRhymeCompletion(difficulty, rhymeRound + 1);
+      }
+    } else {
+      setMistakes((prev) => prev + 1);
+    }
+  };
+
   // ---------------- FINISH & SAVE RESULT ----------------
   const finishGame = async (stats: { accuracy: number; mistakes: number; totalAttempts: number }) => {
     setGameFinished(true);
@@ -559,6 +633,8 @@ export default function GameArenaPage() {
       'number-trail': 'Number Trail',
       'pattern-match': 'Matrix Pattern Recall',
       'sound-word-match': 'Daily Word & Sound Match',
+      'clock-reading': 'Clock Face Match',
+      'rhyme-completion': 'Rhyme & Word Completion',
     };
 
     const payload = {
@@ -616,6 +692,14 @@ export default function GameArenaPage() {
     'sound-word-match': {
       title: 'Daily Word & Sound Match',
       instruction: 'Listen to the spoken audio cue or tap the speaker button, then choose the picture that matches the description.',
+    },
+    'clock-reading': {
+      title: 'Clock Face Match',
+      instruction: 'Look at the analog clock hands representing a familiar daily moment, and select the matching digital time.',
+    },
+    'rhyme-completion': {
+      title: 'Rhyme & Word Completion',
+      instruction: 'Listen to the classic phrase or proverb, and tap the missing word that completes the rhythm.',
     },
   };
 
