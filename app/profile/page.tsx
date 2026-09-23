@@ -12,6 +12,7 @@ import {
   ShieldCheck 
 } from 'lucide-react';
 import VoiceButton from '@/components/VoiceButton';
+import ScrollReveal from '@/components/ScrollReveal';
 
 export default function ProfilePage() {
   const [formData, setFormData] = useState({
@@ -57,23 +58,26 @@ export default function ProfilePage() {
   return (
     <div className="max-w-2xl mx-auto space-y-8 py-6 pb-16">
       {/* Header */}
-      <div className="bg-white rounded-2xl p-5 sm:p-7 border border-slate-200/90 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-            Profile & Settings
-          </h1>
-          <p className="text-xs sm:text-sm text-slate-600 font-medium">
-            Manage your personal preferences and caregiver contacts.
-          </p>
+      <ScrollReveal direction="down">
+        <div className="bg-white rounded-2xl p-5 sm:p-7 border border-slate-200/90 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+              Profile & Settings
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-600 font-medium">
+              Manage your personal preferences and caregiver contacts.
+            </p>
+          </div>
+
+          <VoiceButton
+            textToRead={audioSummary}
+            buttonLabel="Read Profile"
+          />
         </div>
+      </ScrollReveal>
 
-        <VoiceButton
-          textToRead={audioSummary}
-          buttonLabel="Read Profile"
-        />
-      </div>
-
-      <div className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200/90 shadow-lg space-y-5">
+      <ScrollReveal direction="up" delay={100}>
+        <div className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200/90 shadow-lg space-y-5">
         {saved && (
           <div className="bg-emerald-50 border border-emerald-300 p-3.5 rounded-xl flex items-center gap-2.5 text-emerald-900 font-bold text-sm">
             <CheckCircle2 className="w-5 h-5 text-emerald-600" />
@@ -162,6 +166,7 @@ export default function ProfilePage() {
           <span>Your data is stored securely on this device.</span>
         </div>
       </div>
+      </ScrollReveal>
     </div>
   );
 }

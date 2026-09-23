@@ -6,10 +6,16 @@ export interface User {
   name: string;
   email: string;
   age: number;
+  city?: string;
+  doctorName?: string;
+  doctorPhone?: string;
+  caregiverRelation?: string;
   emergencyName: string;
   emergencyPhone: string;
   preferredLanguage: string;
   difficultyLevel: number; // 1 (Easy), 2 (Normal), 3 (Challenging)
+  dailyHydrationTarget?: number;
+  currentHydrationGlasses?: number;
 }
 
 export interface GameSession {
@@ -34,6 +40,7 @@ export interface GameSession {
   recommendedDifficulty: number;
   feedbackText: string;
   timestamp: string;
+  realWorldScenario?: string;
 }
 
 export interface Reminder {
@@ -44,6 +51,8 @@ export interface Reminder {
   category: 'MEDICINE' | 'WATER' | 'EXERCISE' | 'DOCTOR' | 'CUSTOM';
   isCompleted: boolean;
   notes?: string;
+  dosage?: string;
+  priority?: 'HIGH' | 'ROUTINE';
 }
 
 export interface CaregiverAlert {
