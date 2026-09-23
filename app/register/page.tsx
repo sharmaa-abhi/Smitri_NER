@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { UserPlus, Shield } from 'lucide-react';
+import ScrollReveal from '@/components/ScrollReveal';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -41,7 +42,8 @@ export default function RegisterPage() {
 
   return (
     <div className="max-w-2xl mx-auto py-8">
-      <div className="bg-white rounded-3xl p-8 sm:p-10 border-4 border-slate-200 shadow-xl space-y-8">
+      <ScrollReveal direction="up">
+        <div className="bg-white rounded-3xl p-8 sm:p-10 border-4 border-slate-200 shadow-xl space-y-8">
         <div className="text-center space-y-1.5">
           <div className="w-12 h-12 bg-teal-100 text-teal-800 rounded-xl flex items-center justify-center mx-auto mb-2">
             <UserPlus className="w-6 h-6" />
@@ -151,6 +153,7 @@ export default function RegisterPage() {
           </div>
         </div>
       </div>
+      </ScrollReveal>
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { LogIn, UserCheck, Shield, Loader2, Sparkles } from 'lucide-react';
+import ScrollReveal from '@/components/ScrollReveal';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -49,7 +50,8 @@ export default function LoginPage() {
         </div>
       )}
 
-      <div className="bg-white rounded-3xl p-8 sm:p-10 border-4 border-slate-200 shadow-xl space-y-8 relative">
+      <ScrollReveal direction="up">
+        <div className="bg-white rounded-3xl p-8 sm:p-10 border-4 border-slate-200 shadow-xl space-y-8 relative">
         <div className="text-center space-y-1.5">
           <div className="w-12 h-12 bg-blue-100 text-blue-800 rounded-xl flex items-center justify-center mx-auto mb-2">
             <LogIn className="w-6 h-6" />
@@ -144,6 +146,7 @@ export default function LoginPage() {
           </div>
         </div>
       </div>
+      </ScrollReveal>
     </div>
   );
 }

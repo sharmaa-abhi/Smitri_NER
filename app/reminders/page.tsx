@@ -14,6 +14,7 @@ import {
   Trash2
 } from 'lucide-react';
 import VoiceButton from '@/components/VoiceButton';
+import ScrollReveal from '@/components/ScrollReveal';
 
 export default function RemindersPage() {
   const [reminders, setReminders] = useState<any[]>([]);
@@ -97,90 +98,97 @@ export default function RemindersPage() {
   return (
     <div className="space-y-6 pb-16">
       {/* Header */}
-      <div className="bg-white rounded-2xl p-5 sm:p-7 border border-slate-200/90 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div className="space-y-1.5">
-          <div className="inline-flex items-center gap-1.5 bg-teal-50 text-teal-800 px-3 py-1 rounded-full text-xs font-bold border border-teal-200">
-            <Bell className="w-3.5 h-3.5 text-teal-700" />
-            <span>Daily Routine Assistant</span>
+      <ScrollReveal direction="down">
+        <div className="bg-white rounded-2xl p-5 sm:p-7 border border-slate-200/90 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="space-y-1.5">
+            <div className="inline-flex items-center gap-1.5 bg-teal-50 text-teal-800 px-3 py-1 rounded-full text-xs font-bold border border-teal-200">
+              <Bell className="w-3.5 h-3.5 text-teal-700" />
+              <span>Daily Routine Assistant</span>
+            </div>
+            <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+              Daily Reminders
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-600 font-medium">
+              Tap the circular button to check off your medicines and activities.
+            </p>
           </div>
-          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
-            Daily Reminders
-          </h1>
-          <p className="text-xs sm:text-sm text-slate-600 font-medium">
-            Tap the circular button to check off your medicines and activities.
-          </p>
-        </div>
 
-        <div className="flex items-center gap-2.5">
-          <VoiceButton
-            textToRead={voiceSummary}
-            buttonLabel="Read Schedule"
-          />
+          <div className="flex items-center gap-2.5">
+            <VoiceButton
+              textToRead={voiceSummary}
+              buttonLabel="Read Schedule"
+            />
 
-          <button
-            type="button"
-            onClick={() => setShowAddModal(true)}
-            className="flex items-center gap-1.5 bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-xl font-bold text-sm shadow-sm hover:shadow transition-all"
-          >
-            <Plus className="w-4 h-4" />
-            <span>Add Reminder</span>
-          </button>
+            <button
+              type="button"
+              onClick={() => setShowAddModal(true)}
+              className="flex items-center gap-1.5 bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-xl font-bold text-sm shadow-sm hover:shadow transition-all"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Add Reminder</span>
+            </button>
+          </div>
         </div>
-      </div>
+      </ScrollReveal>
 
       {/* Pending Reminders Section */}
       <div className="space-y-3.5">
-        <h2 className="text-lg sm:text-xl font-extrabold text-slate-900 flex items-center gap-2">
-          <span>Pending Today ({pendingList.length})</span>
-        </h2>
+        <ScrollReveal direction="up" delay={50}>
+          <h2 className="text-lg sm:text-xl font-extrabold text-slate-900 flex items-center gap-2">
+            <span>Pending Today ({pendingList.length})</span>
+          </h2>
+        </ScrollReveal>
 
         {pendingList.length === 0 ? (
-          <div className="bg-emerald-50 border border-emerald-300 rounded-2xl p-6 sm:p-8 text-center space-y-2">
-            <CheckCircle2 className="w-10 h-10 text-emerald-600 mx-auto" />
-            <h3 className="text-lg sm:text-xl font-bold text-emerald-950">
-              Wonderful! All reminders for now are complete.
-            </h3>
-            <p className="text-xs sm:text-sm text-emerald-800 font-medium">
-              You are staying on top of your daily health routine.
-            </p>
-          </div>
+          <ScrollReveal direction="up" delay={100}>
+            <div className="bg-emerald-50 border border-emerald-300 rounded-2xl p-6 sm:p-8 text-center space-y-2">
+              <CheckCircle2 className="w-10 h-10 text-emerald-600 mx-auto" />
+              <h3 className="text-lg sm:text-xl font-bold text-emerald-950">
+                Wonderful! All reminders for now are complete.
+              </h3>
+              <p className="text-xs sm:text-sm text-emerald-800 font-medium">
+                You are staying on top of your daily health routine.
+              </p>
+            </div>
+          </ScrollReveal>
         ) : (
           <div className="grid grid-cols-1 gap-3">
-            {pendingList.map((rem) => (
-              <div
-                key={rem.id}
-                className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 hover:border-blue-400 transition-all"
-              >
-                <div className="flex items-start sm:items-center gap-3.5">
-                  <div className="p-2.5 bg-slate-100 rounded-xl border border-slate-200 flex-shrink-0">
-                    {getCategoryIcon(rem.category)}
-                  </div>
-                  <div>
-                    <h3 className="text-base sm:text-lg font-bold text-slate-900">
-                      {rem.title}
-                    </h3>
-                    <div className="flex items-center gap-2.5 mt-0.5">
-                      <span className="text-xs sm:text-sm font-semibold text-amber-700 flex items-center gap-1">
-                        <Clock className="w-3.5 h-3.5" /> {rem.time}
-                      </span>
-                      {rem.notes && (
-                        <span className="text-xs sm:text-sm text-slate-600 font-medium">
-                          • {rem.notes}
+            {pendingList.map((rem, idx) => (
+              <ScrollReveal key={rem.id} direction="up" delay={60 + idx * 50}>
+                <div
+                  className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 hover:border-blue-400 transition-all"
+                >
+                  <div className="flex items-start sm:items-center gap-3.5">
+                    <div className="p-2.5 bg-slate-100 rounded-xl border border-slate-200 flex-shrink-0">
+                      {getCategoryIcon(rem.category)}
+                    </div>
+                    <div>
+                      <h3 className="text-base sm:text-lg font-bold text-slate-900">
+                        {rem.title}
+                      </h3>
+                      <div className="flex items-center gap-2.5 mt-0.5">
+                        <span className="text-xs sm:text-sm font-semibold text-amber-700 flex items-center gap-1">
+                          <Clock className="w-3.5 h-3.5" /> {rem.time}
                         </span>
-                      )}
+                        {rem.notes && (
+                          <span className="text-xs sm:text-sm text-slate-600 font-medium">
+                            • {rem.notes}
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <button
-                  type="button"
-                  onClick={() => handleToggleComplete(rem.id, rem.isCompleted)}
-                  className="w-full sm:w-auto px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-xs sm:text-sm shadow-sm hover:shadow transition-all flex items-center justify-center gap-1.5 flex-shrink-0"
-                >
-                  <CheckCircle2 className="w-4 h-4" />
-                  <span>Mark as Completed</span>
-                </button>
-              </div>
+                  <button
+                    type="button"
+                    onClick={() => handleToggleComplete(rem.id, rem.isCompleted)}
+                    className="w-full sm:w-auto px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-xs sm:text-sm shadow-sm hover:shadow transition-all flex items-center justify-center gap-1.5 flex-shrink-0"
+                  >
+                    <CheckCircle2 className="w-4 h-4" />
+                    <span>Mark as Completed</span>
+                  </button>
+                </div>
+              </ScrollReveal>
             ))}
           </div>
         )}
@@ -188,38 +196,40 @@ export default function RemindersPage() {
 
       {/* Completed Reminders Section */}
       {completedList.length > 0 && (
-        <div className="space-y-3.5 pt-4 border-t border-slate-200">
-          <h2 className="text-base sm:text-lg font-bold text-slate-700">
-            Completed Today ({completedList.length})
-          </h2>
+        <ScrollReveal direction="up" delay={150}>
+          <div className="space-y-3.5 pt-4 border-t border-slate-200">
+            <h2 className="text-base sm:text-lg font-bold text-slate-700">
+              Completed Today ({completedList.length})
+            </h2>
 
-          <div className="grid grid-cols-1 gap-2.5">
-            {completedList.map((rem) => (
-              <div
-                key={rem.id}
-                className="bg-slate-50 rounded-xl p-3.5 border border-slate-200 flex items-center justify-between gap-3 opacity-80"
-              >
-                <div className="flex items-center gap-2.5">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-600" />
-                  <span className="text-sm sm:text-base font-semibold line-through text-slate-600">
-                    {rem.title}
-                  </span>
-                  <span className="text-xs text-slate-600">
-                    ({rem.time})
-                  </span>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => handleToggleComplete(rem.id, rem.isCompleted)}
-                  className="text-xs font-semibold text-slate-600 hover:text-slate-800 underline"
+            <div className="grid grid-cols-1 gap-2.5">
+              {completedList.map((rem) => (
+                <div
+                  key={rem.id}
+                  className="bg-slate-50 rounded-xl p-3.5 border border-slate-200 flex items-center justify-between gap-3 opacity-80"
                 >
-                  Undo
-                </button>
-              </div>
-            ))}
+                  <div className="flex items-center gap-2.5">
+                    <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+                    <span className="text-sm sm:text-base font-semibold line-through text-slate-600">
+                      {rem.title}
+                    </span>
+                    <span className="text-xs text-slate-600">
+                      ({rem.time})
+                    </span>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => handleToggleComplete(rem.id, rem.isCompleted)}
+                    className="text-xs font-semibold text-slate-600 hover:text-slate-800 underline"
+                  >
+                    Undo
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        </ScrollReveal>
       )}
 
       {/* Add Reminder Modal */}

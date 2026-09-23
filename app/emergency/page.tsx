@@ -14,6 +14,7 @@ import {
   Clock
 } from 'lucide-react';
 import VoiceButton from '@/components/VoiceButton';
+import ScrollReveal from '@/components/ScrollReveal';
 
 export default function EmergencyPage() {
   const [user, setUser] = useState<any>(null);
@@ -41,22 +42,25 @@ export default function EmergencyPage() {
   return (
     <div className="max-w-xl mx-auto space-y-6 py-4 pb-16">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <Link
-          href="/dashboard"
-          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 font-bold text-slate-800 text-sm transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Back to Dashboard</span>
-        </Link>
+      <ScrollReveal direction="down">
+        <div className="flex items-center justify-between">
+          <Link
+            href="/dashboard"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 font-bold text-slate-800 text-sm transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>Back to Dashboard</span>
+          </Link>
 
-        <VoiceButton
-          textToRead={audioGuidance}
-          buttonLabel="Read Instructions"
-        />
-      </div>
+          <VoiceButton
+            textToRead={audioGuidance}
+            buttonLabel="Read Instructions"
+          />
+        </div>
+      </ScrollReveal>
 
-      <div className="bg-rose-50 border-2 border-rose-300 rounded-3xl p-6 sm:p-8 shadow-lg space-y-5 text-center">
+      <ScrollReveal direction="up" delay={80}>
+        <div className="bg-rose-50 border-2 border-rose-300 rounded-3xl p-6 sm:p-8 shadow-lg space-y-5 text-center">
         <div className="w-16 h-16 bg-rose-600 text-white rounded-2xl flex items-center justify-center mx-auto shadow-md">
           <ShieldAlert className="w-9 h-9 animate-pulse" />
         </div>
@@ -119,6 +123,7 @@ export default function EmergencyPage() {
           <p className="text-xs text-slate-500">Note: This web prototype launches your device's native dialer.</p>
         </div>
       </div>
+      </ScrollReveal>
     </div>
   );
 }
