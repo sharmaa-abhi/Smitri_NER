@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import { Volume2, VolumeX, Mic, MicOff } from 'lucide-react';
+import { useLanguage } from '@/lib/i18n';
+import { playChime } from '@/lib/audioPrompts';
 
 interface VoiceButtonProps {
   textToRead?: string;
@@ -16,6 +18,7 @@ export default function VoiceButton({
   className = "",
   buttonLabel = "Read Instructions"
 }: VoiceButtonProps) {
+  const { currentLangInfo, t } = useLanguage();
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
@@ -36,16 +39,31 @@ export default function VoiceButton({
     }
 
     window.speechSynthesis.cancel();
+
+    // Play subtle chime for elder focus
+    playChime('start');
+
     const utterance = new SpeechSynthesisUtterance(textToRead);
-    utterance.rate = 0.85; // Slightly slower, clear speech for seniors
-    utterance.pitch = 1.0;
-    utterance.lang = 'en-US';
+    utterance.rate = 0.82; // Gentle, comforting pace for seniors
+    utterance.pitch = 1.05;
+    utterance.lang = currentLangInfo.bcp47 || 'en-IN';
+
+    // Find best matching voice for the regional dialect
+    const voices = window.speechSynthesis.getVoices();
+    const matchingVoice = voices.find(
+      (v) => v.lang === currentLangInfo.bcp47 || v.lang.startsWith(currentLangInfo.code)
+    );
+    if (matchingVoice) {
+      utterance.voice = matchingVoice;
+    }
 
     utterance.onstart = () => setIsSpeaking(true);
     utterance.onend = () => setIsSpeaking(false);
     utterance.onerror = () => setIsSpeaking(false);
 
-    window.speechSynthesis.speak(utterance);
+    setTimeout(() => {
+      window.speechSynthesis.speak(utterance);
+    }, 200);
   };
 
   // Speech to Text (Voice Commands)
@@ -71,7 +89,7 @@ export default function VoiceButton({
       const recognition = new SpeechRecognition();
       recognition.continuous = false;
       recognition.interimResults = false;
-      recognition.lang = 'en-US';
+      recognition.lang = currentLangInfo.bcp47 || 'en-IN';
 
       recognition.onstart = () => {
         setIsListening(true);
@@ -104,6 +122,8 @@ export default function VoiceButton({
     }
   };
 
+  const localizedButtonLabel = buttonLabel === "Read Instructions" ? (t("game_listen") || buttonLabel) : buttonLabel;
+
   return (
     <div className="inline-flex flex-col gap-1 items-start">
       <div className="flex flex-wrap items-center gap-2">
@@ -127,7 +147,7 @@ export default function VoiceButton({
             ) : (
               <>
                 <Volume2 className="w-4 h-4 text-teal-700" />
-                <span>{buttonLabel}</span>
+                <span>{localizedButtonLabel}</span>
               </>
             )}
           </button>

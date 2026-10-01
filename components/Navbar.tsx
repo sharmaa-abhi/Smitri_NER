@@ -105,6 +105,11 @@ export default function Navbar() {
       {/* Mobile / Compact Menu Drawer */}
       {mobileMenuOpen && (
         <div className="md:hidden mt-3 bg-white border border-slate-200 rounded-3xl p-6 shadow-xl space-y-4 animate-in fade-in zoom-in-95">
+          <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+            <span className="text-xs font-black tracking-wider text-slate-700 uppercase">Select Dialect / ভাষা</span>
+            <LanguageSelector />
+          </div>
+
           <div className="space-y-1">
             <span className="text-xs font-bold tracking-wider text-slate-600">Navigation</span>
             {mainNav.map((item) => (
