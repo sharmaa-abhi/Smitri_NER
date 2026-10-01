@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import VoiceButton from '@/components/VoiceButton';
 import ScrollReveal from '@/components/ScrollReveal';
+import { saveReminderOffline, getOfflineReminders } from '@/lib/offlineStorage';
 
 export default function RemindersPage() {
   const [reminders, setReminders] = useState<any[]>([]);
@@ -27,14 +28,33 @@ export default function RemindersPage() {
   const [category, setCategory] = useState<'MEDICINE' | 'WATER' | 'EXERCISE' | 'DOCTOR' | 'CUSTOM'>('MEDICINE');
   const [notes, setNotes] = useState('');
 
-  const loadReminders = () => {
-    fetch('/api/reminders')
-      .then((res) => res.json())
-      .then((data) => {
-        setReminders(data.reminders || []);
+  const loadReminders = async () => {
+    try {
+      const res = await fetch('/api/reminders');
+      if (res.ok) {
+        const data = await res.json();
+        const list = data.reminders || [];
+        setReminders(list);
         setLoading(false);
-      })
-      .catch(() => setLoading(false));
+        // Cache to IndexedDB for offline access
+        for (const item of list) {
+          saveReminderOffline({
+            ...item,
+            synced: true,
+            updatedAt: new Date().toISOString(),
+          }).catch(() => {});
+        }
+        return;
+      }
+      throw new Error('Network error');
+    } catch {
+      // Offline fallback: load from IndexedDB
+      const offlineList = await getOfflineReminders();
+      if (offlineList.length > 0) {
+        setReminders(offlineList);
+      }
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -42,15 +62,30 @@ export default function RemindersPage() {
   }, []);
 
   const handleToggleComplete = async (id: string, currentStatus: boolean) => {
+    // Optimistic UI update
+    setReminders((prev) =>
+      prev.map((r) => (r.id === id ? { ...r, isCompleted: !currentStatus } : r))
+    );
+
+    const reminderItem = reminders.find((r) => r.id === id);
+
     try {
-      await fetch('/api/reminders', {
+      const res = await fetch('/api/reminders', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id, isCompleted: !currentStatus }),
       });
-      loadReminders();
-    } catch (e) {
-      console.error(e);
+      if (!res.ok) throw new Error('Offline');
+    } catch {
+      // Save offline to IndexedDB
+      if (reminderItem) {
+        await saveReminderOffline({
+          ...reminderItem,
+          isCompleted: !currentStatus,
+          synced: false,
+          updatedAt: new Date().toISOString(),
+        });
+      }
     }
   };
 

@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { ArrowLeft, RotateCcw, Clock, HelpCircle } from 'lucide-react';
 import VoiceButton from '@/components/VoiceButton';
 import { GameId, FinishGameStats } from '@/types/games';
+import { saveGameResultOffline } from '@/lib/offlineStorage';
 import {
   MemoryMatchArena,
   SequenceMemoryArena,
@@ -105,12 +106,43 @@ export default function GameArenaPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
-      const data = await res.json();
-      sessionStorage.setItem('lastGameResult', JSON.stringify(data));
-      router.push('/results');
+      if (res.ok) {
+        const data = await res.json();
+        sessionStorage.setItem('lastGameResult', JSON.stringify(data));
+      } else {
+        throw new Error('Server returned non-200');
+      }
     } catch {
-      router.push('/results');
+      // Offline fallback: save locally to IndexedDB and queue for sync
+      try {
+        await saveGameResultOffline({
+          userId: 'user_kamla',
+          gameId,
+          gameTitle: payload.gameTitle,
+          score: payload.accuracy,
+          accuracy: payload.accuracy,
+          responseTimeSec: payload.responseTimeSec,
+          mistakes: payload.mistakes,
+          difficultyLevel: payload.currentDifficulty,
+          timestamp: new Date().toISOString(),
+        });
+      } catch (err) {
+        console.warn('Could not save game result offline:', err);
+      }
+
+      sessionStorage.setItem(
+        'lastGameResult',
+        JSON.stringify({
+          offline: true,
+          evaluation: {
+            score: payload.accuracy,
+            recommendedDifficulty: payload.currentDifficulty,
+            feedback: 'Offline Mode: Your cognitive exercise was recorded and saved safely on your device.',
+          },
+        })
+      );
     } finally {
+      router.push('/results');
       setSubmitting(false);
     }
   };

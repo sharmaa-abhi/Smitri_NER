@@ -12,15 +12,18 @@ import {
   ShieldAlert, 
   UserCircle 
 } from "lucide-react";
+import LanguageSelector from "@/components/LanguageSelector";
+import { useLanguage } from "@/lib/i18n";
 
 export default function Navbar() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { t } = useLanguage();
 
   // Clean primary landing links with Games included
   const mainNav = [
-    { name: "Home", href: "/" },
-    { name: "Games", href: "/games" },
+    { name: t("home") || "Home", href: "/" },
+    { name: t("games") || "Games", href: "/games" },
     { name: "Features", href: "/#features" },
     { name: "How It Works", href: "/#how-it-works" },
     { name: "About", href: "/#about" },
@@ -30,11 +33,11 @@ export default function Navbar() {
 
   // Application links available inside drawer / mobile menu
   const appNav = [
-    { name: "Dashboard", href: "/dashboard" },
-    { name: "Games", href: "/games" },
-    { name: "Reminders", href: "/reminders" },
-    { name: "Progress", href: "/progress" },
-    { name: "Caregiver", href: "/caregiver" },
+    { name: t("dashboard") || "Dashboard", href: "/dashboard" },
+    { name: t("games") || "Games", href: "/games" },
+    { name: t("reminders") || "Reminders", href: "/reminders" },
+    { name: t("progress") || "Progress", href: "/progress" },
+    { name: t("caregiver") || "Caregiver", href: "/caregiver" },
   ];
 
   return (
@@ -75,13 +78,15 @@ export default function Navbar() {
           })}
         </nav>
 
-        {/* Right: Action Button */}
+        {/* Right: Regional Language Selector + Action Button */}
         <div className="flex items-center gap-2 flex-shrink-0">
+          <LanguageSelector />
+
           <Link
             href="/dashboard"
             className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full text-sm font-bold text-white bg-gradient-to-r from-sky-600 to-teal-600 hover:from-sky-700 hover:to-teal-700 shadow-md hover:shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98]"
           >
-            <span>Get Started</span>
+            <span>{t("get_started") || "Get Started"}</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
 
