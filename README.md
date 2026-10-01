@@ -7,7 +7,7 @@
 
 ## 1. Overview
 
-**Smitri_NER** is a fully functional web MVP designed to provide accessible cognitive stimulation, memory assistance, daily routine adherence, and caregiver peace-of-mind. 
+**Smitri_NER** is a fully functional web MVP designed to provide accessible cognitive stimulation, memory assistance, daily routine adherence, and caregiver peace-of-mind.
 
 The application adheres to senior-first accessibility principles:
 - High contrast, large legible typography, and generous touch targets.
@@ -32,13 +32,13 @@ The application adheres to senior-first accessibility principles:
 | **Cognitive Games Hub** | Access to 9 senior-friendly games with audio instructions and adaptive difficulty | [`/games`](file:///c:/Users/ABHI%20SHARMA/OneDrive/Desktop/smitri/app/games/page.tsx) |
 | **1. Memory Match** | Card pair matching with response timer, mistake count, and adaptive grid sizing | [`/games/memory-match`](file:///c:/Users/ABHI%20SHARMA/OneDrive/Desktop/smitri/app/games/[gameId]/page.tsx) |
 | **2. Sequence Memory** | Simon-says light recall puzzle with color flash sequence and pattern reproduction | [`/games/sequence-memory`](file:///c:/Users/ABHI%20SHARMA/OneDrive/Desktop/smitri/app/games/[gameId]/page.tsx) |
-| **3. Find Different One**| Visual attention odd-one-out selection across 3 progressive rounds | [`/games/different-one`](file:///c:/Users/ABHI%20SHARMA/OneDrive/Desktop/smitri/app/games/[gameId]/page.tsx) |
+| **3. Find Different One** | Visual attention odd-one-out selection across 3 progressive rounds | [`/games/different-one`](file:///c:/Users/ABHI%20SHARMA/OneDrive/Desktop/smitri/app/games/[gameId]/page.tsx) |
 | **4. Grocery Basket** | Short-term verbal & episodic recall of daily market shopping items | [`/games/grocery-basket`](file:///c:/Users/ABHI%20SHARMA/OneDrive/Desktop/smitri/app/games/[gameId]/page.tsx) |
 | **5. Number Trail** | Trail Making Test (TMT) inspired sequential number stepping in ascending order | [`/games/number-trail`](file:///c:/Users/ABHI%20SHARMA/OneDrive/Desktop/smitri/app/games/[gameId]/page.tsx) |
 | **6. Matrix Pattern Recall** | Spatial working memory grid recall of illuminated matrix tiles | [`/games/pattern-match`](file:///c:/Users/ABHI%20SHARMA/OneDrive/Desktop/smitri/app/games/[gameId]/page.tsx) |
 | **7. Word & Sound Match** | Auditory & semantic association connecting spoken audio cues to visual concepts | [`/games/sound-word-match`](file:///c:/Users/ABHI%20SHARMA/OneDrive/Desktop/smitri/app/games/[gameId]/page.tsx) |
 | **8. Clock Face Match** | Visuospatial orientation and daily routine analog clock reading | [`/games/clock-reading`](file:///c:/Users/ABHI%20SHARMA/OneDrive/Desktop/smitri/app/games/[gameId]/page.tsx) |
-| **9. Rhyme & Proverb Complete**| Linguistic fluency and semantic memory retrieval through classic comforting phrases | [`/games/rhyme-completion`](file:///c:/Users/ABHI%20SHARMA/OneDrive/Desktop/smitri/app/games/[gameId]/page.tsx) |
+| **9. Rhyme & Proverb Complete** | Linguistic fluency and semantic memory retrieval through classic comforting phrases | [`/games/rhyme-completion`](file:///c:/Users/ABHI%20SHARMA/OneDrive/Desktop/smitri/app/games/[gameId]/page.tsx) |
 | **Performance Engine** | Rule-based scoring: 50% accuracy + 30% speed + 20% completion (0-100 scale) | [`scoring.ts`](file:///c:/Users/ABHI%20SHARMA/OneDrive/Desktop/smitri/lib/scoring.ts) |
 | **Adaptive Difficulty** | Dynamic recalibration (Levels 1-3) with supportive, non-pressuring voice feedback | [`/results`](file:///c:/Users/ABHI%20SHARMA/OneDrive/Desktop/smitri/app/results/page.tsx) |
 | **Daily Reminders** | Medicine, water, exercise, and doctor appointments checklist with modal addition | [`/reminders`](file:///c:/Users/ABHI%20SHARMA/OneDrive/Desktop/smitri/app/reminders/page.tsx) |
@@ -75,12 +75,10 @@ The application adheres to senior-first accessibility principles:
    ```bash
    cd smitri
    ```
-
 2. Install dependencies:
    ```bash
    npm install
    ```
-
 3. Start development server:
    ```bash
    npm run dev
@@ -90,7 +88,6 @@ The application adheres to senior-first accessibility principles:
    npm run build
    npm run start
    ```
-
 4. Open your browser and visit:
    ```text
    http://localhost:3000
@@ -108,8 +105,62 @@ For hackathon reviews and instant demonstrations, demo data is pre-seeded:
 
 ---
 
-## 6. Known Limitations & Future Improvements
+## 6. Future Implementation Plan (Phased Roadmap)
 
-1. **Web Speech API**: In environments without microphone permissions or browsers with strict audio autoplay restrictions, text fallbacks are shown.
-2. **Offline Sync**: Currently stores state locally on the running Node server; future iterations will add ServiceWorker PWA caching for remote rural clinics in the North Eastern Region.
+The long-term development of **Smitri_NER** is structured into 4 sequential phases tailored for elderly care, clinical efficacy, and the geographic nuances of the North Eastern Region.
+
+```mermaid
+timeline
+    title Smitri_NER Phased Implementation Roadmap
+    Phase 1 : Offline Resilience : Regional Dialects : Multi-Channel Alerts
+    Phase 2 : ML Cognitive Modeling : Reminiscence Therapy : Biometric Integration
+    Phase 3 : ABDM & HL7 FHIR : Telehealth Gateway : Multi-Caregiver Roles
+    Phase 4 : ASHA/ANM Field Kit : Edge AI Privacy : Clinical Trials
+```
+
+### Phase 1: Near-Term Enhancements & Offline Resilience (Months 1–3)
+- **Progressive Web App (PWA) & Offline-First Sync**:
+  - Implement Service Workers with Cache API and local IndexedDB storage.
+  - Enable 100% offline gameplay, local scoring, and reminder schedules for remote rural pockets with intermittent cellular connectivity.
+  - Auto-synchronize batched telemetry when an internet connection is re-established.
+- **Regional Languages & Dialects (NER Focus)**:
+  - Add native audio and visual prompt localization for Assamese, Bengali, Bodo, Meitei (Manipuri), Mizo, Khasi, Garo, and Hindi.
+  - Replace generic synthesized browser voices with pre-recorded natural dialect narrations from native speakers.
+- **Multi-Channel Alert Dispatch**:
+  - Integrate SMS and WhatsApp fallback notifications (Twilio / Gupshup) for caregivers when daily medicines or check-ins remain unacknowledged.
+
+### Phase 2: Advanced AI & Reminiscence Therapy (Months 4–6)
+- **ML-Powered Cognitive Trajectory Modeling**:
+  - Migrate heuristic scoring to supervised machine learning models trained alongside standard Mini-Mental State Examination (MMSE) and Montreal Cognitive Assessment (MoCA) rubrics.
+  - Detect micro-fluctuations in motor reaction time, touch jitter, and hesitation curves to catch subtle early signs of cognitive decline.
+- **Personalized Reminiscence & Cultural Memory Games**:
+  - Introduce photo-based family memory games (identifying grandchildren, family milestones).
+  - Add regional folklore, classical melodies, and traditional cultural landmarks tailored to the user's community.
+- **Biometric & Wearable Sensor Fusion**:
+  - Connect with Bluetooth Low Energy (BLE) pulse oximeters, smart bands, and sleep monitors to cross-correlate physical vitals (sleep disruption, heart rate variability) with cognitive scores.
+
+### Phase 3: Healthcare System Integration & ABDM Compliance (Months 7–9)
+- **Ayushman Bharat Digital Mission (ABDM) Integration**:
+  - Implement ABHA (Ayushman Bharat Health Account) creation and linking.
+  - Integrate with the ABDM Health Information Exchange & Consent Manager (HIECM) to allow seniors and legal guardians to share longitudinal cognitive reports with verified physicians.
+- **HL7 FHIR Clinical Data Exchange**:
+  - Transform stored session history into production-ready FHIR `Observation`, `DiagnosticReport`, and `CarePlan` bundles.
+  - Enable direct data interoperability with District Hospitals and Primary Health Centres (PHCs).
+- **Teleconsultation & Tele-Geriatrics Gateway**:
+  - Integrated 1-touch video consults connecting rural seniors and their families directly to regional geriatricians, clinical psychologists, and community health centers.
+
+### Phase 4: Community Scale, Field Deployment & Validation (Months 10–12)
+- **Community Health Worker (ASHA / ANM) Field Screening Mode**:
+  - Specialized multi-patient kiosk mode on tablets allowing ASHA and ANM workers to administer rapid 5-minute cognitive wellness screenings during village health visits.
+- **Privacy-Preserving On-Device Edge AI**:
+  - Deploy quantized on-device neural networks (TensorFlow.js / ONNX Runtime Web) to keep sensitive cognitive health data strictly on the user's device in compliance with India's Digital Personal Data Protection Act (DPDPA 2023).
+- **Clinical Validation & Longitudinal Field Trials**:
+  - Form clinical research partnerships with premier regional healthcare institutions (e.g., NEIGRIHMS Shillong, AIIMS Guwahati) to clinically calibrate platform efficacy over 6- to 12-month cohort studies.
+
+---
+
+## 7. Known Limitations & Current Constraints
+
+1. **Web Speech API**: In environments without microphone permissions or browsers with strict audio autoplay restrictions, graceful text fallbacks are shown.
+2. **Current Persistence**: Currently stores state locally on the Node server JSON store; full client-side PWA offline caching is scheduled for Phase 1.
 3. **ABDM / HL7 FHIR Gateway**: Currently represented as a standardized interoperability schema preview for integration with government digital health ecosystems.
