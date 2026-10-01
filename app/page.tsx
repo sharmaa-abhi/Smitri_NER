@@ -26,6 +26,8 @@ import {
 } from 'lucide-react';
 import VoiceButton from '@/components/VoiceButton';
 import ScrollReveal from '@/components/ScrollReveal';
+import MiniMemoryTeaser from '@/components/MiniMemoryTeaser';
+import CaregiverAlertSimulator from '@/components/CaregiverAlertSimulator';
 
 const HERO_IMAGES = [
   {
@@ -263,6 +265,13 @@ export default function HomePage() {
       </section>
 
       {/* ========================================================================= */}
+      {/* INTERACTIVE TEASER: 15-SECOND MEMORY SPARK                                */}
+      {/* ========================================================================= */}
+      <ScrollReveal direction="up">
+        <MiniMemoryTeaser />
+      </ScrollReveal>
+
+      {/* ========================================================================= */}
       {/* SECTION: FEATURES                                                         */}
       {/* ========================================================================= */}
       <ScrollReveal direction="up">
@@ -405,6 +414,13 @@ export default function HomePage() {
             </ScrollReveal>
           </div>
         </section>
+      </ScrollReveal>
+
+      {/* ========================================================================= */}
+      {/* INTERACTIVE SIMULATOR: CAREGIVER PEACE OF MIND                            */}
+      {/* ========================================================================= */}
+      <ScrollReveal direction="up">
+        <CaregiverAlertSimulator />
       </ScrollReveal>
 
       {/* ========================================================================= */}
