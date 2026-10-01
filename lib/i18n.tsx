@@ -85,8 +85,21 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   };
 
   const t = (key: string): string => {
-    const dict = TRANSLATIONS[language] || TRANSLATIONS.en;
-    return dict[key] || TRANSLATIONS.en[key] || key;
+    const dict = (TRANSLATIONS[language] || TRANSLATIONS.en) as Record<string, string>;
+    const enDict = TRANSLATIONS.en as Record<string, string>;
+    if (dict[key]) return dict[key];
+    if (dict[`nav_${key}`]) return dict[`nav_${key}`];
+    if (dict[`game_${key}`]) return dict[`game_${key}`];
+    if (enDict[key]) return enDict[key];
+    if (enDict[`nav_${key}`]) return enDict[`nav_${key}`];
+    if (enDict[`game_${key}`]) return enDict[`game_${key}`];
+    if (key.includes('_')) {
+      return key
+        .split('_')
+        .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(' ');
+    }
+    return key.charAt(0).toUpperCase() + key.slice(1);
   };
 
   const playVoicePrompt = (promptKey: "welcome" | "start" | "well_done" | "reminder_alert") => {

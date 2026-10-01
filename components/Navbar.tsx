@@ -22,8 +22,8 @@ export default function Navbar() {
 
   // Clean primary landing links with Games included
   const mainNav = [
-    { name: t("home") || "Home", href: "/" },
-    { name: t("games") || "Games", href: "/games" },
+    { name: t("nav_home") || "Home", href: "/" },
+    { name: t("nav_games") || "Games", href: "/games" },
     { name: "Features", href: "/#features" },
     { name: "How It Works", href: "/#how-it-works" },
     { name: "About", href: "/#about" },
@@ -33,42 +33,42 @@ export default function Navbar() {
 
   // Application links available inside drawer / mobile menu
   const appNav = [
-    { name: t("dashboard") || "Dashboard", href: "/dashboard" },
-    { name: t("games") || "Games", href: "/games" },
-    { name: t("reminders") || "Reminders", href: "/reminders" },
-    { name: t("progress") || "Progress", href: "/progress" },
-    { name: t("caregiver") || "Caregiver", href: "/caregiver" },
+    { name: t("nav_dashboard") || "Dashboard", href: "/dashboard" },
+    { name: t("nav_games") || "Games", href: "/games" },
+    { name: t("nav_reminders") || "Reminders", href: "/reminders" },
+    { name: t("nav_progress") || "Progress", href: "/progress" },
+    { name: t("nav_caregiver") || "Caregiver", href: "/caregiver" },
   ];
 
   return (
-    <header className="sticky top-4 z-50 px-4 sm:px-6 w-full max-w-6xl mx-auto mb-6">
-      <div className="bg-white/95 backdrop-blur-md border border-slate-200/80 rounded-full px-5 py-2.5 shadow-[0_4px_20px_rgba(0,0,0,0.04)] flex items-center justify-between transition-all gap-4">
+    <header className="sticky top-3 z-50 px-3 sm:px-4 w-full max-w-5xl mx-auto mb-4">
+      <div className="bg-white/95 backdrop-blur-md border border-slate-200/80 rounded-full px-3.5 py-1.5 sm:px-4 sm:py-2 shadow-[0_2px_14px_rgba(0,0,0,0.04)] flex items-center justify-between transition-all gap-2 sm:gap-3">
         {/* Left: Brand Logo + Name */}
         <Link 
           href="/" 
-          className="flex items-center gap-2.5 text-slate-900 group flex-shrink-0"
+          className="flex items-center gap-2 text-slate-900 group flex-shrink-0"
           aria-label="Smitri_NER Home"
         >
-          <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-sky-600 to-teal-500 text-white flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
-            <Brain className="w-4 h-4 text-white" />
+          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-sky-600 to-teal-500 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+            <Brain className="w-3.5 h-3.5 text-white" />
           </div>
           <div className="flex items-center gap-1">
-            <span className="text-lg font-black tracking-tight text-slate-900">Smitri</span>
-            <span className="text-[10px] font-black px-1.5 py-0.5 rounded-md bg-teal-50 text-teal-700 border border-teal-200">NER</span>
+            <span className="text-base font-black tracking-tight text-slate-900">Smitri</span>
+            <span className="text-[9px] font-black px-1.5 py-0.5 rounded-md bg-teal-50 text-teal-700 border border-teal-200">NER</span>
           </div>
         </Link>
 
         {/* Center: Clean Desktop Navigation with Games */}
-        <nav className="hidden md:flex items-center gap-1 lg:gap-1.5">
+        <nav className="hidden md:flex items-center gap-1">
           {mainNav.map((item) => {
             const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
             return (
               <Link
                 key={item.name}
                 href={item.href}
-                className={`px-3 py-1.5 rounded-full text-sm font-semibold transition-all ${
+                className={`px-2.5 py-1 rounded-full text-xs sm:text-[13px] font-semibold transition-all ${
                   isActive
-                    ? "bg-slate-900 text-white shadow-sm font-bold"
+                    ? "bg-slate-900 text-white shadow-xs font-bold"
                     : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/80"
                 }`}
               >
@@ -84,10 +84,10 @@ export default function Navbar() {
 
           <Link
             href="/dashboard"
-            className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full text-sm font-bold text-white bg-gradient-to-r from-sky-600 to-teal-600 hover:from-sky-700 hover:to-teal-700 shadow-md hover:shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98]"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-1.5 rounded-full text-xs font-bold text-white bg-gradient-to-r from-sky-600 to-teal-600 hover:from-sky-700 hover:to-teal-700 shadow-sm hover:shadow transition-all hover:scale-[1.01] active:scale-[0.98]"
           >
-            <span>{t("get_started") || "Get Started"}</span>
-            <ArrowRight className="w-4 h-4" />
+            <span>{t("nav_get_started") || "Get Started"}</span>
+            <ArrowRight className="w-3.5 h-3.5" />
           </Link>
 
           {/* Mobile menu toggle */}
