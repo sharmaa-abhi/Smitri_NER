@@ -1,0 +1,46 @@
+{
+  "name": "Smitri_NER - AI Cognitive Care & Memory Platform",
+  "short_name": "Smitri_NER",
+  "description": "AI-based cognitive games, memory stimulation, and daily assistance tailored for seniors in the North Eastern Region.",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "background_color": "#FAFCFD",
+  "theme_color": "#0D9488",
+  "orientation": "portrait",
+  "scope": "/",
+  "lang": "en-IN",
+  "categories": ["medical", "health", "lifestyle", "games"],
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Play Daily Games",
+      "short_name": "Games",
+      "description": "Start daily cognitive workout",
+      "url": "/games"
+    },
+    {
+      "name": "Check Reminders",
+      "short_name": "Reminders",
+      "description": "View daily medicines and hydration schedule",
+      "url": "/reminders"
+    },
+    {
+      "name": "Caregiver Portal",
+      "short_name": "Caregiver",
+      "description": "View cognitive trends and safety alerts",
+      "url": "/caregiver"
+    }
+  ]
+}

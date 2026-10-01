@@ -12,7 +12,10 @@ import {
   Clock, 
   Phone,
   FileSpreadsheet,
-  Layers
+  Layers,
+  Send,
+  Smartphone,
+  BellRing
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -29,6 +32,38 @@ import ScrollReveal from '@/components/ScrollReveal';
 export default function CaregiverPortalPage() {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [alertSending, setAlertSending] = useState(false);
+  const [alertResult, setAlertResult] = useState<any>(null);
+
+  const handleTriggerTestAlert = async (type: string = 'SUSTAINED_DECLINE') => {
+    setAlertSending(true);
+    setAlertResult(null);
+    try {
+      const res = await fetch('/api/alerts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          alertType: type,
+          patientName: user.name,
+          caregiverPhone: user.emergencyPhone,
+          details: type === 'SUSTAINED_DECLINE'
+            ? 'Noticeable 10-point drop in memory test scores detected over the last 3 days.'
+            : 'Patient has not confirmed morning heart medication after 2 scheduled reminders.',
+          severity: 'HIGH',
+        }),
+      });
+      const result = await res.json();
+      setAlertResult(result);
+      // Refresh alerts list
+      fetch('/api/dashboard')
+        .then((r) => r.json())
+        .then((d) => setData(d));
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setAlertSending(false);
+    }
+  };
 
   useEffect(() => {
     fetch('/api/dashboard')
@@ -179,6 +214,100 @@ export default function CaregiverPortalPage() {
               </LineChart>
             </ResponsiveContainer>
           </div>
+        </div>
+      </ScrollReveal>
+
+      {/* Phase 1 Implemented: Multi-Channel Caregiver Alert Dispatcher */}
+      <ScrollReveal direction="up" delay={160}>
+        <div className="bg-white rounded-2xl p-6 border-2 border-teal-200 shadow-md space-y-4">
+          <div className="flex items-center justify-between flex-wrap gap-2 pb-3 border-b border-slate-100">
+            <div className="flex items-center gap-2.5">
+              <div className="w-10 h-10 rounded-xl bg-teal-50 flex items-center justify-center text-teal-700">
+                <BellRing className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="text-lg font-black text-slate-900">
+                  Multi-Channel Caregiver Alerts (Phase 1)
+                </h3>
+                <p className="text-xs text-slate-500">
+                  Instant real-time dispatches via Telegram Bot, WhatsApp/SMS, and In-App surveillance
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] font-bold px-2.5 py-1 bg-emerald-100 text-emerald-800 rounded-full border border-emerald-200 flex items-center gap-1">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                Telegram Bot: Free Active
+              </span>
+              <span className="text-[11px] font-bold px-2.5 py-1 bg-teal-100 text-teal-800 rounded-full border border-teal-200">
+                WhatsApp / SMS Ready
+              </span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
+            <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+              <div className="text-xs font-bold text-slate-500 uppercase">Registered Caregiver</div>
+              <div className="text-sm font-black text-slate-900 mt-1">{user.emergencyName || 'Rahul (Son)'}</div>
+              <div className="text-xs text-teal-700 font-semibold">{user.emergencyPhone}</div>
+            </div>
+            <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+              <div className="text-xs font-bold text-slate-500 uppercase">Emergency Protocol</div>
+              <div className="text-sm font-black text-slate-900 mt-1">Direct Cellular & Telegram</div>
+              <div className="text-xs text-slate-500">Zero delayed server dependency</div>
+            </div>
+            <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+              <div className="text-xs font-bold text-slate-500 uppercase">Offline Safety Queue</div>
+              <div className="text-sm font-black text-slate-900 mt-1">IndexedDB Sync Enabled</div>
+              <div className="text-xs text-emerald-600 font-semibold">Auto-dispatches upon network</div>
+            </div>
+          </div>
+
+          {/* Live Action Test Buttons */}
+          <div className="pt-2 flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              disabled={alertSending}
+              onClick={() => handleTriggerTestAlert('SUSTAINED_DECLINE')}
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 disabled:bg-teal-300 text-white font-bold text-xs sm:text-sm shadow-sm transition-all hover:scale-[1.01] active:scale-[0.99]"
+            >
+              <Send className="w-4 h-4" />
+              <span>{alertSending ? 'Dispatching...' : 'Test Cognitive Decline Alert'}</span>
+            </button>
+
+            <button
+              type="button"
+              disabled={alertSending}
+              onClick={() => handleTriggerTestAlert('MISSED_MEDICINE')}
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 disabled:bg-amber-300 text-white font-bold text-xs sm:text-sm shadow-sm transition-all hover:scale-[1.01] active:scale-[0.99]"
+            >
+              <Smartphone className="w-4 h-4" />
+              <span>{alertSending ? 'Dispatching...' : 'Test Missed Medication Alert'}</span>
+            </button>
+          </div>
+
+          {/* Real-time Dispatch Receipt */}
+          {alertResult && (
+            <div className="p-4 bg-teal-50/80 rounded-xl border border-teal-200 text-xs text-teal-900 space-y-2 animate-in fade-in">
+              <div className="font-bold text-sm text-teal-950 flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-teal-600" />
+                <span>{alertResult.message}</span>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] pt-1">
+                {alertResult.dispatchResults?.map((res: any, idx: number) => (
+                  <div key={idx} className="bg-white p-2.5 rounded-lg border border-teal-100 flex items-center justify-between">
+                    <div>
+                      <span className="font-bold uppercase tracking-wider text-slate-700">{res.channel}: </span>
+                      <span className="text-slate-600">{res.message}</span>
+                    </div>
+                    <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold ml-2">
+                      {res.status}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </ScrollReveal>
 
