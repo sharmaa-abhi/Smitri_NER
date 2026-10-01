@@ -104,9 +104,70 @@
   animation: floatGentleAlt 6s ease-in-out infinite;
 }
 
+/* Breath expansion animation for senior calm & focus */
+@keyframes breathOrb {
+  0%, 100% {
+    transform: scale(0.92);
+    box-shadow: 0 0 20px rgba(13, 148, 136, 0.25);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 45px rgba(13, 148, 136, 0.45);
+  }
+}
+
+/* Sound wave equalizer animation */
+@keyframes soundBar {
+  0%, 100% {
+    height: 4px;
+  }
+  50% {
+    height: 18px;
+  }
+}
+
+/* Neural pulse glow */
+@keyframes neuralGlow {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(0.98);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.02);
+  }
+}
+
+.animate-breath {
+  animation: breathOrb 8s ease-in-out infinite;
+}
+
+.animate-neural-glow {
+  animation: neuralGlow 4s ease-in-out infinite;
+}
+
+.animate-sound-1 {
+  animation: soundBar 1.2s ease-in-out infinite 0.1s;
+}
+.animate-sound-2 {
+  animation: soundBar 1.2s ease-in-out infinite 0.3s;
+}
+.animate-sound-3 {
+  animation: soundBar 1.2s ease-in-out infinite 0.2s;
+}
+.animate-sound-4 {
+  animation: soundBar 1.2s ease-in-out infinite 0.4s;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-float-gentle,
-  .animate-float-gentle-alt {
+  .animate-float-gentle-alt,
+  .animate-breath,
+  .animate-neural-glow,
+  .animate-sound-1,
+  .animate-sound-2,
+  .animate-sound-3,
+  .animate-sound-4 {
     animation: none !important;
   }
   * {

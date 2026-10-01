@@ -28,6 +28,7 @@ import VoiceButton from '@/components/VoiceButton';
 import ScrollReveal from '@/components/ScrollReveal';
 import MiniMemoryTeaser from '@/components/MiniMemoryTeaser';
 import CaregiverAlertSimulator from '@/components/CaregiverAlertSimulator';
+import MindfulBreathingOrb from '@/components/MindfulBreathingOrb';
 
 const HERO_IMAGES = [
   {
@@ -119,13 +120,36 @@ export default function HomePage() {
         {/* Subtle decorative background gradient glow */}
         <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[340px] bg-gradient-to-r from-sky-200/40 via-teal-200/30 to-sky-100/20 blur-3xl pointer-events-none -z-10 rounded-full" />
 
+        {/* Animated Background Neural Synapses SVG */}
+        <svg className="absolute -top-8 -right-8 w-80 h-80 opacity-20 pointer-events-none animate-neural-glow -z-10" viewBox="0 0 200 200">
+          <circle cx="40" cy="40" r="4" fill="#0D9488" />
+          <circle cx="160" cy="50" r="5" fill="#0284C7" />
+          <circle cx="100" cy="110" r="6" fill="#14B8A6" />
+          <circle cx="60" cy="160" r="4" fill="#0EA5E9" />
+          <circle cx="150" cy="150" r="5" fill="#059669" />
+          <line x1="40" y1="40" x2="100" y2="110" stroke="#0D9488" strokeWidth="1" strokeDasharray="3 3" />
+          <line x1="160" y1="50" x2="100" y2="110" stroke="#0284C7" strokeWidth="1.2" />
+          <line x1="100" y1="110" x2="60" y2="160" stroke="#14B8A6" strokeWidth="1" strokeDasharray="2 2" />
+          <line x1="100" y1="110" x2="150" y2="150" stroke="#0EA5E9" strokeWidth="1.2" />
+          <line x1="160" y1="50" x2="150" y2="150" stroke="#059669" strokeWidth="1" strokeDasharray="4 4" />
+        </svg>
+
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
           {/* LEFT SIDE: Headline, Badge, Supporting Text, Action Buttons */}
           <div className="lg:col-span-7 space-y-5 text-center lg:text-left">
-            {/* Small Pill / Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-teal-50 border border-teal-200/80 text-teal-700 text-xs font-bold tracking-wide shadow-sm">
-              <Sparkles className="w-3.5 h-3.5 text-teal-700" />
-              <span>AI-powered cognitive care</span>
+            {/* Badges & Live Community Ticker */}
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-teal-50 border border-teal-200/80 text-teal-700 text-xs font-bold tracking-wide shadow-2xs">
+                <Sparkles className="w-3.5 h-3.5 text-teal-700" />
+                <span>AI-powered cognitive care</span>
+              </div>
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-bold shadow-2xs">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <span>Live: 1,420+ Sessions in NER</span>
+              </div>
             </div>
 
             {/* Main Headline */}
@@ -159,12 +183,18 @@ export default function HomePage() {
               </button>
             </div>
 
-            {/* Senior Audio Voice Assistance */}
-            <div className="pt-1 flex justify-center lg:justify-start">
+            {/* Senior Audio Voice Assistance with Animated Equalizer */}
+            <div className="pt-1 flex items-center justify-center lg:justify-start gap-3">
               <VoiceButton 
                 textToRead="Welcome to Smitri N E R. An AI-powered cognitive care and memory assistance platform designed for elderly users. Tap Get Started to enter your personalized dashboard."
                 buttonLabel="Listen to Introduction"
               />
+              <div className="hidden sm:flex items-center gap-1 h-5 px-2.5 py-1 rounded-lg bg-teal-50 border border-teal-200/70" title="Audio voice active">
+                <span className="w-1 bg-teal-500 rounded-full animate-sound-1" />
+                <span className="w-1 bg-teal-600 rounded-full animate-sound-2" />
+                <span className="w-1 bg-teal-400 rounded-full animate-sound-3" />
+                <span className="w-1 bg-teal-700 rounded-full animate-sound-4" />
+              </div>
             </div>
           </div>
 
@@ -269,6 +299,13 @@ export default function HomePage() {
       {/* ========================================================================= */}
       <ScrollReveal direction="up">
         <MiniMemoryTeaser />
+      </ScrollReveal>
+
+      {/* ========================================================================= */}
+      {/* MINDFUL BREATHING ORB (Senior Relaxation & Concentration)                 */}
+      {/* ========================================================================= */}
+      <ScrollReveal direction="up">
+        <MindfulBreathingOrb />
       </ScrollReveal>
 
       {/* ========================================================================= */}
