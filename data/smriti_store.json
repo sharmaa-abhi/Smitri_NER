@@ -12,7 +12,7 @@
       "emergencyName": "Rahul Sharma (Son / Caregiver)",
       "emergencyPhone": "+91 98765 43210",
       "preferredLanguage": "English / Hindi / Assamese",
-      "difficultyLevel": 1,
+      "difficultyLevel": 2,
       "dailyHydrationTarget": 6,
       "currentHydrationGlasses": 4
     }
@@ -40,7 +40,7 @@
       "gameTitle": "Grocery Basket Recall",
       "score": 82,
       "accuracy": 88,
-      "responseTimeSec": 21.0,
+      "responseTimeSec": 21,
       "mistakes": 1,
       "difficultyLevel": 1,
       "recommendedDifficulty": 1,
@@ -70,7 +70,7 @@
       "gameTitle": "Sequence Memory",
       "score": 75,
       "accuracy": 80,
-      "responseTimeSec": 25.0,
+      "responseTimeSec": 25,
       "mistakes": 3,
       "difficultyLevel": 2,
       "recommendedDifficulty": 2,
@@ -85,7 +85,7 @@
       "gameTitle": "Find the Different One",
       "score": 88,
       "accuracy": 92,
-      "responseTimeSec": 16.0,
+      "responseTimeSec": 16,
       "mistakes": 1,
       "difficultyLevel": 1,
       "recommendedDifficulty": 2,
@@ -122,6 +122,34 @@
       "feedbackText": "Excellent auditory recognition of doorstep doorbell and pressure cooker whistle.",
       "timestamp": "2026-09-23T10:00:00.000Z",
       "realWorldScenario": "Household Sounds & Doorbell Awareness"
+    },
+    {
+      "id": "s-1790863079817",
+      "userId": "user_kamla",
+      "gameId": "clock-reading",
+      "gameTitle": "Clock Face Match",
+      "score": 100,
+      "accuracy": 100,
+      "responseTimeSec": 9,
+      "mistakes": 0,
+      "difficultyLevel": 1,
+      "recommendedDifficulty": 2,
+      "feedbackText": "You are doing great! Let's try a slightly higher level.",
+      "timestamp": "2026-10-01T13:57:59.817Z"
+    },
+    {
+      "id": "s-1790863299597",
+      "userId": "user_kamla",
+      "gameId": "pattern-match",
+      "gameTitle": "Matrix Pattern Recall",
+      "score": 100,
+      "accuracy": 100,
+      "responseTimeSec": 8,
+      "mistakes": 0,
+      "difficultyLevel": 1,
+      "recommendedDifficulty": 2,
+      "feedbackText": "You are doing great! Let's try a slightly higher level.",
+      "timestamp": "2026-10-01T14:01:39.597Z"
     }
   ],
   "reminders": [
@@ -174,7 +202,7 @@
       "time": "05:30 PM",
       "category": "EXERCISE",
       "priority": "ROUTINE",
-      "isCompleted": false,
+      "isCompleted": true,
       "notes": "15 minutes slow walk in the backyard with walking stick."
     },
     {
