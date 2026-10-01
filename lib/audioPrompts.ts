@@ -106,3 +106,32 @@ export function playRegionalVoicePrompt(
     }, 280);
   }
 }
+
+/**
+ * Play speech synthesis in a specific BCP-47 regional code directly
+ */
+export function playWebSpeechDialect(text: string, bcp47: string = 'en-IN') {
+  if (typeof window === 'undefined') return;
+  stopVoicePrompt();
+
+  if ('speechSynthesis' in window && text) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = bcp47;
+    utterance.rate = 0.82;
+    utterance.pitch = 1.05;
+    utterance.volume = 1.0;
+
+    const voices = window.speechSynthesis.getVoices();
+    const matchedVoice = voices.find(
+      (v) => v.lang === bcp47 || v.lang.startsWith(bcp47.split('-')[0])
+    );
+    if (matchedVoice) {
+      utterance.voice = matchedVoice;
+    }
+
+    setTimeout(() => {
+      window.speechSynthesis.speak(utterance);
+    }, 200);
+  }
+}
+

@@ -29,6 +29,9 @@ import ScrollReveal from '@/components/ScrollReveal';
 import MiniMemoryTeaser from '@/components/MiniMemoryTeaser';
 import CaregiverAlertSimulator from '@/components/CaregiverAlertSimulator';
 import MindfulBreathingOrb from '@/components/MindfulBreathingOrb';
+import NeuralSynapseCanvas from '@/components/NeuralSynapseCanvas';
+import RegionalCareMap from '@/components/RegionalCareMap';
+import TiltCard from '@/components/TiltCard';
 
 const HERO_IMAGES = [
   {
@@ -117,6 +120,9 @@ export default function HomePage() {
       {/* HERO CONTAINER (Large Rounded Container, Two-Column Desktop Layout)       */}
       {/* ========================================================================= */}
       <section className="relative overflow-hidden bg-gradient-to-b from-white via-sky-50/40 to-teal-50/30 border border-slate-200/90 rounded-3xl p-6 sm:p-10 lg:p-12 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+        {/* Interactive Mouse-Tracking Neural Synapse Canvas */}
+        <NeuralSynapseCanvas />
+
         {/* Subtle decorative background gradient glow */}
         <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[340px] bg-gradient-to-r from-sky-200/40 via-teal-200/30 to-sky-100/20 blur-3xl pointer-events-none -z-10 rounded-full" />
 
@@ -200,25 +206,27 @@ export default function HomePage() {
 
           {/* RIGHT SIDE: Elderly Care Hero Visual with Floating Feature Badges */}
           <div className="lg:col-span-5 relative flex flex-col items-center justify-center">
-            {/* Visual Frame Container */}
-            <div className="group relative w-full max-w-[390px] aspect-square rounded-3xl overflow-hidden border-4 border-white shadow-xl bg-gradient-to-tr from-sky-100 via-white to-teal-100">
-              <Image
-                src={HERO_IMAGES[currentImageIndex].src}
-                alt={HERO_IMAGES[currentImageIndex].alt}
-                fill
-                priority
-                className="object-cover object-center transform group-hover:scale-105 transition-all duration-700"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 45vw, 390px"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent pointer-events-none" />
-              
-              {/* Category & Caption overlay */}
-              <div className="absolute bottom-3 left-3 right-3 flex items-center justify-start pointer-events-none">
-                <div className="bg-slate-900/80 backdrop-blur-md text-white text-[11px] font-semibold px-3 py-1 rounded-full border border-white/20">
-                  {HERO_IMAGES[currentImageIndex].caption}
+            {/* 3D Glassmorphism Tilt Card Frame */}
+            <TiltCard className="rounded-3xl shadow-xl w-full max-w-[390px]" maxTilt={6}>
+              <div className="group relative w-full aspect-square rounded-3xl overflow-hidden border-4 border-white bg-gradient-to-tr from-sky-100 via-white to-teal-100">
+                <Image
+                  src={HERO_IMAGES[currentImageIndex].src}
+                  alt={HERO_IMAGES[currentImageIndex].alt}
+                  fill
+                  priority
+                  className="object-cover object-center transform group-hover:scale-105 transition-all duration-700"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 45vw, 390px"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent pointer-events-none" />
+                
+                {/* Category & Caption overlay */}
+                <div className="absolute bottom-3 left-3 right-3 flex items-center justify-start pointer-events-none">
+                  <div className="bg-slate-900/80 backdrop-blur-md text-white text-[11px] font-semibold px-3 py-1 rounded-full border border-white/20">
+                    {HERO_IMAGES[currentImageIndex].caption}
+                  </div>
                 </div>
               </div>
-            </div>
+            </TiltCard>
 
 
             {/* Floating Feature Badge 1: Top Left - Play Cognitive Games */}
@@ -328,53 +336,59 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
             {/* Feature 1 */}
             <ScrollReveal direction="up" delay={100}>
-              <div className="h-full bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-sm hover:shadow-md transition-all hover:-translate-y-1 space-y-3.5">
-                <div className="w-11 h-11 rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center">
-                  <Brain className="w-5 h-5" />
+              <TiltCard className="h-full rounded-3xl" maxTilt={7}>
+                <div className="h-full bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-sm hover:shadow-md transition-all space-y-3.5">
+                  <div className="w-11 h-11 rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center">
+                    <Brain className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900">Adaptive Cognitive Games</h3>
+                  <p className="text-sm text-slate-600 font-medium leading-relaxed">
+                    Three interactive games (Memory Match, Sequence Memory, and Find the Different One) that tune difficulty automatically to keep tasks calm and rewarding.
+                  </p>
+                  <Link href="/games" className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-sky-700 hover:text-sky-700">
+                    <span>Explore games</span>
+                    <ChevronRight className="w-4 h-4" />
+                  </Link>
                 </div>
-                <h3 className="text-xl font-bold text-slate-900">Adaptive Cognitive Games</h3>
-                <p className="text-sm text-slate-600 font-medium leading-relaxed">
-                  Three interactive games (Memory Match, Sequence Memory, and Find the Different One) that tune difficulty automatically to keep tasks calm and rewarding.
-                </p>
-                <Link href="/games" className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-sky-700 hover:text-sky-700">
-                  <span>Explore games</span>
-                  <ChevronRight className="w-4 h-4" />
-                </Link>
-              </div>
+              </TiltCard>
             </ScrollReveal>
 
             {/* Feature 2 */}
             <ScrollReveal direction="up" delay={200}>
-              <div className="h-full bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-sm hover:shadow-md transition-all hover:-translate-y-1 space-y-3.5">
-                <div className="w-11 h-11 rounded-2xl bg-teal-100 text-teal-700 flex items-center justify-center">
-                  <Bell className="w-5 h-5" />
+              <TiltCard className="h-full rounded-3xl" maxTilt={7}>
+                <div className="h-full bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-sm hover:shadow-md transition-all space-y-3.5">
+                  <div className="w-11 h-11 rounded-2xl bg-teal-100 text-teal-700 flex items-center justify-center">
+                    <Bell className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900">Daily Routine & Reminders</h3>
+                  <p className="text-sm text-slate-600 font-medium leading-relaxed">
+                    Large, high-contrast checklists for medication, hydration, and doctor visits, readable aloud via Web Speech API with a single tap.
+                  </p>
+                  <Link href="/reminders" className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-teal-700 hover:text-teal-700">
+                    <span>View daily routines</span>
+                    <ChevronRight className="w-4 h-4" />
+                  </Link>
                 </div>
-                <h3 className="text-xl font-bold text-slate-900">Daily Routine & Reminders</h3>
-                <p className="text-sm text-slate-600 font-medium leading-relaxed">
-                  Large, high-contrast checklists for medication, hydration, and doctor visits, readable aloud via Web Speech API with a single tap.
-                </p>
-                <Link href="/reminders" className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-teal-700 hover:text-teal-700">
-                  <span>View daily routines</span>
-                  <ChevronRight className="w-4 h-4" />
-                </Link>
-              </div>
+              </TiltCard>
             </ScrollReveal>
 
             {/* Feature 3 */}
             <ScrollReveal direction="up" delay={300}>
-              <div className="h-full bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-sm hover:shadow-md transition-all hover:-translate-y-1 space-y-3.5">
-                <div className="w-11 h-11 rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center">
-                  <Activity className="w-5 h-5" />
+              <TiltCard className="h-full rounded-3xl" maxTilt={7}>
+                <div className="h-full bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-sm hover:shadow-md transition-all space-y-3.5">
+                  <div className="w-11 h-11 rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center">
+                    <Activity className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900">Caregiver Observation</h3>
+                  <p className="text-sm text-slate-600 font-medium leading-relaxed">
+                    Family members and healthcare companions receive proactive alerts if a 3-day sustained performance shift or missed routine is detected.
+                  </p>
+                  <Link href="/caregiver" className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-sky-700 hover:text-sky-700">
+                    <span>Open caregiver portal</span>
+                    <ChevronRight className="w-4 h-4" />
+                  </Link>
                 </div>
-                <h3 className="text-xl font-bold text-slate-900">Caregiver Observation</h3>
-                <p className="text-sm text-slate-600 font-medium leading-relaxed">
-                  Family members and healthcare companions receive proactive alerts if a 3-day sustained performance shift or missed routine is detected.
-                </p>
-                <Link href="/caregiver" className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-sky-700 hover:text-sky-700">
-                  <span>Open caregiver portal</span>
-                  <ChevronRight className="w-4 h-4" />
-                </Link>
-              </div>
+              </TiltCard>
             </ScrollReveal>
           </div>
         </section>
@@ -458,6 +472,13 @@ export default function HomePage() {
       {/* ========================================================================= */}
       <ScrollReveal direction="up">
         <CaregiverAlertSimulator />
+      </ScrollReveal>
+
+      {/* ========================================================================= */}
+      {/* NORTHEAST REGIONAL CARE MAP: 8 SISTER STATES RADAR HUBS                   */}
+      {/* ========================================================================= */}
+      <ScrollReveal direction="up">
+        <RegionalCareMap />
       </ScrollReveal>
 
       {/* ========================================================================= */}
