@@ -41,32 +41,32 @@ export default function Navbar() {
   ];
 
   return (
-    <header className="sticky top-3 z-50 px-3 sm:px-4 w-full max-w-5xl mx-auto mb-4">
-      <div className="bg-white/95 backdrop-blur-md border border-slate-200/80 rounded-full px-3.5 py-1.5 sm:px-4 sm:py-2 shadow-[0_2px_14px_rgba(0,0,0,0.04)] flex items-center justify-between transition-all gap-2 sm:gap-3">
+    <header className="sticky top-3.5 z-50 px-3 sm:px-6 w-full max-w-6xl mx-auto mb-5">
+      <div className="bg-white/95 backdrop-blur-md border border-slate-200/90 rounded-full px-4 py-2 sm:px-6 sm:py-2.5 shadow-[0_4px_20px_rgba(0,0,0,0.05)] flex items-center justify-between transition-all gap-2 sm:gap-4">
         {/* Left: Brand Logo + Name */}
         <Link 
           href="/" 
-          className="flex items-center gap-2 text-slate-900 group flex-shrink-0"
+          className="flex items-center gap-2.5 text-slate-900 group flex-shrink-0"
           aria-label="Smitri_NER Home"
         >
-          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-sky-600 to-teal-500 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
-            <Brain className="w-3.5 h-3.5 text-white" />
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-tr from-sky-600 to-teal-500 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+            <Brain className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
           </div>
-          <div className="flex items-center gap-1">
-            <span className="text-base font-black tracking-tight text-slate-900">Smitri</span>
-            <span className="text-[9px] font-black px-1.5 py-0.5 rounded-md bg-teal-50 text-teal-700 border border-teal-200">NER</span>
+          <div className="flex items-center gap-1.5">
+            <span className="text-lg sm:text-xl font-black tracking-tight text-slate-900">Smitri</span>
+            <span className="text-[10px] sm:text-xs font-black px-1.5 py-0.5 rounded-md bg-teal-50 text-teal-700 border border-teal-200">NER</span>
           </div>
         </Link>
 
         {/* Center: Clean Desktop Navigation with Games */}
-        <nav className="hidden md:flex items-center gap-1">
+        <nav className="hidden md:flex items-center gap-1.5 lg:gap-2">
           {mainNav.map((item) => {
             const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
             return (
               <Link
                 key={item.name}
                 href={item.href}
-                className={`px-2.5 py-1 rounded-full text-xs sm:text-[13px] font-semibold transition-all ${
+                className={`px-3 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all ${
                   isActive
                     ? "bg-slate-900 text-white shadow-xs font-bold"
                     : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/80"
@@ -79,15 +79,15 @@ export default function Navbar() {
         </nav>
 
         {/* Right: Regional Language Selector + Action Button */}
-        <div className="flex items-center gap-2 flex-shrink-0">
+        <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
           <LanguageSelector />
 
           <Link
             href="/dashboard"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-1.5 rounded-full text-xs font-bold text-white bg-gradient-to-r from-sky-600 to-teal-600 hover:from-sky-700 hover:to-teal-700 shadow-sm hover:shadow transition-all hover:scale-[1.01] active:scale-[0.98]"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-sky-600 to-teal-600 hover:from-sky-700 hover:to-teal-700 shadow-sm hover:shadow transition-all hover:scale-[1.01] active:scale-[0.98]"
           >
             <span>{t("nav_get_started") || "Get Started"}</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <ArrowRight className="w-4 h-4" />
           </Link>
 
           {/* Mobile menu toggle */}
