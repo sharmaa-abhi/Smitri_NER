@@ -40,7 +40,7 @@ const STEPS: StepItem[] = [
     number: "01",
     title: "Brain & Memory Games",
     shortTitle: "Memory Games",
-    tag: "Calm Puzzles",
+    tag: "Mental Stimulation",
     icon: Brain,
   },
   {
@@ -49,7 +49,7 @@ const STEPS: StepItem[] = [
     number: "02",
     title: "Medicine & Routine Reminders",
     shortTitle: "Daily Reminders",
-    tag: "Voice Checklist",
+    tag: "Daily Independence",
     icon: Bell,
   },
   {
@@ -58,7 +58,7 @@ const STEPS: StepItem[] = [
     number: "03",
     title: "Voice in Your Own Language",
     shortTitle: "Regional Voice",
-    tag: "Mother Tongue",
+    tag: "Accessibility & Inclusivity",
     icon: Languages,
   },
   {
@@ -67,7 +67,7 @@ const STEPS: StepItem[] = [
     number: "04",
     title: "Caregiver & Family Updates",
     shortTitle: "Family Updates",
-    tag: "Peace of Mind",
+    tag: "Family Peace of Mind",
     icon: Users,
   },
   {
@@ -76,7 +76,7 @@ const STEPS: StepItem[] = [
     number: "05",
     title: "Offline Ready & Emergency SOS",
     shortTitle: "Offline & SOS",
-    tag: "Critical Safety",
+    tag: "Critical Safety & SOS",
     icon: ShieldAlert,
   }
 ];
@@ -130,7 +130,6 @@ export default function FeaturesPage() {
         const section = document.getElementById(STEPS[i].slug);
         if (section) {
           const rect = section.getBoundingClientRect();
-          // If the top of the step card is above or within the trigger line
           if (rect.top <= triggerY) {
             calculatedStep = i + 1;
           }
@@ -141,7 +140,6 @@ export default function FeaturesPage() {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    // Check initial position on mount
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -221,7 +219,7 @@ export default function FeaturesPage() {
       {/* ========================================================================= */}
       <section className="bg-gradient-to-b from-white via-sky-50/50 to-teal-50/30 border border-slate-200/90 rounded-3xl p-6 sm:p-10 text-center space-y-3">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-teal-800 text-xs font-bold">
-          <Sparkles className="w-3.5 h-3.5 text-teal-600" />
+          <Sparkles className="w-3.5 h-3.5 text-teal-700" />
           <span>Smitri_NER Step Guide</span>
         </div>
 
@@ -240,10 +238,10 @@ export default function FeaturesPage() {
           />
           <Link
             href="/dashboard"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-sky-600 to-teal-600 hover:from-sky-700 hover:to-teal-700 shadow-sm transition-all"
+            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold text-white bg-gradient-to-r from-sky-600 to-teal-600 hover:from-sky-700 hover:to-teal-700 shadow-sm transition-all focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none min-h-[42px]"
           >
             <span>Open Dashboard</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </section>
@@ -259,9 +257,9 @@ export default function FeaturesPage() {
             <button
               key={s.id}
               onClick={() => scrollTo(s.slug)}
-              className={`flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all outline-none focus:outline-none ${
+              className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none min-h-[38px] ${
                 isActive
-                  ? "bg-slate-900 text-white shadow-xs scale-102"
+                  ? "bg-slate-900 text-white shadow-xs"
                   : isPassed
                   ? "bg-teal-50 text-teal-800 border border-teal-200"
                   : "bg-slate-100 text-slate-600 hover:bg-slate-200"
@@ -287,17 +285,17 @@ export default function FeaturesPage() {
             
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div>
-                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">Progress</span>
-                <span className="text-sm font-black text-slate-900">Scroll Journey</span>
+                <span className="text-xs font-semibold text-slate-500 block">Progress</span>
+                <h2 className="text-sm font-black text-slate-900">Feature Journey</h2>
               </div>
-              <span className="px-3 py-1 rounded-full bg-slate-900 text-white text-xs font-black shadow-2xs">
+              <span className="px-3 py-1 rounded-full bg-slate-900 text-white text-xs font-bold shadow-2xs">
                 Step 0{activeStep} of 05
               </span>
             </div>
 
             {/* Vertical timeline connecting track & active line */}
             <div className="space-y-2 relative pl-1">
-              {/* Grey background connecting line */}
+              {/* Background connecting line */}
               <div className="absolute left-[25px] top-4 bottom-4 w-0.5 bg-slate-200 rounded-full z-0 pointer-events-none" />
               
               {/* Colored active fill bar that animates with activeStep */}
@@ -316,14 +314,14 @@ export default function FeaturesPage() {
                   <button
                     key={step.id}
                     onClick={() => scrollTo(step.slug)}
-                    className={`w-full relative z-10 flex items-center gap-3 p-3 rounded-2xl transition-all duration-300 text-left outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 ${
+                    className={`w-full relative z-10 flex items-center gap-3 p-3 rounded-2xl transition-all duration-300 text-left focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none min-h-[44px] ${
                       isActive
                         ? "bg-gradient-to-r from-teal-50 to-sky-50/70 border border-teal-300 text-slate-900 shadow-md translate-x-1.5"
                         : "hover:bg-slate-50 text-slate-600 border border-transparent"
                     }`}
                   >
                     {/* Circle badge */}
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-black transition-all duration-300 flex-shrink-0 ${
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 flex-shrink-0 ${
                       isActive
                         ? "bg-gradient-to-tr from-sky-600 to-teal-600 text-white shadow-md ring-4 ring-teal-100 scale-110"
                         : isPassed
@@ -333,28 +331,28 @@ export default function FeaturesPage() {
                       {isPassed ? <Check className="w-4 h-4 stroke-[3]" /> : step.number}
                     </div>
 
-                    {/* Step Title */}
+                    {/* Step Title & Sentence Case Tag */}
                     <div className="flex-1 min-w-0">
-                      <span className={`text-[10px] font-bold uppercase tracking-wider block ${
-                        isActive ? "text-teal-700" : "text-slate-400"
+                      <span className={`text-xs font-semibold block truncate ${
+                        isActive ? "text-teal-700" : "text-slate-500"
                       }`}>
                         {step.tag}
                       </span>
                       <span className={`text-xs font-bold truncate block transition-colors ${
-                        isActive ? "text-slate-900 font-black text-[13px]" : "text-slate-600"
+                        isActive ? "text-slate-900 font-black text-sm" : "text-slate-600"
                       }`}>
                         {step.title}
                       </span>
                     </div>
 
-                    {/* Active chevron indicator */}
+                    {/* Active indicator */}
                     {isActive && (
                       <div className="flex items-center gap-1 flex-shrink-0">
                         <span className="relative flex h-2 w-2">
                           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
                           <span className="relative inline-flex rounded-full h-2 w-2 bg-teal-500"></span>
                         </span>
-                        <ChevronRight className="w-4 h-4 text-teal-600" />
+                        <ChevronRight className="w-4 h-4 text-teal-700" />
                       </div>
                     )}
                   </button>
@@ -363,7 +361,7 @@ export default function FeaturesPage() {
             </div>
 
             <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 text-xs text-slate-600 space-y-1">
-              <span className="font-bold text-slate-800 block">💡 Auto-updating</span>
+              <span className="font-bold text-slate-900 block">Auto-updating steps</span>
               <p>Scroll down or tap any step above to jump directly to it.</p>
             </div>
           </div>
@@ -387,20 +385,20 @@ export default function FeaturesPage() {
           >
             <div className="flex items-center justify-between gap-3 border-b border-slate-100 pb-3">
               <div className="flex items-center gap-3">
-                <span className={`w-10 h-10 rounded-2xl flex items-center justify-center font-black text-sm transition-colors ${
+                <span className={`w-10 h-10 rounded-2xl flex items-center justify-center font-bold text-sm transition-colors ${
                   activeStep === 1 ? "bg-teal-600 text-white shadow-xs" : "bg-sky-100 text-sky-700"
                 }`}>
                   01
                 </span>
                 <div>
-                  <span className="text-xs font-bold text-sky-700 uppercase tracking-wider block">Step 01 • Memory</span>
+                  <span className="text-xs font-semibold text-sky-700 block">Step 01 • Memory games</span>
                   <h2 className="text-xl sm:text-2xl font-black text-slate-900">Brain & Memory Games</h2>
                 </div>
               </div>
 
               {activeStep === 1 && (
-                <span className="px-2.5 py-1 rounded-full bg-teal-100 text-teal-800 text-[11px] font-black uppercase tracking-wider animate-pulse">
-                  Active Step
+                <span className="px-2.5 py-1 rounded-full bg-teal-100 text-teal-800 text-xs font-bold animate-pulse">
+                  Active step
                 </span>
               )}
             </div>
@@ -410,7 +408,7 @@ export default function FeaturesPage() {
               <p>
                 Easy 2-minute daily brain exercises that adapt to your speed.
               </p>
-              <ul className="space-y-1.5 text-xs sm:text-sm text-slate-700">
+              <ul className="space-y-1.5 text-xs sm:text-sm text-slate-600">
                 <li className="flex items-center gap-2">✓ <strong className="text-slate-900">No time pressure:</strong> Play calmly without timer stress.</li>
                 <li className="flex items-center gap-2">✓ <strong className="text-slate-900">Auto-adjusts difficulty:</strong> Gets easier or harder based on your comfort.</li>
                 <li className="flex items-center gap-2">✓ <strong className="text-slate-900">3 simple games:</strong> Match the cards, remember the sequence, find odd one out.</li>
@@ -420,9 +418,12 @@ export default function FeaturesPage() {
             {/* Interactive mini preview */}
             <div className="p-4 rounded-2xl bg-sky-50/60 border border-sky-100 space-y-3">
               <div className="flex items-center justify-between text-xs font-bold">
-                <span className="text-slate-700">Try it: Tap 2 cards to find matching pair</span>
-                <button onClick={resetCards} className="text-slate-500 hover:text-slate-800 flex items-center gap-1">
-                  <RefreshCw className="w-3 h-3" />
+                <span className="text-slate-600">Try it: Tap 2 cards to find matching pair</span>
+                <button 
+                  onClick={resetCards} 
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-all focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none min-h-[32px]"
+                >
+                  <RefreshCw className="w-3.5 h-3.5" />
                   <span>Reset</span>
                 </button>
               </div>
@@ -435,7 +436,8 @@ export default function FeaturesPage() {
                       key={card.id}
                       onClick={() => handleCardClick(card.id)}
                       disabled={card.matched}
-                      className={`aspect-square rounded-xl flex items-center justify-center text-xl font-bold transition-all ${
+                      aria-label={visible ? `Card ${card.icon}` : "Hidden memory card"}
+                      className={`aspect-square rounded-xl flex items-center justify-center text-xl font-bold transition-all focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none min-h-[44px] ${
                         visible
                           ? "bg-white border-2 border-teal-500 shadow-sm"
                           : "bg-sky-600 text-white hover:bg-sky-700"
@@ -448,7 +450,7 @@ export default function FeaturesPage() {
               </div>
 
               {matchDone && (
-                <p className="text-center text-xs font-bold text-teal-700">
+                <p className="text-center text-xs font-bold text-teal-800">
                   🎉 Matched! That's how simple and fun the games are.
                 </p>
               )}
@@ -459,7 +461,10 @@ export default function FeaturesPage() {
                 textToRead="Step 1: Brain and memory games. Calm 2-minute puzzles that train recall without any stress or countdowns."
                 buttonLabel="Listen"
               />
-              <Link href="/games" className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-sky-700 hover:underline">
+              <Link 
+                href="/games" 
+                className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-sky-700 hover:underline focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none rounded-lg p-1"
+              >
                 <span>Play games</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
@@ -479,20 +484,20 @@ export default function FeaturesPage() {
           >
             <div className="flex items-center justify-between gap-3 border-b border-slate-100 pb-3">
               <div className="flex items-center gap-3">
-                <span className={`w-10 h-10 rounded-2xl flex items-center justify-center font-black text-sm transition-colors ${
-                  activeStep === 2 ? "bg-teal-600 text-white shadow-xs" : "bg-teal-100 text-teal-700"
+                <span className={`w-10 h-10 rounded-2xl flex items-center justify-center font-bold text-sm transition-colors ${
+                  activeStep === 2 ? "bg-teal-600 text-white shadow-xs" : "bg-teal-100 text-teal-800"
                 }`}>
                   02
                 </span>
                 <div>
-                  <span className="text-xs font-bold text-teal-700 uppercase tracking-wider block">Step 02 • Daily Habit</span>
+                  <span className="text-xs font-semibold text-teal-700 block">Step 02 • Daily habit</span>
                   <h2 className="text-xl sm:text-2xl font-black text-slate-900">Medicine & Daily Routine</h2>
                 </div>
               </div>
 
               {activeStep === 2 && (
-                <span className="px-2.5 py-1 rounded-full bg-teal-100 text-teal-800 text-[11px] font-black uppercase tracking-wider animate-pulse">
-                  Active Step
+                <span className="px-2.5 py-1 rounded-full bg-teal-100 text-teal-800 text-xs font-bold animate-pulse">
+                  Active step
                 </span>
               )}
             </div>
@@ -501,7 +506,7 @@ export default function FeaturesPage() {
               <p>
                 A large, clear daily checklist so you never miss medicine, water, or walking.
               </p>
-              <ul className="space-y-1.5 text-xs sm:text-sm text-slate-700">
+              <ul className="space-y-1.5 text-xs sm:text-sm text-slate-600">
                 <li className="flex items-center gap-2">✓ <strong className="text-slate-900">Big easy buttons:</strong> Tap to check off in one touch.</li>
                 <li className="flex items-center gap-2">✓ <strong className="text-slate-900">Speaks out loud:</strong> Read your routine aloud with the voice button.</li>
                 <li className="flex items-center gap-2">✓ <strong className="text-slate-900">Daily habit streak:</strong> Encourages steady healthy routines every day.</li>
@@ -510,13 +515,13 @@ export default function FeaturesPage() {
 
             {/* Interactive mini preview */}
             <div className="p-4 rounded-2xl bg-teal-50/60 border border-teal-100 space-y-2.5">
-              <span className="text-xs font-bold text-slate-700 block">Try it: Tap circles to mark routine items done</span>
+              <span className="text-xs font-bold text-slate-600 block">Try it: Tap circles to mark routine items done</span>
               <div className="space-y-2">
                 {routineTasks.map((task) => (
-                  <div
+                  <button
                     key={task.id}
                     onClick={() => toggleRoutine(task.id)}
-                    className={`flex items-center justify-between p-2.5 rounded-xl border cursor-pointer transition-all ${
+                    className={`w-full flex items-center justify-between p-2.5 rounded-xl border text-left transition-all focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none min-h-[38px] ${
                       task.done ? "bg-emerald-50/70 border-emerald-200 text-slate-500" : "bg-white border-slate-200 text-slate-900"
                     }`}
                   >
@@ -526,14 +531,14 @@ export default function FeaturesPage() {
                       }`}>
                         {task.done && <Check className="w-3 h-3 stroke-[3]" />}
                       </div>
-                      <span className={`text-xs sm:text-sm font-bold ${task.done ? "line-through text-slate-400" : ""}`}>
+                      <span className={`text-xs sm:text-sm font-bold ${task.done ? "line-through text-slate-500" : ""}`}>
                         {task.text}
                       </span>
                     </div>
-                    <span className="text-[11px] font-semibold text-slate-500">
+                    <span className="text-xs font-semibold text-slate-500">
                       {task.done ? "Done" : "Tap"}
                     </span>
-                  </div>
+                  </button>
                 ))}
               </div>
             </div>
@@ -543,7 +548,10 @@ export default function FeaturesPage() {
                 textToRead="Step 2: Medicine and daily routine. A simple checklist that reminds you to take medicines on time."
                 buttonLabel="Listen"
               />
-              <Link href="/reminders" className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-teal-700 hover:underline">
+              <Link 
+                href="/reminders" 
+                className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-teal-700 hover:underline focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none rounded-lg p-1"
+              >
                 <span>View reminders</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
@@ -563,20 +571,20 @@ export default function FeaturesPage() {
           >
             <div className="flex items-center justify-between gap-3 border-b border-slate-100 pb-3">
               <div className="flex items-center gap-3">
-                <span className={`w-10 h-10 rounded-2xl flex items-center justify-center font-black text-sm transition-colors ${
-                  activeStep === 3 ? "bg-teal-600 text-white shadow-xs" : "bg-indigo-100 text-indigo-700"
+                <span className={`w-10 h-10 rounded-2xl flex items-center justify-center font-bold text-sm transition-colors ${
+                  activeStep === 3 ? "bg-teal-600 text-white shadow-xs" : "bg-sky-100 text-sky-700"
                 }`}>
                   03
                 </span>
                 <div>
-                  <span className="text-xs font-bold text-indigo-700 uppercase tracking-wider block">Step 03 • Inclusion</span>
+                  <span className="text-xs font-semibold text-sky-700 block">Step 03 • Inclusion</span>
                   <h2 className="text-xl sm:text-2xl font-black text-slate-900">Voice in Your Own Language</h2>
                 </div>
               </div>
 
               {activeStep === 3 && (
-                <span className="px-2.5 py-1 rounded-full bg-teal-100 text-teal-800 text-[11px] font-black uppercase tracking-wider animate-pulse">
-                  Active Step
+                <span className="px-2.5 py-1 rounded-full bg-teal-100 text-teal-800 text-xs font-bold animate-pulse">
+                  Active step
                 </span>
               )}
             </div>
@@ -585,7 +593,7 @@ export default function FeaturesPage() {
               <p>
                 Speaks slowly and clearly in local North Eastern languages so elders feel right at home.
               </p>
-              <ul className="space-y-1.5 text-xs sm:text-sm text-slate-700">
+              <ul className="space-y-1.5 text-xs sm:text-sm text-slate-600">
                 <li className="flex items-center gap-2">✓ <strong className="text-slate-900">Calm slow pace:</strong> Specifically paced slower for elderly hearing comfort.</li>
                 <li className="flex items-center gap-2">✓ <strong className="text-slate-900">Languages supported:</strong> Assamese, Bengali, Hindi, English, and more.</li>
                 <li className="flex items-center gap-2">✓ <strong className="text-slate-900">1-tap switch:</strong> Change language anytime from the top bar.</li>
@@ -593,40 +601,45 @@ export default function FeaturesPage() {
             </div>
 
             {/* Interactive mini preview */}
-            <div className="p-4 rounded-2xl bg-indigo-50/60 border border-indigo-100 space-y-2.5">
-              <span className="text-xs font-bold text-slate-700 block">Try it: Tap a language to hear sample voice</span>
+            <div className="p-4 rounded-2xl bg-sky-50/60 border border-sky-100 space-y-2.5">
+              <span className="text-xs font-bold text-slate-600 block">Try it: Tap a language to hear sample voice</span>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 <button
                   onClick={() => playDialect("en", "Welcome to Smitri N E R. Your personal memory companion.")}
-                  className="p-2.5 rounded-xl bg-white border border-slate-200 hover:border-indigo-300 text-left text-xs font-bold text-slate-800"
+                  className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white hover:bg-slate-50 border border-slate-200 text-slate-900 shadow-2xs transition-all focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none min-h-[38px]"
                 >
                   English
                 </button>
                 <button
                   onClick={() => playDialect("as", "স্মৃতি এন ই আৰলৈ স্বাগতম।")}
-                  className="p-2.5 rounded-xl bg-white border border-slate-200 hover:border-indigo-300 text-left text-xs font-bold text-slate-800"
+                  className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white hover:bg-slate-50 border border-slate-200 text-slate-900 shadow-2xs transition-all focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none min-h-[38px]"
                 >
                   অসমীয়া (Assamese)
                 </button>
                 <button
                   onClick={() => playDialect("bn", "স্মৃতি এন ই আর-এ স্বাগতম।")}
-                  className="p-2.5 rounded-xl bg-white border border-slate-200 hover:border-indigo-300 text-left text-xs font-bold text-slate-800"
+                  className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white hover:bg-slate-50 border border-slate-200 text-slate-900 shadow-2xs transition-all focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none min-h-[38px]"
                 >
                   বাংলা (Bengali)
                 </button>
                 <button
                   onClick={() => playDialect("hi", "स्मृति एन ई आर में आपका स्वागत है।")}
-                  className="p-2.5 rounded-xl bg-white border border-slate-200 hover:border-indigo-300 text-left text-xs font-bold text-slate-800"
+                  className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white hover:bg-slate-50 border border-slate-200 text-slate-900 shadow-2xs transition-all focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none min-h-[38px]"
                 >
                   हिंदी (Hindi)
                 </button>
               </div>
 
               {playingDialect && (
-                <div className="flex items-center gap-2 text-xs font-bold text-indigo-700">
+                <div className="flex items-center gap-2 text-xs font-bold text-teal-700 pt-1">
                   <Volume2 className="w-3.5 h-3.5 animate-pulse" />
                   <span>Playing audio sample...</span>
-                  <button onClick={() => stopVoicePrompt()} className="underline ml-auto text-slate-500">Stop</button>
+                  <button 
+                    onClick={() => stopVoicePrompt()} 
+                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-all focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none ml-auto"
+                  >
+                    Stop
+                  </button>
                 </div>
               )}
             </div>
@@ -636,7 +649,7 @@ export default function FeaturesPage() {
                 textToRead="Step 3: Voice in your own language. Hear everything spoken softly in your native mother tongue."
                 buttonLabel="Listen"
               />
-              <span className="text-xs text-slate-500 font-semibold">Change language anytime in top bar</span>
+              <span className="text-xs text-slate-500 font-medium">Change language anytime in top bar</span>
             </div>
           </section>
 
@@ -653,20 +666,20 @@ export default function FeaturesPage() {
           >
             <div className="flex items-center justify-between gap-3 border-b border-slate-100 pb-3">
               <div className="flex items-center gap-3">
-                <span className={`w-10 h-10 rounded-2xl flex items-center justify-center font-black text-sm transition-colors ${
-                  activeStep === 4 ? "bg-teal-600 text-white shadow-xs" : "bg-amber-100 text-amber-700"
+                <span className={`w-10 h-10 rounded-2xl flex items-center justify-center font-bold text-sm transition-colors ${
+                  activeStep === 4 ? "bg-teal-600 text-white shadow-xs" : "bg-amber-100 text-amber-800"
                 }`}>
                   04
                 </span>
                 <div>
-                  <span className="text-xs font-bold text-amber-700 uppercase tracking-wider block">Step 04 • Family</span>
+                  <span className="text-xs font-semibold text-amber-800 block">Step 04 • Family</span>
                   <h2 className="text-xl sm:text-2xl font-black text-slate-900">Family & Caregiver Updates</h2>
                 </div>
               </div>
 
               {activeStep === 4 && (
-                <span className="px-2.5 py-1 rounded-full bg-teal-100 text-teal-800 text-[11px] font-black uppercase tracking-wider animate-pulse">
-                  Active Step
+                <span className="px-2.5 py-1 rounded-full bg-teal-100 text-teal-800 text-xs font-bold animate-pulse">
+                  Active step
                 </span>
               )}
             </div>
@@ -675,7 +688,7 @@ export default function FeaturesPage() {
               <p>
                 Keeps family informed gently, without disturbing the senior or invading privacy.
               </p>
-              <ul className="space-y-1.5 text-xs sm:text-sm text-slate-700">
+              <ul className="space-y-1.5 text-xs sm:text-sm text-slate-600">
                 <li className="flex items-center gap-2">✓ <strong className="text-slate-900">No cameras or spying:</strong> 100% private, only tracks game scores & routine checks.</li>
                 <li className="flex items-center gap-2">✓ <strong className="text-slate-900">3-Day trend filter:</strong> Family is alerted only if routine is missed 3 days continuously.</li>
                 <li className="flex items-center gap-2">✓ <strong className="text-slate-900">Gentle suggestions:</strong> Recommends a caring phone call rather than alarming family.</li>
@@ -685,17 +698,21 @@ export default function FeaturesPage() {
             {/* Interactive mini preview */}
             <div className="p-4 rounded-2xl bg-amber-50/60 border border-amber-100 space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-slate-700">Try it: See how family gets notified</span>
-                <div className="flex gap-1 bg-white p-1 rounded-lg border border-slate-200 text-xs font-bold">
+                <span className="text-xs font-bold text-slate-600">Try it: See how family gets notified</span>
+                <div className="flex gap-1 bg-white p-1 rounded-xl border border-slate-200 text-xs font-bold">
                   <button
                     onClick={() => setCaregiverView("normal")}
-                    className={`px-2 py-0.5 rounded-md ${caregiverView === "normal" ? "bg-teal-600 text-white" : "text-slate-600"}`}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none min-h-[32px] ${
+                      caregiverView === "normal" ? "bg-teal-600 text-white" : "text-slate-600 hover:text-slate-900"
+                    }`}
                   >
                     Normal
                   </button>
                   <button
                     onClick={() => setCaregiverView("alert")}
-                    className={`px-2 py-0.5 rounded-md ${caregiverView === "alert" ? "bg-rose-600 text-white" : "text-slate-600"}`}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none min-h-[32px] ${
+                      caregiverView === "alert" ? "bg-rose-600 text-white" : "text-slate-600 hover:text-slate-900"
+                    }`}
                   >
                     3-Day Alert
                   </button>
@@ -703,13 +720,13 @@ export default function FeaturesPage() {
               </div>
 
               {caregiverView === "normal" ? (
-                <div className="p-3 rounded-xl bg-teal-50 border border-teal-200 text-xs text-teal-900 flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-teal-600 flex-shrink-0" />
+                <div className="p-3 rounded-xl bg-teal-50 border border-teal-200 text-xs text-teal-800 flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-teal-700 flex-shrink-0" />
                   <span>Routine Normal: All medicines taken on time today. Family sees peaceful green status.</span>
                 </div>
               ) : (
-                <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-900 flex items-center gap-2">
-                  <AlertCircle className="w-4 h-4 text-rose-600 flex-shrink-0" />
+                <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-700 flex items-center gap-2">
+                  <AlertCircle className="w-4 h-4 text-rose-700 flex-shrink-0" />
                   <span>Gentle Alert: "3-day missed routine detected. Consider giving a warm call to check in."</span>
                 </div>
               )}
@@ -720,7 +737,10 @@ export default function FeaturesPage() {
                 textToRead="Step 4: Family updates. Discrete notifications sent to loved ones only if daily routine changes for 3 days."
                 buttonLabel="Listen"
               />
-              <Link href="/caregiver" className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-amber-700 hover:underline">
+              <Link 
+                href="/caregiver" 
+                className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-amber-800 hover:underline focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none rounded-lg p-1"
+              >
                 <span>Caregiver view</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
@@ -740,20 +760,20 @@ export default function FeaturesPage() {
           >
             <div className="flex items-center justify-between gap-3 border-b border-slate-100 pb-3">
               <div className="flex items-center gap-3">
-                <span className={`w-10 h-10 rounded-2xl flex items-center justify-center font-black text-sm transition-colors ${
+                <span className={`w-10 h-10 rounded-2xl flex items-center justify-center font-bold text-sm transition-colors ${
                   activeStep === 5 ? "bg-teal-600 text-white shadow-xs" : "bg-rose-100 text-rose-700"
                 }`}>
                   05
                 </span>
                 <div>
-                  <span className="text-xs font-bold text-rose-700 uppercase tracking-wider block">Step 05 • SOS Safety</span>
+                  <span className="text-xs font-semibold text-rose-700 block">Step 05 • SOS Safety</span>
                   <h2 className="text-xl sm:text-2xl font-black text-slate-900">Offline Ready & Emergency SOS</h2>
                 </div>
               </div>
 
               {activeStep === 5 && (
-                <span className="px-2.5 py-1 rounded-full bg-teal-100 text-teal-800 text-[11px] font-black uppercase tracking-wider animate-pulse">
-                  Active Step
+                <span className="px-2.5 py-1 rounded-full bg-teal-100 text-teal-800 text-xs font-bold animate-pulse">
+                  Active step
                 </span>
               )}
             </div>
@@ -762,7 +782,7 @@ export default function FeaturesPage() {
               <p>
                 Built for remote hills and villages where internet drops frequently.
               </p>
-              <ul className="space-y-1.5 text-xs sm:text-sm text-slate-700">
+              <ul className="space-y-1.5 text-xs sm:text-sm text-slate-600">
                 <li className="flex items-center gap-2">✓ <strong className="text-slate-900">Works 100% offline:</strong> Memory games and reminders work without Wi-Fi or data.</li>
                 <li className="flex items-center gap-2">✓ <strong className="text-slate-900">One-touch SOS call:</strong> Big red button dials family or ambulance directly on mobile phone.</li>
                 <li className="flex items-center gap-2">✓ <strong className="text-slate-900">Saves locally:</strong> Automatically syncs when internet comes back.</li>
@@ -772,14 +792,14 @@ export default function FeaturesPage() {
             {/* Interactive mini preview */}
             <div className="p-4 rounded-2xl bg-rose-50/60 border border-rose-100 space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-slate-700">Try it: Test offline switch & SOS button</span>
+                <span className="text-xs font-bold text-slate-600">Try it: Test offline switch & SOS button</span>
                 <button
                   onClick={() => setIsOffline(!isOffline)}
-                  className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold border transition-colors ${
-                    isOffline ? "bg-slate-900 text-white" : "bg-emerald-100 text-emerald-800 border-emerald-200"
+                  className={`inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold border transition-all focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none min-h-[38px] ${
+                    isOffline ? "bg-slate-900 text-white border-slate-900" : "bg-emerald-50 text-emerald-800 border-emerald-200"
                   }`}
                 >
-                  {isOffline ? <WifiOff className="w-3 h-3" /> : <Wifi className="w-3 h-3" />}
+                  {isOffline ? <WifiOff className="w-3.5 h-3.5" /> : <Wifi className="w-3.5 h-3.5" />}
                   <span>{isOffline ? "Offline Mode" : "Online Mode"}</span>
                 </button>
               </div>
@@ -787,14 +807,14 @@ export default function FeaturesPage() {
               <div className="text-center pt-1">
                 <button
                   onClick={() => setSosTested(true)}
-                  className="px-6 py-3 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs sm:text-sm font-bold shadow-md inline-flex items-center gap-2 transition-all active:scale-95"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl bg-rose-600 hover:bg-rose-700 text-white text-sm font-bold shadow-md hover:shadow-lg transition-all focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:outline-none active:scale-98 min-h-[46px]"
                 >
                   <PhoneCall className="w-4 h-4" />
                   <span>Test Emergency SOS Button</span>
                 </button>
 
                 {sosTested && (
-                  <p className="mt-2 text-xs font-bold text-red-800 bg-red-100 p-2 rounded-lg animate-fadeIn">
+                  <p className="mt-2 text-xs font-bold text-rose-700 bg-rose-100 p-2 rounded-lg animate-fadeIn">
                     🚨 SOS Demo: Instantly opens phone dialer with 112 & primary family contact.
                   </p>
                 )}
@@ -806,7 +826,10 @@ export default function FeaturesPage() {
                 textToRead="Step 5: Offline ready and emergency SOS. Works without internet and gives seniors a direct red button for emergency help."
                 buttonLabel="Listen"
               />
-              <Link href="/emergency" className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-rose-700 hover:underline">
+              <Link 
+                href="/emergency" 
+                className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-rose-700 hover:underline focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none rounded-lg p-1"
+              >
                 <span>Emergency Help page</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
@@ -817,20 +840,20 @@ export default function FeaturesPage() {
           {/* BOTTOM SUMMARY                                                      */}
           {/* =================================================================== */}
           <section className="bg-slate-900 text-white rounded-3xl p-6 sm:p-8 text-center space-y-3">
-            <h3 className="text-lg sm:text-xl font-black">All Features in One Simple App</h3>
-            <p className="text-xs sm:text-sm text-slate-300 max-w-lg mx-auto">
+            <h2 className="text-lg sm:text-xl font-black text-white">All Features in One Simple App</h2>
+            <p className="text-xs sm:text-sm text-slate-300 max-w-lg mx-auto font-medium">
               Ready to start? Play a memory game or check your daily dashboard now.
             </p>
             <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
               <Link
                 href="/dashboard"
-                className="px-5 py-2.5 rounded-full bg-white text-slate-900 text-xs sm:text-sm font-bold hover:bg-slate-100 transition-all"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold bg-white text-slate-900 hover:bg-slate-50 shadow-sm transition-all focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none min-h-[42px]"
               >
                 Go to Dashboard
               </Link>
               <Link
                 href="/games"
-                className="px-5 py-2.5 rounded-full bg-teal-600 text-white text-xs sm:text-sm font-bold hover:bg-teal-700 transition-all"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold text-white bg-gradient-to-r from-sky-600 to-teal-600 hover:from-sky-700 hover:to-teal-700 shadow-sm transition-all focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none min-h-[42px]"
               >
                 Start Memory Games
               </Link>
