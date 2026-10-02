@@ -24,7 +24,7 @@ export default function Navbar() {
   const mainNav = [
     { name: t("nav_home") || "Home", href: "/" },
     { name: t("nav_games") || "Games", href: "/games" },
-    { name: "Features", href: "/#features" },
+    { name: "Features", href: "/features" },
     { name: "How It Works", href: "/#how-it-works" },
     { name: "About", href: "/#about" },
     { name: "Blog", href: "/#blog" },
