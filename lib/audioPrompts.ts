@@ -11,14 +11,19 @@
 let activeAudio: HTMLAudioElement | null = null;
 
 export const REGIONAL_SPEECH_MAP: Record<string, { bcp47: string; fallbackLang: string }> = {
-  as: { bcp47: 'as-IN', fallbackLang: 'bn-IN' }, // Assamese (fallback to Bengali phonetics if OS voice missing)
-  hi: { bcp47: 'hi-IN', fallbackLang: 'hi-IN' }, // Hindi
-  bn: { bcp47: 'bn-IN', fallbackLang: 'bn-IN' }, // Bengali
+  as: { bcp47: 'as-IN', fallbackLang: 'bn-IN' }, // Assamese (Assam)
+  hi: { bcp47: 'hi-IN', fallbackLang: 'hi-IN' }, // Hindi (National)
+  bn: { bcp47: 'bn-IN', fallbackLang: 'bn-IN' }, // Bengali (Tripura / Assam)
   en: { bcp47: 'en-IN', fallbackLang: 'en-US' }, // Indian English
-  mni: { bcp47: 'mni-IN', fallbackLang: 'bn-IN' }, // Manipuri / Meitei
-  brx: { bcp47: 'brx-IN', fallbackLang: 'hi-IN' }, // Bodo
-  kha: { bcp47: 'kha-IN', fallbackLang: 'en-IN' }, // Khasi
-  grx: { bcp47: 'grx-IN', fallbackLang: 'en-IN' }, // Garo
+  mni: { bcp47: 'mni-IN', fallbackLang: 'bn-IN' }, // Manipuri / Meitei (Manipur)
+  brx: { bcp47: 'brx-IN', fallbackLang: 'hi-IN' }, // Bodo (Bodoland, Assam)
+  kha: { bcp47: 'kha-IN', fallbackLang: 'en-IN' }, // Khasi (Meghalaya)
+  grx: { bcp47: 'grx-IN', fallbackLang: 'en-IN' }, // Garo (Meghalaya)
+  miz: { bcp47: 'lus-IN', fallbackLang: 'en-IN' }, // Mizo (Mizoram)
+  nag: { bcp47: 'as-IN', fallbackLang: 'as-IN' }, // Nagamese (Nagaland)
+  trp: { bcp47: 'bn-IN', fallbackLang: 'bn-IN' }, // Kokborok (Tripura)
+  ne: { bcp47: 'ne-NP', fallbackLang: 'hi-IN' }, // Nepali (Sikkim)
+  adi: { bcp47: 'en-IN', fallbackLang: 'en-IN' }, // Adi / Nyishi (Arunachal Pradesh)
 };
 
 /**

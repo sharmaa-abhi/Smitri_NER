@@ -25,89 +25,95 @@ export default function LanguageSelector() {
 
   return (
     <>
-      {/* Sleek, Compact 1-Touch Language Button */}
+      {/* Sleek, Accessible 1-Touch Language Button */}
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className="inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-xs font-bold text-amber-950 bg-amber-100 hover:bg-amber-200 border border-amber-300/90 shadow-2xs transition-all hover:scale-[1.02] active:scale-[0.98] focus:outline-none"
+        className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full text-xs sm:text-sm font-bold text-amber-950 bg-amber-100 hover:bg-amber-200/90 border border-amber-300 shadow-xs transition-all hover:scale-[1.02] active:scale-[0.98] focus:outline-none"
         aria-label="Change Language / ভাষা সলনি কৰক / भाषा बदलें"
-        title="Change Language & Voice Dialect"
+        title="Change Language & Regional Dialect"
       >
-        <Globe className="w-3.5 h-3.5 text-amber-700 flex-shrink-0" />
+        <Globe className="w-4 h-4 text-amber-700 flex-shrink-0" />
         <span className="tracking-tight font-black text-slate-900">
           {currentLangInfo.nativeName}
         </span>
       </button>
 
-      {/* Accessible, Well-proportioned Language Modal */}
+      {/* Accessible, Senior-Friendly Language Modal with All North East States */}
       {isOpen && (
         <div 
-          className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 bg-slate-950/70 backdrop-blur-sm animate-in fade-in duration-150"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 bg-slate-950/75 backdrop-blur-sm animate-in fade-in duration-150"
           role="dialog"
           aria-modal="true"
           aria-labelledby="lang-modal-title"
         >
-          <div className="bg-white rounded-2xl p-4 sm:p-6 max-w-md w-full shadow-2xl border-2 border-slate-300 max-h-[88vh] overflow-y-auto">
+          <div className="bg-white rounded-3xl p-4 sm:p-6 max-w-xl w-full shadow-2xl border border-slate-200 flex flex-col max-h-[90vh]">
             {/* Header */}
-            <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-200 gap-2">
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl bg-amber-100 border border-amber-300 flex items-center justify-center text-amber-900 flex-shrink-0">
-                  <Globe className="w-4 h-4" />
+            <div className="flex items-center justify-between pb-3.5 mb-3 border-b border-slate-200 gap-2 flex-shrink-0">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-2xl bg-amber-100 border border-amber-300 flex items-center justify-center text-amber-900 flex-shrink-0 shadow-2xs">
+                  <Globe className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 id="lang-modal-title" className="text-base font-black text-slate-900 tracking-tight leading-tight">
-                    বাছনি কৰক / Choose Language
+                  <h3 id="lang-modal-title" className="text-base sm:text-lg font-black text-slate-900 tracking-tight leading-tight">
+                    বাছনি কৰক / All North East Languages
                   </h3>
-                  <p className="text-[11px] text-slate-500 font-semibold">
-                    Native Voice & Dialect / আপোনাৰ ভাষা স্পৰ্শ কৰক
+                  <p className="text-xs text-slate-500 font-semibold">
+                    Covering all 8 North Eastern States & Regional Dialects
                   </p>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="p-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
+                className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
                 aria-label="Close"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            {/* Language Grid - Compact & Senior Legible */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4">
+            {/* Language Grid - Senior Legible, 2-Columns */}
+            <div className="overflow-y-auto pr-1 py-1 grid grid-cols-1 sm:grid-cols-2 gap-2.5 flex-1 min-h-0">
               {LANGUAGES.map((lang) => {
                 const isSelected = lang.code === language;
                 return (
                   <div
                     key={lang.code}
                     onClick={() => handleSelectLanguage(lang.code)}
-                    className={`cursor-pointer rounded-xl p-2.5 sm:p-3 border transition-all flex items-center justify-between gap-2 ${
+                    className={`cursor-pointer rounded-2xl p-3 border transition-all flex items-center justify-between gap-2.5 ${
                       isSelected
-                        ? "border-teal-600 bg-teal-50/90 shadow-xs ring-1 ring-teal-500"
-                        : "border-slate-200 hover:border-slate-400 bg-white hover:bg-slate-50"
+                        ? "border-teal-600 bg-teal-50/90 shadow-xs ring-2 ring-teal-500/80"
+                        : "border-slate-200 hover:border-teal-400 bg-white hover:bg-slate-50/90"
                     }`}
                   >
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm sm:text-base font-black text-slate-900 tracking-tight leading-tight">
-                        {lang.nativeName}
+                      <div className="flex items-baseline gap-1.5">
+                        <span className="text-base sm:text-[17px] font-black text-slate-900 tracking-tight leading-tight">
+                          {lang.nativeName}
+                        </span>
+                        <span className="text-xs font-semibold text-slate-500">
+                          ({lang.name})
+                        </span>
                       </div>
-                      <div className="text-[10px] text-slate-500 font-medium">
-                        {lang.name} • <span className="text-teal-700 font-bold">{lang.region}</span>
+                      <div className="text-[11px] text-teal-800 font-bold mt-0.5 truncate">
+                        📍 {lang.region}
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-1 flex-shrink-0">
+                    <div className="flex items-center gap-1.5 flex-shrink-0">
                       <button
                         type="button"
                         onClick={(e) => handlePreviewVoice(e, lang.code)}
-                        title="Listen / শুনক"
-                        className="p-1.5 rounded-lg bg-slate-100 hover:bg-amber-200 text-slate-700 transition-colors"
+                        title="Listen to Voice / মাত শুনক"
+                        className="p-2 rounded-xl bg-slate-100 hover:bg-amber-200 text-slate-700 hover:text-amber-950 transition-colors"
+                        aria-label={`Listen voice in ${lang.name}`}
                       >
-                        <Volume2 className="w-3.5 h-3.5" />
+                        <Volume2 className="w-4 h-4" />
                       </button>
                       {isSelected && (
-                        <div className="w-5 h-5 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold">
-                          <Check className="w-3 h-3 stroke-[3]" />
+                        <div className="w-6 h-6 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold shadow-2xs">
+                          <Check className="w-3.5 h-3.5 stroke-[3]" />
                         </div>
                       )}
                     </div>
@@ -117,16 +123,16 @@ export default function LanguageSelector() {
             </div>
 
             {/* Reassurance note */}
-            <div className="p-2.5 rounded-xl bg-amber-50/90 border border-amber-200 text-slate-800 text-[11px] font-semibold flex items-center gap-2">
+            <div className="mt-3 p-3 rounded-2xl bg-amber-50/90 border border-amber-200 text-slate-800 text-xs font-semibold flex items-center gap-2.5 flex-shrink-0">
               <Sparkles className="w-4 h-4 text-amber-600 flex-shrink-0" />
-              <span>Voice instructions adapt automatically to your chosen regional language.</span>
+              <span>Voice prompts, caregiver alerts, and memory exercises automatically adapt to your chosen North East dialect.</span>
             </div>
 
             {/* Close Button */}
             <button
               type="button"
               onClick={() => setIsOpen(false)}
-              className="mt-3 w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs sm:text-sm text-center transition-colors"
+              className="mt-3 w-full py-3 px-5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm text-center transition-colors shadow-sm"
             >
               Continue / আগবাঢ়ক
             </button>
