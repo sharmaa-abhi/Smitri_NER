@@ -13,6 +13,7 @@ import {
   ShieldCheck,
   BellRing
 } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
 
 type ScenarioType = "NORMAL" | "MISSED_MEDICINE" | "COGNITIVE_DECLINE";
 
