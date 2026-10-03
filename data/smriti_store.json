@@ -12,7 +12,7 @@
       "emergencyName": "Rahul Sharma (Son / Caregiver)",
       "emergencyPhone": "+91 98765 43210",
       "preferredLanguage": "English / Hindi / Assamese",
-      "difficultyLevel": 2,
+      "difficultyLevel": 1,
       "dailyHydrationTarget": 6,
       "currentHydrationGlasses": 4
     }
@@ -150,6 +150,34 @@
       "recommendedDifficulty": 2,
       "feedbackText": "You are doing great! Let's try a slightly higher level.",
       "timestamp": "2026-10-01T14:01:39.597Z"
+    },
+    {
+      "id": "s-1791026182912",
+      "userId": "user_kamla",
+      "gameId": "different-one",
+      "gameTitle": "Find the Different One",
+      "score": 60,
+      "accuracy": 60,
+      "responseTimeSec": 17,
+      "mistakes": 9,
+      "difficultyLevel": 1,
+      "recommendedDifficulty": 1,
+      "feedbackText": "Good steady pace! Keep enjoying your daily games.",
+      "timestamp": "2026-10-03T11:16:22.912Z"
+    },
+    {
+      "id": "s-1791026238313",
+      "userId": "user_kamla",
+      "gameId": "different-one",
+      "gameTitle": "Find the Different One",
+      "score": 46,
+      "accuracy": 60,
+      "responseTimeSec": 46,
+      "mistakes": 7,
+      "difficultyLevel": 1,
+      "recommendedDifficulty": 1,
+      "feedbackText": "Let's make this easier. Take your time, there is no rush.",
+      "timestamp": "2026-10-03T11:17:18.313Z"
     }
   ],
   "reminders": [
@@ -218,6 +246,15 @@
     }
   ],
   "caregiverAlerts": [
+    {
+      "id": "alert-1791026238314",
+      "userId": "user_kamla",
+      "type": "PERFORMANCE_DECLINE",
+      "message": "Performance change detected: A steady decrease of 54 points was observed across the last 3 sessions.",
+      "severity": "MEDIUM",
+      "date": "3/10/2026",
+      "isResolved": false
+    },
     {
       "id": "alert-1",
       "userId": "user_kamla",

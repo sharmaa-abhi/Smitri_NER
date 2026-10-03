@@ -27,10 +27,12 @@ import {
 } from 'lucide-react';
 import VoiceButton from '@/components/VoiceButton';
 import ScrollReveal from '@/components/ScrollReveal';
+import { useLanguage } from '@/lib/i18n';
 
 type GameCategory = 'all' | 'daily' | 'memory' | 'attention' | 'verbal';
 
 export default function GamesHubPage() {
+  const { t } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState<GameCategory>('all');
 
   const games = [
@@ -179,23 +181,23 @@ export default function GamesHubPage() {
               <span>Real-World Cognitive Gaming Hub • 9 Scenarios</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-              Games Dashboard & Everyday Quests
+              {t("games_title") || "Games Dashboard & Everyday Quests"}
             </h1>
             <p className="text-xs sm:text-sm text-slate-600 font-medium max-w-2xl leading-relaxed">
-              Every game is carefully modeled after real-world senior experiences — from grocery market shopping to reading clock hands for daily routines.
+              {t("games_subtitle") || "Every game is carefully modeled after real-world senior experiences — from grocery market shopping to reading clock hands for daily routines."}
             </p>
           </div>
 
           <div className="flex items-center gap-3 flex-shrink-0">
             <VoiceButton
               textToRead={voiceSummary}
-              buttonLabel="Read Guide"
+              buttonLabel={t("Read Instructions") || "Read Guide"}
             />
             <Link
               href="/dashboard"
               className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs sm:text-sm rounded-xl border border-slate-200 transition-colors"
             >
-              Back to Dashboard
+              {t("Back to Dashboard") || "Back to Dashboard"}
             </Link>
           </div>
         </div>

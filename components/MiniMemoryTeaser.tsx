@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Sparkles, RotateCcw, Trophy, CheckCircle2, ArrowRight, Timer } from "lucide-react";
 import { playChime } from "@/lib/audioPrompts";
+import { useLanguage } from "@/lib/i18n";
 
 interface TeaserCard {
   id: number;
@@ -20,6 +21,7 @@ const CARDS_DATA = [
 ];
 
 export default function MiniMemoryTeaser() {
+  const { t } = useLanguage();
   const [cards, setCards] = useState<TeaserCard[]>([]);
   const [flippedIndices, setFlippedIndices] = useState<number[]>([]);
   const [matchedCount, setMatchedCount] = useState<number>(0);
@@ -120,13 +122,13 @@ export default function MiniMemoryTeaser() {
         <div className="text-center space-y-2.5 mb-8">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-teal-400/20 text-teal-300 text-xs font-bold border border-teal-400/30 shadow-xs">
             <Sparkles className="w-3.5 h-3.5 text-teal-300" />
-            <span>Interactive Teaser • No Login Required</span>
+            <span>{t("Quick Senior Brain Spark") || "Interactive Teaser • No Login Required"}</span>
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight">
-            15-Second Memory Spark
+            {t("15-Second Mini Memory Challenge") || "15-Second Memory Spark"}
           </h2>
           <p className="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto font-medium">
-            Tap two cards to find matching pairs of cultural symbols. See how quickly your visual recall activates!
+            {t("Tap 2 matching cards to awaken recall") || "Tap two cards to find matching pairs of cultural symbols. See how quickly your visual recall activates!"}
           </p>
         </div>
 
@@ -136,10 +138,10 @@ export default function MiniMemoryTeaser() {
           <div className="flex items-center justify-between pb-4 mb-6 border-b border-white/10 text-xs sm:text-sm font-bold text-slate-300">
             <div className="flex items-center gap-1.5 bg-white/10 px-3 py-1 rounded-full">
               <Timer className="w-3.5 h-3.5 text-teal-300" />
-              <span>Time: <strong className="text-white font-mono">{elapsedSeconds}s</strong></span>
+              <span>{t("Time")}: <strong className="text-white font-mono">{elapsedSeconds}s</strong></span>
             </div>
             <div className="text-slate-300">
-              Moves: <strong className="text-white font-mono">{moves}</strong>
+              {t("Moves")}: <strong className="text-white font-mono">{moves}</strong>
             </div>
             <button
               type="button"
@@ -148,7 +150,7 @@ export default function MiniMemoryTeaser() {
               title="Restart teaser"
             >
               <RotateCcw className="w-3.5 h-3.5" />
-              <span className="text-xs">Reset</span>
+              <span className="text-xs">{t("Reset") || "Reset"}</span>
             </button>
           </div>
 
@@ -176,7 +178,7 @@ export default function MiniMemoryTeaser() {
                       <div className="animate-in zoom-in-75 duration-200">
                         <span className="text-4xl sm:text-5xl block mb-1">{card.symbol}</span>
                         <span className="text-[10px] font-bold text-slate-800 line-clamp-1">
-                          {card.name.split(" ")[0]}
+                          {t(card.name)}
                         </span>
                       </div>
                     ) : (
@@ -197,10 +199,10 @@ export default function MiniMemoryTeaser() {
               </div>
               <div className="space-y-1">
                 <h3 className="text-xl sm:text-2xl font-black text-white">
-                  Sharp Reflexes! / বহুত সুন্দৰ!
+                  {t("Congratulations! Recall Sparked!") || "Sharp Reflexes!"}
                 </h3>
                 <p className="text-xs sm:text-sm text-teal-200">
-                  You completed the memory recall in <strong className="text-white">{elapsedSeconds}s</strong> with <strong className="text-white">{moves}</strong> attempts.
+                  {t("Moves")}: <strong className="text-white">{moves}</strong> • {t("Time")}: <strong className="text-white">{elapsedSeconds}s</strong>
                 </p>
               </div>
 
@@ -211,13 +213,13 @@ export default function MiniMemoryTeaser() {
                   className="w-full sm:w-auto px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs flex items-center justify-center gap-1.5 border border-white/20"
                 >
                   <RotateCcw className="w-3.5 h-3.5" />
-                  <span>Play Again</span>
+                  <span>{t("Play Again") || "Play Again"}</span>
                 </button>
                 <Link
                   href="/games"
                   className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-gradient-to-r from-teal-400 to-emerald-400 text-slate-950 font-black text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow-md hover:scale-[1.02] active:scale-[0.98]"
                 >
-                  <span>Play All 9 Full Games</span>
+                  <span>{t("Play Full Games") || "Play All 9 Full Games"}</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>

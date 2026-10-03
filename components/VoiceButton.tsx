@@ -131,10 +131,10 @@ export default function VoiceButton({
           <button
             type="button"
             onClick={speakText}
-            className={`flex items-center gap-2 px-3.5 py-2 rounded-xl font-semibold text-sm transition-all border-2 ${
+            className={`btn-secondary btn-md rounded-full ${
               isSpeaking
-                ? "bg-amber-100 text-amber-700 border-amber-400"
-                : "bg-teal-50 hover:bg-teal-100 text-teal-700 border-teal-300"
+                ? "!bg-amber-100 !text-amber-800 !border-amber-300 ring-2 ring-amber-400"
+                : ""
             } ${className}`}
             title="Listen to instruction in audio"
             aria-label="Read Instructions aloud"
@@ -157,10 +157,10 @@ export default function VoiceButton({
           <button
             type="button"
             onClick={toggleListening}
-            className={`flex items-center gap-2 px-3.5 py-2 rounded-xl font-semibold text-sm transition-all border-2 ${
+            className={`btn-secondary btn-md rounded-full ${
               isListening
-                ? "bg-rose-100 text-rose-700 border-rose-400 animate-pulse"
-                : "bg-sky-50 hover:bg-sky-100 text-sky-700 border-sky-300"
+                ? "!bg-rose-100 !text-rose-700 !border-rose-400 animate-pulse ring-2 ring-rose-400"
+                : ""
             }`}
             title="Click and speak command"
             aria-label="Speak command"
@@ -172,7 +172,7 @@ export default function VoiceButton({
               </>
             ) : (
               <>
-                <Mic className="w-4 h-4 text-sky-700" />
+                <Mic className="w-4 h-4 text-teal-700" />
                 <span>Voice Command</span>
               </>
             )}
