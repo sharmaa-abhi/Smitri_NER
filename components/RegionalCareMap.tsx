@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { MapPin, Volume2, Users, Wifi, Radio, Sparkles, CheckCircle2, ChevronRight } from "lucide-react";
 import { playChime, playWebSpeechDialect } from "@/lib/audioPrompts";
+import { useLanguage } from "@/lib/i18n";
 
 interface CareHub {
   id: string;
@@ -135,6 +136,7 @@ const CARE_HUBS: CareHub[] = [
 ];
 
 export default function RegionalCareMap() {
+  const { t } = useLanguage();
   const [activeHub, setActiveHub] = useState<CareHub>(CARE_HUBS[0]);
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
 
@@ -163,13 +165,13 @@ export default function RegionalCareMap() {
         <div className="space-y-2 max-w-xl">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/20 text-teal-300 text-xs font-bold border border-teal-500/30">
             <Radio className="w-3.5 h-3.5 animate-pulse text-teal-300" />
-            <span>NER Care Map • 8 Sister States Live Telemetry</span>
+            <span>{t("8 Sister States Health Coverage") || "NER Care Map • 8 Sister States Live Telemetry"}</span>
           </div>
           <h3 className="text-2xl sm:text-3xl font-black tracking-tight text-white">
-            Pulsing Community Care Hubs
+            {t("North East Regional Care Map") || "Pulsing Community Care Hubs"}
           </h3>
           <p className="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed">
-            Hover or tap any regional hub to hear localized audio greetings and inspect real-time offline cognitive session health.
+            {t("Active Senior Hubs & Languages") || "Hover or tap any regional hub to hear localized audio greetings and inspect real-time offline cognitive session health."}
           </p>
         </div>
 
@@ -179,7 +181,7 @@ export default function RegionalCareMap() {
             <div className="text-xl sm:text-2xl font-black text-teal-300 font-mono">
               {totalActive.toLocaleString()}+
             </div>
-            <div className="text-[11px] font-semibold text-slate-400">Total Active Elders</div>
+            <div className="text-[11px] font-semibold text-slate-400">{t("Active Users") || "Total Active Elders"}</div>
           </div>
           <div className="h-8 w-px bg-white/15" />
           <div>

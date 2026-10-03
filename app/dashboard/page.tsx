@@ -159,11 +159,11 @@ export default function DashboardPage() {
             <div className="flex flex-wrap items-center gap-2">
               <span className="text-2xl sm:text-3xl">🌸</span>
               <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-                Namaste, {user.name}
+                {t("Good day! Welcome back") || "Namaste"}, {user.name}
               </h1>
               <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 flex items-center gap-1">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                Active Caregiver: Rahul
+                {t("feature_caregiver_title") || "Active Caregiver"}: Rahul
               </span>
             </div>
             
@@ -189,7 +189,7 @@ export default function DashboardPage() {
             <VoiceButton 
               textToRead={greetingInstruction}
               onSpeechResult={handleVoiceCommand}
-              buttonLabel="Listen Summary"
+              buttonLabel={t("hero_voice_intro") || "Listen Summary"}
             />
             <a
               href={`tel:${user.emergencyPhone || '+919876543210'}`}
@@ -197,7 +197,7 @@ export default function DashboardPage() {
               title="Call Caregiver Rahul"
             >
               <PhoneCall className="w-4 h-4" />
-              <span>Call Rahul</span>
+              <span>{t("emergency_call_caregiver") || "Call Rahul"}</span>
             </a>
           </div>
         </div>
