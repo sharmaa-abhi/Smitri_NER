@@ -72,43 +72,55 @@ export function playRegionalVoicePrompt(
   stopVoicePrompt();
 
   // 1. Play Pre-recorded native audio clip
-  const clipUrl = `/audio/prompts/${lang}_${promptKey}.wav`;
-  const audio = new Audio(clipUrl);
-  audio.volume = 0.65;
-  activeAudio = audio;
+  try {
+    const clipUrl = `/audio/prompts/${lang}_${promptKey}.wav`;
+    const audio = new Audio(clipUrl);
+    audio.volume = 0.65;
+    audio.onerror = () => {
+      // Graceful fallback if file does not exist on disk
+      activeAudio = null;
+    };
+    activeAudio = audio;
 
-  audio.play().catch(() => {
-    // Graceful fallback if autoplay policy restricts
-  });
+    audio.play().catch(() => {
+      // Graceful fallback if autoplay policy restricts
+    });
+  } catch {}
 
   // 2. Play Loving Native Voice via Web Speech API with regional dialect tags
-  if ('speechSynthesis' in window && spokenText) {
-    const utterance = new SpeechSynthesisUtterance(spokenText);
-    const langConfig = REGIONAL_SPEECH_MAP[lang] || { bcp47: 'en-IN', fallbackLang: 'en-IN' };
+  try {
+    if ('speechSynthesis' in window && spokenText) {
+      const utterance = new SpeechSynthesisUtterance(spokenText);
+      const langConfig = REGIONAL_SPEECH_MAP[lang] || { bcp47: 'en-IN', fallbackLang: 'en-IN' };
 
-    utterance.lang = langConfig.bcp47;
-    utterance.rate = 0.82; // Gentle, comforting slow pace for elders
-    utterance.pitch = 1.05; // Slightly higher clarity
-    utterance.volume = 1.0;
+      utterance.lang = langConfig.bcp47;
+      utterance.rate = 0.82; // Gentle, comforting slow pace for elders
+      utterance.pitch = 1.05; // Slightly higher clarity
+      utterance.volume = 1.0;
 
-    // Search for closest regional matching voice
-    const voices = window.speechSynthesis.getVoices();
-    let matchedVoice = voices.find(
-      (v) => v.lang === langConfig.bcp47 || v.lang.startsWith(lang)
-    );
+      // Search for closest regional matching voice
+      const voices = window.speechSynthesis.getVoices();
+      let matchedVoice = voices.find(
+        (v) => v.lang === langConfig.bcp47 || v.lang.startsWith(lang)
+      );
 
-    if (!matchedVoice && langConfig.fallbackLang) {
-      matchedVoice = voices.find((v) => v.lang === langConfig.fallbackLang);
+      if (!matchedVoice && langConfig.fallbackLang) {
+        matchedVoice = voices.find((v) => v.lang === langConfig.fallbackLang);
+      }
+
+      if (matchedVoice) {
+        utterance.voice = matchedVoice;
+      }
+
+      // Delay speech slightly to harmonize with the acoustic bell chime
+      setTimeout(() => {
+        try {
+          window.speechSynthesis.speak(utterance);
+        } catch {}
+      }, 280);
     }
-
-    if (matchedVoice) {
-      utterance.voice = matchedVoice;
-    }
-
-    // Delay speech slightly to harmonize with the acoustic bell chime
-    setTimeout(() => {
-      window.speechSynthesis.speak(utterance);
-    }, 280);
+  } catch (speechErr) {
+    console.warn("Speech synthesis unavailable:", speechErr);
   }
 }
 

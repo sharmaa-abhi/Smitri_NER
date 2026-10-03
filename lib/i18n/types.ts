@@ -42,12 +42,17 @@ export type TranslationDictionary = Record<string, any>;
 export interface LanguageContextType {
   language: LanguageCode;
   setLanguage: (lang: LanguageCode) => void;
+  changeLanguage: (code: string) => Promise<boolean>;
   t: (keyOrText: string, defaultText?: string) => string;
   speak: (textOrKey: string) => void;
-  playVoicePrompt: (promptKey: "welcome" | "start" | "well_done" | "reminder_alert") => void;
+  playVoicePrompt: (
+    promptKey: "welcome" | "start" | "well_done" | "reminder_alert",
+    targetLang?: LanguageCode
+  ) => void;
   currentLangInfo: SupportedLanguage;
   languages: SupportedLanguage[];
   activeLanguages: SupportedLanguage[];
   plannedLanguages: SupportedLanguage[];
   isLoading: boolean;
+  error: string | null;
 }

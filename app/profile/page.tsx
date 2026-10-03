@@ -13,15 +13,18 @@ import {
 } from 'lucide-react';
 import VoiceButton from '@/components/VoiceButton';
 import ScrollReveal from '@/components/ScrollReveal';
+import { useLanguage, isLanguageSupported, I18N_CONFIG, LanguageCode } from '@/lib/i18n';
 
 export default function ProfilePage() {
+  const { language, changeLanguage, activeLanguages, t } = useLanguage();
+
   const [formData, setFormData] = useState({
     name: 'Kamla Devi',
     age: 68,
     email: 'kamla.devi@example.com',
     emergencyName: 'Rahul (Son / Caregiver)',
     emergencyPhone: '+91 98765 43210',
-    preferredLanguage: 'English / Hindi',
+    preferredLanguage: language,
     difficultyLevel: 1,
   });
 
@@ -32,11 +35,19 @@ export default function ProfilePage() {
     fetch('/api/profile')
       .then((res) => res.json())
       .then((data) => {
-        if (data.user) setFormData(data.user);
+        if (data.user) {
+          const userLang = isLanguageSupported(data.user.preferredLanguage)
+            ? data.user.preferredLanguage
+            : language;
+          setFormData({
+            ...data.user,
+            preferredLanguage: userLang,
+          });
+        }
         setLoading(false);
       })
       .catch(() => setLoading(false));
-  }, []);
+  }, [language]);
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,6 +57,11 @@ export default function ProfilePage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
+
+      if (formData.preferredLanguage && isLanguageSupported(formData.preferredLanguage)) {
+        await changeLanguage(formData.preferredLanguage);
+      }
+
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
     } catch (e) {
@@ -108,13 +124,23 @@ export default function ProfilePage() {
             </div>
 
             <div className="space-y-1.5">
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">Preferred Language</label>
-              <input
-                type="text"
-                value={formData.preferredLanguage}
-                onChange={(e) => setFormData({ ...formData, preferredLanguage: e.target.value })}
-                className="w-full text-sm sm:text-base px-4 py-3 rounded-xl border border-slate-300 focus:border-blue-600 focus:outline-none bg-slate-50 text-slate-900 placeholder:text-slate-600"
-              />
+              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                Preferred Language / ভাষা
+              </label>
+              <select
+                value={formData.preferredLanguage || language}
+                onChange={(e) => {
+                  const newLang = e.target.value as LanguageCode;
+                  setFormData({ ...formData, preferredLanguage: newLang });
+                }}
+                className="w-full text-sm sm:text-base px-4 py-3 rounded-xl border border-slate-300 focus:border-teal-600 focus:outline-none bg-slate-50 text-slate-900 font-semibold cursor-pointer"
+              >
+                {activeLanguages.map((lang) => (
+                  <option key={lang.code} value={lang.code}>
+                    {lang.nativeName} ({lang.name}) — {lang.region}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
 

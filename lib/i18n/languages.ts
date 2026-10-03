@@ -222,10 +222,17 @@ export const LANGUAGES: SupportedLanguage[] = [
 export const ACTIVE_LANGUAGES = LANGUAGES.filter((l) => l.enabled);
 export const PLANNED_LANGUAGES = LANGUAGES.filter((l) => !l.enabled);
 
-export function getLanguageInfo(code: string): SupportedLanguage {
+export function getLanguageInfo(code?: string | null): SupportedLanguage {
+  if (!code) return LANGUAGES[0];
   return LANGUAGES.find((l) => l.code === code) || LANGUAGES[0];
 }
 
-export function isLanguageSupported(code: string): boolean {
-  return LANGUAGES.some((l) => l.code === code && l.enabled);
+export function isLanguageSupported(code?: string | null): boolean {
+  if (!code) return false;
+  return ACTIVE_LANGUAGES.some((l) => l.code === code);
+}
+
+export function isLanguagePlanned(code?: string | null): boolean {
+  if (!code) return false;
+  return PLANNED_LANGUAGES.some((l) => l.code === code);
 }

@@ -48,27 +48,35 @@ Object.entries(enJson).forEach(([key, val]) => {
  * 3. Dot to underscore conversion: "features.step1.title" -> "features_step1_title"
  */
 export function resolveTranslation(
-  dict: Record<string, string> | undefined,
+  dict: Record<string, any> | undefined,
   key: string
 ): string | undefined {
   if (!dict || !key) return undefined;
 
   // 1. Direct key match
-  if (dict[key]) return dict[key];
+  if (typeof dict[key] === "string" && dict[key].trim().length > 0) {
+    return dict[key];
+  }
 
   // 2. Hierarchical dot to underscore mapping: "features.step1.title" -> "features_step1_title"
   if (key.includes(".")) {
     const underscoreKey = key.replace(/\./g, "_");
-    if (dict[underscoreKey]) return dict[underscoreKey];
+    if (typeof dict[underscoreKey] === "string" && dict[underscoreKey].trim().length > 0) {
+      return dict[underscoreKey];
+    }
 
     // Try stripping module prefix: "features.step1_title" -> "features_step1_title"
     const lastPart = key.split(".").pop();
-    if (lastPart && dict[lastPart]) return dict[lastPart];
+    if (lastPart && typeof dict[lastPart] === "string" && dict[lastPart].trim().length > 0) {
+      return dict[lastPart];
+    }
   }
 
   // 3. Normalized snake_case
   const snake = key.toLowerCase().replace(/[\s\.-]+/g, "_");
-  if (dict[snake]) return dict[snake];
+  if (typeof dict[snake] === "string" && dict[snake].trim().length > 0) {
+    return dict[snake];
+  }
 
   return undefined;
 }
@@ -101,7 +109,7 @@ export function translate(
   // 2. Plain English string reverse-lookup
   const normalized = normalizeStr(keyOrText);
   const matchedKey = enToKeyMap.get(normalized);
-  if (matchedKey && currentDict[matchedKey]) {
+  if (matchedKey && typeof currentDict[matchedKey] === "string" && currentDict[matchedKey].trim().length > 0) {
     return currentDict[matchedKey];
   }
 
@@ -109,13 +117,13 @@ export function translate(
   if (language !== I18N_CONFIG.fallbackLocale) {
     const fallbackMatch = resolveTranslation(fallbackDict, keyOrText);
     if (fallbackMatch) return fallbackMatch;
-    if (matchedKey && fallbackDict[matchedKey]) {
+    if (matchedKey && typeof fallbackDict[matchedKey] === "string" && fallbackDict[matchedKey].trim().length > 0) {
       return fallbackDict[matchedKey];
     }
   }
 
   // 4. Return user-provided default text
-  if (defaultText !== undefined) {
+  if (defaultText !== undefined && defaultText !== null) {
     return defaultText;
   }
 

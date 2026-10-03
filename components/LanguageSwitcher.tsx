@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useMemo, useEffect, useRef } from "react";
+import React, { useState, useMemo, useEffect, useRef, useId } from "react";
 import { Globe, Check, Volume2, X, Search, Sparkles, AlertCircle, Clock } from "lucide-react";
-import { useLanguage, SupportedLanguage, LanguageCode } from "@/lib/i18n";
+import { useLanguage, SupportedLanguage, LanguageCode, isLanguageSupported } from "@/lib/i18n";
 import Button from "@/components/Button";
 
 interface LanguageSwitcherProps {
@@ -16,7 +16,7 @@ export default function LanguageSwitcher({
 }: LanguageSwitcherProps) {
   const {
     language,
-    setLanguage,
+    changeLanguage,
     currentLangInfo,
     activeLanguages,
     plannedLanguages,
@@ -25,13 +25,18 @@ export default function LanguageSwitcher({
   } = useLanguage();
 
   const [isOpen, setIsOpen] = useState(false);
+  const [stagedLanguage, setStagedLanguage] = useState<LanguageCode>(language);
+  const [isApplying, setIsApplying] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [notification, setNotification] = useState<string | null>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const modalTitleId = useId();
 
-  // Focus search input when modal opens
+  // Synchronize staged language when modal opens or active language changes
   useEffect(() => {
     if (isOpen) {
+      setStagedLanguage(language);
+      setNotification(null);
       setTimeout(() => {
         searchInputRef.current?.focus();
       }, 100);
@@ -39,7 +44,7 @@ export default function LanguageSwitcher({
       setSearchQuery("");
       setNotification(null);
     }
-  }, [isOpen]);
+  }, [isOpen, language]);
 
   // Handle escape key to close modal
   useEffect(() => {
@@ -68,34 +73,60 @@ export default function LanguageSwitcher({
   const filteredActive = useMemo(() => filterList(activeLanguages), [activeLanguages, searchQuery]);
   const filteredPlanned = useMemo(() => filterList(plannedLanguages), [plannedLanguages, searchQuery]);
 
+  // User taps an active language card: stage selection
   const handleSelectActiveLanguage = (code: LanguageCode) => {
-    setLanguage(code);
-    setIsOpen(false);
-    // Trigger gentle native greeting audio
-    setTimeout(() => {
-      playVoicePrompt("welcome");
-    }, 150);
+    setStagedLanguage(code);
+    setNotification(null);
   };
 
+  // User taps audio preview icon: ONLY plays voice sample, NEVER changes language
   const handlePreviewVoice = (e: React.MouseEvent, lang: SupportedLanguage) => {
     e.stopPropagation();
-    if (lang.enabled) {
-      setLanguage(lang.code);
-    }
-    playVoicePrompt("welcome");
+    playVoicePrompt("welcome", lang.code);
     setNotification(
       lang.enabled
-        ? `Switched to ${lang.name} (${lang.nativeName})`
+        ? `Playing ${lang.name} (${lang.nativeName}) audio greeting sample.`
         : `${lang.name} voice preview playing. Full UI text translation in review for ${lang.region}.`
     );
   };
 
+  // User taps a planned / Coming Soon language card
   const handleSelectPlannedLanguage = (lang: SupportedLanguage) => {
-    // Play mother tongue greeting audio preview
-    playVoicePrompt("welcome");
+    // Reassure user without changing language
     setNotification(
-      `Audio preview playing for ${lang.name} (${lang.nativeName}). Full translation set is currently in review with regional linguists from ${lang.region}.`
+      `${lang.name} (${lang.nativeName}) dialect is currently in review with regional linguists for ${lang.region}. Please select an available language to proceed, or tap the speaker icon to hear the audio preview.`
     );
+  };
+
+  // Confirm and apply the staged language selection
+  const canContinue = isLanguageSupported(stagedLanguage);
+
+  const handleConfirmLanguage = async () => {
+    if (!canContinue || isApplying) return;
+
+    // If staged language is already the active language, just close modal
+    if (stagedLanguage === language) {
+      setIsOpen(false);
+      return;
+    }
+
+    setIsApplying(true);
+    try {
+      const success = await changeLanguage(stagedLanguage);
+      if (success) {
+        setIsOpen(false);
+        // Trigger gentle native greeting audio
+        setTimeout(() => {
+          playVoicePrompt("welcome", stagedLanguage);
+        }, 150);
+      } else {
+        setNotification("Could not switch language. Please try again.");
+      }
+    } catch {
+      setNotification("An error occurred while switching language.");
+    } finally {
+      setIsApplying(false);
+    }
   };
 
   return (
@@ -124,18 +155,18 @@ export default function LanguageSwitcher({
           className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 bg-slate-950/75 backdrop-blur-sm animate-in fade-in duration-150"
           role="dialog"
           aria-modal="true"
-          aria-labelledby="lang-modal-title"
+          aria-labelledby={modalTitleId}
         >
           <div className="bg-white rounded-3xl p-4 sm:p-6 max-w-xl w-full shadow-2xl border border-slate-200 flex flex-col max-h-[92vh] overflow-hidden">
             {/* Modal Header */}
             <div className="flex items-center justify-between pb-3.5 mb-3 border-b border-slate-100 gap-2 flex-shrink-0">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-2xl bg-amber-100 border border-amber-300 flex items-center justify-center text-amber-900 flex-shrink-0 shadow-2xs">
+                <div className="w-9 h-9 rounded-2xl bg-amber-100 border border-amber-300 flex items-center justify-center text-amber-900 flex-shrink-0 shadow-sm">
                   <Globe className="w-5 h-5" />
                 </div>
                 <div>
                   <h3
-                    id="lang-modal-title"
+                    id={modalTitleId}
                     className="text-base sm:text-lg font-black text-slate-900 tracking-tight leading-tight"
                   >
                     {t("select_language_title", "Select Language & Dialect")}
@@ -210,18 +241,26 @@ export default function LanguageSwitcher({
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {filteredActive.map((lang) => {
-                    const isSelected = lang.code === language;
+                    const isSelected = lang.code === stagedLanguage;
+                    const isCurrent = lang.code === language;
                     return (
-                      <button
+                      <div
                         key={lang.code}
-                        type="button"
+                        role="button"
+                        tabIndex={0}
+                        aria-selected={isSelected}
                         onClick={() => handleSelectActiveLanguage(lang.code)}
-                        className={`text-left rounded-2xl p-3 border transition-all flex items-center justify-between gap-2.5 min-h-[56px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 ${
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault();
+                            handleSelectActiveLanguage(lang.code);
+                          }
+                        }}
+                        className={`cursor-pointer text-left rounded-2xl p-3 border transition-all flex items-center justify-between gap-2.5 min-h-[56px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 ${
                           isSelected
                             ? "border-teal-600 bg-teal-50/90 shadow-sm ring-2 ring-teal-500/80"
                             : "border-slate-200 hover:border-teal-400 bg-white hover:bg-slate-50/90"
                         }`}
-                        aria-selected={isSelected}
                       >
                         <div className="flex-1 min-w-0">
                           <div className="flex items-baseline gap-1.5">
@@ -232,8 +271,15 @@ export default function LanguageSwitcher({
                               ({lang.name})
                             </span>
                           </div>
-                          <div className="text-[11px] text-teal-800 font-bold mt-0.5 truncate">
-                            📍 {lang.region}
+                          <div className="flex items-center gap-1.5 mt-0.5">
+                            <span className="text-[11px] text-teal-800 font-bold truncate">
+                              📍 {lang.region}
+                            </span>
+                            {isCurrent && (
+                              <span className="text-[9px] font-bold text-teal-800 bg-teal-100/90 px-1.5 py-0.2 rounded-md">
+                                Current
+                              </span>
+                            )}
                           </div>
                         </div>
 
@@ -249,12 +295,12 @@ export default function LanguageSwitcher({
                           </button>
 
                           {isSelected && (
-                            <div className="w-6 h-6 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold shadow-2xs">
+                            <div className="w-6 h-6 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold shadow-sm">
                               <Check className="w-3.5 h-3.5 stroke-[3]" />
                             </div>
                           )}
                         </div>
-                      </button>
+                      </div>
                     );
                   })}
                 </div>
@@ -277,15 +323,17 @@ export default function LanguageSwitcher({
                     return (
                       <div
                         key={lang.code}
-                        onClick={() => handleSelectPlannedLanguage(lang)}
-                        className="cursor-pointer text-left rounded-2xl p-3 border border-slate-200 bg-slate-50/70 hover:bg-slate-100/80 transition-all flex items-center justify-between gap-2.5 min-h-[56px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500"
                         role="button"
                         tabIndex={0}
+                        aria-disabled="true"
+                        onClick={() => handleSelectPlannedLanguage(lang)}
                         onKeyDown={(e) => {
                           if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault();
                             handleSelectPlannedLanguage(lang);
                           }
                         }}
+                        className="cursor-pointer text-left rounded-2xl p-3 border border-slate-200 bg-slate-50/70 hover:bg-slate-100/80 transition-all flex items-center justify-between gap-2.5 min-h-[56px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 opacity-90"
                       >
                         <div className="flex-1 min-w-0">
                           <div className="flex items-baseline gap-1.5">
@@ -332,12 +380,20 @@ export default function LanguageSwitcher({
 
             {/* Close / Continue Button */}
             <Button
-              onClick={() => setIsOpen(false)}
+              onClick={handleConfirmLanguage}
+              disabled={!canContinue || isApplying}
               variant="primary"
               size="md"
-              className="w-full mt-3"
+              className="w-full mt-3 !min-h-[48px] text-sm sm:text-base font-bold shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Continue / আগবাঢ়ক
+              {isApplying ? (
+                <span className="flex items-center justify-center gap-2">
+                  <span className="w-4 h-4 border-2 border-white/60 border-t-white rounded-full animate-spin" />
+                  {t("common_loading", "Applying...")}
+                </span>
+              ) : (
+                t("common_continue", "Continue / আগবাঢ়ক")
+              )}
             </Button>
           </div>
         </div>
