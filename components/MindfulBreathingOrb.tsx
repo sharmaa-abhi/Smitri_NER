@@ -3,8 +3,10 @@
 import React, { useState, useEffect } from "react";
 import { Wind, Play, Pause, RotateCcw, Sparkles } from "lucide-react";
 import { playChime } from "@/lib/audioPrompts";
+import { useLanguage } from "@/lib/i18n";
 
 export default function MindfulBreathingOrb() {
+  const { t } = useLanguage();
   const [isActive, setIsActive] = useState(false);
   const [phase, setPhase] = useState<"INHALE" | "HOLD" | "EXHALE">("INHALE");
   const [counter, setCounter] = useState(4);
@@ -68,15 +70,15 @@ export default function MindfulBreathingOrb() {
       <div className="relative max-w-xl mx-auto text-center space-y-5">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-teal-500/20 text-teal-300 text-xs font-bold border border-teal-500/30 shadow-xs">
           <Wind className="w-3.5 h-3.5 text-teal-300 animate-pulse" />
-          <span>Mindful Breathing • Neuro-Calm</span>
+          <span>{t("Mindful Breathing Orb") || "Mindful Breathing • Neuro-Calm"}</span>
         </div>
 
         <div>
           <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-            2-Minute Senior Mindful Calm
+            {t("Senior Relaxation & Focus") || "2-Minute Senior Mindful Calm"}
           </h3>
           <p className="text-xs sm:text-sm text-slate-300 font-medium max-w-md mx-auto mt-1.5 leading-relaxed">
-            Gentle rhythmic breathing relaxes blood pressure and sharpens recall before playing memory games.
+            {t("Gentle 4-2-4 rhythm designed for senior lung calm and cardiac regulation.") || "Gentle rhythmic breathing relaxes blood pressure and sharpens recall before playing memory games."}
           </p>
         </div>
 
@@ -115,16 +117,16 @@ export default function MindfulBreathingOrb() {
                 {isActive ? counter : "●"}
               </span>
               <span className="text-xs sm:text-sm font-bold tracking-wider uppercase mt-0.5 text-teal-100">
-                {isActive ? (phase === "INHALE" ? "Breathe In" : phase === "HOLD" ? "Hold" : "Breathe Out") : "Ready"}
+                {isActive ? (phase === "INHALE" ? t("Breathe In") : phase === "HOLD" ? t("Hold") : t("Breathe Out")) : t("Start Breathing")}
               </span>
             </div>
           </div>
 
           {/* Regional Guideline Text */}
           <div className="mt-3 text-xs sm:text-sm font-bold text-teal-300 tracking-wide">
-            {phase === "INHALE" && "উশাহ লওক (Deep Inhale) • नाक से सांस लें"}
-            {phase === "HOLD" && "ধৰি ৰাখক (Hold Gently) • रोकें"}
-            {phase === "EXHALE" && "নিশাহ এৰক (Slow Exhale) • धीरे छोड़ें"}
+            {phase === "INHALE" && (t("Inhale") || "Breathe In")}
+            {phase === "HOLD" && (t("Hold") || "Hold Breath")}
+            {phase === "EXHALE" && (t("Exhale") || "Breathe Out")}
           </div>
         </div>
 
@@ -142,12 +144,12 @@ export default function MindfulBreathingOrb() {
             {isActive ? (
               <>
                 <Pause className="w-4 h-4" />
-                <span>Pause</span>
+                <span>{t("Pause") || "Pause"}</span>
               </>
             ) : (
               <>
                 <Play className="w-4 h-4 fill-slate-950 text-slate-950" />
-                <span>Start Calm Breathing</span>
+                <span>{t("Start Breathing") || "Start Calm Breathing"}</span>
               </>
             )}
           </button>
@@ -157,7 +159,8 @@ export default function MindfulBreathingOrb() {
               type="button"
               onClick={handleReset}
               className="p-3 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-colors shadow-sm"
-              title="Reset"
+              title={t("Reset") || "Reset"}
+              aria-label={t("Reset") || "Reset"}
             >
               <RotateCcw className="w-4 h-4" />
             </button>
@@ -167,7 +170,7 @@ export default function MindfulBreathingOrb() {
         {completedCycles > 0 && (
           <div className="text-xs font-bold text-teal-300 flex items-center justify-center gap-1.5 pt-1">
             <Sparkles className="w-3.5 h-3.5 text-teal-300" />
-            <span>{completedCycles} Mindful Cycles Completed! Mind is relaxed & primed for recall.</span>
+            <span>{completedCycles} {t("Cycles Completed") || "Mindful Cycles Completed!"}</span>
           </div>
         )}
       </div>

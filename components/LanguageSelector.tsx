@@ -5,7 +5,7 @@ import { Globe, Check, Volume2, X, Sparkles } from "lucide-react";
 import { LANGUAGES, useLanguage, SupportedLanguage } from "@/lib/i18n";
 
 export default function LanguageSelector() {
-  const { language, setLanguage, currentLangInfo, playVoicePrompt } = useLanguage();
+  const { language, setLanguage, currentLangInfo, playVoicePrompt, t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
 
   const handleSelectLanguage = (code: SupportedLanguage) => {
@@ -30,8 +30,8 @@ export default function LanguageSelector() {
         type="button"
         onClick={() => setIsOpen(true)}
         className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full text-xs sm:text-sm font-bold text-amber-950 bg-amber-100 hover:bg-amber-200/90 border border-amber-300 shadow-xs transition-all hover:scale-[1.02] active:scale-[0.98] focus:outline-none"
-        aria-label="Change Language / ভাষা সলনি কৰক / भाषा बदलें"
-        title="Change Language & Regional Dialect"
+        aria-label={t("nav_select_language") || "Change Language"}
+        title={t("nav_select_language") || "Change Language & Regional Dialect"}
       >
         <Globe className="w-4 h-4 text-amber-700 flex-shrink-0" />
         <span className="tracking-tight font-black text-slate-900">
@@ -56,10 +56,10 @@ export default function LanguageSelector() {
                 </div>
                 <div>
                   <h3 id="lang-modal-title" className="text-base sm:text-lg font-black text-slate-900 tracking-tight leading-tight">
-                    বাছনি কৰক / All North East Languages
+                    {t("select_language_title") || "Select Language & Dialect"}
                   </h3>
                   <p className="text-xs text-slate-500 font-semibold">
-                    Covering all 8 North Eastern States & Regional Dialects
+                    {t("select_language_subtitle") || "Covering all 8 North Eastern States & Regional Dialects"}
                   </p>
                 </div>
               </div>

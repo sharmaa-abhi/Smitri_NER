@@ -32,6 +32,7 @@ import MindfulBreathingOrb from '@/components/MindfulBreathingOrb';
 import NeuralSynapseCanvas from '@/components/NeuralSynapseCanvas';
 import RegionalCareMap from '@/components/RegionalCareMap';
 import TiltCard from '@/components/TiltCard';
+import { useLanguage } from '@/lib/i18n';
 
 const HERO_IMAGES = [
   {
@@ -99,6 +100,7 @@ const HERO_IMAGES = [
 export default function HomePage() {
   const [showDemoVideoModal, setShowDemoVideoModal] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const { t } = useLanguage();
 
   useEffect(() => {
     try {
@@ -147,26 +149,26 @@ export default function HomePage() {
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-teal-50 border border-teal-200/80 text-teal-700 text-xs font-bold tracking-wide shadow-2xs">
                 <Sparkles className="w-3.5 h-3.5 text-teal-700" />
-                <span>AI-powered cognitive care</span>
+                <span>{t("hero_badge_ai") || "AI-powered cognitive care"}</span>
               </div>
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-bold shadow-2xs">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                 </span>
-                <span>Live: 1,420+ Sessions in NER</span>
+                <span>{t("hero_badge_live") || "Live: 1,420+ Sessions in NER"}</span>
               </div>
             </div>
 
             {/* Main Headline */}
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight leading-snug">
-              Stronger Memories, <br />
-              <span className="text-gradient">Brighter Days</span>
+              {t("hero_title_1") || "Stronger Memories,"} <br />
+              <span className="text-gradient">{t("hero_title_2") || "Brighter Days"}</span>
             </h1>
 
             {/* Supporting Text */}
             <p className="text-sm sm:text-base text-slate-600 font-medium max-w-xl mx-auto lg:mx-0 leading-relaxed">
-              <strong className="text-slate-900 font-semibold">Smitri_NER</strong> is an AI-powered cognitive care platform designed to support elderly users through memory games, cognitive activities, personalized assistance, and caregiver support.
+              {t("hero_desc") || "Smitri_NER is an AI-powered cognitive care platform designed to support elderly users through memory games, cognitive activities, personalized assistance, and caregiver support."}
             </p>
 
             {/* Primary & Secondary Action Buttons */}
@@ -175,7 +177,7 @@ export default function HomePage() {
                 href="/dashboard"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-base font-bold text-white bg-gradient-to-r from-sky-600 to-teal-600 hover:from-sky-700 hover:to-teal-700 shadow-md hover:shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98]"
               >
-                <span>Get Started</span>
+                <span>{t("hero_btn_start") || "Get Started"}</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
 
@@ -185,15 +187,15 @@ export default function HomePage() {
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-base font-semibold text-slate-900 bg-white hover:bg-slate-50 border border-slate-300/90 shadow-sm hover:shadow transition-all"
               >
                 <span className="text-teal-700 text-xs">▶</span>
-                <span>Watch Demo</span>
+                <span>{t("hero_btn_demo") || "Watch Demo"}</span>
               </button>
             </div>
 
             {/* Senior Audio Voice Assistance with Animated Equalizer */}
             <div className="pt-1 flex items-center justify-center lg:justify-start gap-3">
               <VoiceButton 
-                textToRead="Welcome to Smitri N E R. An AI-powered cognitive care and memory assistance platform designed for elderly users. Tap Get Started to enter your personalized dashboard."
-                buttonLabel="Listen to Introduction"
+                textToRead={t("voice_welcome") || "Welcome to Smitri N E R. An AI-powered cognitive care and memory assistance platform designed for elderly users. Tap Get Started to enter your personalized dashboard."}
+                buttonLabel={t("hero_voice_intro") || "Listen to Introduction"}
               />
               <div className="hidden sm:flex items-center gap-1 h-5 px-2.5 py-1 rounded-lg bg-teal-50 border border-teal-200/70" title="Audio voice active">
                 <span className="w-1 bg-teal-500 rounded-full animate-sound-1" />
@@ -222,19 +224,18 @@ export default function HomePage() {
                 {/* Category & Caption overlay */}
                 <div className="absolute bottom-3 left-3 right-3 flex items-center justify-start pointer-events-none">
                   <div className="bg-slate-900/80 backdrop-blur-md text-white text-[11px] font-semibold px-3 py-1 rounded-full border border-white/20">
-                    {HERO_IMAGES[currentImageIndex].caption}
+                    {t(HERO_IMAGES[currentImageIndex].caption)}
                   </div>
                 </div>
               </div>
             </TiltCard>
-
 
             {/* Floating Feature Badge 1: Top Left - Play Cognitive Games */}
             <div className="absolute -top-3 -left-3 sm:-left-6 bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-full border border-slate-200/90 shadow-md flex items-center gap-2 animate-float-gentle">
               <div className="w-7 h-7 rounded-full bg-sky-100 text-sky-700 flex items-center justify-center">
                 <Gamepad2 className="w-3.5 h-3.5" />
               </div>
-              <span className="text-xs font-bold text-slate-900">Play Cognitive Games</span>
+              <span className="text-xs font-bold text-slate-900">{t("hero_badge_games") || "Play Cognitive Games"}</span>
             </div>
 
             {/* Floating Feature Badge 2: Top Right - Boost Memory */}
@@ -242,7 +243,7 @@ export default function HomePage() {
               <div className="w-7 h-7 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center">
                 <Brain className="w-3.5 h-3.5" />
               </div>
-              <span className="text-xs font-bold text-slate-900">Boost Memory</span>
+              <span className="text-xs font-bold text-slate-900">{t("hero_badge_boost") || "Boost Memory"}</span>
             </div>
 
             {/* Floating Feature Badge 3: Bottom Left - Better Wellbeing */}
@@ -250,7 +251,7 @@ export default function HomePage() {
               <div className="w-7 h-7 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center">
                 <Heart className="w-3.5 h-3.5" />
               </div>
-              <span className="text-xs font-bold text-slate-900">Better Wellbeing</span>
+              <span className="text-xs font-bold text-slate-900">{t("hero_badge_wellbeing") || "Better Wellbeing"}</span>
             </div>
 
             {/* Floating Feature Badge 4: Bottom Right - Caregiver Support */}
@@ -258,7 +259,7 @@ export default function HomePage() {
               <div className="w-7 h-7 rounded-full bg-rose-100 text-rose-700 flex items-center justify-center">
                 <Users className="w-3.5 h-3.5" />
               </div>
-              <span className="text-xs font-bold text-slate-900">Caregiver Support</span>
+              <span className="text-xs font-bold text-slate-900">{t("hero_badge_caregiver") || "Caregiver Support"}</span>
             </div>
           </div>
         </div>
@@ -273,8 +274,8 @@ export default function HomePage() {
               <Brain className="w-7 h-7" />
             </div>
             <div>
-              <h2 className="text-lg font-black text-slate-900">Memory Games</h2>
-              <p className="text-sm font-semibold text-slate-600">Train & Improve</p>
+              <h2 className="text-lg font-black text-slate-900">{t("benefit_games_title") || "Memory Games"}</h2>
+              <p className="text-sm font-semibold text-slate-600">{t("benefit_games_desc") || "Train & Improve"}</p>
             </div>
           </div>
 
@@ -284,8 +285,8 @@ export default function HomePage() {
               <Heart className="w-7 h-7" />
             </div>
             <div>
-              <h2 className="text-lg font-black text-slate-900">Better Wellbeing</h2>
-              <p className="text-sm font-semibold text-slate-600">Stay Engaged</p>
+              <h2 className="text-lg font-black text-slate-900">{t("benefit_wellbeing_title") || "Better Wellbeing"}</h2>
+              <p className="text-sm font-semibold text-slate-600">{t("benefit_wellbeing_desc") || "Stay Engaged"}</p>
             </div>
           </div>
 
@@ -295,8 +296,8 @@ export default function HomePage() {
               <Users className="w-7 h-7" />
             </div>
             <div>
-              <h2 className="text-lg font-black text-slate-900">For a Brighter Future</h2>
-              <p className="text-sm font-semibold text-slate-600">Support Our Elders</p>
+              <h2 className="text-lg font-black text-slate-900">{t("benefit_future_title") || "For a Brighter Future"}</h2>
+              <p className="text-sm font-semibold text-slate-600">{t("benefit_future_desc") || "Support Our Elders"}</p>
             </div>
           </div>
         </div>
@@ -323,13 +324,13 @@ export default function HomePage() {
         <section id="features" className="space-y-7 scroll-mt-24">
           <div className="text-center space-y-2.5 max-w-2xl mx-auto">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-50 text-sky-700 text-xs font-bold tracking-wider border border-sky-200">
-              Platform Capabilities
+              {t("section_features_badge") || "Platform Capabilities"}
             </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
-              Thoughtfully Crafted for Seniors
+              {t("section_features_title") || "Thoughtfully Crafted for Seniors"}
             </h2>
             <p className="text-sm sm:text-base text-slate-600 font-medium">
-              Designed specifically for elderly ease of use, with large touch targets, voice guidance, and non-intrusive caregiver monitoring.
+              {t("section_features_subtitle") || "Designed specifically for elderly ease of use, with large touch targets, voice guidance, and non-intrusive caregiver monitoring."}
             </p>
           </div>
 
@@ -341,12 +342,12 @@ export default function HomePage() {
                   <div className="w-11 h-11 rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center">
                     <Brain className="w-5 h-5" />
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900">Adaptive Cognitive Games</h3>
+                  <h3 className="text-xl font-bold text-slate-900">{t("feature_games_title") || "Adaptive Cognitive Games"}</h3>
                   <p className="text-sm text-slate-600 font-medium leading-relaxed">
-                    Three interactive games (Memory Match, Sequence Memory, and Find the Different One) that tune difficulty automatically to keep tasks calm and rewarding.
+                    {t("feature_games_desc") || "Three interactive games (Memory Match, Sequence Memory, and Find the Different One) that tune difficulty automatically to keep tasks calm and rewarding."}
                   </p>
-                  <Link href="/games" className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-sky-700 hover:text-sky-700">
-                    <span>Explore games</span>
+                  <Link href="/games" className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-sky-700 hover:text-sky-800">
+                    <span>{t("feature_games_action") || "Explore games"}</span>
                     <ChevronRight className="w-4 h-4" />
                   </Link>
                 </div>
@@ -360,12 +361,12 @@ export default function HomePage() {
                   <div className="w-11 h-11 rounded-2xl bg-teal-100 text-teal-700 flex items-center justify-center">
                     <Bell className="w-5 h-5" />
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900">Daily Routine & Reminders</h3>
+                  <h3 className="text-xl font-bold text-slate-900">{t("feature_reminders_title") || "Daily Routine & Reminders"}</h3>
                   <p className="text-sm text-slate-600 font-medium leading-relaxed">
-                    Large, high-contrast checklists for medication, hydration, and doctor visits, readable aloud via Web Speech API with a single tap.
+                    {t("feature_reminders_desc") || "Large, high-contrast checklists for medication, hydration, and doctor visits, readable aloud via Web Speech API with a single tap."}
                   </p>
-                  <Link href="/reminders" className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-teal-700 hover:text-teal-700">
-                    <span>View daily routines</span>
+                  <Link href="/reminders" className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-teal-700 hover:text-teal-800">
+                    <span>{t("feature_reminders_action") || "View daily routines"}</span>
                     <ChevronRight className="w-4 h-4" />
                   </Link>
                 </div>
@@ -379,12 +380,12 @@ export default function HomePage() {
                   <div className="w-11 h-11 rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center">
                     <Activity className="w-5 h-5" />
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900">Caregiver Observation</h3>
+                  <h3 className="text-xl font-bold text-slate-900">{t("feature_caregiver_title") || "Caregiver Observation"}</h3>
                   <p className="text-sm text-slate-600 font-medium leading-relaxed">
-                    Family members and healthcare companions receive proactive alerts if a 3-day sustained performance shift or missed routine is detected.
+                    {t("feature_caregiver_desc") || "Family members and healthcare companions receive proactive alerts if a 3-day sustained performance shift or missed routine is detected."}
                   </p>
-                  <Link href="/caregiver" className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-sky-700 hover:text-sky-700">
-                    <span>Open caregiver portal</span>
+                  <Link href="/caregiver" className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-sky-700 hover:text-sky-800">
+                    <span>{t("feature_caregiver_action") || "Open caregiver portal"}</span>
                     <ChevronRight className="w-4 h-4" />
                   </Link>
                 </div>
@@ -405,13 +406,13 @@ export default function HomePage() {
 
           <div className="relative text-center space-y-2.5 max-w-2xl mx-auto">
             <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-blue-500/20 text-teal-300 text-xs font-bold tracking-wider border border-blue-500/30">
-              Workflow Overview
+              {t("how_it_works_badge") || "Workflow Overview"}
             </div>
             <h2 className="text-2xl sm:text-3xl font-black text-white">
-              How Smitri_NER Works
+              {t("how_it_works_title") || "How Smitri_NER Works"}
             </h2>
             <p className="text-sm sm:text-base text-slate-300 font-medium">
-              A continuous loop of gentle interaction, objective rhythm tracking, and caring support.
+              {t("how_it_works_subtitle") || "A continuous loop of gentle interaction, objective rhythm tracking, and caring support."}
             </p>
           </div>
 
@@ -421,9 +422,9 @@ export default function HomePage() {
                 <div className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xs shadow-md shadow-blue-500/20">
                   01
                 </div>
-                <h3 className="text-lg font-bold text-white">Easy Senior Input</h3>
+                <h3 className="text-lg font-bold text-white">{t("step1_title") || "Easy Senior Input"}</h3>
                 <p className="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed">
-                  Elderly users interact through high-contrast buttons, touch-friendly grids, and voice prompts.
+                  {t("step1_desc") || "Elderly users interact through high-contrast buttons, touch-friendly grids, and voice prompts."}
                 </p>
               </div>
             </ScrollReveal>
@@ -433,9 +434,9 @@ export default function HomePage() {
                 <div className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xs shadow-md shadow-blue-500/20">
                   02
                 </div>
-                <h3 className="text-lg font-bold text-white">Cognitive Stimulation</h3>
+                <h3 className="text-lg font-bold text-white">{t("step2_title") || "Cognitive Stimulation"}</h3>
                 <p className="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed">
-                  Short, 2-minute memory challenges measure response speed, accuracy, and mistake recovery.
+                  {t("step2_desc") || "Short, 2-minute memory challenges measure response speed, accuracy, and mistake recovery."}
                 </p>
               </div>
             </ScrollReveal>
@@ -445,9 +446,9 @@ export default function HomePage() {
                 <div className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xs shadow-md shadow-blue-500/20">
                   03
                 </div>
-                <h3 className="text-lg font-bold text-white">Adaptive Difficulty</h3>
+                <h3 className="text-lg font-bold text-white">{t("step3_title") || "Adaptive Difficulty"}</h3>
                 <p className="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed">
-                  Our rule-based engine dynamically scales grid size and speed so users never feel pressured.
+                  {t("step3_desc") || "Our rule-based engine dynamically scales grid size and speed so users never feel pressured."}
                 </p>
               </div>
             </ScrollReveal>
@@ -457,9 +458,9 @@ export default function HomePage() {
                 <div className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xs shadow-md shadow-blue-500/20">
                   04
                 </div>
-                <h3 className="text-lg font-bold text-white">Caregiver Connection</h3>
+                <h3 className="text-lg font-bold text-white">{t("step4_title") || "Caregiver Connection"}</h3>
                 <p className="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed">
-                  Caregivers see real-time trends and receive gentle notifications if check-ins are needed.
+                  {t("step4_desc") || "Caregivers see real-time trends and receive gentle notifications if check-ins are needed."}
                 </p>
               </div>
             </ScrollReveal>
@@ -489,13 +490,13 @@ export default function HomePage() {
           <div className="max-w-3xl space-y-3.5">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-teal-500/20 text-teal-300 text-xs font-bold tracking-wider border border-teal-500/30">
               <Compass className="w-4 h-4" />
-              <span>North Eastern Region (NER) Focus</span>
+              <span>{t("about_badge") || "North Eastern Region (NER) Focus"}</span>
             </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-tight">
-              Bridging Care Across Remote & Rural Communities
+              {t("about_title") || "Bridging Care Across Remote & Rural Communities"}
             </h2>
             <p className="text-base sm:text-lg text-slate-300 font-medium leading-relaxed">
-              Smitri_NER is tailored to bridge the geographical challenges of the North Eastern Region. By supporting lightweight offline-friendly execution and multi-dialect voice assistance, families stay closely connected regardless of distance.
+              {t("about_desc") || "Smitri_NER is tailored to bridge the geographical challenges of the North Eastern Region. By supporting lightweight offline-friendly execution and multi-dialect voice assistance, families stay closely connected regardless of distance."}
             </p>
           </div>
 
@@ -503,24 +504,24 @@ export default function HomePage() {
             <div className="flex items-start gap-3">
               <WifiOff className="w-6 h-6 text-teal-300 flex-shrink-0 mt-1" />
               <div>
-                <h3 className="font-bold text-white text-base">Offline-First Design</h3>
-                <p className="text-sm text-slate-300">Works reliably on local device storage even during intermittent connectivity.</p>
+                <h3 className="font-bold text-white text-base">{t("about_pillar1_title") || "Offline-First Design"}</h3>
+                <p className="text-sm text-slate-300">{t("about_pillar1_desc") || "Works reliably on local device storage even during intermittent connectivity."}</p>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
               <PhoneCall className="w-6 h-6 text-teal-300 flex-shrink-0 mt-1" />
               <div>
-                <h3 className="font-bold text-white text-base">Direct SOS Link</h3>
-                <p className="text-sm text-slate-300">Single-click native cellular dial to local family or ambulance dispatch.</p>
+                <h3 className="font-bold text-white text-base">{t("about_pillar2_title") || "Direct SOS Link"}</h3>
+                <p className="text-sm text-slate-300">{t("about_pillar2_desc") || "Single-click native cellular dial to local family or ambulance dispatch."}</p>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
               <Stethoscope className="w-6 h-6 text-teal-300 flex-shrink-0 mt-1" />
               <div>
-                <h3 className="font-bold text-white text-base">Healthcare Readiness</h3>
-                <p className="text-sm text-slate-300">Structured data models mapped for upcoming ABDM & HL7 FHIR telehealth exchange.</p>
+                <h3 className="font-bold text-white text-base">{t("about_pillar3_title") || "Healthcare Readiness"}</h3>
+                <p className="text-sm text-slate-300">{t("about_pillar3_desc") || "Structured data models mapped for upcoming ABDM & HL7 FHIR telehealth exchange."}</p>
               </div>
             </div>
           </div>
@@ -535,14 +536,14 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div>
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-xs font-bold tracking-wider mb-2">
-                Wellness Resources
+                {t("blog_badge") || "Wellness Resources"}
               </div>
               <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
-                Cognitive Wellness Articles
+                {t("blog_title") || "Cognitive Wellness Articles"}
               </h2>
             </div>
-            <Link href="/dashboard" className="text-xs sm:text-sm font-bold text-sky-700 hover:text-sky-700 inline-flex items-center gap-1">
-              <span>Explore all insights</span>
+            <Link href="/dashboard" className="text-xs sm:text-sm font-bold text-sky-700 hover:text-sky-800 inline-flex items-center gap-1">
+              <span>{t("blog_explore") || "Explore all insights"}</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -550,25 +551,25 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <ScrollReveal direction="up" delay={100}>
               <div className="h-full bg-white p-6 rounded-3xl border border-slate-200 space-y-3 shadow-sm hover:shadow-md transition-all hover:-translate-y-1">
-                <span className="text-xs font-bold text-teal-700 bg-teal-50 px-2.5 py-1 rounded-md border border-teal-200">Memory & Sleep</span>
-                <h3 className="text-lg font-bold text-slate-900">How 7 Hours of Sleep Protects Neural Recall in Seniors</h3>
-                <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">Simple evening routines to promote deeper, memory-consolidating sleep cycles.</p>
+                <span className="text-xs font-bold text-teal-700 bg-teal-50 px-2.5 py-1 rounded-md border border-teal-200">{t("blog_article1_tag") || "Memory & Sleep"}</span>
+                <h3 className="text-lg font-bold text-slate-900">{t("blog_article1_title") || "How 7 Hours of Sleep Protects Neural Recall in Seniors"}</h3>
+                <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">{t("blog_article1_desc") || "Simple evening routines to promote deeper, memory-consolidating sleep cycles."}</p>
               </div>
             </ScrollReveal>
 
             <ScrollReveal direction="up" delay={200}>
               <div className="h-full bg-white p-6 rounded-3xl border border-slate-200 space-y-3 shadow-sm hover:shadow-md transition-all hover:-translate-y-1">
-                <span className="text-xs font-bold text-sky-700 bg-sky-50 px-2.5 py-1 rounded-md border border-sky-200">Hydration Tips</span>
-                <h3 className="text-lg font-bold text-slate-900">Why Water Intake Directly Affects Attention & Reaction Time</h3>
-                <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">Mild dehydration is one of the most common causes of morning cognitive fog.</p>
+                <span className="text-xs font-bold text-sky-700 bg-sky-50 px-2.5 py-1 rounded-md border border-sky-200">{t("blog_article2_tag") || "Hydration Tips"}</span>
+                <h3 className="text-lg font-bold text-slate-900">{t("blog_article2_title") || "Why Water Intake Directly Affects Attention & Reaction Time"}</h3>
+                <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">{t("blog_article2_desc") || "Mild dehydration is one of the most common causes of morning cognitive fog."}</p>
               </div>
             </ScrollReveal>
 
             <ScrollReveal direction="up" delay={300}>
               <div className="h-full bg-white p-6 rounded-3xl border border-slate-200 space-y-3 shadow-sm hover:shadow-md transition-all hover:-translate-y-1">
-                <span className="text-xs font-bold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-md border border-amber-200">Caregiver Guidance</span>
-                <h3 className="text-lg font-bold text-slate-900">Comforting Communication: Encouraging Daily Mental Games</h3>
-                <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">How family members can make daily cognitive check-ins playful and stress-free.</p>
+                <span className="text-xs font-bold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-md border border-amber-200">{t("blog_article3_tag") || "Caregiver Guidance"}</span>
+                <h3 className="text-lg font-bold text-slate-900">{t("blog_article3_title") || "Comforting Communication: Encouraging Daily Mental Games"}</h3>
+                <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">{t("blog_article3_desc") || "How family members can make daily cognitive check-ins playful and stress-free."}</p>
               </div>
             </ScrollReveal>
           </div>
@@ -586,23 +587,23 @@ export default function HomePage() {
             </div>
             <div>
               <span className="text-xl font-black text-slate-900 block">Smitri_NER</span>
-              <span className="text-xs font-semibold text-slate-600">Cognitive Wellness & Memory Assistance</span>
+              <span className="text-xs font-semibold text-slate-600">{t("footer_tagline") || "Cognitive Wellness & Memory Assistance"}</span>
             </div>
           </div>
 
           <div className="flex flex-wrap items-center gap-6 text-sm font-semibold text-slate-600">
-            <Link href="/dashboard" className="hover:text-slate-900">Dashboard</Link>
-            <Link href="/games" className="hover:text-slate-900">Games</Link>
-            <Link href="/reminders" className="hover:text-slate-900">Reminders</Link>
-            <Link href="/progress" className="hover:text-slate-900">Progress</Link>
-            <Link href="/caregiver" className="hover:text-slate-900">Caregiver</Link>
-            <Link href="/emergency" className="text-rose-700 hover:text-rose-700 font-bold">Emergency Help</Link>
+            <Link href="/dashboard" className="hover:text-slate-900">{t("nav_dashboard") || "Dashboard"}</Link>
+            <Link href="/games" className="hover:text-slate-900">{t("nav_games") || "Games"}</Link>
+            <Link href="/reminders" className="hover:text-slate-900">{t("nav_reminders") || "Reminders"}</Link>
+            <Link href="/progress" className="hover:text-slate-900">{t("nav_progress") || "Progress"}</Link>
+            <Link href="/caregiver" className="hover:text-slate-900">{t("nav_caregiver") || "Caregiver"}</Link>
+            <Link href="/emergency" className="text-rose-700 hover:text-rose-800 font-bold">{t("nav_emergency") || "Emergency Help"}</Link>
           </div>
         </div>
 
         <div className="bg-slate-100 rounded-2xl p-4 text-xs font-medium text-slate-600 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border border-slate-200">
-          <p>© 2026 Smitri_NER Platform. Prototype cognitive wellness system. Not intended for clinical or medical diagnosis.</p>
-          <p className="font-semibold text-slate-900">Contact: support@smitriner.care</p>
+          <p>{t("footer_copyright") || "© 2026 Smitri_NER Platform. Prototype cognitive wellness system. Not intended for clinical or medical diagnosis."}</p>
+          <p className="font-semibold text-slate-900">{t("footer_contact") || "Contact: support@smitriner.care"}</p>
         </div>
       </footer>
 
@@ -614,27 +615,28 @@ export default function HomePage() {
           <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-xl w-full shadow-2xl border border-slate-200 space-y-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="text-teal-700 font-bold text-sm tracking-wider">Interactive Walkthrough</span>
+                <span className="text-teal-700 font-bold text-sm tracking-wider">{t("modal_demo_badge") || "Interactive Walkthrough"}</span>
               </div>
               <button
                 type="button"
                 onClick={() => setShowDemoVideoModal(false)}
                 className="p-2 rounded-full hover:bg-slate-100 text-slate-600"
+                aria-label={t("modal_demo_close") || "Close"}
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             <div className="space-y-3">
-              <h3 className="text-2xl font-black text-slate-900">Smitri_NER Platform Demo</h3>
+              <h3 className="text-2xl font-black text-slate-900">{t("modal_demo_title") || "Smitri_NER Platform Demo"}</h3>
               <p className="text-slate-600 text-sm font-medium leading-relaxed">
-                Experience the complete live workflow designed for seniors:
+                {t("modal_demo_subtitle") || "Experience the complete live workflow designed for seniors:"}
               </p>
               <ul className="space-y-2 text-sm text-slate-600 font-medium">
-                <li className="flex items-center gap-2">✓ <strong className="text-slate-900">Easy Input:</strong> Large cards, voice assistance, high contrast</li>
-                <li className="flex items-center gap-2">✓ <strong className="text-slate-900">Cognitive Games:</strong> Memory Match, Sequence & Odd-one-out</li>
-                <li className="flex items-center gap-2">✓ <strong className="text-slate-900">Adaptive Engine:</strong> Calibrated difficulty recommendation</li>
-                <li className="flex items-center gap-2">✓ <strong className="text-slate-900">Caregiver View:</strong> 7-day trend & sustained decline detection</li>
+                <li className="flex items-center gap-2">✓ <strong className="text-slate-900">{t("step1_title") || "Easy Input"}:</strong> {t("Large cards, voice assistance, high contrast")}</li>
+                <li className="flex items-center gap-2">✓ <strong className="text-slate-900">{t("feature_games_title") || "Cognitive Games"}:</strong> {t("Memory Match, Sequence & Odd-one-out")}</li>
+                <li className="flex items-center gap-2">✓ <strong className="text-slate-900">{t("step3_title") || "Adaptive Engine"}:</strong> {t("Calibrated difficulty recommendation")}</li>
+                <li className="flex items-center gap-2">✓ <strong className="text-slate-900">{t("feature_caregiver_title") || "Caregiver View"}:</strong> {t("7-day trend & sustained decline detection")}</li>
               </ul>
             </div>
 
@@ -644,14 +646,14 @@ export default function HomePage() {
                 onClick={() => setShowDemoVideoModal(false)}
                 className="flex-1 py-3 px-4 bg-gradient-to-r from-sky-600 to-teal-600 text-white rounded-xl font-bold text-center shadow-md hover:from-sky-700 hover:to-teal-700"
               >
-                Launch Working Prototype →
+                {t("modal_demo_launch") || "Launch Working Prototype →"}
               </Link>
               <button
                 type="button"
                 onClick={() => setShowDemoVideoModal(false)}
                 className="px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl font-bold"
               >
-                Close
+                {t("modal_demo_close") || "Close"}
               </button>
             </div>
           </div>

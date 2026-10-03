@@ -24,11 +24,11 @@ export default function Navbar() {
   const mainNav = [
     { name: t("nav_home") || "Home", href: "/" },
     { name: t("nav_games") || "Games", href: "/games" },
-    { name: "Features", href: "/features" },
-    { name: "How It Works", href: "/#how-it-works" },
-    { name: "About", href: "/#about" },
-    { name: "Blog", href: "/#blog" },
-    { name: "Contact", href: "/#contact" },
+    { name: t("nav_features") || "Features", href: "/features" },
+    { name: t("nav_how_it_works") || "How It Works", href: "/#how-it-works" },
+    { name: t("nav_about") || "About", href: "/#about" },
+    { name: t("nav_blog") || "Blog", href: "/#blog" },
+    { name: t("nav_contact") || "Contact", href: "/#contact" },
   ];
 
   // Application links available inside drawer / mobile menu
@@ -106,12 +106,12 @@ export default function Navbar() {
       {mobileMenuOpen && (
         <div className="md:hidden mt-3 bg-white border border-slate-200 rounded-3xl p-6 shadow-xl space-y-4 animate-in fade-in zoom-in-95">
           <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-            <span className="text-xs font-black tracking-wider text-slate-700 uppercase">Select Dialect / ভাষা</span>
+            <span className="text-xs font-black tracking-wider text-slate-700 uppercase">{t("select_language_title") || "Select Dialect / ভাষা"}</span>
             <LanguageSelector />
           </div>
 
           <div className="space-y-1">
-            <span className="text-xs font-bold tracking-wider text-slate-600">Navigation</span>
+            <span className="text-xs font-bold tracking-wider text-slate-600">{t("nav_navigation") || "Navigation"}</span>
             {mainNav.map((item) => (
               <Link
                 key={item.name}
@@ -125,7 +125,7 @@ export default function Navbar() {
           </div>
 
           <div className="border-t border-slate-100 pt-3 space-y-1">
-            <span className="text-xs font-bold tracking-wider text-slate-600">Elderly & Caregiver Features</span>
+            <span className="text-xs font-bold tracking-wider text-slate-600">{t("nav_care_features") || "Elderly & Caregiver Features"}</span>
             <div className="grid grid-cols-2 gap-2 pt-1">
               {appNav.map((item) => (
                 <Link
@@ -147,7 +147,7 @@ export default function Navbar() {
               className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold text-rose-700 bg-rose-50 border border-rose-200"
             >
               <ShieldAlert className="w-4 h-4" />
-              <span>Emergency Help</span>
+              <span>{t("nav_emergency") || "Emergency Help"}</span>
             </Link>
 
             <Link
@@ -156,7 +156,7 @@ export default function Navbar() {
               className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-bold text-slate-600 bg-slate-100"
             >
               <UserCircle className="w-4 h-4" />
-              <span>Profile</span>
+              <span>{t("nav_profile") || "Profile"}</span>
             </Link>
           </div>
         </div>
