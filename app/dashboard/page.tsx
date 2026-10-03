@@ -28,6 +28,7 @@ import {
 } from 'lucide-react';
 import VoiceButton from '@/components/VoiceButton';
 import ScrollReveal from '@/components/ScrollReveal';
+import { useLanguage } from '@/lib/i18n';
 import {
   ResponsiveContainer,
   LineChart,
@@ -39,6 +40,7 @@ import {
 } from 'recharts';
 
 export default function DashboardPage() {
+  const { t } = useLanguage();
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [hydrationCount, setHydrationCount] = useState<number>(4);

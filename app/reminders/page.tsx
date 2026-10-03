@@ -16,8 +16,10 @@ import {
 import VoiceButton from '@/components/VoiceButton';
 import ScrollReveal from '@/components/ScrollReveal';
 import { saveReminderOffline, getOfflineReminders } from '@/lib/offlineStorage';
+import { useLanguage } from '@/lib/i18n';
 
 export default function RemindersPage() {
+  const { t } = useLanguage();
   const [reminders, setReminders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
@@ -138,20 +140,20 @@ export default function RemindersPage() {
           <div className="space-y-1.5">
             <div className="inline-flex items-center gap-1.5 bg-teal-50 text-teal-800 px-3 py-1 rounded-full text-xs font-bold border border-teal-200">
               <Bell className="w-3.5 h-3.5 text-teal-700" />
-              <span>Daily Routine Assistant</span>
+              <span>{t("Daily Routine & Reminders") || "Daily Routine Assistant"}</span>
             </div>
             <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
-              Daily Reminders
+              {t("reminders_title") || "Daily Reminders"}
             </h1>
             <p className="text-xs sm:text-sm text-slate-600 font-medium">
-              Tap the circular button to check off your medicines and activities.
+              {t("feature_reminders_desc") || "Tap the circular button to check off your medicines and activities."}
             </p>
           </div>
 
           <div className="flex items-center gap-2.5">
             <VoiceButton
               textToRead={voiceSummary}
-              buttonLabel="Read Schedule"
+              buttonLabel={t("Read Schedule") || "Read Schedule"}
             />
 
             <button
@@ -160,7 +162,7 @@ export default function RemindersPage() {
               className="flex items-center gap-1.5 bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-xl font-bold text-sm shadow-sm hover:shadow transition-all"
             >
               <Plus className="w-4 h-4" />
-              <span>Add Reminder</span>
+              <span>{t("Add Reminder") || "Add Reminder"}</span>
             </button>
           </div>
         </div>
@@ -170,7 +172,7 @@ export default function RemindersPage() {
       <div className="space-y-3.5">
         <ScrollReveal direction="up" delay={50}>
           <h2 className="text-lg sm:text-xl font-extrabold text-slate-900 flex items-center gap-2">
-            <span>Pending Today ({pendingList.length})</span>
+            <span>{t("Pending") || "Pending Today"} ({pendingList.length})</span>
           </h2>
         </ScrollReveal>
 

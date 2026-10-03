@@ -74,6 +74,7 @@ const SCENARIOS: ScenarioConfig[] = [
 ];
 
 export default function CaregiverAlertSimulator() {
+  const { t } = useLanguage();
   const [selectedScenario, setSelectedScenario] = useState<ScenarioType>("MISSED_MEDICINE");
 
   const current = SCENARIOS.find((s) => s.id === selectedScenario) || SCENARIOS[0];
@@ -84,13 +85,13 @@ export default function CaregiverAlertSimulator() {
       <div className="text-center space-y-2.5 max-w-2xl mx-auto mb-8">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-50 text-sky-700 text-xs font-bold border border-sky-200 shadow-2xs">
           <ShieldCheck className="w-3.5 h-3.5 text-sky-700" />
-          <span>Caregiver Peace of Mind Simulator</span>
+          <span>{t("Caregiver Peace of Mind Simulator") || "Caregiver Peace of Mind Simulator"}</span>
         </div>
         <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
-          Real-Time Family Protection
+          {t("feature_caregiver_title") || "Real-Time Family Protection"}
         </h2>
         <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">
-          See how Smitri_NER tracks daily rhythms and automatically dispatches SMS, WhatsApp, and Telegram alerts to family members when help is needed.
+          {t("feature_caregiver_desc") || "See how Smitri_NER tracks daily rhythms and automatically dispatches SMS, WhatsApp, and Telegram alerts to family members when help is needed."}
         </p>
       </div>
 
@@ -112,7 +113,7 @@ export default function CaregiverAlertSimulator() {
               {scenario.id === "NORMAL" && <CheckCircle2 className="w-4 h-4 text-emerald-400" />}
               {scenario.id === "MISSED_MEDICINE" && <AlertTriangle className="w-4 h-4 text-amber-400" />}
               {scenario.id === "COGNITIVE_DECLINE" && <Activity className="w-4 h-4 text-rose-400" />}
-              <span>{scenario.tabLabel}</span>
+              <span>{t(scenario.tabLabel)}</span>
             </button>
           );
         })}
