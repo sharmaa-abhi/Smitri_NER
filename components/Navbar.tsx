@@ -84,7 +84,7 @@ export default function Navbar() {
 
           <Link
             href="/dashboard"
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-sky-600 to-teal-600 hover:from-sky-700 hover:to-teal-700 shadow-sm hover:shadow transition-all hover:scale-[1.01] active:scale-[0.98]"
+            className="btn-primary btn-sm text-xs sm:text-sm"
           >
             <span>{t("nav_get_started") || "Get Started"}</span>
             <ArrowRight className="w-4 h-4" />
@@ -94,7 +94,7 @@ export default function Navbar() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-full text-slate-600 hover:bg-slate-100 transition-colors"
+            className="btn-icon md:hidden !p-2"
             aria-label="Toggle Navigation Menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}

@@ -66,6 +66,54 @@
   }
 }
 
+@layer components {
+  /* ========================================================================= */
+  /* SYSTEMATIC BUTTON DESIGN SYSTEM (5 Standardized Variants)                 */
+  /* ========================================================================= */
+  .btn-base {
+    @apply inline-flex items-center justify-center gap-2 font-bold transition-all duration-200 select-none;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-teal-500;
+    @apply disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed;
+    @apply active:scale-[0.98];
+  }
+
+  /* 1. Primary: Main CTA, strong visual emphasis */
+  .btn-primary {
+    @apply btn-base bg-gradient-to-r from-sky-600 to-teal-600 hover:from-sky-700 hover:to-teal-700 text-white border border-transparent shadow-sm hover:shadow-md;
+  }
+
+  /* 2. Secondary: Supporting action with gentle teal tint */
+  .btn-secondary {
+    @apply btn-base bg-teal-50 hover:bg-teal-100 text-teal-800 border border-teal-200/90 shadow-2xs;
+  }
+
+  /* 3. Outline / Ghost: Low-emphasis neutral action */
+  .btn-outline {
+    @apply btn-base bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 border border-slate-200/90 shadow-2xs;
+  }
+
+  /* 4. Destructive: Critical, emergency, or removal actions */
+  .btn-destructive {
+    @apply btn-base bg-rose-600 hover:bg-rose-700 text-white border border-rose-700 shadow-sm hover:shadow-md focus-visible:ring-rose-500;
+  }
+
+  /* 5. Icon / Icon-only: Small utility controls with accessible touch target */
+  .btn-icon {
+    @apply btn-base p-2.5 rounded-full text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent min-h-[44px] min-w-[44px];
+  }
+
+  /* Standard Size Modifiers */
+  .btn-sm {
+    @apply text-xs px-3.5 py-1.5 rounded-full min-h-[38px];
+  }
+  .btn-md {
+    @apply text-sm px-5 py-2.5 rounded-full min-h-[44px];
+  }
+  .btn-lg {
+    @apply text-base px-6 py-3 rounded-full min-h-[48px];
+  }
+}
+
 /* Subtle gentle glow and mesh background */
 .hero-gradient-glow {
   background: radial-gradient(circle at 50% 20%, rgba(14, 165, 233, 0.08) 0%, rgba(20, 184, 166, 0.06) 40%, rgba(250, 252, 253, 0) 70%);

@@ -29,11 +29,11 @@ export default function LanguageSelector() {
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full text-xs sm:text-sm font-bold text-amber-950 bg-amber-100 hover:bg-amber-200/90 border border-amber-300 shadow-xs transition-all hover:scale-[1.02] active:scale-[0.98] focus:outline-none"
+        className="btn-secondary btn-sm rounded-full !bg-amber-100/90 hover:!bg-amber-200/90 !border-amber-300 !text-amber-950 gap-2"
         aria-label={t("nav_select_language") || "Change Language"}
         title={t("nav_select_language") || "Change Language & Regional Dialect"}
       >
-        <Globe className="w-4 h-4 text-amber-700 flex-shrink-0" />
+        <Globe className="w-4 h-4 text-amber-800 flex-shrink-0" />
         <span className="tracking-tight font-black text-slate-900">
           {currentLangInfo.nativeName}
         </span>
@@ -66,7 +66,7 @@ export default function LanguageSelector() {
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
+                className="btn-icon !min-h-[38px] !min-w-[38px] !p-2"
                 aria-label="Close"
               >
                 <X className="w-4 h-4" />
@@ -106,10 +106,10 @@ export default function LanguageSelector() {
                         type="button"
                         onClick={(e) => handlePreviewVoice(e, lang.code)}
                         title="Listen to Voice / মাত শুনক"
-                        className="p-2 rounded-xl bg-slate-100 hover:bg-amber-200 text-slate-700 hover:text-amber-950 transition-colors"
+                        className="btn-icon !min-h-[36px] !min-w-[36px] !p-1.5 hover:!bg-amber-100"
                         aria-label={`Listen voice in ${lang.name}`}
                       >
-                        <Volume2 className="w-4 h-4" />
+                        <Volume2 className="w-4 h-4 text-slate-700" />
                       </button>
                       {isSelected && (
                         <div className="w-6 h-6 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold shadow-2xs">
@@ -132,7 +132,7 @@ export default function LanguageSelector() {
             <button
               type="button"
               onClick={() => setIsOpen(false)}
-              className="mt-3 w-full py-3 px-5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm text-center transition-colors shadow-sm"
+              className="btn-primary btn-md w-full mt-3"
             >
               Continue / আগবাঢ়ক
             </button>

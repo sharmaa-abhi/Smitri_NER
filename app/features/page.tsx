@@ -21,6 +21,7 @@ import {
   AlertCircle
 } from "lucide-react";
 import VoiceButton from "@/components/VoiceButton";
+import Button from "@/components/Button";
 import { playRegionalVoicePrompt, playChime, stopVoicePrompt } from "@/lib/audioPrompts";
 
 interface StepItem {
@@ -236,13 +237,14 @@ export default function FeaturesPage() {
             textToRead="Welcome to the step by step feature guide. Scroll down to see 5 easy steps: memory games, medicine reminders, regional voices, family updates, and emergency SOS."
             buttonLabel="Listen"
           />
-          <Link
+          <Button
             href="/dashboard"
-            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold text-white bg-gradient-to-r from-sky-600 to-teal-600 hover:from-sky-700 hover:to-teal-700 shadow-sm transition-all focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none min-h-[42px]"
+            variant="primary"
+            size="md"
           >
             <span>Open Dashboard</span>
             <ArrowRight className="w-4 h-4" />
-          </Link>
+          </Button>
         </div>
       </section>
 
@@ -254,20 +256,16 @@ export default function FeaturesPage() {
           const isActive = activeStep === s.id;
           const isPassed = activeStep > s.id;
           return (
-            <button
+            <Button
               key={s.id}
               onClick={() => scrollTo(s.slug)}
-              className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none min-h-[38px] ${
-                isActive
-                  ? "bg-slate-900 text-white shadow-xs"
-                  : isPassed
-                  ? "bg-teal-50 text-teal-800 border border-teal-200"
-                  : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-              }`}
+              variant={isActive ? "primary" : isPassed ? "secondary" : "outline"}
+              size="sm"
+              className="whitespace-nowrap"
             >
               <span>{isPassed ? "✓" : s.number}</span>
               <span>{s.shortTitle}</span>
-            </button>
+            </Button>
           );
         })}
       </div>
@@ -419,13 +417,14 @@ export default function FeaturesPage() {
             <div className="p-4 rounded-2xl bg-sky-50/60 border border-sky-100 space-y-3">
               <div className="flex items-center justify-between text-xs font-bold">
                 <span className="text-slate-600">Try it: Tap 2 cards to find matching pair</span>
-                <button 
+                <Button 
                   onClick={resetCards} 
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-all focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none min-h-[32px]"
+                  variant="outline"
+                  size="sm"
                 >
                   <RefreshCw className="w-3.5 h-3.5" />
                   <span>Reset</span>
-                </button>
+                </Button>
               </div>
 
               <div className="grid grid-cols-4 gap-2.5 max-w-xs mx-auto">
@@ -604,42 +603,52 @@ export default function FeaturesPage() {
             <div className="p-4 rounded-2xl bg-sky-50/60 border border-sky-100 space-y-2.5">
               <span className="text-xs font-bold text-slate-600 block">Try it: Tap a language to hear sample voice</span>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                <button
+                <Button
                   onClick={() => playDialect("en", "Welcome to Smitri N E R. Your personal memory companion.")}
-                  className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white hover:bg-slate-50 border border-slate-200 text-slate-900 shadow-2xs transition-all focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none min-h-[38px]"
+                  variant={playingDialect === "en" ? "secondary" : "outline"}
+                  size="sm"
+                  className="w-full text-center"
                 >
                   English
-                </button>
-                <button
+                </Button>
+                <Button
                   onClick={() => playDialect("as", "স্মৃতি এন ই আৰলৈ স্বাগতম।")}
-                  className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white hover:bg-slate-50 border border-slate-200 text-slate-900 shadow-2xs transition-all focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none min-h-[38px]"
+                  variant={playingDialect === "as" ? "secondary" : "outline"}
+                  size="sm"
+                  className="w-full text-center"
                 >
                   অসমীয়া (Assamese)
-                </button>
-                <button
+                </Button>
+                <Button
                   onClick={() => playDialect("bn", "স্মৃতি এন ই আর-এ স্বাগতম।")}
-                  className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white hover:bg-slate-50 border border-slate-200 text-slate-900 shadow-2xs transition-all focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none min-h-[38px]"
+                  variant={playingDialect === "bn" ? "secondary" : "outline"}
+                  size="sm"
+                  className="w-full text-center"
                 >
                   বাংলা (Bengali)
-                </button>
-                <button
+                </Button>
+                <Button
                   onClick={() => playDialect("hi", "स्मृति एन ई आर में आपका स्वागत है।")}
-                  className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white hover:bg-slate-50 border border-slate-200 text-slate-900 shadow-2xs transition-all focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none min-h-[38px]"
+                  variant={playingDialect === "hi" ? "secondary" : "outline"}
+                  size="sm"
+                  className="w-full text-center"
                 >
                   हिंदी (Hindi)
-                </button>
+                </Button>
               </div>
 
               {playingDialect && (
                 <div className="flex items-center gap-2 text-xs font-bold text-teal-700 pt-1">
                   <Volume2 className="w-3.5 h-3.5 animate-pulse" />
                   <span>Playing audio sample...</span>
-                  <button 
+                  <Button 
                     onClick={() => stopVoicePrompt()} 
-                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-all focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none ml-auto"
+                    variant="outline"
+                    size="sm"
+                    className="ml-auto"
                   >
                     Stop
-                  </button>
+                  </Button>
                 </div>
               )}
             </div>
@@ -699,23 +708,21 @@ export default function FeaturesPage() {
             <div className="p-4 rounded-2xl bg-amber-50/60 border border-amber-100 space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-slate-600">Try it: See how family gets notified</span>
-                <div className="flex gap-1 bg-white p-1 rounded-xl border border-slate-200 text-xs font-bold">
-                  <button
+                <div className="flex gap-1.5 p-1 bg-slate-100 rounded-full">
+                  <Button
                     onClick={() => setCaregiverView("normal")}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none min-h-[32px] ${
-                      caregiverView === "normal" ? "bg-teal-600 text-white" : "text-slate-600 hover:text-slate-900"
-                    }`}
+                    variant={caregiverView === "normal" ? "secondary" : "outline"}
+                    size="sm"
                   >
                     Normal
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     onClick={() => setCaregiverView("alert")}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none min-h-[32px] ${
-                      caregiverView === "alert" ? "bg-rose-600 text-white" : "text-slate-600 hover:text-slate-900"
-                    }`}
+                    variant={caregiverView === "alert" ? "destructive" : "outline"}
+                    size="sm"
                   >
                     3-Day Alert
-                  </button>
+                  </Button>
                 </div>
               </div>
 
@@ -793,25 +800,26 @@ export default function FeaturesPage() {
             <div className="p-4 rounded-2xl bg-rose-50/60 border border-rose-100 space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-slate-600">Try it: Test offline switch & SOS button</span>
-                <button
+                <Button
                   onClick={() => setIsOffline(!isOffline)}
-                  className={`inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold border transition-all focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none min-h-[38px] ${
-                    isOffline ? "bg-slate-900 text-white border-slate-900" : "bg-emerald-50 text-emerald-800 border-emerald-200"
-                  }`}
+                  variant={isOffline ? "outline" : "secondary"}
+                  size="sm"
                 >
                   {isOffline ? <WifiOff className="w-3.5 h-3.5" /> : <Wifi className="w-3.5 h-3.5" />}
                   <span>{isOffline ? "Offline Mode" : "Online Mode"}</span>
-                </button>
+                </Button>
               </div>
 
               <div className="text-center pt-1">
-                <button
+                <Button
                   onClick={() => setSosTested(true)}
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl bg-rose-600 hover:bg-rose-700 text-white text-sm font-bold shadow-md hover:shadow-lg transition-all focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:outline-none active:scale-98 min-h-[46px]"
+                  variant="destructive"
+                  size="lg"
+                  className="shadow-md hover:shadow-lg"
                 >
                   <PhoneCall className="w-4 h-4" />
                   <span>Test Emergency SOS Button</span>
-                </button>
+                </Button>
 
                 {sosTested && (
                   <p className="mt-2 text-xs font-bold text-rose-700 bg-rose-100 p-2 rounded-lg animate-fadeIn">
@@ -845,18 +853,20 @@ export default function FeaturesPage() {
               Ready to start? Play a memory game or check your daily dashboard now.
             </p>
             <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
-              <Link
+              <Button
                 href="/dashboard"
-                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold bg-white text-slate-900 hover:bg-slate-50 shadow-sm transition-all focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none min-h-[42px]"
+                variant="outline"
+                size="md"
               >
                 Go to Dashboard
-              </Link>
-              <Link
+              </Button>
+              <Button
                 href="/games"
-                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold text-white bg-gradient-to-r from-sky-600 to-teal-600 hover:from-sky-700 hover:to-teal-700 shadow-sm transition-all focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none min-h-[42px]"
+                variant="primary"
+                size="md"
               >
                 Start Memory Games
-              </Link>
+              </Button>
             </div>
           </section>
 
