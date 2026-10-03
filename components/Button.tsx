@@ -40,9 +40,9 @@ export function getButtonClasses(
       "bg-gradient-to-r from-sky-600 to-teal-600 hover:from-sky-700 hover:to-teal-700 " +
       "text-white border border-transparent shadow-sm hover:shadow-md",
     secondary:
-      "bg-teal-50 hover:bg-teal-100 text-teal-800 border border-teal-200/90 shadow-2xs",
+      "bg-teal-50 hover:bg-teal-100 text-teal-800 border border-teal-200/90 shadow-sm",
     outline:
-      "bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 border border-slate-200/90 shadow-2xs",
+      "bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 border border-slate-200/90 shadow-sm",
     destructive:
       "bg-rose-600 hover:bg-rose-700 text-white border border-rose-700 shadow-sm hover:shadow-md " +
       "focus-visible:ring-rose-500",

@@ -84,12 +84,12 @@
 
   /* 2. Secondary: Supporting action with gentle teal tint */
   .btn-secondary {
-    @apply btn-base bg-teal-50 hover:bg-teal-100 text-teal-800 border border-teal-200/90 shadow-2xs;
+    @apply btn-base bg-teal-50 hover:bg-teal-100 text-teal-800 border border-teal-200/90 shadow-sm;
   }
 
   /* 3. Outline / Ghost: Low-emphasis neutral action */
   .btn-outline {
-    @apply btn-base bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 border border-slate-200/90 shadow-2xs;
+    @apply btn-base bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 border border-slate-200/90 shadow-sm;
   }
 
   /* 4. Destructive: Critical, emergency, or removal actions */
