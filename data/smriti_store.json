@@ -206,6 +206,20 @@
       "recommendedDifficulty": 2,
       "feedbackText": "You are doing great! Let's try a slightly higher level.",
       "timestamp": "2026-10-04T08:31:58.811Z"
+    },
+    {
+      "id": "s-1791102762127",
+      "userId": "user_kamla",
+      "gameId": "number-trail",
+      "gameTitle": "Number Trail",
+      "score": 100,
+      "accuracy": 100,
+      "responseTimeSec": 17,
+      "mistakes": 0,
+      "difficultyLevel": 1,
+      "recommendedDifficulty": 2,
+      "feedbackText": "You are doing great! Let's try a slightly higher level.",
+      "timestamp": "2026-10-04T08:32:42.127Z"
     }
   ],
   "reminders": [
