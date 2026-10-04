@@ -152,35 +152,35 @@ export default function GameArenaPage() {
   return (
     <div className="space-y-6 pb-12">
       {/* Navigation & Controls Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/90 shadow-sm">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 sm:p-6 rounded-2xl border border-[#D5DFDC] shadow-sm">
         <div className="flex items-center gap-3.5">
           <Link
             href="/games"
-            className="p-2.5 bg-slate-100 hover:bg-slate-200 rounded-xl text-slate-800 transition-colors border border-slate-300"
+            className="p-2.5 bg-[#F6F8F7] hover:bg-[#E6F4F1] rounded-xl text-[#0B534B] transition-colors border border-[#D5DFDC]"
             aria-label="Back to Games"
           >
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div>
-            <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+            <h1 className="text-xl sm:text-2xl font-black text-[#111615] tracking-tight">
               {currentInfo.title}
             </h1>
-            <p className="text-xs sm:text-sm text-slate-600 font-semibold">
+            <p className="text-xs sm:text-sm text-[#5A6A66] font-semibold">
               Difficulty: Level {difficulty} (Adaptive)
             </p>
           </div>
         </div>
 
         <div className="flex items-center gap-2.5">
-          <div className="flex items-center gap-1.5 bg-slate-100 px-3 py-2 rounded-lg border border-slate-200 text-sm font-bold text-slate-800">
-            <Clock className="w-4 h-4 text-blue-700" />
+          <div className="flex items-center gap-1.5 bg-[#F6F8F7] px-3 py-2 rounded-lg border border-[#D5DFDC] text-sm font-bold text-[#111615]">
+            <Clock className="w-4 h-4 text-[#0B534B]" />
             <span>{elapsedTime}s</span>
           </div>
 
           <button
             type="button"
             onClick={restartGame}
-            className="flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg border border-slate-200 text-sm font-bold text-slate-800 transition-colors"
+            className="flex items-center gap-1.5 bg-[#F6F8F7] hover:bg-[#E6F4F1] px-3 py-2 rounded-lg border border-[#D5DFDC] text-sm font-bold text-[#0B534B] transition-colors"
           >
             <RotateCcw className="w-4 h-4" />
             <span>Restart</span>
@@ -189,10 +189,10 @@ export default function GameArenaPage() {
       </div>
 
       {/* Senior Voice Instructions Card */}
-      <div className="bg-blue-50 border border-blue-200 p-4 sm:p-5 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3.5">
+      <div className="bg-[#E6F4F1] border border-[#0B534B]/20 p-4 sm:p-5 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3.5">
         <div className="flex items-start gap-2.5">
-          <HelpCircle className="w-5 h-5 text-blue-700 flex-shrink-0 mt-0.5" />
-          <p className="text-sm sm:text-base text-blue-950 font-medium leading-snug">
+          <HelpCircle className="w-5 h-5 text-[#0B534B] flex-shrink-0 mt-0.5" />
+          <p className="text-sm sm:text-base text-[#111615] font-medium leading-snug">
             {currentInfo.instruction}
           </p>
         </div>
@@ -204,7 +204,7 @@ export default function GameArenaPage() {
       </div>
 
       {/* Main Game Stage */}
-      <div className="bg-white rounded-3xl p-6 sm:p-10 border-4 border-slate-200 shadow-lg min-h-[440px] flex flex-col items-center justify-center">
+      <div className="bg-white rounded-3xl p-6 sm:p-10 border-2 border-[#D5DFDC] shadow-sm min-h-[440px] flex flex-col items-center justify-center">
         {gameId === 'memory-match' && (
           <MemoryMatchArena key={gameKey} difficulty={difficulty} onFinish={handleFinishGame} />
         )}
@@ -235,11 +235,11 @@ export default function GameArenaPage() {
       </div>
 
       {submitting && (
-        <div className="fixed inset-0 bg-slate-900/60 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-3xl p-8 max-w-md text-center space-y-4 shadow-2xl border-4 border-blue-600">
-            <div className="w-16 h-16 border-4 border-blue-700 border-t-transparent rounded-full animate-spin mx-auto" />
-            <h3 className="text-2xl font-black text-slate-900">Analyzing Your Rhythm...</h3>
-            <p className="text-lg text-slate-600 font-medium">
+        <div className="fixed inset-0 bg-[#042420]/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-3xl p-8 max-w-md text-center space-y-4 shadow-2xl border-2 border-[#0B534B]">
+            <div className="w-16 h-16 border-4 border-[#0B534B] border-t-transparent rounded-full animate-spin mx-auto" />
+            <h3 className="text-2xl font-black text-[#111615]">Analyzing Your Rhythm...</h3>
+            <p className="text-lg text-[#5A6A66] font-medium">
               Calculating cognitive performance score and adaptive difficulty adjustment.
             </p>
           </div>

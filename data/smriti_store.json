@@ -12,7 +12,7 @@
       "emergencyName": "Rahul Sharma (Son / Caregiver)",
       "emergencyPhone": "+91 98765 43210",
       "preferredLanguage": "English / Hindi / Assamese",
-      "difficultyLevel": 1,
+      "difficultyLevel": 2,
       "dailyHydrationTarget": 6,
       "currentHydrationGlasses": 4
     }
@@ -178,6 +178,34 @@
       "recommendedDifficulty": 1,
       "feedbackText": "Let's make this easier. Take your time, there is no rush.",
       "timestamp": "2026-10-03T11:17:18.313Z"
+    },
+    {
+      "id": "s-1791102712419",
+      "userId": "user_kamla",
+      "gameId": "different-one",
+      "gameTitle": "Find the Different One",
+      "score": 80,
+      "accuracy": 100,
+      "responseTimeSec": 77,
+      "mistakes": 0,
+      "difficultyLevel": 1,
+      "recommendedDifficulty": 2,
+      "feedbackText": "You are doing great! Let's try a slightly higher level.",
+      "timestamp": "2026-10-04T08:31:52.419Z"
+    },
+    {
+      "id": "s-1791102718811",
+      "userId": "user_kamla",
+      "gameId": "different-one",
+      "gameTitle": "Find the Different One",
+      "score": 80,
+      "accuracy": 100,
+      "responseTimeSec": 77,
+      "mistakes": 0,
+      "difficultyLevel": 1,
+      "recommendedDifficulty": 2,
+      "feedbackText": "You are doing great! Let's try a slightly higher level.",
+      "timestamp": "2026-10-04T08:31:58.811Z"
     }
   ],
   "reminders": [
