@@ -73,16 +73,16 @@ export default function SoundWordMatchArena({ difficulty, onFinish }: Props) {
 
   return (
     <div className="space-y-6 w-full max-w-xl text-center">
-      <div className="inline-flex items-center gap-2 bg-rose-100 text-rose-950 px-4 py-1.5 rounded-full font-bold text-sm">
-        <Volume2 className="w-4 h-4 text-rose-700" />
+      <div className="inline-flex items-center gap-2 bg-[#E6F4F1] text-[#0B534B] border border-[#93CEC5] px-4 py-1.5 rounded-full font-bold text-sm">
+        <Volume2 className="w-4 h-4 text-[#0B534B]" />
         <span>Question {round} of 3</span>
       </div>
 
       <div className="space-y-2">
-        <h3 className="text-2xl sm:text-3xl font-black text-slate-900">
+        <h3 className="text-2xl sm:text-3xl font-black text-[#111615]">
           &ldquo;{currentPrompt.prompt}&rdquo;
         </h3>
-        <p className="text-xs sm:text-sm text-slate-600 font-medium">
+        <p className="text-xs sm:text-sm text-[#5A6A66] font-medium">
           Tap the speaker to hear the description again, then choose the picture.
         </p>
       </div>
@@ -101,7 +101,7 @@ export default function SoundWordMatchArena({ difficulty, onFinish }: Props) {
             key={idx}
             type="button"
             onClick={() => handleSelect(opt.isCorrect)}
-            className="h-32 sm:h-36 bg-slate-50 hover:bg-rose-50 border-3 border-slate-300 hover:border-rose-400 rounded-3xl text-5xl flex items-center justify-center shadow-md hover:scale-105 active:scale-95 transition-all"
+            className="h-32 sm:h-36 bg-white hover:bg-[#E6F4F1] border-2 border-[#D5DFDC] hover:border-[#0B534B] rounded-3xl text-5xl flex items-center justify-center shadow-md hover:scale-105 active:scale-95 transition-all"
             aria-label="Selection option"
           >
             {opt.icon}

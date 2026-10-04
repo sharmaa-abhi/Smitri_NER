@@ -62,14 +62,14 @@ export default function MindfulBreathingOrb() {
   };
 
   return (
-    <div className="bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 text-white rounded-3xl p-6 sm:p-8 border border-blue-900/60 shadow-2xl relative overflow-hidden">
+    <div className="bg-gradient-to-br from-[#042420] via-[#06342E] to-[#0B534B] text-white rounded-3xl p-6 sm:p-8 border border-[#127267]/40 shadow-2xl relative overflow-hidden">
       {/* Background ambient glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-teal-500/15 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -top-12 -right-12 w-64 h-64 bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-[#10B981]/15 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -top-12 -right-12 w-64 h-64 bg-[#0B534B]/20 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative max-w-xl mx-auto text-center space-y-5">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-teal-500/20 text-teal-300 text-xs font-bold border border-teal-500/30 shadow-xs">
-          <Wind className="w-3.5 h-3.5 text-teal-300 animate-pulse" />
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-[#A7F3D0] text-xs font-bold border border-white/20 shadow-xs">
+          <Wind className="w-3.5 h-3.5 text-[#A7F3D0] animate-pulse" />
           <span>{t("Mindful Breathing Orb") || "Mindful Breathing • Neuro-Calm"}</span>
         </div>
 
@@ -77,7 +77,7 @@ export default function MindfulBreathingOrb() {
           <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
             {t("Senior Relaxation & Focus") || "2-Minute Senior Mindful Calm"}
           </h3>
-          <p className="text-xs sm:text-sm text-slate-300 font-medium max-w-md mx-auto mt-1.5 leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#D5DFDC] font-medium max-w-md mx-auto mt-1.5 leading-relaxed">
             {t("Gentle 4-2-4 rhythm designed for senior lung calm and cardiac regulation.") || "Gentle rhythmic breathing relaxes blood pressure and sharpens recall before playing memory games."}
           </p>
         </div>
@@ -87,7 +87,7 @@ export default function MindfulBreathingOrb() {
           <div className="relative flex items-center justify-center w-48 h-48 sm:w-56 sm:h-56">
             {/* Outer Pulsing Wave Rings */}
             <div
-              className={`absolute inset-0 rounded-full bg-gradient-to-tr from-teal-400/25 to-sky-400/20 transition-all duration-1000 ${
+              className={`absolute inset-0 rounded-full bg-gradient-to-tr from-[#0B534B]/30 to-[#10B981]/30 transition-all duration-1000 ${
                 isActive
                   ? phase === "INHALE"
                     ? "scale-110 opacity-75"
@@ -98,7 +98,7 @@ export default function MindfulBreathingOrb() {
               }`}
             />
             <div
-              className={`absolute inset-3 rounded-full bg-gradient-to-tr from-teal-300/30 to-sky-300/20 transition-all duration-1000 ${
+              className={`absolute inset-3 rounded-full bg-gradient-to-tr from-[#10B981]/30 to-[#A7F3D0]/20 transition-all duration-1000 ${
                 isActive && phase === "INHALE" ? "scale-105 opacity-90" : "scale-95 opacity-50"
               }`}
             />
@@ -107,23 +107,23 @@ export default function MindfulBreathingOrb() {
             <div
               className={`w-36 h-36 sm:w-40 sm:h-40 rounded-full flex flex-col items-center justify-center text-white shadow-2xl transition-all duration-1000 select-none ${
                 phase === "INHALE"
-                  ? "bg-gradient-to-tr from-teal-500 to-sky-500 scale-105 shadow-[0_0_40px_rgba(20,184,166,0.5)]"
+                  ? "bg-gradient-to-tr from-[#0B534B] to-[#10B981] scale-105 shadow-[0_0_40px_rgba(16,185,129,0.4)]"
                   : phase === "HOLD"
-                  ? "bg-gradient-to-tr from-sky-500 to-indigo-600 scale-100 shadow-[0_0_40px_rgba(14,165,233,0.5)]"
-                  : "bg-gradient-to-tr from-teal-600 to-emerald-600 scale-95 shadow-[0_0_35px_rgba(16,185,129,0.45)]"
+                  ? "bg-gradient-to-tr from-[#08433C] to-[#D97706] scale-100 shadow-[0_0_40px_rgba(217,119,6,0.35)]"
+                  : "bg-gradient-to-tr from-[#059669] to-[#10B981] scale-95 shadow-[0_0_35px_rgba(16,185,129,0.35)]"
               }`}
             >
               <span className="text-2xl sm:text-3xl font-black font-mono text-white">
                 {isActive ? counter : "●"}
               </span>
-              <span className="text-xs sm:text-sm font-bold tracking-wider uppercase mt-0.5 text-teal-100">
+              <span className="text-xs sm:text-sm font-bold tracking-wider uppercase mt-0.5 text-[#A7F3D0]">
                 {isActive ? (phase === "INHALE" ? t("Breathe In") : phase === "HOLD" ? t("Hold") : t("Breathe Out")) : t("Start Breathing")}
               </span>
             </div>
           </div>
 
           {/* Regional Guideline Text */}
-          <div className="mt-3 text-xs sm:text-sm font-bold text-teal-300 tracking-wide">
+          <div className="mt-3 text-xs sm:text-sm font-bold text-[#A7F3D0] tracking-wide">
             {phase === "INHALE" && (t("Inhale") || "Breathe In")}
             {phase === "HOLD" && (t("Hold") || "Hold Breath")}
             {phase === "EXHALE" && (t("Exhale") || "Breathe Out")}
@@ -137,8 +137,8 @@ export default function MindfulBreathingOrb() {
             onClick={handleToggle}
             className={`inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs sm:text-sm font-black transition-all shadow-lg active:scale-95 ${
               isActive
-                ? "bg-amber-400 hover:bg-amber-500 text-slate-950 shadow-amber-400/25"
-                : "bg-teal-500 hover:bg-teal-400 text-slate-950 hover:scale-102 shadow-teal-500/30"
+                ? "bg-[#D97706] hover:bg-[#B45309] text-white shadow-[#D97706]/25"
+                : "bg-[#10B981] hover:bg-[#059669] text-white hover:scale-102 shadow-[#10B981]/30"
             }`}
           >
             {isActive ? (
@@ -148,7 +148,7 @@ export default function MindfulBreathingOrb() {
               </>
             ) : (
               <>
-                <Play className="w-4 h-4 fill-slate-950 text-slate-950" />
+                <Play className="w-4 h-4 fill-white text-white" />
                 <span>{t("Start Breathing") || "Start Calm Breathing"}</span>
               </>
             )}
@@ -168,8 +168,8 @@ export default function MindfulBreathingOrb() {
         </div>
 
         {completedCycles > 0 && (
-          <div className="text-xs font-bold text-teal-300 flex items-center justify-center gap-1.5 pt-1">
-            <Sparkles className="w-3.5 h-3.5 text-teal-300" />
+          <div className="text-xs font-bold text-[#A7F3D0] flex items-center justify-center gap-1.5 pt-1">
+            <Sparkles className="w-3.5 h-3.5 text-[#A7F3D0]" />
             <span>{completedCycles} {t("Cycles Completed") || "Mindful Cycles Completed!"}</span>
           </div>
         )}

@@ -60,27 +60,27 @@ export default function ClockReadingArena({ difficulty, onFinish }: Props) {
 
   return (
     <div className="space-y-6 w-full max-w-xl text-center">
-      <div className="inline-flex items-center gap-2 bg-cyan-100 text-cyan-950 px-4 py-1.5 rounded-full font-bold text-sm">
-        <Clock className="w-4 h-4 text-cyan-700" />
+      <div className="inline-flex items-center gap-2 bg-[#E6F4F1] text-[#0B534B] border border-[#93CEC5] px-4 py-1.5 rounded-full font-bold text-sm">
+        <Clock className="w-4 h-4 text-[#0B534B]" />
         <span>Time Check {round} of 3</span>
       </div>
 
       <div className="space-y-1">
-        <h3 className="text-2xl sm:text-3xl font-black text-slate-900">
+        <h3 className="text-2xl sm:text-3xl font-black text-[#111615]">
           What time does the clock show?
         </h3>
-        <p className="text-xs sm:text-sm font-semibold text-cyan-800">
+        <p className="text-xs sm:text-sm font-semibold text-[#0B534B]">
           Hint: {currentQuestion.label}
         </p>
       </div>
 
       {/* SVG Analog Clock Face */}
       <div className="flex justify-center py-2">
-        <div className="relative w-48 h-48 sm:w-56 sm:h-56 bg-slate-50 rounded-full border-4 border-slate-800 shadow-xl flex items-center justify-center">
-          <span className="absolute top-2 font-black text-slate-700 text-lg">12</span>
-          <span className="absolute right-3 font-black text-slate-700 text-lg">3</span>
-          <span className="absolute bottom-2 font-black text-slate-700 text-lg">6</span>
-          <span className="absolute left-3 font-black text-slate-700 text-lg">9</span>
+        <div className="relative w-48 h-48 sm:w-56 sm:h-56 bg-white rounded-full border-4 border-[#0B534B] shadow-xl flex items-center justify-center">
+          <span className="absolute top-2 font-black text-[#111615] text-lg">12</span>
+          <span className="absolute right-3 font-black text-[#111615] text-lg">3</span>
+          <span className="absolute bottom-2 font-black text-[#111615] text-lg">6</span>
+          <span className="absolute left-3 font-black text-[#111615] text-lg">9</span>
 
           <svg className="w-full h-full" viewBox="0 0 200 200">
             <line
@@ -88,7 +88,7 @@ export default function ClockReadingArena({ difficulty, onFinish }: Props) {
               y1="100"
               x2="100"
               y2="52"
-              stroke="#1e293b"
+              stroke="#111615"
               strokeWidth="7"
               strokeLinecap="round"
               transform={`rotate(${hourAngle} 100 100)`}
@@ -98,12 +98,12 @@ export default function ClockReadingArena({ difficulty, onFinish }: Props) {
               y1="100"
               x2="100"
               y2="30"
-              stroke="#0891b2"
+              stroke="#0B534B"
               strokeWidth="5"
               strokeLinecap="round"
               transform={`rotate(${minuteAngle} 100 100)`}
             />
-            <circle cx="100" cy="100" r="6" fill="#0891b2" />
+            <circle cx="100" cy="100" r="6" fill="#0B534B" />
           </svg>
         </div>
       </div>
@@ -115,7 +115,7 @@ export default function ClockReadingArena({ difficulty, onFinish }: Props) {
             key={idx}
             type="button"
             onClick={() => handleSelect(timeOpt)}
-            className="py-3.5 px-4 bg-slate-50 hover:bg-cyan-50 border-3 border-slate-300 hover:border-cyan-500 rounded-2xl font-black text-lg sm:text-xl text-slate-800 shadow-sm hover:scale-105 active:scale-95 transition-all"
+            className="py-3.5 px-4 bg-white hover:bg-[#E6F4F1] border-2 border-[#D5DFDC] hover:border-[#0B534B] rounded-2xl font-black text-lg sm:text-xl text-[#111615] shadow-sm hover:scale-105 active:scale-95 transition-all"
           >
             {timeOpt}
           </button>

@@ -63,10 +63,10 @@ export default function NeuralSynapseCanvas() {
     }
 
     const COLORS = [
-      "rgba(13, 148, 136, 0.7)",  // Teal
-      "rgba(2, 132, 199, 0.7)",   // Sky
-      "rgba(20, 184, 166, 0.6)",  // Mint teal
-      "rgba(59, 130, 246, 0.6)",  // Blue
+      "rgba(11, 83, 75, 0.75)",  // Primary Deep Teal #0B534B
+      "rgba(16, 185, 129, 0.75)", // Secondary Emerald #10B981
+      "rgba(18, 114, 103, 0.65)", // Teal Mid #127267
+      "rgba(90, 106, 102, 0.55)", // Neutral Slate #5A6A66
     ];
 
     let nodes: Node[] = [];
@@ -105,7 +105,7 @@ export default function NeuralSynapseCanvas() {
             ctx.beginPath();
             ctx.moveTo(nodes[i].x, nodes[i].y);
             ctx.lineTo(nodes[j].x, nodes[j].y);
-            ctx.strokeStyle = `rgba(13, 148, 136, ${alpha})`;
+            ctx.strokeStyle = `rgba(11, 83, 75, ${alpha})`;
             ctx.lineWidth = 1;
             ctx.stroke();
           }
@@ -124,7 +124,7 @@ export default function NeuralSynapseCanvas() {
             ctx.beginPath();
             ctx.moveTo(nodes[i].x, nodes[i].y);
             ctx.lineTo(mouse.x, mouse.y);
-            ctx.strokeStyle = `rgba(2, 132, 199, ${alpha})`;
+            ctx.strokeStyle = `rgba(16, 185, 129, ${alpha})`;
             ctx.lineWidth = 1.6;
             ctx.stroke();
 
@@ -138,8 +138,8 @@ export default function NeuralSynapseCanvas() {
 
         // Draw soft cursor glow center
         const cursorGlow = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 25);
-        cursorGlow.addColorStop(0, "rgba(14, 165, 233, 0.2)");
-        cursorGlow.addColorStop(1, "rgba(14, 165, 233, 0)");
+        cursorGlow.addColorStop(0, "rgba(16, 185, 129, 0.2)");
+        cursorGlow.addColorStop(1, "rgba(16, 185, 129, 0)");
         ctx.beginPath();
         ctx.arc(mouse.x, mouse.y, 25, 0, Math.PI * 2);
         ctx.fillStyle = cursorGlow;

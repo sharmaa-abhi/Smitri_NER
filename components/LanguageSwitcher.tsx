@@ -135,7 +135,7 @@ export default function LanguageSwitcher({
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className={`btn-secondary rounded-full !bg-amber-100/90 hover:!bg-amber-200/90 !border-amber-300 !text-amber-950 gap-2 ${
+        className={`btn-secondary rounded-full !bg-[#E6F4F1] hover:!bg-[#C2E5DF] !border-[#93CEC5] !text-[#0B534B] gap-2 ${
           buttonVariant === "sm" ? "btn-sm text-xs sm:text-sm" : "btn-md"
         } ${className}`}
         aria-haspopup="dialog"
@@ -143,8 +143,8 @@ export default function LanguageSwitcher({
         aria-label={t("nav_select_language", "Change Language")}
         title={t("nav_select_language", "Change Language & Regional Dialect")}
       >
-        <Globe className="w-4 h-4 text-amber-800 flex-shrink-0" />
-        <span className="tracking-tight font-black text-slate-900">
+        <Globe className="w-4 h-4 text-[#0B534B] flex-shrink-0" />
+        <span className="tracking-tight font-black text-[#0B534B]">
           {currentLangInfo.nativeName}
         </span>
       </button>
@@ -152,26 +152,26 @@ export default function LanguageSwitcher({
       {/* Senior-Friendly Multilingual Selection Dialog */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 bg-slate-950/75 backdrop-blur-sm animate-in fade-in duration-150"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 bg-[#042420]/70 backdrop-blur-sm animate-in fade-in duration-150"
           role="dialog"
           aria-modal="true"
           aria-labelledby={modalTitleId}
         >
-          <div className="bg-white rounded-3xl p-4 sm:p-6 max-w-xl w-full shadow-2xl border border-slate-200 flex flex-col max-h-[92vh] overflow-hidden">
+          <div className="bg-white rounded-3xl p-4 sm:p-6 max-w-xl w-full shadow-2xl border border-[#D5DFDC] flex flex-col max-h-[92vh] overflow-hidden">
             {/* Modal Header */}
-            <div className="flex items-center justify-between pb-3.5 mb-3 border-b border-slate-100 gap-2 flex-shrink-0">
+            <div className="flex items-center justify-between pb-3.5 mb-3 border-b border-[#EBF0EE] gap-2 flex-shrink-0">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-2xl bg-amber-100 border border-amber-300 flex items-center justify-center text-amber-900 flex-shrink-0 shadow-sm">
+                <div className="w-9 h-9 rounded-2xl bg-[#E6F4F1] border border-[#93CEC5] flex items-center justify-center text-[#0B534B] flex-shrink-0 shadow-sm">
                   <Globe className="w-5 h-5" />
                 </div>
                 <div>
                   <h3
                     id={modalTitleId}
-                    className="text-base sm:text-lg font-black text-slate-900 tracking-tight leading-tight"
+                    className="text-base sm:text-lg font-black text-[#111615] tracking-tight leading-tight"
                   >
                     {t("select_language_title", "Select Language & Dialect")}
                   </h3>
-                  <p className="text-xs text-slate-500 font-semibold">
+                  <p className="text-xs text-[#5A6A66] font-semibold">
                     {t("select_language_subtitle", "Covering all 8 North Eastern States, Hindi & English")}
                   </p>
                 </div>
@@ -188,21 +188,21 @@ export default function LanguageSwitcher({
 
             {/* Senior Search Bar */}
             <div className="relative mb-3 flex-shrink-0">
-              <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <Search className="w-4 h-4 text-[#5A6A66] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
                 ref={searchInputRef}
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search language / ভাষা বিচাৰক..."
-                className="w-full pl-9 pr-9 py-2.5 rounded-full border border-slate-200 bg-slate-50 text-sm font-semibold text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:bg-white transition-all min-h-[44px]"
+                className="w-full pl-9 pr-9 py-2.5 rounded-full border border-[#D5DFDC] bg-[#F6F8F7] text-sm font-semibold text-[#111615] placeholder:text-[#5A6A66] focus:outline-none focus:ring-2 focus:ring-[#0B534B] focus:bg-white transition-all min-h-[44px]"
                 aria-label="Search languages"
               />
               {searchQuery && (
                 <button
                   type="button"
                   onClick={() => setSearchQuery("")}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 rounded-full"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#5A6A66] hover:text-[#111615] p-1 rounded-full"
                   aria-label="Clear search"
                 >
                   <X className="w-4 h-4" />
@@ -212,13 +212,13 @@ export default function LanguageSwitcher({
 
             {/* Notification alert banner if user tapped preview or info */}
             {notification && (
-              <div className="mb-3 p-3 rounded-2xl bg-teal-50 border border-teal-200 text-teal-900 text-xs font-semibold flex items-center gap-2 flex-shrink-0 animate-in fade-in">
-                <AlertCircle className="w-4 h-4 text-teal-700 flex-shrink-0" />
+              <div className="mb-3 p-3 rounded-2xl bg-[#E6F4F1] border border-[#93CEC5] text-[#0B534B] text-xs font-semibold flex items-center gap-2 flex-shrink-0 animate-in fade-in">
+                <AlertCircle className="w-4 h-4 text-[#0B534B] flex-shrink-0" />
                 <span className="flex-1">{notification}</span>
                 <button
                   type="button"
                   onClick={() => setNotification(null)}
-                  className="text-teal-700 hover:text-teal-900 p-0.5"
+                  className="text-[#0B534B] hover:text-[#042420] p-0.5"
                   aria-label="Dismiss message"
                 >
                   <X className="w-3.5 h-3.5" />
@@ -231,10 +231,10 @@ export default function LanguageSwitcher({
               {/* Group 1: Available & Fully Supported Languages */}
               <div>
                 <div className="flex items-center justify-between mb-2 px-1">
-                  <span className="text-xs font-black tracking-wider text-slate-700 uppercase">
+                  <span className="text-xs font-black tracking-wider text-[#111615] uppercase">
                     Available Languages • পূৰ্ণ সমৰ্থন ({filteredActive.length})
                   </span>
-                  <span className="text-[11px] font-bold text-teal-700 bg-teal-50 px-2 py-0.5 rounded-full border border-teal-200">
+                  <span className="text-[11px] font-bold text-[#0B534B] bg-[#E6F4F1] px-2 py-0.5 rounded-full border border-[#93CEC5]">
                     100% Translated
                   </span>
                 </div>
@@ -256,27 +256,27 @@ export default function LanguageSwitcher({
                             handleSelectActiveLanguage(lang.code);
                           }
                         }}
-                        className={`cursor-pointer text-left rounded-2xl p-3 border transition-all flex items-center justify-between gap-2.5 min-h-[56px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 ${
+                        className={`cursor-pointer text-left rounded-2xl p-3 border transition-all flex items-center justify-between gap-2.5 min-h-[56px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0B534B] ${
                           isSelected
-                            ? "border-teal-600 bg-teal-50/90 shadow-sm ring-2 ring-teal-500/80"
-                            : "border-slate-200 hover:border-teal-400 bg-white hover:bg-slate-50/90"
+                            ? "border-[#0B534B] bg-[#E6F4F1] shadow-sm ring-2 ring-[#0B534B]/80"
+                            : "border-[#D5DFDC] hover:border-[#0B534B] bg-white hover:bg-[#F6F8F7]"
                         }`}
                       >
                         <div className="flex-1 min-w-0">
                           <div className="flex items-baseline gap-1.5">
-                            <span className="text-base sm:text-[17px] font-black text-slate-900 tracking-tight leading-tight">
+                            <span className="text-base sm:text-[17px] font-black text-[#111615] tracking-tight leading-tight">
                               {lang.nativeName}
                             </span>
-                            <span className="text-xs font-semibold text-slate-500">
+                            <span className="text-xs font-semibold text-[#5A6A66]">
                               ({lang.name})
                             </span>
                           </div>
                           <div className="flex items-center gap-1.5 mt-0.5">
-                            <span className="text-[11px] text-teal-800 font-bold truncate">
+                            <span className="text-[11px] text-[#0B534B] font-bold truncate">
                               📍 {lang.region}
                             </span>
                             {isCurrent && (
-                              <span className="text-[9px] font-bold text-teal-800 bg-teal-100/90 px-1.5 py-0.2 rounded-md">
+                              <span className="text-[9px] font-bold text-[#0B534B] bg-[#C2E5DF] px-1.5 py-0.5 rounded-md">
                                 Current
                               </span>
                             )}
@@ -288,14 +288,14 @@ export default function LanguageSwitcher({
                             type="button"
                             onClick={(e) => handlePreviewVoice(e, lang)}
                             title={`Listen voice sample in ${lang.name}`}
-                            className="btn-icon !min-h-[38px] !min-w-[38px] !p-2 hover:!bg-amber-100"
+                            className="btn-icon !min-h-[38px] !min-w-[38px] !p-2 hover:!bg-[#E6F4F1] hover:!text-[#0B534B]"
                             aria-label={`Listen voice sample in ${lang.name}`}
                           >
-                            <Volume2 className="w-4 h-4 text-slate-700" />
+                            <Volume2 className="w-4 h-4 text-[#5A6A66]" />
                           </button>
 
                           {isSelected && (
-                            <div className="w-6 h-6 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold shadow-sm">
+                            <div className="w-6 h-6 rounded-full bg-[#0B534B] text-white flex items-center justify-center font-bold shadow-sm">
                               <Check className="w-3.5 h-3.5 stroke-[3]" />
                             </div>
                           )}
@@ -308,12 +308,12 @@ export default function LanguageSwitcher({
 
               {/* Group 2: Planned North East Dialects (In Review / Coming Soon) */}
               <div>
-                <div className="flex items-center justify-between mb-2 px-1 pt-1 border-t border-slate-100">
-                  <span className="text-xs font-black tracking-wider text-slate-700 uppercase flex items-center gap-1.5">
-                    <Clock className="w-3.5 h-3.5 text-amber-600" />
+                <div className="flex items-center justify-between mb-2 px-1 pt-1 border-t border-[#EBF0EE]">
+                  <span className="text-xs font-black tracking-wider text-[#111615] uppercase flex items-center gap-1.5">
+                    <Clock className="w-3.5 h-3.5 text-[#D97706]" />
                     North East Regional Dialects • প্ৰস্তুতি চলি আছে ({filteredPlanned.length})
                   </span>
-                  <span className="text-[11px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
+                  <span className="text-[11px] font-bold text-[#92400E] bg-[#FEF3C7] px-2 py-0.5 rounded-full border border-[#FDE68A]">
                     Audio Preview
                   </span>
                 </div>
@@ -333,22 +333,22 @@ export default function LanguageSwitcher({
                             handleSelectPlannedLanguage(lang);
                           }
                         }}
-                        className="cursor-pointer text-left rounded-2xl p-3 border border-slate-200 bg-slate-50/70 hover:bg-slate-100/80 transition-all flex items-center justify-between gap-2.5 min-h-[56px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 opacity-90"
+                        className="cursor-pointer text-left rounded-2xl p-3 border border-[#D5DFDC] bg-[#F6F8F7] hover:bg-[#EBF0EE] transition-all flex items-center justify-between gap-2.5 min-h-[56px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D97706] opacity-90"
                       >
                         <div className="flex-1 min-w-0">
                           <div className="flex items-baseline gap-1.5">
-                            <span className="text-base sm:text-[17px] font-black text-slate-800 tracking-tight leading-tight">
+                            <span className="text-base sm:text-[17px] font-black text-[#111615] tracking-tight leading-tight">
                               {lang.nativeName}
                             </span>
-                            <span className="text-xs font-semibold text-slate-500">
+                            <span className="text-xs font-semibold text-[#5A6A66]">
                               ({lang.name})
                             </span>
                           </div>
                           <div className="flex items-center gap-1.5 mt-0.5">
-                            <span className="text-[11px] text-slate-600 font-semibold truncate">
+                            <span className="text-[11px] text-[#5A6A66] font-semibold truncate">
                               📍 {lang.region}
                             </span>
-                            <span className="text-[9px] font-black text-amber-700 bg-amber-100/90 px-1.5 py-0.2 rounded-md">
+                            <span className="text-[9px] font-black text-[#92400E] bg-[#FEF3C7] border border-[#FDE68A] px-1.5 py-0.5 rounded-md">
                               Coming Soon
                             </span>
                           </div>
@@ -358,10 +358,10 @@ export default function LanguageSwitcher({
                           type="button"
                           onClick={(e) => handlePreviewVoice(e, lang)}
                           title={`Listen to ${lang.name} greeting audio`}
-                          className="btn-icon !min-h-[38px] !min-w-[38px] !p-2 hover:!bg-amber-200/80 flex-shrink-0"
+                          className="btn-icon !min-h-[38px] !min-w-[38px] !p-2 hover:!bg-[#FEF3C7] text-[#D97706] flex-shrink-0"
                           aria-label={`Listen to ${lang.name} voice greeting`}
                         >
-                          <Volume2 className="w-4 h-4 text-amber-900" />
+                          <Volume2 className="w-4 h-4 text-[#D97706]" />
                         </button>
                       </div>
                     );
@@ -371,8 +371,8 @@ export default function LanguageSwitcher({
             </div>
 
             {/* Reassurance Footer Banner */}
-            <div className="mt-3 p-3 rounded-2xl bg-amber-50/90 border border-amber-200 text-slate-800 text-xs font-semibold flex items-center gap-2.5 flex-shrink-0">
-              <Sparkles className="w-4 h-4 text-amber-600 flex-shrink-0" />
+            <div className="mt-3 p-3 rounded-2xl bg-[#FFFBEB] border border-[#FDE68A] text-[#78350F] text-xs font-semibold flex items-center gap-2.5 flex-shrink-0">
+              <Sparkles className="w-4 h-4 text-[#D97706] flex-shrink-0" />
               <span>
                 Voice prompts, memory exercises, and caregiver alerts adapt smoothly to your chosen language.
               </span>

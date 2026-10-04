@@ -72,20 +72,20 @@ export default function SequenceMemoryArena({ difficulty, onFinish }: Props) {
 
   return (
     <div className="space-y-8 w-full max-w-md text-center">
-      <div className="text-xl font-black text-slate-800">
+      <div className="text-xl font-black text-[#111615]">
         {isShowingSequence ? (
-          <span className="text-blue-700 animate-pulse">👀 Memorize the light pattern...</span>
+          <span className="text-[#0B534B] animate-pulse">👀 Memorize the light pattern...</span>
         ) : (
-          <span className="text-teal-700">👉 Now tap the tiles in the same sequence!</span>
+          <span className="text-[#059669]">👉 Now tap the tiles in the same sequence!</span>
         )}
       </div>
 
       <div className="grid grid-cols-2 gap-6">
         {[
-          { id: 0, color: 'bg-blue-500', active: 'bg-blue-300 ring-8 ring-blue-300 scale-105' },
-          { id: 1, color: 'bg-emerald-500', active: 'bg-emerald-300 ring-8 ring-emerald-300 scale-105' },
-          { id: 2, color: 'bg-amber-500', active: 'bg-amber-300 ring-8 ring-amber-300 scale-105' },
-          { id: 3, color: 'bg-rose-500', active: 'bg-rose-300 ring-8 ring-rose-300 scale-105' },
+          { id: 0, color: 'bg-[#0B534B]', active: 'bg-[#127267] ring-8 ring-[#93CEC5] scale-105' },
+          { id: 1, color: 'bg-[#10B981]', active: 'bg-[#34D399] ring-8 ring-[#A7F3D0] scale-105' },
+          { id: 2, color: 'bg-[#D97706]', active: 'bg-[#FBBF24] ring-8 ring-[#FDE68A] scale-105' },
+          { id: 3, color: 'bg-[#2F9285]', active: 'bg-[#5EB2A6] ring-8 ring-[#C2E5DF] scale-105' },
         ].map((pad) => {
           const isActive = activePad === pad.id;
           return (
@@ -94,7 +94,7 @@ export default function SequenceMemoryArena({ difficulty, onFinish }: Props) {
               type="button"
               disabled={isShowingSequence}
               onClick={() => handlePadClick(pad.id)}
-              className={`h-36 sm:h-44 rounded-3xl shadow-lg border-4 border-slate-800/20 transition-all ${
+              className={`h-36 sm:h-44 rounded-3xl shadow-lg border-4 border-black/10 transition-all ${
                 pad.color
               } ${isActive ? pad.active : 'opacity-85 hover:opacity-100 active:scale-95'}`}
               aria-label={`Color tile ${pad.id + 1}`}
