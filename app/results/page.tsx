@@ -55,18 +55,18 @@ export default function ResultsPage() {
     <div className="max-w-3xl mx-auto space-y-8 py-4 pb-16">
       {/* Top Banner */}
       <ScrollReveal direction="down">
-        <div className="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200/90 shadow-lg text-center space-y-3">
-          <div className="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-900 px-3.5 py-1 rounded-full text-xs font-bold border border-emerald-200">
-            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+        <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#D5DFDC] shadow-sm text-center space-y-3">
+          <div className="inline-flex items-center gap-1.5 bg-[#ECFDF5] text-[#047857] px-3.5 py-1 rounded-full text-xs font-bold border border-[#10B981]/30">
+            <CheckCircle2 className="w-4 h-4 text-[#10B981]" />
             <span>Exercise Completed</span>
           </div>
 
-          <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-black text-[#111615] tracking-tight">
             Great Job Today!
           </h1>
 
-          <p className="text-xs sm:text-sm text-slate-600 font-medium max-w-xl mx-auto">
-            You completed <span className="font-bold text-slate-900">{session.gameTitle}</span> with calm focus and attention.
+          <p className="text-xs sm:text-sm text-[#5A6A66] font-medium max-w-xl mx-auto">
+            You completed <span className="font-bold text-[#111615]">{session.gameTitle}</span> with calm focus and attention.
           </p>
 
           {/* Voice Feedback Reader */}
@@ -81,14 +81,14 @@ export default function ResultsPage() {
 
       {/* Score Hero Card */}
       <ScrollReveal direction="up" delay={80}>
-        <div className="bg-gradient-to-br from-blue-900 to-indigo-950 text-white rounded-2xl p-6 sm:p-8 border-2 border-blue-800 shadow-xl text-center space-y-4">
+        <div className="bg-gradient-to-br from-[#042420] to-[#0B534B] text-white rounded-2xl p-6 sm:p-8 border-2 border-[#0B534B] shadow-xl text-center space-y-4">
           <div className="space-y-0.5">
-            <span className="text-xs font-bold tracking-widest uppercase text-blue-300">
+            <span className="text-xs font-bold tracking-widest uppercase text-[#A7F3D0]">
               Prototype Cognitive Performance Score
             </span>
             <div className="flex items-center justify-center gap-2 pt-1">
-              <span className="text-5xl sm:text-6xl font-black text-amber-300">{session.score}</span>
-              <span className="text-2xl font-bold text-blue-200">/ 100</span>
+              <span className="text-5xl sm:text-6xl font-black text-[#F59E0B]">{session.score}</span>
+              <span className="text-2xl font-bold text-[#A7F3D0]">/ 100</span>
             </div>
           </div>
 
@@ -97,23 +97,23 @@ export default function ResultsPage() {
           </div>
 
           {/* Breakdown Badges */}
-          <div className="grid grid-cols-3 gap-3 pt-3 border-t border-blue-800/80">
-            <div className="bg-blue-950/60 p-3 rounded-xl border border-blue-800">
-              <span className="text-xs font-semibold text-blue-300 block">Accuracy</span>
+          <div className="grid grid-cols-3 gap-3 pt-3 border-t border-[#0B534B]/60">
+            <div className="bg-white/10 p-3 rounded-xl border border-[#0B534B]/50">
+              <span className="text-xs font-semibold text-[#A7F3D0] block">Accuracy</span>
               <span className="text-xl sm:text-2xl font-black text-white mt-0.5 block">
                 {session.accuracy}%
               </span>
             </div>
 
-            <div className="bg-blue-950/60 p-3 rounded-xl border border-blue-800">
-              <span className="text-xs font-semibold text-blue-300 block">Response Time</span>
+            <div className="bg-white/10 p-3 rounded-xl border border-[#0B534B]/50">
+              <span className="text-xs font-semibold text-[#A7F3D0] block">Response Time</span>
               <span className="text-xl sm:text-2xl font-black text-white mt-0.5 block">
                 {session.responseTimeSec}s
               </span>
             </div>
 
-            <div className="bg-blue-950/60 p-3 rounded-xl border border-blue-800">
-              <span className="text-xs font-semibold text-blue-300 block">Mistakes</span>
+            <div className="bg-white/10 p-3 rounded-xl border border-[#0B534B]/50">
+              <span className="text-xs font-semibold text-[#A7F3D0] block">Mistakes</span>
               <span className="text-xl sm:text-2xl font-black text-white mt-0.5 block">
                 {session.mistakes}
               </span>
@@ -124,21 +124,21 @@ export default function ResultsPage() {
 
       {/* Adaptive Difficulty Recommendation */}
       <ScrollReveal direction="up" delay={120}>
-        <div className="bg-amber-50 border border-amber-300 rounded-2xl p-5 sm:p-6 space-y-2.5">
+        <div className="bg-[#FFFBEB] border border-[#D97706]/30 rounded-2xl p-5 sm:p-6 space-y-2.5">
           <div className="flex items-center gap-2.5">
-            <Sparkles className="w-5 h-5 text-amber-600 flex-shrink-0" />
-            <h3 className="text-base sm:text-lg font-bold text-amber-950">
+            <Sparkles className="w-5 h-5 text-[#D97706] flex-shrink-0" />
+            <h3 className="text-base sm:text-lg font-bold text-[#B45309]">
               Adaptive Difficulty Recommendation
             </h3>
           </div>
 
-          <p className="text-xs sm:text-sm text-amber-900 font-medium leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#78350F] font-medium leading-relaxed">
             {evaluation.feedback}
           </p>
 
-          <div className="bg-white p-3 rounded-xl border border-amber-200 flex items-center justify-between font-bold text-xs sm:text-sm text-slate-800">
+          <div className="bg-white p-3 rounded-xl border border-[#D97706]/20 flex items-center justify-between font-bold text-xs sm:text-sm text-[#111615]">
             <span>Current: Level {session.difficultyLevel}</span>
-            <span className="text-amber-700 font-extrabold">→ Recommended: Level {evaluation.recommendedDifficulty}</span>
+            <span className="text-[#D97706] font-extrabold">→ Recommended: Level {evaluation.recommendedDifficulty}</span>
           </div>
         </div>
       </ScrollReveal>
@@ -148,7 +148,7 @@ export default function ResultsPage() {
         <div className="flex flex-col sm:flex-row gap-3">
           <Link
             href="/dashboard"
-            className="flex-1 py-3 px-5 bg-blue-700 hover:bg-blue-800 text-white rounded-xl font-bold text-sm sm:text-base shadow-sm hover:shadow transition-all flex items-center justify-center gap-2"
+            className="flex-1 py-3 px-5 bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white rounded-xl font-bold text-sm sm:text-base shadow-sm hover:shadow transition-all flex items-center justify-center gap-2"
           >
             <Home className="w-4 h-4" />
             <span>Return to Dashboard</span>
@@ -156,7 +156,7 @@ export default function ResultsPage() {
 
           <Link
             href="/games"
-            className="flex-1 py-3 px-5 bg-amber-400 hover:bg-amber-300 text-slate-950 rounded-xl font-bold text-sm sm:text-base shadow-sm hover:shadow transition-all flex items-center justify-center gap-2 border border-amber-500"
+            className="flex-1 py-3 px-5 bg-[#10B981] hover:bg-[#059669] active:bg-[#047857] text-white rounded-xl font-bold text-sm sm:text-base shadow-sm hover:shadow transition-all flex items-center justify-center gap-2"
           >
             <RotateCcw className="w-4 h-4" />
             <span>Play Another Game</span>
@@ -166,7 +166,7 @@ export default function ResultsPage() {
 
       {/* Medical Disclaimer */}
       <ScrollReveal direction="up" delay={190}>
-        <div className="text-center text-xs font-medium text-slate-500 bg-slate-100 p-3 rounded-xl border border-slate-200">
+        <div className="text-center text-xs font-medium text-[#5A6A66] bg-[#F6F8F7] p-3 rounded-xl border border-[#D5DFDC]">
           Notice: These scores are for cognitive wellness stimulation only and are NOT a clinical or medical diagnosis.
         </div>
       </ScrollReveal>

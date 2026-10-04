@@ -8,3 +8,4 @@ export * from "./languages";
 export * from "./config";
 export * from "./translate";
 export * from "./LanguageProvider";
+export * from "./regionalDialects";
