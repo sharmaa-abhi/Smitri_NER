@@ -41,7 +41,7 @@ export default function GamesHubPage() {
       title: 'Grocery Basket Recall',
       desc: 'Remember items placed in your daily market basket. Stimulates short-term verbal recall and everyday grocery shopping recognition.',
       icon: ShoppingBag,
-      color: 'bg-emerald-600',
+      color: 'bg-[#10B981]',
       category: 'daily',
       tag: 'Everyday Market Recall',
       difficulty: 'Adaptive (Level 1-3)',
@@ -55,7 +55,7 @@ export default function GamesHubPage() {
       title: 'Clock Face Match',
       desc: 'Read gentle analog clock hands and pick the correct daily routine moment. Grounding for time orientation, prayer, and meal timings.',
       icon: Clock,
-      color: 'bg-cyan-600',
+      color: 'bg-[#0B534B]',
       category: 'daily',
       tag: 'Daily Routine & Time',
       difficulty: 'Adaptive (Level 1-3)',
@@ -69,7 +69,7 @@ export default function GamesHubPage() {
       title: 'Find the Different One',
       desc: 'Spot the single object that looks different from the others. Enhances attention to detail and sharpens eye-for-detail.',
       icon: Eye,
-      color: 'bg-amber-600',
+      color: 'bg-[#D97706]',
       category: 'attention',
       tag: 'Visual Attention',
       difficulty: 'Adaptive (Level 1-3)',
@@ -83,7 +83,7 @@ export default function GamesHubPage() {
       title: 'Memory Match',
       desc: 'Flip and match pairs of colorful everyday icons. Gentle exercise for short-term visual recall and object association.',
       icon: Shapes,
-      color: 'bg-blue-600',
+      color: 'bg-[#0B534B]',
       category: 'memory',
       tag: 'Visual Memory',
       difficulty: 'Adaptive (Level 1-3)',
@@ -97,7 +97,7 @@ export default function GamesHubPage() {
       title: 'Number Trail',
       desc: 'Follow river stones by tapping numbers in rising order. Strengthens mental sequencing, passbook checks, and motor agility.',
       icon: Hash,
-      color: 'bg-indigo-600',
+      color: 'bg-[#10B981]',
       category: 'attention',
       tag: 'Numerical Order',
       difficulty: 'Adaptive (Level 1-3)',
@@ -111,7 +111,7 @@ export default function GamesHubPage() {
       title: 'Daily Word & Sound Match',
       desc: 'Listen to spoken prompts and choose the matching picture. Enhances auditory comprehension and household sound awareness.',
       icon: Volume2,
-      color: 'bg-rose-600',
+      color: 'bg-[#D97706]',
       category: 'verbal',
       tag: 'Auditory & Semantic',
       difficulty: 'Adaptive (Level 1-3)',
@@ -125,7 +125,7 @@ export default function GamesHubPage() {
       title: 'Sequence Memory',
       desc: 'Watch the light sequence flash and tap them back in order. Stimulates working memory and light perception.',
       icon: Brain,
-      color: 'bg-teal-600',
+      color: 'bg-[#0B534B]',
       category: 'memory',
       tag: 'Pattern Recall',
       difficulty: 'Adaptive (Level 1-3)',
@@ -139,7 +139,7 @@ export default function GamesHubPage() {
       title: 'Matrix Pattern Recall',
       desc: 'Observe illuminated squares on a grid and replicate where they were. Boosts spatial memory and room navigation.',
       icon: Grid3X3,
-      color: 'bg-purple-600',
+      color: 'bg-[#10B981]',
       category: 'memory',
       tag: 'Spatial Memory',
       difficulty: 'Adaptive (Level 1-3)',
@@ -153,7 +153,7 @@ export default function GamesHubPage() {
       title: 'Rhyme & Proverb Complete',
       desc: 'Complete classic comfort proverbs and rhymes with the missing word. Stimulates linguistic recall and conversational confidence.',
       icon: BookOpen,
-      color: 'bg-violet-600',
+      color: 'bg-[#0B534B]',
       category: 'verbal',
       tag: 'Verbal Fluency',
       difficulty: 'Adaptive (Level 1-3)',
@@ -174,16 +174,16 @@ export default function GamesHubPage() {
     <div className="space-y-8 pb-16">
       {/* Header with Game Hub Description & Voice Reader */}
       <ScrollReveal direction="down">
-        <div className="bg-white rounded-3xl p-5 sm:p-7 border border-slate-200/90 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-5">
+        <div className="bg-white rounded-3xl p-5 sm:p-7 border border-[#D5DFDC] shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-5">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-800 px-3.5 py-1 rounded-full text-xs font-bold border border-blue-200">
-              <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+            <div className="inline-flex items-center gap-2 bg-[#E6F4F1] text-[#0B534B] px-3.5 py-1 rounded-full text-xs font-bold border border-[#0B534B]/20">
+              <Sparkles className="w-3.5 h-3.5 text-[#D97706]" />
               <span>Real-World Cognitive Gaming Hub • 9 Scenarios</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#111615] tracking-tight">
               {t("games_title") || "Games Dashboard & Everyday Quests"}
             </h1>
-            <p className="text-xs sm:text-sm text-slate-600 font-medium max-w-2xl leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#5A6A66] font-medium max-w-2xl leading-relaxed">
               {t("games_subtitle") || "Every game is carefully modeled after real-world senior experiences — from grocery market shopping to reading clock hands for daily routines."}
             </p>
           </div>
@@ -195,7 +195,7 @@ export default function GamesHubPage() {
             />
             <Link
               href="/dashboard"
-              className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs sm:text-sm rounded-xl border border-slate-200 transition-colors"
+              className="px-4 py-2.5 bg-[#F6F8F7] hover:bg-[#E6F4F1] text-[#0B534B] font-bold text-xs sm:text-sm rounded-xl border border-[#D5DFDC] transition-colors"
             >
               {t("Back to Dashboard") || "Back to Dashboard"}
             </Link>
@@ -206,46 +206,46 @@ export default function GamesHubPage() {
       {/* Real-World Game Analytics Bar (Embedded Game Dashboard Stats) */}
       <ScrollReveal direction="up" delay={80}>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-gradient-to-br from-blue-700 to-indigo-800 text-white p-5 rounded-2xl shadow-md border border-blue-900 flex items-center justify-between">
+          <div className="bg-gradient-to-br from-[#042420] to-[#0B534B] text-white p-5 rounded-2xl shadow-md border border-[#0B534B] flex items-center justify-between">
             <div className="space-y-1">
-              <span className="text-xs font-bold uppercase tracking-wider text-blue-200">Consistency Streak</span>
+              <span className="text-xs font-bold uppercase tracking-wider text-[#A7F3D0]">Consistency Streak</span>
               <div className="text-3xl font-black">7 Days 🔥</div>
-              <p className="text-[11px] text-blue-100">Played daily without missing</p>
+              <p className="text-[11px] text-[#E6F4F1]/90">Played daily without missing</p>
             </div>
             <div className="w-12 h-12 rounded-xl bg-white/15 flex items-center justify-center font-bold text-xl">
               🎯
             </div>
           </div>
 
-          <div className="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-sm flex items-center justify-between">
+          <div className="bg-white p-5 rounded-2xl border border-[#D5DFDC] shadow-sm flex items-center justify-between">
             <div className="space-y-1">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Overall Accuracy</span>
-              <div className="text-3xl font-black text-emerald-700">88%</div>
-              <p className="text-[11px] text-slate-600">Across all 9 real-life games</p>
+              <span className="text-xs font-bold uppercase tracking-wider text-[#5A6A66]">Overall Accuracy</span>
+              <div className="text-3xl font-black text-[#10B981]">88%</div>
+              <p className="text-[11px] text-[#5A6A66]">Across all 9 real-life games</p>
             </div>
-            <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center justify-center font-bold text-lg">
+            <div className="w-12 h-12 rounded-xl bg-[#ECFDF5] text-[#047857] border border-[#10B981]/30 flex items-center justify-center font-bold text-lg">
               ✓
             </div>
           </div>
 
-          <div className="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-sm flex items-center justify-between">
+          <div className="bg-white p-5 rounded-2xl border border-[#D5DFDC] shadow-sm flex items-center justify-between">
             <div className="space-y-1">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Fastest Domain</span>
-              <div className="text-2xl font-black text-blue-950">Clock Face</div>
-              <p className="text-[11px] text-teal-700 font-semibold">12.4s avg response speed</p>
+              <span className="text-xs font-bold uppercase tracking-wider text-[#5A6A66]">Fastest Domain</span>
+              <div className="text-2xl font-black text-[#111615]">Clock Face</div>
+              <p className="text-[11px] text-[#0B534B] font-semibold">12.4s avg response speed</p>
             </div>
-            <div className="w-12 h-12 rounded-xl bg-sky-50 text-sky-700 border border-sky-200 flex items-center justify-center font-bold text-lg">
+            <div className="w-12 h-12 rounded-xl bg-[#E6F4F1] text-[#0B534B] border border-[#0B534B]/20 flex items-center justify-center font-bold text-lg">
               ⏰
             </div>
           </div>
 
-          <div className="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-sm flex items-center justify-between">
+          <div className="bg-white p-5 rounded-2xl border border-[#D5DFDC] shadow-sm flex items-center justify-between">
             <div className="space-y-1">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Pace Setting</span>
-              <div className="text-2xl font-black text-amber-700">Adaptive L1</div>
-              <p className="text-[11px] text-slate-600">Stress-free, zero time pressure</p>
+              <span className="text-xs font-bold uppercase tracking-wider text-[#5A6A66]">Pace Setting</span>
+              <div className="text-2xl font-black text-[#D97706]">Adaptive L1</div>
+              <p className="text-[11px] text-[#5A6A66]">Stress-free, zero time pressure</p>
             </div>
-            <div className="w-12 h-12 rounded-xl bg-amber-50 text-amber-700 border border-amber-200 flex items-center justify-center font-bold text-lg">
+            <div className="w-12 h-12 rounded-xl bg-[#FFFBEB] text-[#B45309] border border-[#D97706]/30 flex items-center justify-center font-bold text-lg">
               ★
             </div>
           </div>
@@ -254,8 +254,8 @@ export default function GamesHubPage() {
 
       {/* Category Filter Pills */}
       <div className="flex flex-wrap items-center gap-2">
-        <span className="text-xs font-bold text-slate-500 flex items-center gap-1.5 mr-2">
-          <Filter className="w-3.5 h-3.5" /> Filter By Scenario:
+        <span className="text-xs font-bold text-[#5A6A66] flex items-center gap-1.5 mr-2">
+          <Filter className="w-3.5 h-3.5 text-[#0B534B]" /> Filter By Scenario:
         </span>
         {[
           { id: 'all', label: 'All 9 Games' },
@@ -270,8 +270,8 @@ export default function GamesHubPage() {
             onClick={() => setSelectedCategory(tab.id as GameCategory)}
             className={`px-4 py-2 rounded-xl font-bold text-xs sm:text-sm transition-all border ${
               selectedCategory === tab.id
-                ? 'bg-blue-700 text-white border-blue-800 shadow-sm'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
+                ? 'bg-[#0B534B] text-white border-[#08433C] shadow-sm'
+                : 'bg-white text-[#5A6A66] border-[#D5DFDC] hover:bg-[#F6F8F7]'
             }`}
           >
             {tab.label}
@@ -290,7 +290,7 @@ export default function GamesHubPage() {
               delay={idx * 50}
               className="h-full"
             >
-              <div className="bg-white rounded-3xl p-6 border border-slate-200/90 shadow-sm hover:border-blue-500 hover:shadow-md transition-all flex flex-col justify-between space-y-5 h-full relative group">
+              <div className="bg-white rounded-3xl p-6 border border-[#D5DFDC] shadow-sm hover:border-[#0B534B] hover:shadow-md transition-all flex flex-col justify-between space-y-5 h-full relative group">
                 
                 <div className="space-y-3.5">
                   {/* Top Bar: Icon + Category Tag + Last Score */}
@@ -299,10 +299,10 @@ export default function GamesHubPage() {
                       <Icon className="w-6 h-6" />
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-[10px] font-black uppercase tracking-wider bg-slate-100 text-slate-700 px-2.5 py-1 rounded-full border border-slate-200">
+                      <span className="text-[10px] font-black uppercase tracking-wider bg-[#F6F8F7] text-[#5A6A66] px-2.5 py-1 rounded-full border border-[#D5DFDC]">
                         {game.tag}
                       </span>
-                      <span className="text-xs font-black text-blue-900 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded-md">
+                      <span className="text-xs font-black text-[#0B534B] bg-[#E6F4F1] border border-[#0B534B]/20 px-2 py-0.5 rounded-md">
                         Score: {game.lastPlayedScore}
                       </span>
                     </div>
@@ -310,36 +310,36 @@ export default function GamesHubPage() {
 
                   {/* Title & Description */}
                   <div className="space-y-1.5">
-                    <h2 className="text-xl font-extrabold text-slate-900 group-hover:text-blue-700 transition-colors">
+                    <h2 className="text-xl font-extrabold text-[#111615] group-hover:text-[#0B534B] transition-colors">
                       {game.title}
                     </h2>
-                    <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">
+                    <p className="text-xs sm:text-sm text-[#5A6A66] font-medium leading-relaxed">
                       {game.desc}
                     </p>
                   </div>
 
                   {/* Real-World Example & Elder Benefit Box */}
-                  <div className="bg-slate-50/80 rounded-2xl p-3.5 border border-slate-200/80 space-y-1.5">
-                    <div className="flex items-start gap-1.5 text-xs font-bold text-slate-900">
-                      <span className="text-amber-600 flex-shrink-0">🌟</span>
+                  <div className="bg-[#F6F8F7] rounded-2xl p-3.5 border border-[#D5DFDC] space-y-1.5">
+                    <div className="flex items-start gap-1.5 text-xs font-bold text-[#111615]">
+                      <span className="text-[#D97706] flex-shrink-0">🌟</span>
                       <span>Real-World Scenario:</span>
                     </div>
-                    <p className="text-xs text-slate-700 font-semibold pl-5">
+                    <p className="text-xs text-[#5A6A66] font-semibold pl-5">
                       {game.realWorldScenario}
                     </p>
-                    <p className="text-[11px] text-teal-800 font-medium pl-5 italic">
+                    <p className="text-[11px] text-[#0B534B] font-medium pl-5 italic">
                       Why it helps: {game.realWorldBenefit}
                     </p>
                   </div>
 
-                  <div className="flex items-center gap-1.5 text-xs font-bold text-teal-800 bg-teal-50 px-2.5 py-1 rounded-lg border border-teal-200 inline-flex">
+                  <div className="flex items-center gap-1.5 text-xs font-bold text-[#0B534B] bg-[#E6F4F1] px-2.5 py-1 rounded-lg border border-[#0B534B]/20 inline-flex">
                     <Award className="w-3.5 h-3.5" />
                     <span>{game.difficulty}</span>
                   </div>
                 </div>
 
                 {/* Actions: Audio Guide + Start Button */}
-                <div className="space-y-2.5 pt-2 border-t border-slate-100">
+                <div className="space-y-2.5 pt-2 border-t border-[#D5DFDC]/60">
                   <VoiceButton
                     textToRead={game.audioInstruction}
                     buttonLabel="Listen Instructions"
@@ -348,7 +348,7 @@ export default function GamesHubPage() {
 
                   <Link
                     href={`/games/${game.id}`}
-                    className="w-full py-3.5 px-5 bg-blue-700 hover:bg-blue-800 text-white rounded-xl font-extrabold text-sm sm:text-base shadow-sm hover:shadow transition-all flex items-center justify-center gap-2"
+                    className="w-full py-3.5 px-5 bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white rounded-xl font-extrabold text-sm sm:text-base shadow-sm hover:shadow transition-all flex items-center justify-center gap-2"
                   >
                     <Play className="w-4 h-4 fill-white" />
                     <span>Play This Real-World Quest</span>
@@ -362,23 +362,23 @@ export default function GamesHubPage() {
 
       {/* Senior Encouragement & Safety Note Footer */}
       <ScrollReveal direction="up" delay={200}>
-        <div className="bg-slate-900 text-white rounded-3xl p-6 sm:p-7 border border-slate-800 shadow-md flex flex-col md:flex-row items-center justify-between gap-5">
+        <div className="bg-gradient-to-r from-[#042420] to-[#0B534B] text-white rounded-3xl p-6 sm:p-7 border border-[#0B534B]/30 shadow-md flex flex-col md:flex-row items-center justify-between gap-5">
           <div className="space-y-1.5 text-center md:text-left">
-            <div className="inline-flex items-center gap-2 text-amber-400 text-xs font-bold">
+            <div className="inline-flex items-center gap-2 text-[#F59E0B] text-xs font-bold">
               <ShieldCheck className="w-4 h-4" />
               <span>Dignity & Calm-First Design</span>
             </div>
             <h3 className="text-lg sm:text-xl font-bold">
               Cognitive Exercises Designed for Real Senior Life
             </h3>
-            <p className="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#E6F4F1]/90 max-w-2xl leading-relaxed">
               Scores are never penalized for slow response or errors. Our adaptive system automatically slows down and eases questions so that every daily exercise feels comfortable and rewarding.
             </p>
           </div>
 
           <Link
             href="/dashboard"
-            className="px-6 py-3.5 bg-amber-400 hover:bg-amber-300 text-slate-950 rounded-xl font-black text-sm shadow-md transition-all flex items-center gap-2 flex-shrink-0"
+            className="px-6 py-3.5 bg-[#10B981] hover:bg-[#059669] text-white rounded-xl font-black text-sm shadow-md transition-all flex items-center gap-2 flex-shrink-0"
           >
             <span>Return to Daily Routine</span>
             <ArrowRight className="w-4 h-4" />
