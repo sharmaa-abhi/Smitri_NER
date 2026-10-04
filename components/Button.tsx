@@ -3,7 +3,7 @@
 import React, { forwardRef } from "react";
 import Link from "next/link";
 
-export type ButtonVariant = "primary" | "secondary" | "outline" | "destructive" | "icon";
+export type ButtonVariant = "primary" | "secondary" | "outline" | "tertiary" | "destructive" | "icon";
 export type ButtonSize = "sm" | "md" | "lg";
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -15,13 +15,12 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 
 /**
- * Standardized 5-Variant Button Styling Engine
- * Consolidated from 15 disparate styles into 5 accessible, brand-consistent variants:
- * 1. primary: Main CTA with signature gradient, high visual hierarchy
- * 2. secondary: Supporting action with gentle teal tint
- * 3. outline: Low-emphasis action with clean neutral border
- * 4. destructive: Critical/SOS/Delete actions with high-visibility rose
- * 5. icon: Compact utility control with accessible min 44x44px touch targets
+ * Standardized 5-Variant Button Styling Engine for Smitri_NER:
+ * 1. primary: Deep Teal #0B534B, high contrast white text, hover #08433C
+ * 2. secondary: Emerald Green #10B981, white text, hover #059669
+ * 3. outline: Surface / white, #0B534B border & text, hover #E6F4F1
+ * 4. tertiary / destructive: Warm Amber #D97706 or SOS Red #DC2626
+ * 5. icon: Neutral Slate #5A6A66 with accessible 44x44px touch target
  */
 export function getButtonClasses(
   variant: ButtonVariant = "primary",
@@ -31,23 +30,23 @@ export function getButtonClasses(
   // Base tokens shared across ALL button variants
   const baseClasses =
     "inline-flex items-center justify-center gap-2 font-bold transition-all duration-200 select-none " +
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-teal-500 " +
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0B534B] " +
     "disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed active:scale-[0.98]";
 
-  // 5 Standardized Variants
+  // Standardized Variants
   const variantClasses: Record<ButtonVariant, string> = {
     primary:
-      "bg-gradient-to-r from-sky-600 to-teal-600 hover:from-sky-700 hover:to-teal-700 " +
-      "text-white border border-transparent shadow-sm hover:shadow-md",
+      "bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white border border-transparent shadow-sm hover:shadow-md",
     secondary:
-      "bg-teal-50 hover:bg-teal-100 text-teal-800 border border-teal-200/90 shadow-sm",
+      "bg-[#10B981] hover:bg-[#059669] active:bg-[#047857] text-white border border-transparent shadow-sm hover:shadow-md",
     outline:
-      "bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 border border-slate-200/90 shadow-sm",
+      "bg-white hover:bg-[#E6F4F1] text-[#0B534B] hover:text-[#08433C] border border-[#0B534B] shadow-sm",
+    tertiary:
+      "bg-[#D97706] hover:bg-[#B45309] active:bg-[#92400E] text-white border border-transparent shadow-sm",
     destructive:
-      "bg-rose-600 hover:bg-rose-700 text-white border border-rose-700 shadow-sm hover:shadow-md " +
-      "focus-visible:ring-rose-500",
+      "bg-[#DC2626] hover:bg-[#B91C1C] text-white border border-transparent shadow-sm hover:shadow-md focus-visible:ring-red-600",
     icon:
-      "p-2.5 rounded-full text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent",
+      "p-2.5 rounded-full text-[#5A6A66] hover:text-[#111615] hover:bg-[#EBF0EE] border border-transparent",
   };
 
   // Standardized Sizes (incorporating WCAG AAA 44x44px minimum senior touch targets)
