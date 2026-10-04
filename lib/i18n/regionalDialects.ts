@@ -290,9 +290,56 @@ export const REGIONAL_PROFILES: RegionProfile[] = [
       },
     ],
   },
+  {
+    id: "national_english",
+    name: "National & Global (Default)",
+    nativeTitle: "English & National Languages",
+    subtitle: "High-clarity English voice prompt & elder cognitive exercises",
+    stateIds: ["english"],
+    dialects: [
+      {
+        id: "en_default",
+        langCode: "en",
+        title: "English (Default / Standard)",
+        badge: "Default Language",
+        badgeColor: "emerald",
+        location: "Pan-India & Global Audio",
+        speakerCount: "Standard Voice • Recommended",
+        playButtonText: 'Listen "Hello"',
+        voicePrompt: "Hello, welcome to Smitri N E R. Let us begin today's memory games.",
+        bcp47: "en-IN",
+      },
+      {
+        id: "hi_national",
+        langCode: "hi",
+        title: "हिन्दी (मानक हिन्दी)",
+        badge: "National",
+        badgeColor: "teal",
+        location: "Pan-India Standard Voice",
+        speakerCount: "550M+ speakers",
+        playButtonText: 'सुनिए "नमस्ते"',
+        voicePrompt: "नमस्ते, स्मृति में आपका स्वागत है। आज का खेल शुरू करें।",
+        bcp47: "hi-IN",
+      },
+    ],
+  },
 ];
 
+export const DEFAULT_ENGLISH_DIALECT: DialectOption = {
+  id: "en_default",
+  langCode: "en",
+  title: "English (Default / Standard)",
+  badge: "Default Language",
+  badgeColor: "emerald",
+  location: "Pan-India & Global Audio",
+  speakerCount: "Standard Voice • Recommended",
+  playButtonText: 'Listen "Hello"',
+  voicePrompt: "Hello, welcome to Smitri N E R. Let us begin today's memory games.",
+  bcp47: "en-IN",
+};
+
 export const QUICK_STATES = [
+  { id: "english", label: "🌐 English (Default)", regionId: "national_english" },
   { id: "assam", label: "অসম Assam", regionId: "assam_tripura" },
   { id: "tripura", label: "ত্রিপুরা Tripura", regionId: "assam_tripura" },
   { id: "manipur", label: "মণিপুর Manipur", regionId: "manipur" },
@@ -302,3 +349,4 @@ export const QUICK_STATES = [
   { id: "sikkim", label: "Sikkim", regionId: "sikkim" },
   { id: "arunachal", label: "Arunachal", regionId: "arunachal" },
 ];
+

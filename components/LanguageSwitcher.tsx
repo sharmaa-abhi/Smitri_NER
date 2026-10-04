@@ -13,11 +13,13 @@ import {
   ArrowRight,
   ChevronDown,
   Navigation,
+  RotateCcw,
 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 import {
   REGIONAL_PROFILES,
   QUICK_STATES,
+  DEFAULT_ENGLISH_DIALECT,
   DialectOption,
   RegionProfile,
 } from "@/lib/i18n/regionalDialects";
@@ -36,11 +38,9 @@ export default function LanguageSwitcher({
 
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [activeRegionId, setActiveRegionId] = useState<string>("assam_tripura");
-  const [activeStateId, setActiveStateId] = useState<string>("assam");
-  const [stagedDialect, setStagedDialect] = useState<DialectOption>(
-    REGIONAL_PROFILES[0].dialects[0]
-  );
+  const [activeRegionId, setActiveRegionId] = useState<string>("national_english");
+  const [activeStateId, setActiveStateId] = useState<string>("english");
+  const [stagedDialect, setStagedDialect] = useState<DialectOption>(DEFAULT_ENGLISH_DIALECT);
   const [playingDialectId, setPlayingDialectId] = useState<string | null>(null);
   const [isApplying, setIsApplying] = useState(false);
   const modalTitleId = useId();
@@ -56,7 +56,16 @@ export default function LanguageSwitcher({
   // Initialize staged dialect when modal opens
   useEffect(() => {
     if (isOpen) {
-      if (language === "bn" || language === "as" || language === "brx" || language === "trp") {
+      if (language === "en") {
+        setActiveRegionId("national_english");
+        setActiveStateId("english");
+        setStagedDialect(DEFAULT_ENGLISH_DIALECT);
+      } else if (
+        language === "bn" ||
+        language === "as" ||
+        language === "brx" ||
+        language === "trp"
+      ) {
         setActiveRegionId("assam_tripura");
         setActiveStateId("assam");
         const found =
@@ -64,7 +73,6 @@ export default function LanguageSwitcher({
           REGIONAL_PROFILES[0].dialects[0];
         setStagedDialect(found);
       } else {
-        // Find if current language belongs to another region
         let foundDialect: DialectOption | undefined;
         let foundProfile: RegionProfile | undefined;
 
@@ -77,15 +85,14 @@ export default function LanguageSwitcher({
           }
         }
 
-        if (foundDialect && foundProfile && language !== "en") {
+        if (foundDialect && foundProfile) {
           setActiveRegionId(foundProfile.id);
           setActiveStateId(foundProfile.stateIds[0] || "assam");
           setStagedDialect(foundDialect);
         } else {
-          // Default to exact design match: Assam & Tripura Valley with Bengali card staged
-          setActiveRegionId("assam_tripura");
-          setActiveStateId("assam");
-          setStagedDialect(REGIONAL_PROFILES[0].dialects[0]);
+          setActiveRegionId("national_english");
+          setActiveStateId("english");
+          setStagedDialect(DEFAULT_ENGLISH_DIALECT);
         }
       }
     }
@@ -113,6 +120,14 @@ export default function LanguageSwitcher({
       document.body.style.overflow = "unset";
     };
   }, [isOpen]);
+
+  // Quick switch directly to English default
+  const handleSelectDefaultEnglish = () => {
+    setActiveStateId("english");
+    setActiveRegionId("national_english");
+    setStagedDialect(DEFAULT_ENGLISH_DIALECT);
+    playChime("start");
+  };
 
   // Select state from quick button or map
   const handleSelectState = (stateId: string) => {
@@ -176,7 +191,7 @@ export default function LanguageSwitcher({
     return activeStateId === stateId || currentRegion.stateIds.includes(stateId);
   };
 
-  // Dialects to display (limiting to 3 if in assam_tripura to match the exact 3 cards in reference design)
+  // Dialects to display (limiting to 3 if in assam_tripura to match reference design)
   const visibleDialects =
     activeRegionId === "assam_tripura"
       ? currentRegion.dialects.slice(0, 3)
@@ -245,7 +260,7 @@ export default function LanguageSwitcher({
           {/* LEFT COLUMN: Interactive Map & Quick State Switch */}
           <div className="lg:col-span-5 p-4 sm:p-5 bg-[#EDF3F1] flex flex-col justify-between space-y-3">
             <div>
-              {/* Left Column Header */}
+              {/* Left Column Header with English Default Action */}
               <div className="flex items-center justify-between gap-2 mb-1">
                 <span className="text-xs font-black tracking-wider text-[#4E615D] uppercase">
                   INTERACTIVE MAP
@@ -515,13 +530,29 @@ export default function LanguageSwitcher({
               </div>
             </div>
 
-            {/* Quick State Switch Buttons Card */}
+            {/* Quick State Switch Buttons Card with English Default button */}
             <div className="bg-white rounded-2xl p-3 border border-[#D5DFDC] shadow-2xs">
-              <span className="text-[10px] font-black text-[#5A6A66] tracking-wider mb-2 block uppercase">
-                QUICK STATE SWITCH:
-              </span>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[10px] font-black text-[#5A6A66] tracking-wider block uppercase">
+                  QUICK STATE SWITCH:
+                </span>
+                <button
+                  type="button"
+                  onClick={handleSelectDefaultEnglish}
+                  className={`text-[11px] px-2.5 py-0.5 rounded-full font-black border transition-all flex items-center gap-1 cursor-pointer ${
+                    activeStateId === "english"
+                      ? "bg-[#0B534B] text-white border-[#0B534B] shadow-xs"
+                      : "bg-[#E6F4F1] text-[#0B534B] border-[#93CEC5] hover:bg-[#C2E5DF]"
+                  }`}
+                  title="Switch directly to English (Default)"
+                >
+                  <Globe className="w-3 h-3 text-current" />
+                  <span>English (Default)</span>
+                </button>
+              </div>
+
               <div className="flex flex-wrap gap-1.5">
-                {QUICK_STATES.slice(0, 6).map((st) => {
+                {QUICK_STATES.map((st) => {
                   const isActive =
                     activeStateId === st.id ||
                     (activeRegionId === "assam_tripura" &&
@@ -562,8 +593,22 @@ export default function LanguageSwitcher({
                   </h4>
                 </div>
 
-                <div className="flex items-center gap-1.5 bg-[#E6F4F1] text-[#0B534B] border border-[#93CEC5] text-[11px] font-bold px-2.5 py-1 rounded-full flex-shrink-0">
-                  <span>🎙 High-Clarity Voice Available</span>
+                <div className="flex items-center gap-2">
+                  {activeRegionId !== "national_english" && (
+                    <button
+                      type="button"
+                      onClick={handleSelectDefaultEnglish}
+                      className="hidden sm:inline-flex items-center gap-1 text-[11px] font-bold text-[#0B534B] bg-[#E6F4F1] hover:bg-[#C2E5DF] border border-[#93CEC5] px-2.5 py-1 rounded-full transition-all cursor-pointer"
+                      title="Quick select English as Default"
+                    >
+                      <RotateCcw className="w-3 h-3 text-[#0B534B]" />
+                      <span>Use English</span>
+                    </button>
+                  )}
+
+                  <div className="flex items-center gap-1.5 bg-[#E6F4F1] text-[#0B534B] border border-[#93CEC5] text-[11px] font-bold px-2.5 py-1 rounded-full flex-shrink-0">
+                    <span>🎙 High-Clarity Voice Available</span>
+                  </div>
                 </div>
               </div>
 
@@ -616,6 +661,8 @@ export default function LanguageSwitcher({
                               className={`text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-md border ${
                                 dialect.badgeColor === "amber"
                                   ? "bg-[#FEF3C7] text-[#92400E] border-[#FDE68A]"
+                                  : dialect.badgeColor === "emerald"
+                                  ? "bg-[#DCFCE7] text-[#166534] border-[#86EFAC]"
                                   : "bg-[#E6F4F1] text-[#0B534B] border-[#93CEC5]"
                               }`}
                             >
@@ -689,7 +736,12 @@ export default function LanguageSwitcher({
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-[#10B981] animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.6)]" />
             <span className="text-xs sm:text-sm font-bold text-[#111615]">
-              Selected: <span className="font-black text-[#0B534B]">{stagedDialect.title} + English</span>
+              Selected:{" "}
+              <span className="font-black text-[#0B534B]">
+                {stagedDialect.langCode === "en"
+                  ? "English (Default / National Standard)"
+                  : `${stagedDialect.title} + English`}
+              </span>
             </span>
           </div>
 
