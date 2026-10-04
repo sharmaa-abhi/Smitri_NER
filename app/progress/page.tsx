@@ -68,16 +68,16 @@ export default function ProgressPage() {
     <div className="space-y-6 pb-16">
       {/* Header */}
       <ScrollReveal direction="down">
-        <div className="bg-white rounded-2xl p-5 sm:p-7 border border-slate-200/90 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="bg-white rounded-2xl p-5 sm:p-7 border border-[#D5DFDC] shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-1.5">
-            <div className="inline-flex items-center gap-1.5 bg-amber-50 text-amber-900 px-3 py-1 rounded-full text-xs font-bold border border-amber-200">
-              <TrendingUp className="w-3.5 h-3.5 text-amber-700" />
+            <div className="inline-flex items-center gap-1.5 bg-[#FFFBEB] text-[#B45309] px-3 py-1 rounded-full text-xs font-bold border border-[#D97706]/30">
+              <TrendingUp className="w-3.5 h-3.5 text-[#D97706]" />
               <span>Rhythm & Growth History</span>
             </div>
-            <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+            <h1 className="text-xl sm:text-2xl font-extrabold text-[#111615] tracking-tight">
               Your Progress & History
             </h1>
-            <p className="text-xs sm:text-sm text-slate-600 font-medium">
+            <p className="text-xs sm:text-sm text-[#5A6A66] font-medium">
               Celebrate your consistency and cognitive exercises over time.
             </p>
           </div>
@@ -89,12 +89,12 @@ export default function ProgressPage() {
             />
 
             {/* Range Switcher */}
-            <div className="flex bg-slate-100 p-1 rounded-xl border border-slate-200">
+            <div className="flex bg-[#F6F8F7] p-1 rounded-xl border border-[#D5DFDC]">
               <button
                 type="button"
                 onClick={() => setTimeRange('7')}
                 className={`px-3.5 py-1.5 rounded-lg font-bold text-xs transition-all ${
-                  timeRange === '7' ? 'bg-blue-700 text-white shadow-sm' : 'text-slate-700 hover:text-blue-900'
+                  timeRange === '7' ? 'bg-[#0B534B] text-white shadow-sm' : 'text-[#5A6A66] hover:text-[#0B534B]'
                 }`}
               >
                 7 Days
@@ -103,7 +103,7 @@ export default function ProgressPage() {
                 type="button"
                 onClick={() => setTimeRange('30')}
                 className={`px-3.5 py-1.5 rounded-lg font-bold text-xs transition-all ${
-                  timeRange === '30' ? 'bg-blue-700 text-white shadow-sm' : 'text-slate-700 hover:text-blue-900'
+                  timeRange === '30' ? 'bg-[#0B534B] text-white shadow-sm' : 'text-[#5A6A66] hover:text-[#0B534B]'
                 }`}
               >
                 30 Days
@@ -121,37 +121,37 @@ export default function ProgressPage() {
             val: avgScore,
             sub: '/ 100',
             desc: 'Steady focus across all games',
-            color: 'text-blue-900',
+            color: 'text-[#0B534B]',
             icon: Award,
-            iconColor: 'text-blue-700',
+            iconColor: 'text-[#0B534B]',
           },
           {
             label: 'Average Accuracy',
             val: `${avgAccuracy}%`,
             desc: 'Careful and deliberate matching',
-            color: 'text-teal-900',
+            color: 'text-[#10B981]',
             icon: Target,
-            iconColor: 'text-teal-700',
+            iconColor: 'text-[#10B981]',
           },
           {
             label: 'Avg Response Time',
             val: `${avgResponse}s`,
             desc: 'Calm and comfortable speed',
-            color: 'text-amber-900',
+            color: 'text-[#D97706]',
             icon: Clock,
-            iconColor: 'text-amber-700',
+            iconColor: 'text-[#D97706]',
           },
         ].map((card, idx) => (
           <ScrollReveal key={card.label} direction="up" delay={80 + idx * 60}>
-            <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-sm space-y-1.5 h-full">
-              <div className="flex items-center justify-between text-slate-600">
+            <div className="bg-white rounded-2xl p-4 sm:p-5 border border-[#D5DFDC] shadow-sm space-y-1.5 h-full">
+              <div className="flex items-center justify-between text-[#5A6A66]">
                 <span className="text-[11px] font-bold uppercase tracking-wider">{card.label}</span>
                 <card.icon className={`w-4 h-4 ${card.iconColor}`} />
               </div>
               <div className={`text-3xl sm:text-4xl font-black ${card.color}`}>
-                {card.val} {card.sub && <span className="text-base font-semibold text-slate-600">{card.sub}</span>}
+                {card.val} {card.sub && <span className="text-base font-semibold text-[#5A6A66]">{card.sub}</span>}
               </div>
-              <p className="text-xs text-slate-600 font-medium">{card.desc}</p>
+              <p className="text-xs text-[#5A6A66] font-medium">{card.desc}</p>
             </div>
           </ScrollReveal>
         ))}
@@ -159,22 +159,23 @@ export default function ProgressPage() {
 
       {/* Chart 1: Daily Cognitive Score Trend */}
       <ScrollReveal direction="up" delay={150}>
-        <div className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 shadow-sm space-y-3.5">
-          <h2 className="text-lg sm:text-xl font-bold text-slate-900">
+        <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-sm space-y-3.5">
+          <h2 className="text-lg sm:text-xl font-bold text-[#111615]">
             Cognitive Score Evolution ({timeRange}-Day View)
           </h2>
 
           <div className="h-72 w-full pt-4">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={chartData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                <XAxis dataKey="name" stroke="#64748b" fontSize={13} fontWeight="bold" />
-                <YAxis domain={[40, 100]} stroke="#64748b" fontSize={13} fontWeight="bold" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#D5DFDC" />
+                <XAxis dataKey="name" stroke="#5A6A66" fontSize={13} fontWeight="bold" />
+                <YAxis domain={[40, 100]} stroke="#5A6A66" fontSize={13} fontWeight="bold" />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: '#0f172a',
+                    backgroundColor: '#042420',
                     color: '#fff',
                     borderRadius: '12px',
+                    border: '1px solid #0B534B',
                     fontWeight: 'bold',
                   }}
                 />
@@ -183,15 +184,15 @@ export default function ProgressPage() {
                   type="monotone"
                   name="Cognitive Score"
                   dataKey="score"
-                  stroke="#1d4ed8"
+                  stroke="#0B534B"
                   strokeWidth={4}
-                  dot={{ r: 5, fill: '#1d4ed8' }}
+                  dot={{ r: 5, fill: '#0B534B' }}
                 />
                 <Line
                   type="monotone"
                   name="Accuracy %"
                   dataKey="accuracy"
-                  stroke="#0d9488"
+                  stroke="#10B981"
                   strokeWidth={3}
                   strokeDasharray="4 4"
                 />
@@ -203,9 +204,9 @@ export default function ProgressPage() {
 
       {/* Non-Medical Notice Footer */}
       <ScrollReveal direction="up" delay={180}>
-        <div className="bg-slate-100 rounded-2xl p-6 border-2 border-slate-300 flex items-start gap-4">
-          <AlertCircle className="w-6 h-6 text-slate-600 flex-shrink-0 mt-0.5" />
-          <p className="text-base text-slate-600 font-medium leading-relaxed">
+        <div className="bg-[#F6F8F7] rounded-2xl p-6 border border-[#D5DFDC] flex items-start gap-4">
+          <AlertCircle className="w-6 h-6 text-[#5A6A66] flex-shrink-0 mt-0.5" />
+          <p className="text-base text-[#5A6A66] font-medium leading-relaxed">
             These scores are for prototype demonstration and cognitive engagement purposes only. They do not constitute a medical diagnosis, clinical test, or dementia screen.
           </p>
         </div>

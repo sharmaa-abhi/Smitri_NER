@@ -4,8 +4,52 @@
 
 @layer base {
   :root {
-    --background: #FAFCFD;
-    --foreground: #0A192F;
+    /* Central Color Token System */
+    --color-primary: #0B534B;
+    --color-primary-hover: #08433C;
+    --color-primary-active: #06342E;
+    --color-primary-soft: #E6F4F1;
+    --color-primary-dark: #042420;
+
+    --color-secondary: #10B981;
+    --color-secondary-hover: #059669;
+    --color-secondary-active: #047857;
+    --color-secondary-soft: #ECFDF5;
+
+    --color-tertiary: #D97706;
+    --color-tertiary-hover: #B45309;
+    --color-tertiary-active: #92400E;
+    --color-tertiary-soft: #FFFBEB;
+
+    --color-neutral: #5A6A66;
+    --color-neutral-dark: #111615;
+    --color-neutral-muted: #7A8D88;
+    --color-neutral-light: #D5DFDC;
+    --color-neutral-subtle: #EBF0EE;
+
+    --color-background: #F6F8F7;
+    --color-surface: #FFFFFF;
+    --color-surface-mint: #F2F8F6;
+    --color-surface-muted: #EBF0EE;
+    --color-surface-dark: #0B534B;
+    --color-surface-darkest: #042420;
+
+    --color-text-primary: #111615;
+    --color-text-secondary: #5A6A66;
+    --color-text-muted: #7A8D88;
+    --color-text-inverse: #FFFFFF;
+    --color-text-inverse-muted: #D5DFDC;
+
+    --color-border: #D5DFDC;
+    --color-border-subtle: #E6ECEB;
+
+    --color-success: #10B981;
+    --color-warning: #D97706;
+    --color-error: #DC2626;
+    --color-info: #0B534B;
+
+    --background: #F6F8F7;
+    --foreground: #111615;
     
     /* Global Typography Scale Tokens */
     --font-sans: var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -20,16 +64,17 @@
     --text-5xl: 2.75rem;   /* 44px */
     
     /* Semantic Text Colour System Tokens */
-    --text-primary: #0F172A;       /* Slate 900: High-contrast primary headings */
-    --text-secondary: #475569;     /* Slate 600: Readable body & description text */
-    --text-muted: #64748B;         /* Slate 500: Low-emphasis metadata */
-    --text-accent-teal: #0F766E;   /* Teal 700: Cognitive care / brand accent */
-    --text-accent-sky: #0369A1;    /* Sky 700: Interactive actions & links */
-    --text-accent-amber: #B45309;  /* Amber 700: Wellbeing & alerts */
-    --text-accent-rose: #BE123C;   /* Rose 700: Emergency & critical actions */
+    --text-primary: #111615;       /* Deep dark neutral / teal headings */
+    --text-secondary: #5A6A66;     /* Neutral slate: Readable body & description text */
+    --text-muted: #7A8D88;         /* Neutral muted: Low-emphasis metadata */
+    --text-accent-teal: #0B534B;   /* Deep Teal 600: Primary brand accent */
+    --text-accent-emerald: #10B981;/* Emerald 500: Secondary positive accent */
+    --text-accent-sky: #0B534B;    /* Interactive actions & links */
+    --text-accent-amber: #D97706;  /* Tertiary warm amber: Wellbeing & alerts */
+    --text-accent-rose: #DC2626;   /* Rose / Red: Emergency & critical actions */
     --text-inverse: #FFFFFF;       /* White: Text on dark/saturated surfaces */
-    --text-inverse-muted: #CBD5E1; /* Slate 300: Supporting text on dark surfaces */
-    --text-inverse-accent: #5EEAD4;/* Teal 300: Accent tags on dark surfaces */
+    --text-inverse-muted: #D5DFDC; /* Light slate: Supporting text on dark surfaces */
+    --text-inverse-accent: #A7F3D0;/* Mint 200: Accent tags on dark surfaces */
 
     /* Proportional Line Heights */
     --leading-tight: 1.15;
@@ -53,6 +98,7 @@
   h1, h2, h3, h4, h5, h6 {
     letter-spacing: -0.02em;
     text-wrap: balance;
+    color: var(--text-primary);
   }
 
   p {
@@ -61,7 +107,7 @@
 
   /* Accessibility focus styles */
   button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
-    outline: 3px solid #0EA5E9;
+    outline: 3px solid #0B534B;
     outline-offset: 3px;
   }
 }
@@ -72,34 +118,37 @@
   /* ========================================================================= */
   .btn-base {
     @apply inline-flex items-center justify-center gap-2 font-bold transition-all duration-200 select-none;
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-teal-500;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0B534B];
     @apply disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed;
     @apply active:scale-[0.98];
   }
 
-  /* 1. Primary: Main CTA, strong visual emphasis */
+  /* 1. Primary: Main CTA, Deep Teal #0B534B */
   .btn-primary {
-    @apply btn-base bg-gradient-to-r from-sky-600 to-teal-600 hover:from-sky-700 hover:to-teal-700 text-white border border-transparent shadow-sm hover:shadow-md;
+    @apply btn-base bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white border border-transparent shadow-sm hover:shadow-md;
   }
 
-  /* 2. Secondary: Supporting action with gentle teal tint */
+  /* 2. Secondary: Supporting action, Emerald Green #10B981 */
   .btn-secondary {
-    @apply btn-base bg-teal-50 hover:bg-teal-100 text-teal-800 border border-teal-200/90 shadow-sm;
+    @apply btn-base bg-[#10B981] hover:bg-[#059669] active:bg-[#047857] text-white border border-transparent shadow-sm hover:shadow-md;
   }
 
-  /* 3. Outline / Ghost: Low-emphasis neutral action */
+  /* 3. Outline / Ghost: Low-emphasis action with primary border */
   .btn-outline {
-    @apply btn-base bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 border border-slate-200/90 shadow-sm;
+    @apply btn-base bg-white hover:bg-[#E6F4F1] text-[#0B534B] border border-[#0B534B] shadow-sm;
   }
 
-  /* 4. Destructive: Critical, emergency, or removal actions */
+  /* 4. Tertiary / Warning / Destructive */
+  .btn-tertiary {
+    @apply btn-base bg-[#D97706] hover:bg-[#B45309] active:bg-[#92400E] text-white border border-transparent shadow-sm;
+  }
   .btn-destructive {
-    @apply btn-base bg-rose-600 hover:bg-rose-700 text-white border border-rose-700 shadow-sm hover:shadow-md focus-visible:ring-rose-500;
+    @apply btn-base bg-[#DC2626] hover:bg-[#B91C1C] text-white border border-transparent shadow-sm hover:shadow-md focus-visible:ring-red-600;
   }
 
   /* 5. Icon / Icon-only: Small utility controls with accessible touch target */
   .btn-icon {
-    @apply btn-base p-2.5 rounded-full text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent min-h-[44px] min-w-[44px];
+    @apply btn-base p-2.5 rounded-full text-[#5A6A66] hover:text-[#111615] hover:bg-[#EBF0EE] border border-transparent min-h-[44px] min-w-[44px];
   }
 
   /* Standard Size Modifiers */
@@ -116,11 +165,11 @@
 
 /* Subtle gentle glow and mesh background */
 .hero-gradient-glow {
-  background: radial-gradient(circle at 50% 20%, rgba(14, 165, 233, 0.08) 0%, rgba(20, 184, 166, 0.06) 40%, rgba(250, 252, 253, 0) 70%);
+  background: radial-gradient(circle at 50% 20%, rgba(11, 83, 75, 0.08) 0%, rgba(16, 185, 129, 0.06) 40%, rgba(246, 248, 247, 0) 70%);
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, #0284C7 0%, #0D9488 100%);
+  background: linear-gradient(135deg, #0B534B 0%, #10B981 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

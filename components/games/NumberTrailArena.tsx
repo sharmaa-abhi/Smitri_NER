@@ -73,16 +73,16 @@ export default function NumberTrailArena({ difficulty, onFinish }: Props) {
 
   return (
     <div className="w-full max-w-xl text-center space-y-4">
-      <div className="inline-flex items-center gap-2 bg-indigo-100 text-indigo-950 px-4 py-1.5 rounded-full font-bold text-sm">
-        <Hash className="w-4 h-4 text-indigo-700" />
-        <span>Next Number to Tap: <strong className="text-lg text-indigo-800 ml-1">{nextExpectedNumber}</strong></span>
+      <div className="inline-flex items-center gap-2 bg-[#E6F4F1] text-[#0B534B] border border-[#93CEC5] px-4 py-1.5 rounded-full font-bold text-sm">
+        <Hash className="w-4 h-4 text-[#0B534B]" />
+        <span>Next Number to Tap: <strong className="text-lg text-[#0B534B] ml-1">{nextExpectedNumber}</strong></span>
       </div>
 
-      <p className="text-xs sm:text-sm text-slate-600 font-medium">
+      <p className="text-xs sm:text-sm text-[#5A6A66] font-medium">
         Tap the stones in numerical order from 1 to {trailNumbers.length}.
       </p>
 
-      <div className="relative w-full h-80 sm:h-96 bg-gradient-to-b from-sky-50 to-indigo-50/40 rounded-3xl border-3 border-indigo-200 overflow-hidden shadow-inner mt-2">
+      <div className="relative w-full h-80 sm:h-96 bg-gradient-to-b from-[#F2F8F6] to-[#E6F4F1] rounded-3xl border-2 border-[#D5DFDC] overflow-hidden shadow-inner mt-2">
         {trailNumbers.map((stone) => {
           const isTapped = stone.tapped;
           const isFlash = trailErrorFlash === stone.num;
@@ -98,12 +98,12 @@ export default function NumberTrailArena({ difficulty, onFinish }: Props) {
                 top: `${stone.y}%`,
                 transform: 'translate(-50%, -50%)',
               }}
-              className={`absolute w-14 h-14 sm:w-16 sm:h-16 rounded-full font-black text-xl sm:text-2xl shadow-lg border-3 transition-all flex items-center justify-center ${
+              className={`absolute w-14 h-14 sm:w-16 sm:h-16 rounded-full font-black text-xl sm:text-2xl shadow-lg border-2 transition-all flex items-center justify-center ${
                 isTapped
-                  ? 'bg-emerald-100 border-emerald-500 text-emerald-900 opacity-60 scale-90'
+                  ? 'bg-[#ECFDF5] border-[#10B981] text-[#059669] opacity-70 scale-90'
                   : isFlash
-                  ? 'bg-rose-500 border-rose-700 text-white animate-bounce'
-                  : 'bg-indigo-600 hover:bg-indigo-700 border-indigo-800 text-white hover:scale-110 active:scale-95'
+                  ? 'bg-red-500 border-red-700 text-white animate-bounce'
+                  : 'bg-[#0B534B] hover:bg-[#08433C] border-[#06342E] text-white hover:scale-110 active:scale-95'
               }`}
               aria-label={`Number ${stone.num}`}
             >

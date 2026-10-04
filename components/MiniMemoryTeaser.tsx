@@ -112,22 +112,22 @@ export default function MiniMemoryTeaser() {
   };
 
   return (
-    <section className="bg-gradient-to-br from-teal-900 via-slate-900 to-sky-950 text-white rounded-3xl p-6 sm:p-10 border border-teal-500/30 shadow-xl relative overflow-hidden">
+    <section className="bg-gradient-to-br from-[#042420] via-[#06342E] to-[#0B534B] text-white rounded-3xl p-6 sm:p-10 border border-[#127267]/40 shadow-xl relative overflow-hidden">
       {/* Decorative ambient background glows */}
-      <div className="absolute top-0 right-0 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-80 h-80 bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 right-0 w-80 h-80 bg-[#10B981]/15 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#0B534B]/20 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative max-w-4xl mx-auto">
         {/* Header Badge & Title */}
         <div className="text-center space-y-2.5 mb-8">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-teal-400/20 text-teal-300 text-xs font-bold border border-teal-400/30 shadow-xs">
-            <Sparkles className="w-3.5 h-3.5 text-teal-300" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-[#A7F3D0] text-xs font-bold border border-white/20 shadow-xs">
+            <Sparkles className="w-3.5 h-3.5 text-[#A7F3D0]" />
             <span>{t("Quick Senior Brain Spark") || "Interactive Teaser • No Login Required"}</span>
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight">
             {t("15-Second Mini Memory Challenge") || "15-Second Memory Spark"}
           </h2>
-          <p className="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto font-medium">
+          <p className="text-xs sm:text-sm text-[#D5DFDC] max-w-xl mx-auto font-medium">
             {t("Tap 2 matching cards to awaken recall") || "Tap two cards to find matching pairs of cultural symbols. See how quickly your visual recall activates!"}
           </p>
         </div>
@@ -135,18 +135,18 @@ export default function MiniMemoryTeaser() {
         {/* Game Arena & Cards */}
         <div className="bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-5 sm:p-7 max-w-xl mx-auto">
           {/* Status Bar */}
-          <div className="flex items-center justify-between pb-4 mb-6 border-b border-white/10 text-xs sm:text-sm font-bold text-slate-300">
+          <div className="flex items-center justify-between pb-4 mb-6 border-b border-white/10 text-xs sm:text-sm font-bold text-[#D5DFDC]">
             <div className="flex items-center gap-1.5 bg-white/10 px-3 py-1 rounded-full">
-              <Timer className="w-3.5 h-3.5 text-teal-300" />
+              <Timer className="w-3.5 h-3.5 text-[#A7F3D0]" />
               <span>{t("Time")}: <strong className="text-white font-mono">{elapsedSeconds}s</strong></span>
             </div>
-            <div className="text-slate-300">
+            <div className="text-[#D5DFDC]">
               {t("Moves")}: <strong className="text-white font-mono">{moves}</strong>
             </div>
             <button
               type="button"
               onClick={resetGame}
-              className="inline-flex items-center gap-1 text-slate-300 hover:text-white transition-colors"
+              className="inline-flex items-center gap-1 text-[#D5DFDC] hover:text-white transition-colors"
               title="Restart teaser"
             >
               <RotateCcw className="w-3.5 h-3.5" />
@@ -167,22 +167,22 @@ export default function MiniMemoryTeaser() {
                     onClick={() => handleCardClick(idx)}
                     className={`aspect-square rounded-2xl flex flex-col items-center justify-center p-3 text-center transition-all duration-300 transform select-none border-2 ${
                       card.matched
-                        ? "bg-teal-500/20 border-teal-400/80 scale-95 shadow-sm"
+                        ? "bg-[#10B981]/25 border-[#10B981] scale-95 shadow-sm"
                         : isFlipped
-                        ? "bg-white text-slate-900 border-white scale-102 shadow-lg"
-                        : "bg-white/10 hover:bg-white/20 border-white/20 hover:border-teal-300 active:scale-95"
+                        ? "bg-white text-[#111615] border-white scale-102 shadow-lg"
+                        : "bg-white/10 hover:bg-white/20 border-white/20 hover:border-[#10B981] active:scale-95"
                     }`}
                     aria-label={`Card ${idx + 1}`}
                   >
                     {isFlipped ? (
                       <div className="animate-in zoom-in-75 duration-200">
                         <span className="text-4xl sm:text-5xl block mb-1">{card.symbol}</span>
-                        <span className="text-[10px] font-bold text-slate-800 line-clamp-1">
+                        <span className="text-[10px] font-bold text-[#111615] line-clamp-1">
                           {t(card.name)}
                         </span>
                       </div>
                     ) : (
-                      <div className="flex flex-col items-center justify-center text-teal-200/60 group-hover:text-teal-200">
+                      <div className="flex flex-col items-center justify-center text-[#A7F3D0]/70 group-hover:text-[#A7F3D0]">
                         <span className="text-2xl font-black mb-1">?</span>
                         <span className="text-[10px] uppercase font-bold tracking-wider">Tap</span>
                       </div>
@@ -194,14 +194,14 @@ export default function MiniMemoryTeaser() {
           ) : (
             /* Celebration Screen */
             <div className="text-center py-6 px-4 space-y-4 animate-in zoom-in-95 duration-300">
-              <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-teal-400 to-amber-300 text-slate-900 flex items-center justify-center mx-auto shadow-lg shadow-teal-500/20 animate-bounce">
+              <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-[#10B981] to-[#D97706] text-white flex items-center justify-center mx-auto shadow-lg shadow-[#10B981]/20 animate-bounce">
                 <Trophy className="w-8 h-8" />
               </div>
               <div className="space-y-1">
                 <h3 className="text-xl sm:text-2xl font-black text-white">
                   {t("Congratulations! Recall Sparked!") || "Sharp Reflexes!"}
                 </h3>
-                <p className="text-xs sm:text-sm text-teal-200">
+                <p className="text-xs sm:text-sm text-[#A7F3D0]">
                   {t("Moves")}: <strong className="text-white">{moves}</strong> • {t("Time")}: <strong className="text-white">{elapsedSeconds}s</strong>
                 </p>
               </div>
@@ -217,7 +217,7 @@ export default function MiniMemoryTeaser() {
                 </button>
                 <Link
                   href="/games"
-                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-gradient-to-r from-teal-400 to-emerald-400 text-slate-950 font-black text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow-md hover:scale-[1.02] active:scale-[0.98]"
+                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-[#10B981] hover:bg-[#059669] text-white font-black text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow-md hover:scale-[1.02] active:scale-[0.98]"
                 >
                   <span>{t("Play Full Games") || "Play All 9 Full Games"}</span>
                   <ArrowRight className="w-4 h-4" />
@@ -226,7 +226,7 @@ export default function MiniMemoryTeaser() {
             </div>
           )}
 
-          <div className="text-center pt-3 text-[11px] text-slate-400 font-medium">
+          <div className="text-center pt-3 text-[11px] text-[#D5DFDC] font-medium">
             💡 Full platform includes 9 adaptive games with audio narration in 8 regional dialects.
           </div>
         </div>

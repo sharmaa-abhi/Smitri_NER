@@ -84,12 +84,12 @@ export default function MemoryMatchArena({ difficulty, onFinish }: Props) {
           type="button"
           onClick={() => handleCardClick(idx)}
           disabled={card.flipped || card.matched}
-          className={`h-28 sm:h-36 rounded-2xl text-4xl sm:text-5xl font-bold flex items-center justify-center transition-all duration-300 shadow-md border-3 ${
+          className={`h-28 sm:h-36 rounded-2xl text-4xl sm:text-5xl font-bold flex items-center justify-center transition-all duration-300 shadow-md border-2 ${
             card.matched
-              ? 'bg-emerald-100 border-emerald-400 text-emerald-900 opacity-90 scale-95'
+              ? 'bg-[#ECFDF5] border-[#10B981] text-[#059669] opacity-90 scale-95'
               : card.flipped
-              ? 'bg-amber-100 border-amber-400 text-slate-900 scale-105'
-              : 'bg-blue-700 hover:bg-blue-800 border-blue-900 text-white hover:scale-102'
+              ? 'bg-[#FFFBEB] border-[#D97706] text-[#111615] scale-105 shadow-lg'
+              : 'bg-[#0B534B] hover:bg-[#08433C] border-[#06342E] text-white hover:scale-102'
           }`}
           aria-label={`Card ${idx + 1}`}
         >

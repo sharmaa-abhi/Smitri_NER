@@ -209,18 +209,18 @@ export default function FeaturesPage() {
       {/* ========================================================================= */}
       {/* SIMPLE CLEAN HEADER                                                       */}
       {/* ========================================================================= */}
-      <section className="bg-gradient-to-b from-white via-sky-50/50 to-teal-50/30 border border-slate-200/90 rounded-3xl p-6 sm:p-10 text-center space-y-3">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-teal-800 text-xs font-bold">
-          <Sparkles className="w-3.5 h-3.5 text-teal-700" />
+      <section className="bg-gradient-to-b from-white via-[#E6F4F1]/30 to-[#ECFDF5]/20 border border-[#D5DFDC] rounded-3xl p-6 sm:p-10 text-center space-y-3">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E6F4F1] border border-[#0B534B]/20 text-[#0B534B] text-xs font-bold">
+          <Sparkles className="w-3.5 h-3.5 text-[#0B534B]" />
           <span>{t("features_guide_badge", "Smitri_NER Step Guide")}</span>
         </div>
 
-        <h1 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
+        <h1 className="text-2xl sm:text-4xl font-black text-[#111615] tracking-tight">
           {t("features_title_prefix", "How Features Work,")}{" "}
           <span className="text-gradient">{t("features_title_gradient", "Step by Step")}</span>
         </h1>
 
-        <p className="text-sm sm:text-base text-slate-600 font-medium max-w-2xl mx-auto">
+        <p className="text-sm sm:text-base text-[#5A6A66] font-medium max-w-2xl mx-auto">
           {t("features_desc", "Scroll down through each step. As you scroll, the steps on the left update automatically to guide your journey.")}
         </p>
 
@@ -243,7 +243,7 @@ export default function FeaturesPage() {
       {/* ========================================================================= */}
       {/* MOBILE STICKY STEPPER                                                     */}
       {/* ========================================================================= */}
-      <div className="lg:hidden sticky top-20 z-30 bg-white/95 backdrop-blur-md border border-slate-200/90 rounded-2xl p-2 shadow-sm flex items-center justify-between gap-1 overflow-x-auto scrollbar-none">
+      <div className="lg:hidden sticky top-20 z-30 bg-white/95 backdrop-blur-md border border-[#D5DFDC] rounded-2xl p-2 shadow-sm flex items-center justify-between gap-1 overflow-x-auto scrollbar-none">
         {STEPS.map((s) => {
           const isActive = activeStep === s.id;
           const isPassed = activeStep > s.id;
@@ -271,14 +271,14 @@ export default function FeaturesPage() {
         {/* LEFT COLUMN: STICKY STEPPER (Desktop)                                  */}
         {/* ======================================================================= */}
         <aside className="hidden lg:block lg:col-span-4 sticky top-24 space-y-4">
-          <div className="bg-white border border-slate-200/90 rounded-3xl p-5 shadow-sm space-y-4">
+          <div className="bg-white border border-[#D5DFDC] rounded-3xl p-5 shadow-sm space-y-4">
             
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div className="flex items-center justify-between border-b border-[#D5DFDC]/60 pb-3">
               <div>
-                <span className="text-xs font-semibold text-slate-500 block">{t("features_progress", "Progress")}</span>
-                <h2 className="text-sm font-black text-slate-900">{t("features_journey", "Feature Journey")}</h2>
+                <span className="text-xs font-semibold text-[#5A6A66] block">{t("features_progress", "Progress")}</span>
+                <h2 className="text-sm font-black text-[#111615]">{t("features_journey", "Feature Journey")}</h2>
               </div>
-              <span className="px-3 py-1 rounded-full bg-slate-900 text-white text-xs font-bold shadow-sm">
+              <span className="px-3 py-1 rounded-full bg-[#0B534B] text-white text-xs font-bold shadow-sm">
                 {t("features_step_format", "Step 0{step} of 05").replace("{step}", activeStep.toString())}
               </span>
             </div>
@@ -286,11 +286,11 @@ export default function FeaturesPage() {
             {/* Vertical timeline connecting track & active line */}
             <div className="space-y-2 relative pl-1">
               {/* Background connecting line */}
-              <div className="absolute left-[25px] top-4 bottom-4 w-0.5 bg-slate-200 rounded-full z-0 pointer-events-none" />
+              <div className="absolute left-[25px] top-4 bottom-4 w-0.5 bg-[#D5DFDC] rounded-full z-0 pointer-events-none" />
               
               {/* Colored active fill bar that animates with activeStep */}
               <div 
-                className="absolute left-[25px] top-4 w-0.5 bg-gradient-to-b from-sky-500 via-teal-500 to-indigo-600 rounded-full z-0 transition-all duration-500 ease-out pointer-events-none"
+                className="absolute left-[25px] top-4 w-0.5 bg-gradient-to-b from-[#0B534B] to-[#10B981] rounded-full z-0 transition-all duration-500 ease-out pointer-events-none"
                 style={{ 
                   height: `${((activeStep - 1) / (STEPS.length - 1)) * 100}%` 
                 }}
@@ -304,19 +304,19 @@ export default function FeaturesPage() {
                   <button
                     key={step.id}
                     onClick={() => scrollTo(step.slug)}
-                    className={`w-full relative z-10 flex items-center gap-3 p-3 rounded-2xl transition-all duration-300 text-left focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none min-h-[44px] ${
+                    className={`w-full relative z-10 flex items-center gap-3 p-3 rounded-2xl transition-all duration-300 text-left focus-visible:ring-2 focus-visible:ring-[#0B534B] focus-visible:outline-none min-h-[44px] ${
                       isActive
-                        ? "bg-gradient-to-r from-teal-50 to-sky-50/70 border border-teal-300 text-slate-900 shadow-md translate-x-1.5"
-                        : "hover:bg-slate-50 text-slate-600 border border-transparent"
+                        ? "bg-[#E6F4F1] border border-[#0B534B]/30 text-[#111615] shadow-sm translate-x-1.5"
+                        : "hover:bg-[#F6F8F7] text-[#5A6A66] border border-transparent"
                     }`}
                   >
                     {/* Circle badge */}
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 flex-shrink-0 ${
                       isActive
-                        ? "bg-gradient-to-tr from-sky-600 to-teal-600 text-white shadow-md ring-4 ring-teal-100 scale-110"
+                        ? "bg-[#0B534B] text-white shadow-md ring-4 ring-[#E6F4F1] scale-110"
                         : isPassed
-                        ? "bg-teal-600 text-white shadow-sm"
-                        : "bg-white border-2 border-slate-300 text-slate-500"
+                        ? "bg-[#10B981] text-white shadow-sm"
+                        : "bg-white border-2 border-[#D5DFDC] text-[#5A6A66]"
                     }`}>
                       {isPassed ? <Check className="w-4 h-4 stroke-[3]" /> : step.number}
                     </div>
@@ -324,12 +324,12 @@ export default function FeaturesPage() {
                     {/* Step Title & Tag */}
                     <div className="flex-1 min-w-0">
                       <span className={`text-xs font-semibold block truncate ${
-                        isActive ? "text-teal-700" : "text-slate-500"
+                        isActive ? "text-[#0B534B]" : "text-[#5A6A66]"
                       }`}>
                         {step.tag}
                       </span>
                       <span className={`text-xs font-bold truncate block transition-colors ${
-                        isActive ? "text-slate-900 font-black text-sm" : "text-slate-600"
+                        isActive ? "text-[#111615] font-black text-sm" : "text-[#5A6A66]"
                       }`}>
                         {step.title}
                       </span>
@@ -339,10 +339,10 @@ export default function FeaturesPage() {
                     {isActive && (
                       <div className="flex items-center gap-1 flex-shrink-0">
                         <span className="relative flex h-2 w-2">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
-                          <span className="relative inline-flex rounded-full h-2 w-2 bg-teal-500"></span>
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10B981] opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-2 w-2 bg-[#10B981]"></span>
                         </span>
-                        <ChevronRight className="w-4 h-4 text-teal-700" />
+                        <ChevronRight className="w-4 h-4 text-[#0B534B]" />
                       </div>
                     )}
                   </button>
@@ -350,8 +350,8 @@ export default function FeaturesPage() {
               })}
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 text-xs text-slate-600 space-y-1">
-              <span className="font-bold text-slate-900 block">{t("features_auto_updating", "Auto-updating steps")}</span>
+            <div className="p-3.5 rounded-2xl bg-[#F6F8F7] border border-[#D5DFDC] text-xs text-[#5A6A66] space-y-1">
+              <span className="font-bold text-[#111615] block">{t("features_auto_updating", "Auto-updating steps")}</span>
               <p>{t("features_auto_updating_desc", "Scroll down or tap any step above to jump directly to it.")}</p>
             </div>
           </div>
@@ -369,46 +369,46 @@ export default function FeaturesPage() {
             id="step-1" 
             className={`scroll-mt-28 bg-white rounded-3xl p-6 sm:p-8 space-y-5 transition-all duration-500 ${
               activeStep === 1
-                ? "border-2 border-teal-500 ring-4 ring-teal-50/80 shadow-xl scale-[1.008]"
-                : "border border-slate-200/90 shadow-sm opacity-90 hover:opacity-100"
+                ? "border-2 border-[#0B534B] ring-4 ring-[#E6F4F1] shadow-xl scale-[1.008]"
+                : "border border-[#D5DFDC] shadow-sm opacity-90 hover:opacity-100"
             }`}
           >
-            <div className="flex items-center justify-between gap-3 border-b border-slate-100 pb-3">
+            <div className="flex items-center justify-between gap-3 border-b border-[#D5DFDC]/60 pb-3">
               <div className="flex items-center gap-3">
                 <span className={`w-10 h-10 rounded-2xl flex items-center justify-center font-bold text-sm transition-colors ${
-                  activeStep === 1 ? "bg-teal-600 text-white shadow-sm" : "bg-sky-100 text-sky-700"
+                  activeStep === 1 ? "bg-[#0B534B] text-white shadow-sm" : "bg-[#E6F4F1] text-[#0B534B]"
                 }`}>
                   01
                 </span>
                 <div>
-                  <span className="text-xs font-semibold text-sky-700 block">{t("features_step1_badge", "Step 01 • Memory games")}</span>
-                  <h2 className="text-xl sm:text-2xl font-black text-slate-900">{t("features_step1_title", "Brain & Memory Games")}</h2>
+                  <span className="text-xs font-semibold text-[#0B534B] block">{t("features_step1_badge", "Step 01 • Memory games")}</span>
+                  <h2 className="text-xl sm:text-2xl font-black text-[#111615]">{t("features_step1_title", "Brain & Memory Games")}</h2>
                 </div>
               </div>
 
               {activeStep === 1 && (
-                <span className="px-2.5 py-1 rounded-full bg-teal-100 text-teal-800 text-xs font-bold animate-pulse">
+                <span className="px-2.5 py-1 rounded-full bg-[#ECFDF5] text-[#065F46] text-xs font-bold animate-pulse">
                   {t("features_active_step", "Active step")}
                 </span>
               )}
             </div>
 
             {/* Explanation */}
-            <div className="space-y-2 text-sm text-slate-600 font-medium leading-relaxed">
+            <div className="space-y-2 text-sm text-[#5A6A66] font-medium leading-relaxed">
               <p>
                 {t("features_step1_desc", "Easy 2-minute daily brain exercises that adapt to your speed.")}
               </p>
-              <ul className="space-y-1.5 text-xs sm:text-sm text-slate-600">
-                <li className="flex items-center gap-2">✓ <strong className="text-slate-900">{t("features_step1_b1_title", "No time pressure")}:</strong> {t("features_step1_b1_desc", "Play calmly without timer stress.")}</li>
-                <li className="flex items-center gap-2">✓ <strong className="text-slate-900">{t("features_step1_b2_title", "Auto-adjusts difficulty")}:</strong> {t("features_step1_b2_desc", "Gets easier or harder based on your comfort.")}</li>
-                <li className="flex items-center gap-2">✓ <strong className="text-slate-900">{t("features_step1_b3_title", "3 simple games")}:</strong> {t("features_step1_b3_desc", "Match the cards, remember the sequence, find odd one out.")}</li>
+              <ul className="space-y-1.5 text-xs sm:text-sm text-[#5A6A66]">
+                <li className="flex items-center gap-2">✓ <strong className="text-[#111615]">{t("features_step1_b1_title", "No time pressure")}:</strong> {t("features_step1_b1_desc", "Play calmly without timer stress.")}</li>
+                <li className="flex items-center gap-2">✓ <strong className="text-[#111615]">{t("features_step1_b2_title", "Auto-adjusts difficulty")}:</strong> {t("features_step1_b2_desc", "Gets easier or harder based on your comfort.")}</li>
+                <li className="flex items-center gap-2">✓ <strong className="text-[#111615]">{t("features_step1_b3_title", "3 simple games")}:</strong> {t("features_step1_b3_desc", "Match the cards, remember the sequence, find odd one out.")}</li>
               </ul>
             </div>
 
             {/* Interactive mini preview */}
-            <div className="p-4 rounded-2xl bg-sky-50/60 border border-sky-100 space-y-3">
+            <div className="p-4 rounded-2xl bg-[#E6F4F1]/40 border border-[#0B534B]/15 space-y-3">
               <div className="flex items-center justify-between text-xs font-bold">
-                <span className="text-slate-600">{t("features_step1_try", "Try it: Tap 2 cards to find matching pair")}</span>
+                <span className="text-[#5A6A66]">{t("features_step1_try", "Try it: Tap 2 cards to find matching pair")}</span>
                 <Button 
                   onClick={resetCards} 
                   variant="outline"
@@ -429,10 +429,10 @@ export default function FeaturesPage() {
                       onClick={() => handleCardClick(card.id)}
                       disabled={card.matched}
                       aria-label={visible ? `Card ${card.icon}` : "Hidden memory card"}
-                      className={`aspect-square rounded-2xl flex items-center justify-center text-xl font-bold transition-all focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none min-h-[44px] ${
+                      className={`aspect-square rounded-2xl flex items-center justify-center text-xl font-bold transition-all focus-visible:ring-2 focus-visible:ring-[#0B534B] focus-visible:outline-none min-h-[44px] ${
                         visible
-                          ? "bg-white border-2 border-teal-500 shadow-sm"
-                          : "bg-sky-600 text-white hover:bg-sky-700"
+                          ? "bg-white border-2 border-[#0B534B] shadow-sm"
+                          : "bg-[#0B534B] text-white hover:bg-[#08433C]"
                       }`}
                     >
                       {visible ? card.icon : <Brain className="w-5 h-5 text-white/80" />}
@@ -442,7 +442,7 @@ export default function FeaturesPage() {
               </div>
 
               {matchDone && (
-                <p className="text-center text-xs font-bold text-teal-800">
+                <p className="text-center text-xs font-bold text-[#065F46]">
                   {t("features_step1_matched", "🎉 Matched! That's how simple and fun the games are.")}
                 </p>
               )}
@@ -455,7 +455,7 @@ export default function FeaturesPage() {
               />
               <Link 
                 href="/games" 
-                className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-sky-700 hover:underline focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none rounded-lg p-1"
+                className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#0B534B] hover:text-[#08433C] focus-visible:ring-2 focus-visible:ring-[#0B534B] focus-visible:outline-none rounded-lg p-1"
               >
                 <span>{t("features_step1_action", "Play games")}</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -470,65 +470,65 @@ export default function FeaturesPage() {
             id="step-2" 
             className={`scroll-mt-28 bg-white rounded-3xl p-6 sm:p-8 space-y-5 transition-all duration-500 ${
               activeStep === 2
-                ? "border-2 border-teal-500 ring-4 ring-teal-50/80 shadow-xl scale-[1.008]"
-                : "border border-slate-200/90 shadow-sm opacity-90 hover:opacity-100"
+                ? "border-2 border-[#0B534B] ring-4 ring-[#E6F4F1] shadow-xl scale-[1.008]"
+                : "border border-[#D5DFDC] shadow-sm opacity-90 hover:opacity-100"
             }`}
           >
-            <div className="flex items-center justify-between gap-3 border-b border-slate-100 pb-3">
+            <div className="flex items-center justify-between gap-3 border-b border-[#D5DFDC]/60 pb-3">
               <div className="flex items-center gap-3">
                 <span className={`w-10 h-10 rounded-2xl flex items-center justify-center font-bold text-sm transition-colors ${
-                  activeStep === 2 ? "bg-teal-600 text-white shadow-sm" : "bg-teal-100 text-teal-800"
+                  activeStep === 2 ? "bg-[#0B534B] text-white shadow-sm" : "bg-[#ECFDF5] text-[#065F46]"
                 }`}>
                   02
                 </span>
                 <div>
-                  <span className="text-xs font-semibold text-teal-700 block">{t("features_step2_badge", "Step 02 • Daily habit")}</span>
-                  <h2 className="text-xl sm:text-2xl font-black text-slate-900">{t("features_step2_title", "Medicine & Daily Routine")}</h2>
+                  <span className="text-xs font-semibold text-[#065F46] block">{t("features_step2_badge", "Step 02 • Daily habit")}</span>
+                  <h2 className="text-xl sm:text-2xl font-black text-[#111615]">{t("features_step2_title", "Medicine & Daily Routine")}</h2>
                 </div>
               </div>
 
               {activeStep === 2 && (
-                <span className="px-2.5 py-1 rounded-full bg-teal-100 text-teal-800 text-xs font-bold animate-pulse">
+                <span className="px-2.5 py-1 rounded-full bg-[#ECFDF5] text-[#065F46] text-xs font-bold animate-pulse">
                   {t("features_active_step", "Active step")}
                 </span>
               )}
             </div>
 
-            <div className="space-y-2 text-sm text-slate-600 font-medium leading-relaxed">
+            <div className="space-y-2 text-sm text-[#5A6A66] font-medium leading-relaxed">
               <p>
                 {t("features_step2_desc", "A large, clear daily checklist so you never miss medicine, water, or walking.")}
               </p>
-              <ul className="space-y-1.5 text-xs sm:text-sm text-slate-600">
-                <li className="flex items-center gap-2">✓ <strong className="text-slate-900">{t("features_step2_b1_title", "Big easy buttons")}:</strong> {t("features_step2_b1_desc", "Tap to check off in one touch.")}</li>
-                <li className="flex items-center gap-2">✓ <strong className="text-slate-900">{t("features_step2_b2_title", "Speaks out loud")}:</strong> {t("features_step2_b2_desc", "Read your routine aloud with the voice button.")}</li>
-                <li className="flex items-center gap-2">✓ <strong className="text-slate-900">{t("features_step2_b3_title", "Daily habit streak")}:</strong> {t("features_step2_b3_desc", "Encourages steady healthy routines every day.")}</li>
+              <ul className="space-y-1.5 text-xs sm:text-sm text-[#5A6A66]">
+                <li className="flex items-center gap-2">✓ <strong className="text-[#111615]">{t("features_step2_b1_title", "Big easy buttons")}:</strong> {t("features_step2_b1_desc", "Tap to check off in one touch.")}</li>
+                <li className="flex items-center gap-2">✓ <strong className="text-[#111615]">{t("features_step2_b2_title", "Speaks out loud")}:</strong> {t("features_step2_b2_desc", "Read your routine aloud with the voice button.")}</li>
+                <li className="flex items-center gap-2">✓ <strong className="text-[#111615]">{t("features_step2_b3_title", "Daily habit streak")}:</strong> {t("features_step2_b3_desc", "Encourages steady healthy routines every day.")}</li>
               </ul>
             </div>
 
             {/* Interactive mini preview */}
-            <div className="p-4 rounded-2xl bg-teal-50/60 border border-teal-100 space-y-2.5">
-              <span className="text-xs font-bold text-slate-600 block">{t("features_step2_try", "Try it: Tap circles to mark routine items done")}</span>
+            <div className="p-4 rounded-2xl bg-[#ECFDF5]/60 border border-[#10B981]/20 space-y-2.5">
+              <span className="text-xs font-bold text-[#5A6A66] block">{t("features_step2_try", "Try it: Tap circles to mark routine items done")}</span>
               <div className="space-y-2">
                 {routineTasks.map((task) => (
                   <button
                     key={task.id}
                     type="button"
                     onClick={() => toggleRoutine(task.id)}
-                    className={`w-full flex items-center justify-between p-3 rounded-2xl border text-left transition-all focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none min-h-[44px] ${
-                      task.done ? "bg-emerald-50/70 border-emerald-200 text-slate-500" : "bg-white border-slate-200 text-slate-900"
+                    className={`w-full flex items-center justify-between p-3 rounded-2xl border text-left transition-all focus-visible:ring-2 focus-visible:ring-[#0B534B] focus-visible:outline-none min-h-[44px] ${
+                      task.done ? "bg-[#ECFDF5] border-[#10B981]/30 text-[#5A6A66]" : "bg-white border-[#D5DFDC] text-[#111615]"
                     }`}
                   >
                     <div className="flex items-center gap-2.5">
                       <div className={`w-5 h-5 rounded-full flex items-center justify-center ${
-                        task.done ? "bg-emerald-600 text-white" : "border-2 border-slate-300 bg-white"
+                        task.done ? "bg-[#10B981] text-white" : "border-2 border-[#D5DFDC] bg-white"
                       }`}>
                         {task.done && <Check className="w-3 h-3 stroke-[3]" />}
                       </div>
-                      <span className={`text-xs sm:text-sm font-bold ${task.done ? "line-through text-slate-500" : ""}`}>
+                      <span className={`text-xs sm:text-sm font-bold ${task.done ? "line-through text-[#5A6A66]" : ""}`}>
                         {task.defaultText}
                       </span>
                     </div>
-                    <span className="text-xs font-semibold text-slate-500">
+                    <span className="text-xs font-semibold text-[#5A6A66]">
                       {task.done ? "✓" : "Tap"}
                     </span>
                   </button>
@@ -543,7 +543,7 @@ export default function FeaturesPage() {
               />
               <Link 
                 href="/reminders" 
-                className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-teal-700 hover:underline focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none rounded-lg p-1"
+                className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#0B534B] hover:text-[#08433C] focus-visible:ring-2 focus-visible:ring-[#0B534B] focus-visible:outline-none rounded-lg p-1"
               >
                 <span>{t("features_step2_action", "View reminders")}</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -558,44 +558,44 @@ export default function FeaturesPage() {
             id="step-3" 
             className={`scroll-mt-28 bg-white rounded-3xl p-6 sm:p-8 space-y-5 transition-all duration-500 ${
               activeStep === 3
-                ? "border-2 border-teal-500 ring-4 ring-teal-50/80 shadow-xl scale-[1.008]"
-                : "border border-slate-200/90 shadow-sm opacity-90 hover:opacity-100"
+                ? "border-2 border-[#0B534B] ring-4 ring-[#E6F4F1] shadow-xl scale-[1.008]"
+                : "border border-[#D5DFDC] shadow-sm opacity-90 hover:opacity-100"
             }`}
           >
-            <div className="flex items-center justify-between gap-3 border-b border-slate-100 pb-3">
+            <div className="flex items-center justify-between gap-3 border-b border-[#D5DFDC]/60 pb-3">
               <div className="flex items-center gap-3">
                 <span className={`w-10 h-10 rounded-2xl flex items-center justify-center font-bold text-sm transition-colors ${
-                  activeStep === 3 ? "bg-teal-600 text-white shadow-sm" : "bg-sky-100 text-sky-700"
+                  activeStep === 3 ? "bg-[#0B534B] text-white shadow-sm" : "bg-[#E6F4F1] text-[#0B534B]"
                 }`}>
                   03
                 </span>
                 <div>
-                  <span className="text-xs font-semibold text-sky-700 block">{t("features_step3_badge", "Step 03 • Inclusion")}</span>
-                  <h2 className="text-xl sm:text-2xl font-black text-slate-900">{t("features_step3_title", "Voice in Your Own Language")}</h2>
+                  <span className="text-xs font-semibold text-[#0B534B] block">{t("features_step3_badge", "Step 03 • Inclusion")}</span>
+                  <h2 className="text-xl sm:text-2xl font-black text-[#111615]">{t("features_step3_title", "Voice in Your Own Language")}</h2>
                 </div>
               </div>
 
               {activeStep === 3 && (
-                <span className="px-2.5 py-1 rounded-full bg-teal-100 text-teal-800 text-xs font-bold animate-pulse">
+                <span className="px-2.5 py-1 rounded-full bg-[#ECFDF5] text-[#065F46] text-xs font-bold animate-pulse">
                   {t("features_active_step", "Active step")}
                 </span>
               )}
             </div>
 
-            <div className="space-y-2 text-sm text-slate-600 font-medium leading-relaxed">
+            <div className="space-y-2 text-sm text-[#5A6A66] font-medium leading-relaxed">
               <p>
                 {t("features_step3_desc", "Speaks slowly and clearly in local North Eastern languages so elders feel right at home.")}
               </p>
-              <ul className="space-y-1.5 text-xs sm:text-sm text-slate-600">
-                <li className="flex items-center gap-2">✓ <strong className="text-slate-900">{t("features_step3_b1_title", "Calm slow pace")}:</strong> {t("features_step3_b1_desc", "Specifically paced slower for elderly hearing comfort.")}</li>
-                <li className="flex items-center gap-2">✓ <strong className="text-slate-900">{t("features_step3_b2_title", "Languages supported")}:</strong> {t("features_step3_b2_desc", "Assamese, Bengali, Hindi, English, and more.")}</li>
-                <li className="flex items-center gap-2">✓ <strong className="text-slate-900">{t("features_step3_b3_title", "1-tap switch")}:</strong> {t("features_step3_b3_desc", "Change language anytime from the top bar.")}</li>
+              <ul className="space-y-1.5 text-xs sm:text-sm text-[#5A6A66]">
+                <li className="flex items-center gap-2">✓ <strong className="text-[#111615]">{t("features_step3_b1_title", "Calm slow pace")}:</strong> {t("features_step3_b1_desc", "Specifically paced slower for elderly hearing comfort.")}</li>
+                <li className="flex items-center gap-2">✓ <strong className="text-[#111615]">{t("features_step3_b2_title", "Languages supported")}:</strong> {t("features_step3_b2_desc", "Assamese, Bengali, Hindi, English, and more.")}</li>
+                <li className="flex items-center gap-2">✓ <strong className="text-[#111615]">{t("features_step3_b3_title", "1-tap switch")}:</strong> {t("features_step3_b3_desc", "Change language anytime from the top bar.")}</li>
               </ul>
             </div>
 
             {/* Interactive mini preview */}
-            <div className="p-4 rounded-2xl bg-sky-50/60 border border-sky-100 space-y-2.5">
-              <span className="text-xs font-bold text-slate-600 block">{t("features_step3_try", "Try it: Tap a language to hear sample voice")}</span>
+            <div className="p-4 rounded-2xl bg-[#E6F4F1]/40 border border-[#0B534B]/15 space-y-2.5">
+              <span className="text-xs font-bold text-[#5A6A66] block">{t("features_step3_try", "Try it: Tap a language to hear sample voice")}</span>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 <Button
                   onClick={() => playDialect("en", "Welcome to Smitri N E R. Your personal memory companion.")}
@@ -632,7 +632,7 @@ export default function FeaturesPage() {
               </div>
 
               {playingDialect && (
-                <div className="flex items-center gap-2 text-xs font-bold text-teal-700 pt-1">
+                <div className="flex items-center gap-2 text-xs font-bold text-[#0B534B] pt-1">
                   <Volume2 className="w-3.5 h-3.5 animate-pulse" />
                   <span>{t("features_step3_playing", "Playing audio sample...")}</span>
                   <Button 
@@ -652,7 +652,7 @@ export default function FeaturesPage() {
                 textToRead={t("features_step3_desc", "Step 3: Voice in your own language. Hear everything spoken softly in your native mother tongue.")}
                 buttonLabel={t("features_listen", "Listen")}
               />
-              <span className="text-xs text-slate-500 font-medium">{t("features_step3_note", "Change language anytime in top bar")}</span>
+              <span className="text-xs text-[#5A6A66] font-medium">{t("features_step3_note", "Change language anytime in top bar")}</span>
             </div>
           </section>
 
@@ -663,46 +663,46 @@ export default function FeaturesPage() {
             id="step-4" 
             className={`scroll-mt-28 bg-white rounded-3xl p-6 sm:p-8 space-y-5 transition-all duration-500 ${
               activeStep === 4
-                ? "border-2 border-teal-500 ring-4 ring-teal-50/80 shadow-xl scale-[1.008]"
-                : "border border-slate-200/90 shadow-sm opacity-90 hover:opacity-100"
+                ? "border-2 border-[#0B534B] ring-4 ring-[#E6F4F1] shadow-xl scale-[1.008]"
+                : "border border-[#D5DFDC] shadow-sm opacity-90 hover:opacity-100"
             }`}
           >
-            <div className="flex items-center justify-between gap-3 border-b border-slate-100 pb-3">
+            <div className="flex items-center justify-between gap-3 border-b border-[#D5DFDC]/60 pb-3">
               <div className="flex items-center gap-3">
                 <span className={`w-10 h-10 rounded-2xl flex items-center justify-center font-bold text-sm transition-colors ${
-                  activeStep === 4 ? "bg-teal-600 text-white shadow-sm" : "bg-amber-100 text-amber-800"
+                  activeStep === 4 ? "bg-[#0B534B] text-white shadow-sm" : "bg-[#FFFBEB] text-[#D97706]"
                 }`}>
                   04
                 </span>
                 <div>
-                  <span className="text-xs font-semibold text-amber-800 block">{t("features_step4_badge", "Step 04 • Family")}</span>
-                  <h2 className="text-xl sm:text-2xl font-black text-slate-900">{t("features_step4_title", "Family & Caregiver Updates")}</h2>
+                  <span className="text-xs font-semibold text-[#D97706] block">{t("features_step4_badge", "Step 04 • Family")}</span>
+                  <h2 className="text-xl sm:text-2xl font-black text-[#111615]">{t("features_step4_title", "Family & Caregiver Updates")}</h2>
                 </div>
               </div>
 
               {activeStep === 4 && (
-                <span className="px-2.5 py-1 rounded-full bg-teal-100 text-teal-800 text-xs font-bold animate-pulse">
+                <span className="px-2.5 py-1 rounded-full bg-[#ECFDF5] text-[#065F46] text-xs font-bold animate-pulse">
                   {t("features_active_step", "Active step")}
                 </span>
               )}
             </div>
 
-            <div className="space-y-2 text-sm text-slate-600 font-medium leading-relaxed">
+            <div className="space-y-2 text-sm text-[#5A6A66] font-medium leading-relaxed">
               <p>
                 {t("features_step4_desc", "Keeps family informed gently, without disturbing the senior or invading privacy.")}
               </p>
-              <ul className="space-y-1.5 text-xs sm:text-sm text-slate-600">
-                <li className="flex items-center gap-2">✓ <strong className="text-slate-900">{t("features_step4_b1_title", "No cameras or spying")}:</strong> {t("features_step4_b1_desc", "100% private, only tracks game scores & routine checks.")}</li>
-                <li className="flex items-center gap-2">✓ <strong className="text-slate-900">{t("features_step4_b2_title", "3-Day trend filter")}:</strong> {t("features_step4_b2_desc", "Family is alerted only if routine is missed 3 days continuously.")}</li>
-                <li className="flex items-center gap-2">✓ <strong className="text-slate-900">{t("features_step4_b3_title", "Gentle suggestions")}:</strong> {t("features_step4_b3_desc", "Recommends a caring phone call rather than alarming family.")}</li>
+              <ul className="space-y-1.5 text-xs sm:text-sm text-[#5A6A66]">
+                <li className="flex items-center gap-2">✓ <strong className="text-[#111615]">{t("features_step4_b1_title", "No cameras or spying")}:</strong> {t("features_step4_b1_desc", "100% private, only tracks game scores & routine checks.")}</li>
+                <li className="flex items-center gap-2">✓ <strong className="text-[#111615]">{t("features_step4_b2_title", "3-Day trend filter")}:</strong> {t("features_step4_b2_desc", "Family is alerted only if routine is missed 3 days continuously.")}</li>
+                <li className="flex items-center gap-2">✓ <strong className="text-[#111615]">{t("features_step4_b3_title", "Gentle suggestions")}:</strong> {t("features_step4_b3_desc", "Recommends a caring phone call rather than alarming family.")}</li>
               </ul>
             </div>
 
             {/* Interactive mini preview */}
-            <div className="p-4 rounded-2xl bg-amber-50/60 border border-amber-100 space-y-3">
+            <div className="p-4 rounded-2xl bg-[#FFFBEB]/50 border border-[#D97706]/20 space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-slate-600">{t("features_step4_try", "Try it: See how family gets notified")}</span>
-                <div className="flex gap-1.5 p-1 bg-slate-100 rounded-full">
+                <span className="text-xs font-bold text-[#5A6A66]">{t("features_step4_try", "Try it: See how family gets notified")}</span>
+                <div className="flex gap-1.5 p-1 bg-[#F6F8F7] rounded-full border border-[#D5DFDC]">
                   <Button
                     onClick={() => setCaregiverView("normal")}
                     variant={caregiverView === "normal" ? "secondary" : "outline"}
@@ -721,8 +721,8 @@ export default function FeaturesPage() {
               </div>
 
               {caregiverView === "normal" ? (
-                <div className="p-3 rounded-xl bg-teal-50 border border-teal-200 text-xs text-teal-800 flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-teal-700 flex-shrink-0" />
+                <div className="p-3 rounded-xl bg-[#ECFDF5] border border-[#10B981]/30 text-xs text-[#065F46] flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-[#10B981] flex-shrink-0" />
                   <span>{t("features_step4_normal_text", "Routine Normal: All medicines taken on time today. Family sees peaceful green status.")}</span>
                 </div>
               ) : (
@@ -740,7 +740,7 @@ export default function FeaturesPage() {
               />
               <Link 
                 href="/caregiver" 
-                className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-amber-800 hover:underline focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none rounded-lg p-1"
+                className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#0B534B] hover:text-[#08433C] focus-visible:ring-2 focus-visible:ring-[#0B534B] focus-visible:outline-none rounded-lg p-1"
               >
                 <span>{t("features_step4_action", "Caregiver view")}</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -755,45 +755,45 @@ export default function FeaturesPage() {
             id="step-5" 
             className={`scroll-mt-28 bg-white rounded-3xl p-6 sm:p-8 space-y-5 transition-all duration-500 ${
               activeStep === 5
-                ? "border-2 border-teal-500 ring-4 ring-teal-50/80 shadow-xl scale-[1.008]"
-                : "border border-slate-200/90 shadow-sm opacity-90 hover:opacity-100"
+                ? "border-2 border-[#0B534B] ring-4 ring-[#E6F4F1] shadow-xl scale-[1.008]"
+                : "border border-[#D5DFDC] shadow-sm opacity-90 hover:opacity-100"
             }`}
           >
-            <div className="flex items-center justify-between gap-3 border-b border-slate-100 pb-3">
+            <div className="flex items-center justify-between gap-3 border-b border-[#D5DFDC]/60 pb-3">
               <div className="flex items-center gap-3">
                 <span className={`w-10 h-10 rounded-2xl flex items-center justify-center font-bold text-sm transition-colors ${
-                  activeStep === 5 ? "bg-teal-600 text-white shadow-sm" : "bg-rose-100 text-rose-700"
+                  activeStep === 5 ? "bg-[#0B534B] text-white shadow-sm" : "bg-rose-100 text-rose-700"
                 }`}>
                   05
                 </span>
                 <div>
                   <span className="text-xs font-semibold text-rose-700 block">{t("features_step5_badge", "Step 05 • SOS Safety")}</span>
-                  <h2 className="text-xl sm:text-2xl font-black text-slate-900">{t("features_step5_title", "Offline Ready & Emergency SOS")}</h2>
+                  <h2 className="text-xl sm:text-2xl font-black text-[#111615]">{t("features_step5_title", "Offline Ready & Emergency SOS")}</h2>
                 </div>
               </div>
 
               {activeStep === 5 && (
-                <span className="px-2.5 py-1 rounded-full bg-teal-100 text-teal-800 text-xs font-bold animate-pulse">
+                <span className="px-2.5 py-1 rounded-full bg-[#ECFDF5] text-[#065F46] text-xs font-bold animate-pulse">
                   {t("features_active_step", "Active step")}
                 </span>
               )}
             </div>
 
-            <div className="space-y-2 text-sm text-slate-600 font-medium leading-relaxed">
+            <div className="space-y-2 text-sm text-[#5A6A66] font-medium leading-relaxed">
               <p>
                 {t("features_step5_desc", "Built for remote hills and villages where internet drops frequently.")}
               </p>
-              <ul className="space-y-1.5 text-xs sm:text-sm text-slate-600">
-                <li className="flex items-center gap-2">✓ <strong className="text-slate-900">{t("features_step5_b1_title", "Works 100% offline")}:</strong> {t("features_step5_b1_desc", "Memory games and reminders work without Wi-Fi or data.")}</li>
-                <li className="flex items-center gap-2">✓ <strong className="text-slate-900">{t("features_step5_b2_title", "One-touch SOS call")}:</strong> {t("features_step5_b2_desc", "Big red button dials family or ambulance directly on mobile phone.")}</li>
-                <li className="flex items-center gap-2">✓ <strong className="text-slate-900">{t("features_step5_b3_title", "Saves locally")}:</strong> {t("features_step5_b3_desc", "Automatically syncs when internet comes back.")}</li>
+              <ul className="space-y-1.5 text-xs sm:text-sm text-[#5A6A66]">
+                <li className="flex items-center gap-2">✓ <strong className="text-[#111615]">{t("features_step5_b1_title", "Works 100% offline")}:</strong> {t("features_step5_b1_desc", "Memory games and reminders work without Wi-Fi or data.")}</li>
+                <li className="flex items-center gap-2">✓ <strong className="text-[#111615]">{t("features_step5_b2_title", "One-touch SOS call")}:</strong> {t("features_step5_b2_desc", "Big red button dials family or ambulance directly on mobile phone.")}</li>
+                <li className="flex items-center gap-2">✓ <strong className="text-[#111615]">{t("features_step5_b3_title", "Saves locally")}:</strong> {t("features_step5_b3_desc", "Automatically syncs when internet comes back.")}</li>
               </ul>
             </div>
 
             {/* Interactive mini preview */}
             <div className="p-4 rounded-2xl bg-rose-50/60 border border-rose-100 space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-slate-600">{t("features_step5_try", "Try it: Test offline switch & SOS button")}</span>
+                <span className="text-xs font-bold text-[#5A6A66]">{t("features_step5_try", "Try it: Test offline switch & SOS button")}</span>
                 <Button
                   onClick={() => setIsOffline(!isOffline)}
                   variant={isOffline ? "outline" : "secondary"}
@@ -830,7 +830,7 @@ export default function FeaturesPage() {
               />
               <Link 
                 href="/emergency" 
-                className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-rose-700 hover:underline focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:outline-none rounded-lg p-1"
+                className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-rose-700 hover:text-rose-800 focus-visible:ring-2 focus-visible:ring-[#0B534B] focus-visible:outline-none rounded-lg p-1"
               >
                 <span>{t("features_step5_action", "Emergency Help page")}</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -841,9 +841,9 @@ export default function FeaturesPage() {
           {/* =================================================================== */}
           {/* BOTTOM SUMMARY                                                      */}
           {/* =================================================================== */}
-          <section className="bg-slate-900 text-white rounded-3xl p-6 sm:p-8 text-center space-y-3">
+          <section className="bg-gradient-to-br from-[#042420] via-[#0B534B] to-[#042420] text-white border border-[#10B981]/30 rounded-3xl p-6 sm:p-8 text-center space-y-3 shadow-xl">
             <h2 className="text-lg sm:text-xl font-black text-white">{t("features_bottom_title", "All Features in One Simple App")}</h2>
-            <p className="text-xs sm:text-sm text-slate-300 max-w-lg mx-auto font-medium">
+            <p className="text-xs sm:text-sm text-[#D5DFDC] max-w-lg mx-auto font-medium">
               {t("features_bottom_desc", "Ready to start? Play a memory game or check your daily dashboard now.")}
             </p>
             <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
@@ -851,12 +851,13 @@ export default function FeaturesPage() {
                 href="/dashboard"
                 variant="outline"
                 size="md"
+                className="!text-white !border-white/30 hover:!bg-white/10"
               >
                 {t("features_bottom_dashboard", "Go to Dashboard")}
               </Button>
               <Button
                 href="/games"
-                variant="primary"
+                variant="secondary"
                 size="md"
               >
                 {t("features_bottom_games", "Start Memory Games")}

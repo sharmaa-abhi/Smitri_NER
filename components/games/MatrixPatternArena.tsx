@@ -67,8 +67,8 @@ export default function MatrixPatternArena({ difficulty, onFinish }: Props) {
 
   return (
     <div className="space-y-6 w-full max-w-md text-center">
-      <div className="inline-flex items-center gap-2 bg-purple-100 text-purple-950 px-4 py-1.5 rounded-full font-bold text-sm">
-        <Grid3X3 className="w-4 h-4 text-purple-700" />
+      <div className="inline-flex items-center gap-2 bg-[#E6F4F1] text-[#0B534B] border border-[#93CEC5] px-4 py-1.5 rounded-full font-bold text-sm">
+        <Grid3X3 className="w-4 h-4 text-[#0B534B]" />
         <span>
           {isShowingPattern
             ? `Memorize glowing squares: ${countdown}s`
@@ -76,22 +76,22 @@ export default function MatrixPatternArena({ difficulty, onFinish }: Props) {
         </span>
       </div>
 
-      <h3 className="text-2xl font-black text-slate-900">
+      <h3 className="text-2xl font-black text-[#111615]">
         {isShowingPattern ? 'Watch the Pattern' : 'Where were the glowing tiles?'}
       </h3>
 
-      <div className="grid grid-cols-3 gap-4 p-4 bg-slate-100 rounded-3xl border-3 border-slate-300 max-w-xs mx-auto">
+      <div className="grid grid-cols-3 gap-4 p-4 bg-[#F6F8F7] rounded-3xl border-2 border-[#D5DFDC] max-w-xs mx-auto">
         {Array.from({ length: 9 }, (_, idx) => {
           const isTarget = targetCells.includes(idx);
           const isSelected = selectedCells.includes(idx);
 
-          let cellBg = 'bg-white border-slate-300';
+          let cellBg = 'bg-white border-[#D5DFDC]';
           if (isShowingPattern && isTarget) {
-            cellBg = 'bg-purple-600 border-purple-800 ring-4 ring-purple-300 text-white';
+            cellBg = 'bg-[#0B534B] border-[#08433C] ring-4 ring-[#93CEC5] text-white';
           } else if (!isShowingPattern && isSelected) {
             cellBg = isTarget
-              ? 'bg-emerald-500 border-emerald-700 text-white ring-4 ring-emerald-200'
-              : 'bg-rose-500 border-rose-700 text-white';
+              ? 'bg-[#10B981] border-[#059669] text-white ring-4 ring-[#A7F3D0]'
+              : 'bg-red-500 border-red-700 text-white';
           }
 
           return (
@@ -100,7 +100,7 @@ export default function MatrixPatternArena({ difficulty, onFinish }: Props) {
               type="button"
               disabled={isShowingPattern}
               onClick={() => handleCellClick(idx)}
-              className={`w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border-3 shadow-md transition-all flex items-center justify-center text-3xl font-bold ${cellBg} ${
+              className={`w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border-2 shadow-md transition-all flex items-center justify-center text-3xl font-bold ${cellBg} ${
                 !isShowingPattern ? 'hover:scale-105 active:scale-95' : ''
               }`}
               aria-label={`Grid tile ${idx + 1}`}

@@ -69,16 +69,16 @@ export default function RhymeCompletionArena({ difficulty, onFinish }: Props) {
 
   return (
     <div className="space-y-6 w-full max-w-xl text-center">
-      <div className="inline-flex items-center gap-2 bg-violet-100 text-violet-950 px-4 py-1.5 rounded-full font-bold text-sm">
-        <Sparkles className="w-4 h-4 text-violet-700" />
+      <div className="inline-flex items-center gap-2 bg-[#E6F4F1] text-[#0B534B] border border-[#93CEC5] px-4 py-1.5 rounded-full font-bold text-sm">
+        <Sparkles className="w-4 h-4 text-[#0B534B]" />
         <span>Rhyme {round} of 3</span>
       </div>
 
-      <div className="bg-violet-50/80 border-2 border-violet-200 rounded-3xl p-6 sm:p-7 shadow-inner space-y-3">
-        <p className="text-xl sm:text-2xl font-bold text-slate-800 leading-relaxed">
+      <div className="bg-[#F2F8F6] border-2 border-[#D5DFDC] rounded-3xl p-6 sm:p-7 shadow-inner space-y-3">
+        <p className="text-xl sm:text-2xl font-bold text-[#111615] leading-relaxed">
           &ldquo;{currentQuestion.prefix}&rdquo;
         </p>
-        <span className="inline-block bg-white text-violet-800 font-black text-xs sm:text-sm px-3 py-1 rounded-full border border-violet-300">
+        <span className="inline-block bg-white text-[#0B534B] font-black text-xs sm:text-sm px-3 py-1 rounded-full border border-[#93CEC5]">
           Hint: {currentQuestion.hint}
         </span>
       </div>
@@ -96,7 +96,7 @@ export default function RhymeCompletionArena({ difficulty, onFinish }: Props) {
             key={idx}
             type="button"
             onClick={() => handleSelect(word)}
-            className="py-4 px-4 bg-slate-50 hover:bg-violet-50 border-3 border-slate-300 hover:border-violet-500 rounded-2xl font-black text-lg sm:text-xl text-slate-900 shadow-sm hover:scale-105 active:scale-95 transition-all"
+            className="py-4 px-4 bg-white hover:bg-[#E6F4F1] border-2 border-[#D5DFDC] hover:border-[#0B534B] rounded-2xl font-black text-lg sm:text-xl text-[#111615] shadow-sm hover:scale-105 active:scale-95 transition-all"
           >
             {word}
           </button>

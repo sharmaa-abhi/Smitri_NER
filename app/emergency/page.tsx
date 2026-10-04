@@ -38,7 +38,7 @@ export default function EmergencyPage() {
     setTimeout(() => setCallInitiated(null), 5000);
   };
 
-  const audioGuidance = t("emergency_reassurance") || "Emergency Help Screen. Tap the large blue button to call your caregiver Rahul, or tap the red button to call emergency ambulance services.";
+  const audioGuidance = t("emergency_reassurance") || "Emergency Help Screen. Tap the large teal button to call your caregiver Rahul, or tap the red button to call emergency ambulance services.";
 
   return (
     <div className="max-w-xl mx-auto space-y-6 py-4 pb-16">
@@ -47,7 +47,7 @@ export default function EmergencyPage() {
         <div className="flex items-center justify-between">
           <Link
             href="/dashboard"
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 font-bold text-slate-800 text-sm transition-colors"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#E6F4F1] hover:bg-[#E6F4F1]/80 font-bold text-[#0B534B] text-sm transition-colors border border-[#0B534B]/20"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>{t("Back to Dashboard") || "Back to Dashboard"}</span>
@@ -62,7 +62,7 @@ export default function EmergencyPage() {
 
       <ScrollReveal direction="up" delay={80}>
         <div className="bg-rose-50 border-2 border-rose-300 rounded-3xl p-6 sm:p-8 shadow-lg space-y-5 text-center">
-        <div className="w-16 h-16 bg-rose-600 text-white rounded-2xl flex items-center justify-center mx-auto shadow-md">
+        <div className="w-16 h-16 bg-[#DC2626] text-white rounded-2xl flex items-center justify-center mx-auto shadow-md">
           <ShieldAlert className="w-9 h-9 animate-pulse" />
         </div>
 
@@ -86,15 +86,15 @@ export default function EmergencyPage() {
           <button
             type="button"
             onClick={() => handleCall(emergencyName, emergencyPhone)}
-            className="w-full p-4 sm:p-5 bg-blue-700 hover:bg-blue-800 text-white rounded-2xl font-extrabold text-lg sm:text-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-3.5 border-2 border-blue-900"
+            className="w-full p-4 sm:p-5 bg-[#0B534B] hover:bg-[#08433C] text-white rounded-2xl font-extrabold text-lg sm:text-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-3.5 border-2 border-[#06342E]"
           >
             <Phone className="w-6 h-6 flex-shrink-0" />
             <div className="text-left">
-              <span className="block text-xs font-semibold uppercase tracking-wider text-blue-200">
+              <span className="block text-xs font-semibold uppercase tracking-wider text-[#ECFDF5]">
                 {t("Primary Contact") || "Primary Contact"}
               </span>
               <span>{t("emergency_call_caregiver") || "Call Caregiver"}</span>
-              <span className="block text-xs sm:text-sm font-normal text-blue-100">
+              <span className="block text-xs sm:text-sm font-normal text-[#E6F4F1]">
                 {emergencyName} ({emergencyPhone})
               </span>
             </div>

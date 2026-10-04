@@ -108,7 +108,7 @@ export function PWAProvider({ children }: { children: React.ReactNode }) {
     <PWAContext.Provider value={{ isOnline, isInstallable, installApp, syncNow, isSyncing }}>
       {/* Offline Alert Banner */}
       {!isOnline && (
-        <div className="bg-amber-500 text-amber-950 px-4 py-2 text-center text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-sm sticky top-0 z-[60]">
+        <div className="bg-[#D97706] text-white px-4 py-2 text-center text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-sm sticky top-0 z-[60]">
           <WifiOff className="w-4 h-4 animate-bounce flex-shrink-0" />
           <span>
             Offline Mode Active — You can continue playing games! Scores and reminders will automatically save on this device.
@@ -118,16 +118,16 @@ export function PWAProvider({ children }: { children: React.ReactNode }) {
 
       {/* Online Syncing Toast */}
       {showSyncSuccess && (
-        <div className="fixed bottom-6 right-6 z-[70] bg-teal-800 text-white px-5 py-3 rounded-2xl shadow-xl flex items-center gap-3 animate-slide-up border border-teal-600">
-          <Zap className="w-5 h-5 text-teal-300" />
+        <div className="fixed bottom-6 right-6 z-[70] bg-[#0B534B] text-white px-5 py-3 rounded-2xl shadow-xl flex items-center gap-3 animate-slide-up border border-[#10B981]/30">
+          <Zap className="w-5 h-5 text-[#10B981]" />
           <div className="text-sm">
             <div className="font-bold">Back Online & Synced!</div>
-            <div className="text-xs text-teal-200">Your offline scores have been safely uploaded to your profile.</div>
+            <div className="text-xs text-[#E6F4F1]">Your offline scores have been safely uploaded to your profile.</div>
           </div>
           <button 
             type="button" 
             onClick={() => setShowSyncSuccess(false)}
-            className="text-teal-300 hover:text-white ml-2"
+            className="text-[#E6F4F1] hover:text-white ml-2 transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
@@ -136,25 +136,25 @@ export function PWAProvider({ children }: { children: React.ReactNode }) {
 
       {/* Install Prompt for Android/Mobile Seniors */}
       {isInstallable && (
-        <div className="fixed bottom-4 left-4 z-[70] bg-white border-2 border-teal-600 p-3 sm:p-4 rounded-2xl shadow-2xl flex items-center gap-3 max-w-sm">
-          <div className="w-10 h-10 rounded-xl bg-teal-50 flex items-center justify-center text-teal-700 flex-shrink-0">
+        <div className="fixed bottom-4 left-4 z-[70] bg-white border-2 border-[#0B534B]/30 p-3 sm:p-4 rounded-2xl shadow-2xl flex items-center gap-3 max-w-sm">
+          <div className="w-10 h-10 rounded-xl bg-[#E6F4F1] flex items-center justify-center text-[#0B534B] flex-shrink-0">
             <Download className="w-5 h-5" />
           </div>
           <div className="flex-1">
-            <div className="text-xs sm:text-sm font-bold text-slate-900">Install Smitri_NER App</div>
-            <div className="text-[11px] text-slate-500">Quick 1-tap access on your home screen</div>
+            <div className="text-xs sm:text-sm font-bold text-[#111615]">Install Smitri_NER App</div>
+            <div className="text-[11px] text-[#5A6A66]">Quick 1-tap access on your home screen</div>
           </div>
           <button
             type="button"
             onClick={installApp}
-            className="px-3 py-1.5 bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold rounded-lg shadow-sm"
+            className="px-3.5 py-2 bg-[#0B534B] hover:bg-[#08433C] text-white text-xs font-bold rounded-xl shadow-sm transition-colors"
           >
             Install
           </button>
           <button
             type="button"
             onClick={() => setIsInstallable(false)}
-            className="text-slate-400 hover:text-slate-600 p-1"
+            className="text-[#5A6A66] hover:text-[#111615] p-1 transition-colors"
             aria-label="Dismiss"
           >
             <X className="w-3.5 h-3.5" />

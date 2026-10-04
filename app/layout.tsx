@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0D9488",
+  themeColor: "#0B534B",
   width: "device-width",
   initialScale: 1,
 };
@@ -36,7 +36,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`scroll-smooth ${inter.variable}`}>
-      <body className="min-h-screen bg-[#FAFCFD] text-slate-900 font-sans flex flex-col antialiased">
+      <body className="min-h-screen bg-[#F6F8F7] text-[#111615] font-sans flex flex-col antialiased selection:bg-[#C2E5DF] selection:text-[#042420]">
         <LanguageProvider>
           <PWAProvider>
             <ScrollProgressBar />
