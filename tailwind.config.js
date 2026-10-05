@@ -7,8 +7,34 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+        card: {
+          DEFAULT: "var(--card)",
+          foreground: "var(--card-foreground)",
+        },
+        popover: {
+          DEFAULT: "var(--popover)",
+          foreground: "var(--popover-foreground)",
+        },
+        muted: {
+          DEFAULT: "var(--muted)",
+          foreground: "var(--muted-foreground)",
+        },
+        accent: {
+          DEFAULT: "var(--accent)",
+          foreground: "var(--accent-foreground)",
+        },
+        destructive: {
+          DEFAULT: "var(--destructive)",
+          foreground: "var(--destructive-foreground)",
+        },
+        border: "var(--border)",
+        input: "var(--input)",
+        ring: "var(--ring)",
         primary: {
-          DEFAULT: "#0B534B",
+          DEFAULT: "var(--primary)",
+          foreground: "var(--primary-foreground)",
           50: "#E6F4F1",
           100: "#C2E5DF",
           200: "#93CEC5",
@@ -24,7 +50,8 @@ module.exports = {
           soft: "#E6F4F1",
         },
         secondary: {
-          DEFAULT: "#10B981",
+          DEFAULT: "var(--secondary)",
+          foreground: "var(--secondary-foreground)",
           50: "#ECFDF5",
           100: "#D1FAE5",
           200: "#A7F3D0",
