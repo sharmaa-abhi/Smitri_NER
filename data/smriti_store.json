@@ -231,7 +231,7 @@
       "category": "MEDICINE",
       "dosage": "1 Tablet with lukewarm water",
       "priority": "HIGH",
-      "isCompleted": true,
+      "isCompleted": false,
       "notes": "Take right after breakfast. Monitored by caregiver Rahul."
     },
     {
@@ -283,8 +283,17 @@
       "category": "MEDICINE",
       "dosage": "1 Tablet after dinner",
       "priority": "HIGH",
-      "isCompleted": false,
+      "isCompleted": true,
       "notes": "Prescribed for bone density and joint comfort."
+    },
+    {
+      "id": "rem-1791206451812",
+      "userId": "user_kamla",
+      "title": "water ",
+      "time": "08:00 AM",
+      "category": "MEDICINE",
+      "isCompleted": false,
+      "notes": ""
     }
   ],
   "caregiverAlerts": [

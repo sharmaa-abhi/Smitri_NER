@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
 import { LanguageProvider } from "@/lib/i18n";
 import { PWAProvider } from "@/components/PWAProvider";
+import { cn } from "@/lib/utils";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -35,7 +36,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`scroll-smooth ${inter.variable}`}>
+    <html lang="en" className={cn("scroll-smooth", inter.variable, "font-sans")}>
       <body className="min-h-screen bg-[#F6F8F7] text-[#111615] font-sans flex flex-col antialiased selection:bg-[#C2E5DF] selection:text-[#042420]">
         <LanguageProvider>
           <PWAProvider>
