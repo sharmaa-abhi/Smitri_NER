@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "check-i18n": "node scripts/check-i18n.js"
+    "check-i18n": "node scripts/check-i18n.js",
+    "postinstall": "prisma skills sync || exit 0"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",
@@ -35,7 +36,7 @@
     "autoprefixer": "^10.4.20",
     "postcss": "^8.5.3",
     "prisma": "^7.10.0",
-    "tailwindcss": "^4.3.3",
+    "tailwindcss": "^3.4.17",
     "typescript": "^5.7.3"
   }
 }
