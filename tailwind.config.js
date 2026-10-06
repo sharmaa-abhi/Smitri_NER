@@ -131,7 +131,10 @@ module.exports = {
       },
       fontFamily: {
         sans: ['var(--font-inter)', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
-      }
+      },
+      outlineColor: {
+        ring: "var(--ring)",
+      },
     },
   },
   plugins: [],
