@@ -36,8 +36,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={cn("scroll-smooth", inter.variable, "font-sans")}>
-      <body className="min-h-screen bg-[#F6F8F7] text-[#111615] font-sans flex flex-col antialiased selection:bg-[#C2E5DF] selection:text-[#042420]">
+    <html lang="en" className={cn("scroll-smooth", inter.variable, "font-sans")} suppressHydrationWarning>
+      <body className="min-h-screen bg-[#F6F8F7] text-[#111615] font-sans flex flex-col antialiased selection:bg-[#C2E5DF] selection:text-[#042420]" suppressHydrationWarning>
         <LanguageProvider>
           <PWAProvider>
             <ScrollProgressBar />

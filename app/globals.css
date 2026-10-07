@@ -1,6 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@config "../tailwind.config.js";
 
 @layer base {
   :root {
@@ -190,6 +189,8 @@
   /* ========================================================================= */
   /* SYSTEMATIC BUTTON DESIGN SYSTEM (5 Standardized Variants)                 */
   /* ========================================================================= */
+
+  /* Base button shared styles (used as a real class in HTML, not @apply) */
   .btn-base {
     @apply inline-flex items-center justify-center gap-2 font-bold transition-all duration-200 select-none;
     @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0B534B];
@@ -199,30 +200,50 @@
 
   /* 1. Primary: Main CTA, Deep Teal #0B534B */
   .btn-primary {
-    @apply btn-base bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white border border-transparent shadow-sm hover:shadow-md;
+    @apply inline-flex items-center justify-center gap-2 font-bold transition-all duration-200 select-none;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0B534B];
+    @apply disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed active:scale-[0.98];
+    @apply bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white border border-transparent shadow-sm hover:shadow-md;
   }
 
   /* 2. Secondary: Supporting action, Emerald Green #10B981 */
   .btn-secondary {
-    @apply btn-base bg-[#10B981] hover:bg-[#059669] active:bg-[#047857] text-white border border-transparent shadow-sm hover:shadow-md;
+    @apply inline-flex items-center justify-center gap-2 font-bold transition-all duration-200 select-none;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0B534B];
+    @apply disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed active:scale-[0.98];
+    @apply bg-[#10B981] hover:bg-[#059669] active:bg-[#047857] text-white border border-transparent shadow-sm hover:shadow-md;
   }
 
   /* 3. Outline / Ghost: Low-emphasis action with primary border */
   .btn-outline {
-    @apply btn-base bg-white hover:bg-[#E6F4F1] text-[#0B534B] border border-[#0B534B] shadow-sm;
+    @apply inline-flex items-center justify-center gap-2 font-bold transition-all duration-200 select-none;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0B534B];
+    @apply disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed active:scale-[0.98];
+    @apply bg-white hover:bg-[#E6F4F1] text-[#0B534B] border border-[#0B534B] shadow-sm;
   }
 
-  /* 4. Tertiary / Warning / Destructive */
+  /* 4. Tertiary / Warning */
   .btn-tertiary {
-    @apply btn-base bg-[#D97706] hover:bg-[#B45309] active:bg-[#92400E] text-white border border-transparent shadow-sm;
+    @apply inline-flex items-center justify-center gap-2 font-bold transition-all duration-200 select-none;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0B534B];
+    @apply disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed active:scale-[0.98];
+    @apply bg-[#D97706] hover:bg-[#B45309] active:bg-[#92400E] text-white border border-transparent shadow-sm;
   }
+
+  /* 4b. Destructive */
   .btn-destructive {
-    @apply btn-base bg-[#DC2626] hover:bg-[#B91C1C] text-white border border-transparent shadow-sm hover:shadow-md focus-visible:ring-red-600;
+    @apply inline-flex items-center justify-center gap-2 font-bold transition-all duration-200 select-none;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-600;
+    @apply disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed active:scale-[0.98];
+    @apply bg-[#DC2626] hover:bg-[#B91C1C] text-white border border-transparent shadow-sm hover:shadow-md;
   }
 
   /* 5. Icon / Icon-only: Small utility controls with accessible touch target */
   .btn-icon {
-    @apply btn-base p-2.5 rounded-full text-[#5A6A66] hover:text-[#111615] hover:bg-[#EBF0EE] border border-transparent min-h-[44px] min-w-[44px];
+    @apply inline-flex items-center justify-center gap-2 font-bold transition-all duration-200 select-none;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0B534B];
+    @apply disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed active:scale-[0.98];
+    @apply p-2.5 rounded-full text-[#5A6A66] hover:text-[#111615] hover:bg-[#EBF0EE] border border-transparent min-h-[44px] min-w-[44px];
   }
 
   /* Standard Size Modifiers */
