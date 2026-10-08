@@ -10,7 +10,7 @@ import { useAuth } from '@/lib/auth';
 
 export default function RegisterPage() {
   const router = useRouter();
-  const { login } = useAuth();
+  const { login, signUpWithSupabase } = useAuth();
   const [name, setName] = useState('');
   const [age, setAge] = useState('68');
   const [email, setEmail] = useState('');
@@ -18,10 +18,12 @@ export default function RegisterPage() {
   const [emergencyName, setEmergencyName] = useState('');
   const [emergencyPhone, setEmergencyPhone] = useState('');
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setErrorMessage(null);
 
     const userData = {
       name: name || 'Elderly Member',
@@ -32,14 +34,25 @@ export default function RegisterPage() {
     };
 
     try {
+      const res = await signUpWithSupabase(email, password, userData);
+      if (res.success) {
+        router.push('/dashboard');
+        return;
+      }
+      
+      // If Supabase returned a validation error (like password too short)
+      if (res.error) {
+        setErrorMessage(res.error);
+        setLoading(false);
+        return;
+      }
+    } catch {
+      // Fallback: save profile and proceed
       await fetch('/api/profile', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(userData),
       });
-      login(userData);
-      router.push('/dashboard');
-    } catch {
       login(userData);
       router.push('/dashboard');
     } finally {
@@ -60,6 +73,12 @@ export default function RegisterPage() {
             Simple setup so your loved ones and caregivers can support you.
           </p>
         </div>
+
+        {errorMessage && (
+          <div className="bg-rose-50 border border-rose-200 text-rose-700 text-xs sm:text-sm rounded-xl p-3 text-center font-medium animate-in fade-in">
+            {errorMessage}
+          </div>
+        )}
 
         <form onSubmit={handleRegister} className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

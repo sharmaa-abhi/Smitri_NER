@@ -9,22 +9,42 @@ import { useAuth } from '@/lib/auth';
 
 export default function LoginPage() {
   const router = useRouter();
-  const { login } = useAuth();
+  const { login, loginWithSupabase } = useAuth();
   const [email, setEmail] = useState('kamla.devi@example.com');
   const [password, setPassword] = useState('password123');
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
-      login({ email });
-      router.push('/dashboard');
-    }, 900);
+    setErrorMessage(null);
+
+    if (email.toLowerCase() === 'kamla.devi@example.com') {
+      setTimeout(() => {
+        login({ email });
+        router.push('/dashboard');
+      }, 700);
+      return;
+    }
+
+    try {
+      const res = await loginWithSupabase(email, password);
+      if (res.success) {
+        router.push('/dashboard');
+      } else {
+        setLoading(false);
+        setErrorMessage(res.error || 'Unable to log in. Check credentials or use the 1-Click Demo button.');
+      }
+    } catch {
+      setLoading(false);
+      setErrorMessage('Network or authentication service error. You can still use the 1-Click Demo button.');
+    }
   };
 
   const handleQuickDemo = () => {
     setLoading(true);
+    setErrorMessage(null);
     setTimeout(() => {
       login({
         name: 'Kamla Devi',
@@ -34,7 +54,7 @@ export default function LoginPage() {
         emergencyPhone: '+91 98765 43210',
       });
       router.push('/dashboard');
-    }, 900);
+    }, 700);
   };
 
   return (
@@ -96,6 +116,12 @@ export default function LoginPage() {
               )}
             </button>
           </div>
+
+          {errorMessage && (
+            <div className="bg-rose-50 border border-rose-200 text-rose-700 text-xs sm:text-sm rounded-xl p-3 text-center font-medium animate-in fade-in">
+              {errorMessage}
+            </div>
+          )}
 
           <form onSubmit={handleLogin} className="space-y-4">
             <div className="space-y-1.5">

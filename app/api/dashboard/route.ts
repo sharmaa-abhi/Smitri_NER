@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
-import { getDb, saveDb } from '@/lib/db';
+import { getDbAsync } from '@/lib/db';
 
 export async function GET() {
   try {
-    const db = getDb();
+    const db = await getDbAsync();
     return NextResponse.json({
       user: db.users[0] || null,
       gameSessions: db.gameSessions,
