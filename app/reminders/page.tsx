@@ -11,7 +11,9 @@ import {
   Activity, 
   Calendar, 
   Bookmark,
-  Trash2
+  Trash2,
+  X,
+  RotateCcw
 } from 'lucide-react';
 import VoiceButton from '@/components/VoiceButton';
 import ScrollReveal from '@/components/ScrollReveal';
@@ -62,6 +64,16 @@ export default function RemindersPage() {
   useEffect(() => {
     loadReminders();
   }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && showAddModal) {
+        setShowAddModal(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [showAddModal]);
 
   const handleToggleComplete = async (id: string, currentStatus: boolean) => {
     // Optimistic UI update
@@ -258,9 +270,11 @@ export default function RemindersPage() {
                   <button
                     type="button"
                     onClick={() => handleToggleComplete(rem.id, rem.isCompleted)}
-                    className="text-xs font-semibold text-[#5A6A66] hover:text-[#0B534B] underline"
+                    className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-bold text-[#0B534B] hover:text-[#08433C] bg-white hover:bg-[#E6F4F1] border border-[#93CEC5] transition-all min-h-[44px] min-w-[76px] focus-visible:ring-2 focus-visible:ring-[#0B534B] shadow-2xs"
+                    aria-label={`Undo completed reminder: ${rem.title}`}
                   >
-                    Undo
+                    <RotateCcw className="w-3.5 h-3.5 text-[#0B534B]" />
+                    <span>Undo</span>
                   </button>
                 </div>
               ))}
@@ -271,42 +285,74 @@ export default function RemindersPage() {
 
       {/* Add Reminder Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 bg-[#042420]/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl p-6 max-w-md w-full border border-[#D5DFDC] shadow-2xl space-y-4">
-            <h2 className="text-xl font-extrabold text-[#111615]">Add New Reminder</h2>
+        <div 
+          className="fixed inset-0 bg-[#042420]/75 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-200"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="add-reminder-heading"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setShowAddModal(false);
+          }}
+        >
+          <div 
+            className="bg-white rounded-3xl p-6 sm:p-7 max-w-md w-full border border-[#D5DFDC] shadow-2xl space-y-5"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between pb-3 border-b border-[#EBF0EE]">
+              <h2 id="add-reminder-heading" className="text-xl font-black text-[#111615]">
+                Add New Reminder
+              </h2>
+              <button
+                type="button"
+                onClick={() => setShowAddModal(false)}
+                className="w-10 h-10 rounded-full flex items-center justify-center text-[#5A6A66] hover:text-[#111615] hover:bg-[#EBF0EE] transition-colors focus-visible:ring-2 focus-visible:ring-[#0B534B]"
+                aria-label="Close add reminder dialog"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
 
-            <form onSubmit={handleAddReminder} className="space-y-3.5">
-              <div className="space-y-1">
-                <label className="block text-xs font-bold text-[#5A6A66] uppercase tracking-wider">Title</label>
+            <form onSubmit={handleAddReminder} className="space-y-4">
+              <div className="space-y-1.5">
+                <label htmlFor="reminder-title-input" className="block text-xs font-bold text-[#5A6A66] uppercase tracking-wider">
+                  Title
+                </label>
                 <input
+                  id="reminder-title-input"
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   required
                   placeholder="e.g. Afternoon Water Glass"
-                  className="w-full text-sm px-3.5 py-2.5 rounded-lg border border-[#D5DFDC] focus:border-[#0B534B] focus:outline-none bg-[#F6F8F7] text-[#111615] placeholder:text-[#5A6A66]"
+                  className="w-full text-sm sm:text-base px-4 py-3 rounded-xl border border-[#D5DFDC] focus:border-[#0B534B] focus:ring-2 focus:ring-[#0B534B]/20 focus-visible:outline-none bg-[#F6F8F7] text-[#111615] placeholder:text-[#5A6A66]"
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                <div className="space-y-1">
-                  <label className="block text-xs font-bold text-[#5A6A66] uppercase tracking-wider">Time</label>
+              <div className="grid grid-cols-2 gap-3.5">
+                <div className="space-y-1.5">
+                  <label htmlFor="reminder-time-input" className="block text-xs font-bold text-[#5A6A66] uppercase tracking-wider">
+                    Time
+                  </label>
                   <input
+                    id="reminder-time-input"
                     type="text"
                     value={time}
                     onChange={(e) => setTime(e.target.value)}
                     placeholder="e.g. 02:00 PM"
                     required
-                    className="w-full text-sm px-3.5 py-2.5 rounded-lg border border-[#D5DFDC] focus:border-[#0B534B] focus:outline-none bg-[#F6F8F7] text-[#111615] placeholder:text-[#5A6A66]"
+                    className="w-full text-sm sm:text-base px-4 py-3 rounded-xl border border-[#D5DFDC] focus:border-[#0B534B] focus:ring-2 focus:ring-[#0B534B]/20 focus-visible:outline-none bg-[#F6F8F7] text-[#111615] placeholder:text-[#5A6A66]"
                   />
                 </div>
 
-                <div className="space-y-1">
-                  <label className="block text-xs font-bold text-[#5A6A66] uppercase tracking-wider">Category</label>
+                <div className="space-y-1.5">
+                  <label htmlFor="reminder-category-select" className="block text-xs font-bold text-[#5A6A66] uppercase tracking-wider">
+                    Category
+                  </label>
                   <select
+                    id="reminder-category-select"
                     value={category}
                     onChange={(e) => setCategory(e.target.value as any)}
-                    className="w-full text-sm px-3.5 py-2.5 rounded-lg border border-[#D5DFDC] focus:border-[#0B534B] focus:outline-none bg-[#F6F8F7] text-[#111615]"
+                    className="w-full text-sm sm:text-base px-4 py-3 rounded-xl border border-[#D5DFDC] focus:border-[#0B534B] focus:ring-2 focus:ring-[#0B534B]/20 focus-visible:outline-none bg-[#F6F8F7] text-[#111615] cursor-pointer"
                   >
                     <option value="MEDICINE">Medicine</option>
                     <option value="WATER">Water / Hydration</option>
@@ -317,28 +363,31 @@ export default function RemindersPage() {
                 </div>
               </div>
 
-              <div className="space-y-1">
-                <label className="block text-xs font-bold text-[#5A6A66] uppercase tracking-wider">Notes (Optional)</label>
+              <div className="space-y-1.5">
+                <label htmlFor="reminder-notes-input" className="block text-xs font-bold text-[#5A6A66] uppercase tracking-wider">
+                  Notes (Optional)
+                </label>
                 <input
+                  id="reminder-notes-input"
                   type="text"
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   placeholder="e.g. With warm water after food"
-                  className="w-full text-sm px-3.5 py-2.5 rounded-lg border border-[#D5DFDC] focus:border-[#0B534B] focus:outline-none bg-[#F6F8F7] text-[#111615] placeholder:text-[#5A6A66]"
+                  className="w-full text-sm sm:text-base px-4 py-3 rounded-xl border border-[#D5DFDC] focus:border-[#0B534B] focus:ring-2 focus:ring-[#0B534B]/20 focus-visible:outline-none bg-[#F6F8F7] text-[#111615] placeholder:text-[#5A6A66]"
                 />
               </div>
 
-              <div className="flex gap-2.5 pt-3">
+              <div className="flex items-center gap-3 pt-2">
                 <button
                   type="button"
                   onClick={() => setShowAddModal(false)}
-                  className="flex-1 py-2.5 bg-[#F6F8F7] hover:bg-[#E6F4F1] text-[#5A6A66] rounded-xl font-semibold text-sm transition-colors"
+                  className="flex-1 min-h-[44px] py-3 bg-[#F6F8F7] hover:bg-[#E6F4F1] text-[#5A6A66] hover:text-[#111615] rounded-xl font-bold text-sm transition-colors border border-[#D5DFDC]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 py-2.5 bg-[#0B534B] hover:bg-[#08433C] text-white rounded-xl font-bold text-sm shadow-sm transition-all"
+                  className="flex-1 min-h-[44px] py-3 bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white rounded-xl font-bold text-sm shadow-sm transition-all"
                 >
                   Save Reminder
                 </button>

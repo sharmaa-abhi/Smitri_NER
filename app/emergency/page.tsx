@@ -83,10 +83,11 @@ export default function EmergencyPage() {
 
         <div className="space-y-3.5 pt-2">
           {/* Button 1: Call Caregiver */}
-          <button
-            type="button"
-            onClick={() => handleCall(emergencyName, emergencyPhone)}
-            className="w-full p-4 sm:p-5 bg-[#0B534B] hover:bg-[#08433C] text-white rounded-2xl font-extrabold text-lg sm:text-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-3.5 border-2 border-[#06342E]"
+          <a
+            href={`tel:${emergencyPhone.replace(/\s+/g, '')}`}
+            role="button"
+            aria-label={`${t("emergency_call_caregiver") || "Call Caregiver"} ${emergencyName} at ${emergencyPhone}`}
+            className="w-full min-h-[72px] p-4 sm:p-5 bg-[#0B534B] hover:bg-[#08433C] text-white rounded-2xl font-extrabold text-lg sm:text-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-3.5 border-2 border-[#06342E] cursor-pointer focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0B534B]"
           >
             <Phone className="w-6 h-6 flex-shrink-0" />
             <div className="text-left">
@@ -98,13 +99,14 @@ export default function EmergencyPage() {
                 {emergencyName} ({emergencyPhone})
               </span>
             </div>
-          </button>
+          </a>
 
           {/* Button 2: Call Emergency Services */}
-          <button
-            type="button"
-            onClick={() => handleCall('Emergency Services', '112')}
-            className="w-full p-4 sm:p-5 bg-rose-600 hover:bg-rose-700 text-white rounded-2xl font-extrabold text-lg sm:text-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-3.5 border-2 border-rose-800"
+          <a
+            href="tel:112"
+            role="button"
+            aria-label={`${t("emergency_call_helpline") || "Call National Emergency Service (112)"}`}
+            className="w-full min-h-[72px] p-4 sm:p-5 bg-rose-600 hover:bg-rose-700 text-white rounded-2xl font-extrabold text-lg sm:text-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-3.5 border-2 border-rose-800 cursor-pointer focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-rose-600"
           >
             <Ambulance className="w-6 h-6 flex-shrink-0" />
             <div className="text-left">
@@ -116,7 +118,7 @@ export default function EmergencyPage() {
                 {t("National Emergency Help Line") || "National Emergency Help Line"}
               </span>
             </div>
-          </button>
+          </a>
         </div>
 
         <div className="border-t border-rose-200 pt-4 text-xs sm:text-sm text-slate-700 font-medium space-y-0.5">

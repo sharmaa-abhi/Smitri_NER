@@ -101,39 +101,53 @@ export default function ProfilePage() {
           </div>
         )}
 
-        <form onSubmit={handleSave} className="space-y-4">
+        <form onSubmit={handleSave} className="space-y-5">
           <div className="space-y-1.5">
-            <label className="block text-xs font-bold text-[#5A6A66] uppercase tracking-wider">Full Name</label>
+            <label htmlFor="profile-fullname" className="block text-xs font-bold text-[#5A6A66] uppercase tracking-wider">
+              Full Name
+            </label>
             <input
+              id="profile-fullname"
               type="text"
+              name="name"
+              autoComplete="name"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="w-full text-sm sm:text-base px-4 py-3 rounded-xl border border-[#D5DFDC] focus:border-[#0B534B] focus:ring-2 focus:ring-[#0B534B]/20 focus:outline-none bg-[#F6F8F7] text-[#111615] placeholder:text-[#5A6A66]"
+              className="w-full text-sm sm:text-base px-4 py-3 rounded-xl border border-[#D5DFDC] focus:border-[#0B534B] focus:ring-2 focus:ring-[#0B534B]/20 focus-visible:outline-none bg-[#F6F8F7] text-[#111615] placeholder:text-[#5A6A66]"
             />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="block text-xs font-bold text-[#5A6A66] uppercase tracking-wider">Age</label>
+              <label htmlFor="profile-age" className="block text-xs font-bold text-[#5A6A66] uppercase tracking-wider">
+                Age
+              </label>
               <input
+                id="profile-age"
                 type="number"
+                name="age"
+                autoComplete="off"
+                min={45}
+                max={120}
                 value={formData.age}
                 onChange={(e) => setFormData({ ...formData, age: parseInt(e.target.value) || 68 })}
-                className="w-full text-sm sm:text-base px-4 py-3 rounded-xl border border-[#D5DFDC] focus:border-[#0B534B] focus:ring-2 focus:ring-[#0B534B]/20 focus:outline-none bg-[#F6F8F7] text-[#111615] placeholder:text-[#5A6A66]"
+                className="w-full text-sm sm:text-base px-4 py-3 rounded-xl border border-[#D5DFDC] focus:border-[#0B534B] focus:ring-2 focus:ring-[#0B534B]/20 focus-visible:outline-none bg-[#F6F8F7] text-[#111615] placeholder:text-[#5A6A66]"
               />
             </div>
 
             <div className="space-y-1.5">
-              <label className="block text-xs font-bold text-[#5A6A66] uppercase tracking-wider">
+              <label htmlFor="profile-language" className="block text-xs font-bold text-[#5A6A66] uppercase tracking-wider">
                 Preferred Language / ভাষা
               </label>
               <select
+                id="profile-language"
+                name="preferredLanguage"
                 value={formData.preferredLanguage || language}
                 onChange={(e) => {
                   const newLang = e.target.value as LanguageCode;
                   setFormData({ ...formData, preferredLanguage: newLang });
                 }}
-                className="w-full text-sm sm:text-base px-4 py-3 rounded-xl border border-[#D5DFDC] focus:border-[#0B534B] focus:ring-2 focus:ring-[#0B534B]/20 focus:outline-none bg-[#F6F8F7] text-[#111615] font-semibold cursor-pointer"
+                className="w-full text-sm sm:text-base px-4 py-3 rounded-xl border border-[#D5DFDC] focus:border-[#0B534B] focus:ring-2 focus:ring-[#0B534B]/20 focus-visible:outline-none bg-[#F6F8F7] text-[#111615] font-semibold cursor-pointer"
               >
                 {activeLanguages.map((lang) => (
                   <option key={lang.code} value={lang.code}>
@@ -145,42 +159,59 @@ export default function ProfilePage() {
           </div>
 
           <div className="space-y-1.5">
-            <label className="block text-xs font-bold text-[#5A6A66] uppercase tracking-wider">Email Address</label>
+            <label htmlFor="profile-email" className="block text-xs font-bold text-[#5A6A66] uppercase tracking-wider">
+              Email Address
+            </label>
             <input
+              id="profile-email"
               type="email"
+              name="email"
+              autoComplete="email"
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              className="w-full text-sm sm:text-base px-4 py-3 rounded-xl border border-[#D5DFDC] focus:border-[#0B534B] focus:ring-2 focus:ring-[#0B534B]/20 focus:outline-none bg-[#F6F8F7] text-[#111615] placeholder:text-[#5A6A66]"
+              className="w-full text-sm sm:text-base px-4 py-3 rounded-xl border border-[#D5DFDC] focus:border-[#0B534B] focus:ring-2 focus:ring-[#0B534B]/20 focus-visible:outline-none bg-[#F6F8F7] text-[#111615] placeholder:text-[#5A6A66]"
             />
           </div>
 
-          <div className="border-t border-[#D5DFDC] pt-4 space-y-3">
-            <h3 className="text-sm font-bold text-[#D97706] uppercase tracking-wider">Emergency & Caregiver Contact</h3>
+          <div className="border-t border-[#D5DFDC] pt-4 space-y-4">
+            <h2 className="text-sm font-bold text-[#D97706] uppercase tracking-wider">
+              Emergency &amp; Caregiver Contact
+            </h2>
 
             <div className="space-y-1.5">
-              <label className="block text-xs font-bold text-[#5A6A66] uppercase tracking-wider">Caregiver Name</label>
+              <label htmlFor="profile-caregiver-name" className="block text-xs font-bold text-[#5A6A66] uppercase tracking-wider">
+                Caregiver Name
+              </label>
               <input
+                id="profile-caregiver-name"
                 type="text"
+                name="emergencyName"
+                autoComplete="name"
                 value={formData.emergencyName}
                 onChange={(e) => setFormData({ ...formData, emergencyName: e.target.value })}
-                className="w-full text-sm sm:text-base px-4 py-3 rounded-xl border border-[#D5DFDC] focus:border-[#0B534B] focus:ring-2 focus:ring-[#0B534B]/20 focus:outline-none bg-[#F6F8F7] text-[#111615] placeholder:text-[#5A6A66]"
+                className="w-full text-sm sm:text-base px-4 py-3 rounded-xl border border-[#D5DFDC] focus:border-[#0B534B] focus:ring-2 focus:ring-[#0B534B]/20 focus-visible:outline-none bg-[#F6F8F7] text-[#111615] placeholder:text-[#5A6A66]"
               />
             </div>
 
             <div className="space-y-1.5">
-              <label className="block text-xs font-bold text-[#5A6A66] uppercase tracking-wider">Caregiver Phone Number</label>
+              <label htmlFor="profile-caregiver-phone" className="block text-xs font-bold text-[#5A6A66] uppercase tracking-wider">
+                Caregiver Phone Number
+              </label>
               <input
+                id="profile-caregiver-phone"
                 type="tel"
+                name="emergencyPhone"
+                autoComplete="tel"
                 value={formData.emergencyPhone}
                 onChange={(e) => setFormData({ ...formData, emergencyPhone: e.target.value })}
-                className="w-full text-sm sm:text-base px-4 py-3 rounded-xl border border-[#D5DFDC] focus:border-[#0B534B] focus:ring-2 focus:ring-[#0B534B]/20 focus:outline-none bg-[#F6F8F7] text-[#111615] placeholder:text-[#5A6A66]"
+                className="w-full text-sm sm:text-base px-4 py-3 rounded-xl border border-[#D5DFDC] focus:border-[#0B534B] focus:ring-2 focus:ring-[#0B534B]/20 focus-visible:outline-none bg-[#F6F8F7] text-[#111615] placeholder:text-[#5A6A66]"
               />
             </div>
           </div>
 
           <button
             type="submit"
-            className="w-full py-3.5 px-5 bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white rounded-xl font-bold text-base shadow-sm hover:shadow transition-all flex items-center justify-center gap-2 border border-[#08433C] mt-2"
+            className="w-full min-h-[48px] py-3.5 px-5 bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white rounded-xl font-bold text-base shadow-sm hover:shadow transition-all flex items-center justify-center gap-2 border border-[#08433C] mt-2 cursor-pointer focus-visible:ring-2 focus-visible:ring-[#0B534B] focus-visible:ring-offset-2"
           >
             <Save className="w-5 h-5" />
             <span>Save Profile Settings</span>

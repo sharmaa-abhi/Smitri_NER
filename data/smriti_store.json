@@ -248,6 +248,20 @@
       "recommendedDifficulty": 2,
       "feedbackText": "You are doing great! Let's try a slightly higher level.",
       "timestamp": "2026-10-08T01:22:23.322Z"
+    },
+    {
+      "id": "s-1791466494118",
+      "userId": "user_kamla",
+      "gameId": "different-one",
+      "gameTitle": "Find the Different One",
+      "score": 90,
+      "accuracy": 88,
+      "responseTimeSec": 8,
+      "mistakes": 1,
+      "difficultyLevel": 1,
+      "recommendedDifficulty": 2,
+      "feedbackText": "You are doing great! Let's try a slightly higher level.",
+      "timestamp": "2026-10-08T13:34:54.118Z"
     }
   ],
   "reminders": [
@@ -330,8 +344,6 @@
       "time": "06:00 PM",
       "category": "MEDICINE",
       "isCompleted": false,
-      "notes": "",
-      "dosage": "",
       "priority": "ROUTINE"
     }
   ],

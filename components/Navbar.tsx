@@ -82,15 +82,18 @@ export default function Navbar() {
         </nav>
 
         {/* Right: Regional Language Selector + Action Buttons */}
-        <div className="flex items-center gap-2 sm:gap-2.5 flex-shrink-0">
-          <LanguageSelector />
+        <div className="flex items-center gap-1.5 sm:gap-2.5 flex-shrink-0">
+          <div className="hidden sm:block">
+            <LanguageSelector />
+          </div>
 
           {/* Dynamic Auth Action Buttons */}
           {isLoaded && isLoggedIn ? (
             <div className="flex items-center gap-1.5 sm:gap-2">
               <Link
                 href="/dashboard"
-                className="btn-primary btn-sm text-xs sm:text-sm flex items-center gap-1.5"
+                className="btn-primary btn-sm text-xs sm:text-sm flex items-center gap-1.5 min-h-[44px] px-3.5"
+                aria-label={t("nav_dashboard") || "Go to Dashboard"}
               >
                 <span>{t("nav_dashboard") || "Dashboard"}</span>
                 <ArrowRight className="w-4 h-4" />
@@ -99,10 +102,11 @@ export default function Navbar() {
               <button
                 type="button"
                 onClick={logout}
-                className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-full text-xs font-bold text-[#5A6A66] hover:text-red-700 hover:bg-red-50 border border-[#D5DFDC] hover:border-red-200 transition-all"
+                className="inline-flex items-center justify-center gap-1 px-3 py-2 rounded-full text-xs font-bold text-[#5A6A66] hover:text-red-700 hover:bg-red-50 border border-[#D5DFDC] hover:border-red-200 transition-all min-h-[44px] min-w-[44px]"
                 title={t("nav_logout") || "Log Out"}
+                aria-label={t("nav_logout") || "Log Out"}
               >
-                <LogOut className="w-3.5 h-3.5 text-gray-500" />
+                <LogOut className="w-4 h-4 text-gray-500" />
                 <span className="hidden lg:inline">{t("nav_logout") || "Log Out"}</span>
               </button>
             </div>
@@ -111,16 +115,18 @@ export default function Navbar() {
               {/* Login Button with Icon */}
               <Link
                 href="/login"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full text-xs sm:text-sm font-bold text-[#0B534B] hover:text-[#08433C] hover:bg-[#E6F4F1] border border-[#0B534B]/30 transition-all shadow-xs"
+                className="inline-flex items-center justify-center gap-1.5 px-3 py-2 sm:px-4 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold text-[#0B534B] hover:text-[#08433C] hover:bg-[#E6F4F1] border border-[#0B534B]/30 transition-all shadow-xs min-h-[44px]"
+                aria-label={t("nav_login") || "Log In to Account"}
               >
-                <LogIn className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#0B534B]" />
+                <LogIn className="w-4 h-4 text-[#0B534B]" />
                 <span>{t("nav_login") || "Log In"}</span>
               </Link>
 
               {/* Get Started Button (Register / Onboarding) */}
               <Link
                 href="/register"
-                className="btn-primary btn-sm text-xs sm:text-sm hidden sm:inline-flex"
+                className="btn-primary btn-sm text-xs sm:text-sm hidden sm:inline-flex min-h-[44px] px-3.5"
+                aria-label={t("nav_get_started") || "Get Started"}
               >
                 <span>{t("nav_get_started") || "Get Started"}</span>
                 <ArrowRight className="w-4 h-4" />
@@ -132,10 +138,11 @@ export default function Navbar() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="btn-icon md:hidden !p-2"
-            aria-label="Toggle Navigation Menu"
+            className="btn-icon md:hidden min-h-[44px] min-w-[44px] flex items-center justify-center p-2 rounded-full border border-[#D5DFDC] hover:bg-[#E6F4F1]"
+            aria-label={mobileMenuOpen ? "Close Navigation Menu" : "Open Navigation Menu"}
+            aria-expanded={mobileMenuOpen}
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {mobileMenuOpen ? <X className="w-6 h-6 text-[#111615]" /> : <Menu className="w-6 h-6 text-[#111615]" />}
           </button>
         </div>
       </div>
@@ -200,7 +207,7 @@ export default function Navbar() {
                 key={item.name}
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="block px-4 py-2.5 rounded-xl text-base font-semibold text-[#5A6A66] hover:text-[#0B534B] hover:bg-[#E6F4F1]"
+                className="flex items-center min-h-[44px] px-4 py-2.5 rounded-xl text-base font-semibold text-[#5A6A66] hover:text-[#0B534B] hover:bg-[#E6F4F1] transition-colors"
               >
                 {item.name}
               </Link>
@@ -215,7 +222,7 @@ export default function Navbar() {
                   key={item.name}
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="px-3 py-2 rounded-xl text-sm font-bold bg-[#F6F8F7] text-[#111615] hover:bg-[#E6F4F1] hover:text-[#0B534B] text-center"
+                  className="flex items-center justify-center min-h-[44px] px-3 py-2 rounded-xl text-sm font-bold bg-[#F6F8F7] text-[#111615] hover:bg-[#E6F4F1] hover:text-[#0B534B] text-center transition-colors"
                 >
                   {item.name}
                 </Link>
@@ -223,11 +230,11 @@ export default function Navbar() {
             </div>
           </div>
 
-          <div className="border-t border-[#EBF0EE] pt-3 flex items-center justify-between">
+          <div className="border-t border-[#EBF0EE] pt-3 flex items-center justify-between gap-2">
             <Link
               href="/emergency"
               onClick={() => setMobileMenuOpen(false)}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold text-red-700 bg-red-50 border border-red-200"
+              className="inline-flex items-center justify-center min-h-[44px] gap-2 px-4 py-2 rounded-xl text-sm font-bold text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 transition-colors"
             >
               <ShieldAlert className="w-4 h-4" />
               <span>{t("nav_emergency") || "Emergency Help"}</span>
@@ -236,7 +243,7 @@ export default function Navbar() {
             <Link
               href="/profile"
               onClick={() => setMobileMenuOpen(false)}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-bold text-[#5A6A66] bg-[#F6F8F7] hover:bg-[#E6F4F1] hover:text-[#0B534B]"
+              className="inline-flex items-center justify-center min-h-[44px] gap-1.5 px-4 py-2 rounded-xl text-sm font-bold text-[#5A6A66] bg-[#F6F8F7] hover:bg-[#E6F4F1] hover:text-[#0B534B] transition-colors"
             >
               <UserCircle className="w-4 h-4" />
               <span>{t("nav_profile") || "Profile"}</span>

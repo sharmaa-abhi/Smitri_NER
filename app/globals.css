@@ -135,10 +135,16 @@
     max-width: 72ch;
   }
 
-  /* Accessibility focus styles */
-  button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
-    outline: 3px solid #0B534B;
-    outline-offset: 3px;
+  /* Senior Accessibility focus styles - WCAG AAA visible keyboard focus */
+  button:focus-visible, 
+  a:focus-visible, 
+  input:focus-visible, 
+  select:focus-visible, 
+  textarea:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 3px solid #0B534B !important;
+    outline-offset: 3px !important;
+    box-shadow: 0 0 0 2px #FFFFFF !important;
   }
   .theme {
     --font-heading: var(--font-sans);
