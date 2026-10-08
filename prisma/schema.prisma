@@ -7,3 +7,78 @@ datasource db {
   url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
+
+model User {
+  id                      String           @id @default(cuid())
+  supabaseId              String?          @unique
+  name                    String
+  email                   String           @unique
+  age                     Int              @default(68)
+  city                    String?
+  doctorName              String?
+  doctorPhone             String?
+  caregiverRelation       String?
+  emergencyName           String           @default("Emergency Contact")
+  emergencyPhone          String           @default("+91 98765 43210")
+  preferredLanguage       String           @default("English")
+  difficultyLevel         Int              @default(1)
+  dailyHydrationTarget    Int              @default(6)
+  currentHydrationGlasses Int              @default(0)
+  createdAt               DateTime         @default(now())
+  updatedAt               DateTime         @updatedAt
+
+  gameSessions            GameSession[]
+  reminders               Reminder[]
+  caregiverAlerts         CaregiverAlert[]
+
+  @@map("users")
+}
+
+model GameSession {
+  id                    String   @id @default(cuid())
+  userId                String
+  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  gameId                String
+  gameTitle             String
+  score                 Float
+  accuracy              Float
+  responseTimeSec       Float
+  mistakes              Int      @default(0)
+  difficultyLevel       Int      @default(1)
+  recommendedDifficulty Int      @default(1)
+  feedbackText          String?
+  realWorldScenario     String?
+  timestamp             DateTime @default(now())
+
+  @@map("game_sessions")
+}
+
+model Reminder {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title       String
+  time        String
+  category    String   @default("MEDICINE")
+  isCompleted Boolean  @default(false)
+  notes       String?
+  dosage      String?
+  priority    String?  @default("ROUTINE")
+  createdAt   DateTime @default(now())
+
+  @@map("reminders")
+}
+
+model CaregiverAlert {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type       String
+  message    String
+  severity   String   @default("MEDIUM")
+  date       String
+  isResolved Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  @@map("caregiver_alerts")
+}

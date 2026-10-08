@@ -124,7 +124,7 @@ export default function CaregiverAlertSimulator() {
         {/* Left Side: Scenario Explanation */}
         <div className="lg:col-span-6 space-y-4 text-left">
           <div className="space-y-1">
-            <span className={`text-[11px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full ${current.bgLight} ${current.color} border ${current.borderColor}`}>
+            <span className={`text-xs font-bold px-3 py-1 rounded-full ${current.bgLight} ${current.color} border ${current.borderColor} inline-flex items-center`}>
               {current.badge}
             </span>
             <h3 className="text-xl sm:text-2xl font-black text-[#111615] pt-1">
@@ -181,7 +181,7 @@ export default function CaregiverAlertSimulator() {
                   </div>
                   <div>
                     <div className="text-xs font-bold leading-tight">Smitri Elder Watch</div>
-                    <div className="text-[10px] text-[#A7F3D0]">Caregiver: Rahul (Son)</div>
+                    <div className="text-xs text-[#A7F3D0]">Caregiver: Rahul (Son)</div>
                   </div>
                 </div>
                 <Phone className="w-4 h-4 text-white" />
@@ -190,7 +190,7 @@ export default function CaregiverAlertSimulator() {
               {/* Chat Message Bubble */}
               <div className="flex-1 p-3 space-y-3 overflow-y-auto">
                 <div className="text-center">
-                  <span className="text-[10px] font-bold bg-white/80 text-[#5A6A66] px-2 py-0.5 rounded-full shadow-2xs">
+                  <span className="text-xs font-bold bg-white/80 text-[#5A6A66] px-2.5 py-0.5 rounded-full shadow-2xs">
                     Today
                   </span>
                 </div>
@@ -203,14 +203,14 @@ export default function CaregiverAlertSimulator() {
                     ? "bg-[#FFFBEB] border-[#FDE68A]"
                     : "bg-red-50 border-red-200"
                 }`}>
-                  <div className="flex items-center justify-between pb-1 border-b border-black/5 text-[10px] font-bold text-[#5A6A66]">
+                  <div className="flex items-center justify-between pb-1 border-b border-black/5 text-xs font-semibold text-[#5A6A66]">
                     <span>Automated Dispatch</span>
                     <span>{current.time}</span>
                   </div>
-                  <p className="text-xs font-semibold text-[#111615] pt-1.5 leading-snug">
+                  <p className="text-xs sm:text-sm font-semibold text-[#111615] pt-1.5 leading-snug">
                     {current.messagePreview}
                   </p>
-                  <div className="pt-2 text-[10px] text-[#5A6A66] flex items-center justify-between">
+                  <div className="pt-2 text-xs text-[#5A6A66] flex items-center justify-between font-medium">
                     <span>Delivered via WhatsApp / SMS</span>
                     <span className="text-[#0B534B] font-bold">✓✓ Read</span>
                   </div>

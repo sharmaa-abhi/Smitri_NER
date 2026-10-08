@@ -27,7 +27,7 @@ import { playWebSpeechDialect, playChime } from "@/lib/audioPrompts";
 
 interface LanguageSwitcherProps {
   className?: string;
-  buttonVariant?: "sm" | "md";
+  buttonVariant?: "sm" | "md" | "translucent";
 }
 
 export default function LanguageSwitcher({
@@ -782,26 +782,46 @@ export default function LanguageSwitcher({
 
   return (
     <>
-      {/* 1-Touch Trigger Button matching top-nav pill */}
-      <button
-        type="button"
-        onClick={() => setIsOpen(true)}
-        className={`bg-[#0B3B36] hover:bg-[#072F2B] text-white border border-[#166258] rounded-full px-3.5 py-1.5 flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-bold shadow-xs transition-all cursor-pointer ${
-          buttonVariant === "sm" ? "btn-sm text-xs sm:text-sm" : "btn-md"
-        } ${className}`}
-        aria-haspopup="dialog"
-        aria-expanded={isOpen}
-        aria-label={t("nav_select_language", "Change Language & Dialect")}
-        title={t("nav_select_language", "Regional Dialect Navigator")}
-      >
-        <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#A7F3D0] flex-shrink-0" />
-        <span className="tracking-tight font-black text-white">
-          {currentLangInfo.code === "en"
-            ? "NE/IN • English"
-            : `NE/IN • ${currentLangInfo.nativeName}`}
-        </span>
-        <ChevronDown className="w-3 h-3 text-[#A7F3D0] opacity-80" />
-      </button>
+      {/* 1-Touch Trigger Button matching floating pill */}
+      {buttonVariant === "translucent" ? (
+        <button
+          type="button"
+          onClick={() => setIsOpen(true)}
+          className={`bg-white/80 hover:bg-[#E6F4F1] text-[#0B534B] hover:text-[#083D37] border border-[#93CEC5]/60 hover:border-[#10B981] rounded-full px-3 py-1.5 flex items-center gap-1.5 text-xs font-bold shadow-2xs backdrop-blur-md transition-all cursor-pointer hover:-translate-y-0.5 min-h-[40px] ${className}`}
+          aria-haspopup="dialog"
+          aria-expanded={isOpen}
+          aria-label={t("nav_select_language", "Change Language & Dialect")}
+          title={t("nav_select_language", "Regional Dialect Navigator")}
+        >
+          <Globe className="w-3.5 h-3.5 text-[#0B534B] flex-shrink-0" />
+          <span className="tracking-tight font-black text-[#0B534B]">
+            {currentLangInfo.code === "en"
+              ? "NE/IN • English"
+              : `NE/IN • ${currentLangInfo.nativeName}`}
+          </span>
+          <ChevronDown className="w-3 h-3 text-[#0B534B]/70" />
+        </button>
+      ) : (
+        <button
+          type="button"
+          onClick={() => setIsOpen(true)}
+          className={`bg-[#0B3B36] hover:bg-[#072F2B] text-white border border-[#166258] rounded-full px-3.5 py-1.5 flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-bold shadow-xs transition-all cursor-pointer ${
+            buttonVariant === "sm" ? "btn-sm text-xs sm:text-sm" : "btn-md"
+          } ${className}`}
+          aria-haspopup="dialog"
+          aria-expanded={isOpen}
+          aria-label={t("nav_select_language", "Change Language & Dialect")}
+          title={t("nav_select_language", "Regional Dialect Navigator")}
+        >
+          <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#A7F3D0] flex-shrink-0" />
+          <span className="tracking-tight font-black text-white">
+            {currentLangInfo.code === "en"
+              ? "NE/IN • English"
+              : `NE/IN • ${currentLangInfo.nativeName}`}
+          </span>
+          <ChevronDown className="w-3 h-3 text-[#A7F3D0] opacity-80" />
+        </button>
+      )}
 
       {/* Render Modal via Portal directly into document.body */}
       {isOpen && mounted && createPortal(modalDialog, document.body)}

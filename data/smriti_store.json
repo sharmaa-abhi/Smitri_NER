@@ -248,6 +248,20 @@
       "recommendedDifficulty": 2,
       "feedbackText": "You are doing great! Let's try a slightly higher level.",
       "timestamp": "2026-10-08T01:22:23.322Z"
+    },
+    {
+      "id": "s-1791466494118",
+      "userId": "user_kamla",
+      "gameId": "different-one",
+      "gameTitle": "Find the Different One",
+      "score": 90,
+      "accuracy": 88,
+      "responseTimeSec": 8,
+      "mistakes": 1,
+      "difficultyLevel": 1,
+      "recommendedDifficulty": 2,
+      "feedbackText": "You are doing great! Let's try a slightly higher level.",
+      "timestamp": "2026-10-08T13:34:54.118Z"
     }
   ],
   "reminders": [
@@ -257,10 +271,10 @@
       "title": "Morning Blood Pressure Medicine (Amlodipine 5mg)",
       "time": "08:00 AM",
       "category": "MEDICINE",
+      "isCompleted": true,
+      "notes": "Take right after breakfast. Monitored by caregiver Rahul.",
       "dosage": "1 Tablet with lukewarm water",
-      "priority": "HIGH",
-      "isCompleted": false,
-      "notes": "Take right after breakfast. Monitored by caregiver Rahul."
+      "priority": "HIGH"
     },
     {
       "id": "rem-2",
@@ -268,9 +282,9 @@
       "title": "Cognitive Workout - Grocery Basket Bazaar Recall",
       "time": "10:30 AM",
       "category": "CUSTOM",
-      "priority": "ROUTINE",
       "isCompleted": true,
-      "notes": "Play today's 2-minute memory challenge before lunch."
+      "notes": "Play today's 2-minute memory challenge before lunch.",
+      "priority": "ROUTINE"
     },
     {
       "id": "rem-3",
@@ -278,10 +292,10 @@
       "title": "Midday Hydration & Fresh Coconut Water",
       "time": "12:00 PM",
       "category": "WATER",
-      "dosage": "1 Full Glass (300ml)",
-      "priority": "ROUTINE",
       "isCompleted": true,
-      "notes": "Keeps blood pressure stable and joints hydrated in hot weather."
+      "notes": "Keeps blood pressure stable and joints hydrated in hot weather.",
+      "dosage": "1 Full Glass (300ml)",
+      "priority": "ROUTINE"
     },
     {
       "id": "rem-4",
@@ -289,9 +303,9 @@
       "title": "Dr. Manab Barua Tele-Consultation Checkup",
       "time": "03:30 PM",
       "category": "DOCTOR",
-      "priority": "HIGH",
       "isCompleted": true,
-      "notes": "Monthly geriatric checkup to review 7-day cognitive trend charts."
+      "notes": "Monthly geriatric checkup to review 7-day cognitive trend charts.",
+      "priority": "HIGH"
     },
     {
       "id": "rem-5",
@@ -299,9 +313,9 @@
       "title": "Evening Walk & Garden Breathing Exercise",
       "time": "05:30 PM",
       "category": "EXERCISE",
-      "priority": "ROUTINE",
       "isCompleted": true,
-      "notes": "15 minutes slow walk in the backyard with walking stick."
+      "notes": "15 minutes slow walk in the backyard with walking stick.",
+      "priority": "ROUTINE"
     },
     {
       "id": "rem-6",
@@ -309,10 +323,10 @@
       "title": "Night Calcium & Vitamin D3 Tablet",
       "time": "08:30 PM",
       "category": "MEDICINE",
-      "dosage": "1 Tablet after dinner",
-      "priority": "HIGH",
       "isCompleted": true,
-      "notes": "Prescribed for bone density and joint comfort."
+      "notes": "Prescribed for bone density and joint comfort.",
+      "dosage": "1 Tablet after dinner",
+      "priority": "HIGH"
     },
     {
       "id": "rem-1791206451812",
@@ -321,19 +335,19 @@
       "time": "08:00 AM",
       "category": "MEDICINE",
       "isCompleted": false,
-      "notes": ""
+      "priority": "ROUTINE"
+    },
+    {
+      "id": "rem-1791465644168",
+      "userId": "user_kamla",
+      "title": "Evening Herbal Tea",
+      "time": "06:00 PM",
+      "category": "MEDICINE",
+      "isCompleted": false,
+      "priority": "ROUTINE"
     }
   ],
   "caregiverAlerts": [
-    {
-      "id": "alert-1791026238314",
-      "userId": "user_kamla",
-      "type": "PERFORMANCE_DECLINE",
-      "message": "Performance change detected: A steady decrease of 54 points was observed across the last 3 sessions.",
-      "severity": "MEDIUM",
-      "date": "3/10/2026",
-      "isResolved": false
-    },
     {
       "id": "alert-1",
       "userId": "user_kamla",
@@ -341,6 +355,15 @@
       "message": "Routine Adherence: 4 of 6 daily elder activities completed on schedule. Cognitive accuracy remains steady at 87%.",
       "severity": "INFO",
       "date": "23/9/2026",
+      "isResolved": false
+    },
+    {
+      "id": "alert-1791026238314",
+      "userId": "user_kamla",
+      "type": "PERFORMANCE_DECLINE",
+      "message": "Performance change detected: A steady decrease of 54 points was observed across the last 3 sessions.",
+      "severity": "MEDIUM",
+      "date": "3/10/2026",
       "isResolved": false
     }
   ]

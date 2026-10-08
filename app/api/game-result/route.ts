@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getDb, saveDb, GameSession, CaregiverAlert } from '@/lib/db';
+import { getDbAsync, addGameSessionAsync, addCaregiverAlertAsync, GameSession, CaregiverAlert } from '@/lib/db';
 import { evaluateCognitivePerformance, analyzeSustainedDecline } from '@/lib/scoring';
 
 export async function POST(req: Request) {
@@ -25,7 +25,7 @@ export async function POST(req: Request) {
       currentDifficulty: currentDifficulty || 1,
     });
 
-    const db = getDb();
+    const db = await getDbAsync();
     const userId = db.users[0]?.id || 'user_kamla';
 
     const gameTitlesMap: Record<string, string> = {
@@ -55,21 +55,16 @@ export async function POST(req: Request) {
       timestamp: new Date().toISOString(),
     };
 
-    db.gameSessions.push(newSession);
+    await addGameSessionAsync(newSession);
 
-    // Check if user difficulty needs updating
-    const user = db.users.find(u => u.id === userId);
-    if (user) {
-      user.difficultyLevel = evaluation.recommendedDifficulty;
-    }
-
-    // Fast O(1) backward extraction of last 3 user scores without O(N) full array filter
+    // Fast O(1) backward extraction of last 3 user scores
     const recentScores: number[] = [];
-    for (let i = db.gameSessions.length - 1; i >= 0 && recentScores.length < 3; i--) {
+    for (let i = db.gameSessions.length - 1; i >= 0 && recentScores.length < 2; i--) {
       if (db.gameSessions[i].userId === userId) {
         recentScores.unshift(db.gameSessions[i].score);
       }
     }
+    recentScores.push(newSession.score);
 
     const declineAnalysis = analyzeSustainedDecline(recentScores);
     if (declineAnalysis.hasDecline) {
@@ -82,10 +77,8 @@ export async function POST(req: Request) {
         date: new Date().toLocaleDateString(),
         isResolved: false,
       };
-      db.caregiverAlerts.unshift(alert);
+      await addCaregiverAlertAsync(alert);
     }
-
-    saveDb(db);
 
     return NextResponse.json({
       success: true,

@@ -1,13 +1,13 @@
 import { NextResponse } from 'next/server';
-import { getDb, saveDb, CaregiverAlert } from '@/lib/db';
+import { getDbAsync, addCaregiverAlertAsync, CaregiverAlert } from '@/lib/db';
 import { dispatchCaregiverAlert, CaregiverAlertPayload } from '@/lib/alerts';
 
 export async function POST(req: Request) {
   try {
     const body: CaregiverAlertPayload = await req.json();
 
-    const db = getDb();
-    const user = db.users[0] || { name: 'Kamla Devi', emergencyPhone: '+91 98765 43210' };
+    const db = await getDbAsync();
+    const user = db.users[0] || { id: 'user_kamla', name: 'Kamla Devi', emergencyPhone: '+91 98765 43210' };
 
     const payload: CaregiverAlertPayload = {
       alertType: body.alertType || 'TEST_ALERT',
@@ -35,8 +35,7 @@ export async function POST(req: Request) {
       isResolved: false,
     };
 
-    db.caregiverAlerts.unshift(newAlert);
-    saveDb(db);
+    await addCaregiverAlertAsync(newAlert);
 
     return NextResponse.json({
       success: true,
