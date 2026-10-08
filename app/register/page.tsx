@@ -6,8 +6,11 @@ import Link from 'next/link';
 import { UserPlus, Shield } from 'lucide-react';
 import ScrollReveal from '@/components/ScrollReveal';
 
+import { useAuth } from '@/lib/auth';
+
 export default function RegisterPage() {
   const router = useRouter();
+  const { login } = useAuth();
   const [name, setName] = useState('');
   const [age, setAge] = useState('68');
   const [email, setEmail] = useState('');
@@ -20,20 +23,24 @@ export default function RegisterPage() {
     e.preventDefault();
     setLoading(true);
 
+    const userData = {
+      name: name || 'Elderly Member',
+      age: parseInt(age) || 68,
+      email,
+      emergencyName: emergencyName || 'Caregiver',
+      emergencyPhone: emergencyPhone || '+91 98765 43210',
+    };
+
     try {
       await fetch('/api/profile', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: name || 'Elderly Member',
-          age: parseInt(age) || 68,
-          email,
-          emergencyName: emergencyName || 'Caregiver',
-          emergencyPhone: emergencyPhone || '+91 98765 43210',
-        }),
+        body: JSON.stringify(userData),
       });
+      login(userData);
       router.push('/dashboard');
     } catch {
+      login(userData);
       router.push('/dashboard');
     } finally {
       setLoading(false);
