@@ -2,19 +2,19 @@
   "users": [
     {
       "id": "user_kamla",
-      "name": "Kamla Devi",
-      "email": "kamla.devi@example.com",
-      "age": 68,
+      "name": "Sunita Devi",
+      "email": "sunita.devi@example.com",
+      "age": 72,
       "city": "Guwahati, Assam",
       "doctorName": "Dr. Manab Barua (Neurologist / Geriatrician)",
       "doctorPhone": "+91 94350 12345",
       "caregiverRelation": "Son & Primary Caregiver",
-      "emergencyName": "Rahul Sharma (Son / Caregiver)",
-      "emergencyPhone": "+91 98765 43210",
+      "emergencyName": "Amit Sharma (Son)",
+      "emergencyPhone": "+91 98765 11223",
       "preferredLanguage": "English / Hindi / Assamese",
       "difficultyLevel": 2,
       "dailyHydrationTarget": 6,
-      "currentHydrationGlasses": 4
+      "currentHydrationGlasses": 5
     }
   ],
   "gameSessions": [
@@ -220,6 +220,34 @@
       "recommendedDifficulty": 2,
       "feedbackText": "You are doing great! Let's try a slightly higher level.",
       "timestamp": "2026-10-04T08:32:42.127Z"
+    },
+    {
+      "id": "s-1791422515440",
+      "userId": "user_kamla",
+      "gameId": "number-trail",
+      "gameTitle": "Number Trail",
+      "score": 91,
+      "accuracy": 90,
+      "responseTimeSec": 16,
+      "mistakes": 1,
+      "difficultyLevel": 1,
+      "recommendedDifficulty": 2,
+      "feedbackText": "You are doing great! Let's try a slightly higher level.",
+      "timestamp": "2026-10-08T01:21:55.440Z"
+    },
+    {
+      "id": "s-1791422543322",
+      "userId": "user_kamla",
+      "gameId": "different-one",
+      "gameTitle": "Find the Different One",
+      "score": 100,
+      "accuracy": 100,
+      "responseTimeSec": 5,
+      "mistakes": 0,
+      "difficultyLevel": 1,
+      "recommendedDifficulty": 2,
+      "feedbackText": "You are doing great! Let's try a slightly higher level.",
+      "timestamp": "2026-10-08T01:22:23.322Z"
     }
   ],
   "reminders": [

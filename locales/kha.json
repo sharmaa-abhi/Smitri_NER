@@ -228,5 +228,7 @@
   "features_bottom_title": "All Features in One Simple App",
   "features_bottom_desc": "Ready to start? Play a memory game or check your daily dashboard now.",
   "features_bottom_dashboard": "Go to Dashboard",
-  "features_bottom_games": "Start Memory Games"
+  "features_bottom_games": "Start Memory Games",
+  "nav_login": "Log In",
+  "nav_logout": "Log Out"
 }
