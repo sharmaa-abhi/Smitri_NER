@@ -228,5 +228,7 @@
   "features_bottom_title": "এটা সৰল এপত সকলো সুবিধা",
   "features_bottom_desc": "আৰম্ভ কৰিবলৈ সাজুনে? এটা স্মৃতি খেল খেলক বা আপোনাৰ দৈনিক ডেশ্ববৰ্ড চাওক।",
   "features_bottom_dashboard": "ডেশ্ববৰ্ডলৈ যাওক",
-  "features_bottom_games": "স্মৃতি খেল আৰম্ভ কৰক"
+  "features_bottom_games": "স্মৃতি খেল আৰম্ভ কৰক",
+  "nav_login": "লগ ইন (Log In)",
+  "nav_logout": "লগ আউট (Log Out)"
 }

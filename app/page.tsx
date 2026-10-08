@@ -22,6 +22,7 @@ import {
   Stethoscope, 
   Gamepad2,
   Smile,
+  LogIn,
   X 
 } from 'lucide-react';
 import VoiceButton from '@/components/VoiceButton';
@@ -33,6 +34,7 @@ import NeuralSynapseCanvas from '@/components/NeuralSynapseCanvas';
 import RegionalCareMap from '@/components/RegionalCareMap';
 import TiltCard from '@/components/TiltCard';
 import { useLanguage } from '@/lib/i18n';
+import { useAuth } from '@/lib/auth';
 
 const HERO_IMAGES = [
   {
@@ -101,6 +103,7 @@ export default function HomePage() {
   const [showDemoVideoModal, setShowDemoVideoModal] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const { t } = useLanguage();
+  const { isLoggedIn, isLoaded } = useAuth();
 
   useEffect(() => {
     try {
@@ -173,18 +176,38 @@ export default function HomePage() {
 
             {/* Primary & Secondary Action Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 pt-1">
-              <Link
-                href="/dashboard"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-base font-bold text-white bg-[#0B534B] hover:bg-[#08433C] shadow-md hover:shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98]"
-              >
-                <span>{t("hero_btn_start") || "Get Started"}</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
+              {isLoaded && isLoggedIn ? (
+                <Link
+                  href="/dashboard"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-base font-bold text-white bg-[#0B534B] hover:bg-[#08433C] shadow-md hover:shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  <span>{t("nav_dashboard") || "Go to Dashboard"}</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-base font-bold text-white bg-[#0B534B] hover:bg-[#08433C] shadow-md hover:shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98]"
+                  >
+                    <LogIn className="w-4 h-4" />
+                    <span>{t("nav_login") || "Log In"}</span>
+                  </Link>
+
+                  <Link
+                    href="/register"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-base font-semibold text-[#0B534B] bg-[#E6F4F1] hover:bg-[#d5ece7] border border-[#0B534B]/30 shadow-xs hover:shadow transition-all"
+                  >
+                    <span>{t("hero_btn_start") || "Get Started"}</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </>
+              )}
 
               <button
                 type="button"
                 onClick={() => setShowDemoVideoModal(true)}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-base font-semibold text-[#0B534B] bg-white hover:bg-[#E6F4F1]/40 border border-[#0B534B]/30 shadow-sm hover:shadow transition-all"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-base font-semibold text-[#5A6A66] hover:text-[#0B534B] bg-white hover:bg-[#E6F4F1]/40 border border-[#D5DFDC] shadow-xs hover:shadow transition-all"
               >
                 <span className="text-[#0B534B] text-xs">▶</span>
                 <span>{t("hero_btn_demo") || "Watch Demo"}</span>

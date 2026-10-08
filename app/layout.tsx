@@ -4,7 +4,9 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
 import { LanguageProvider } from "@/lib/i18n";
+import { AuthProvider } from "@/lib/auth";
 import { PWAProvider } from "@/components/PWAProvider";
+import { cn } from "@/lib/utils";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -35,16 +37,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`scroll-smooth ${inter.variable}`}>
-      <body className="min-h-screen bg-[#F6F8F7] text-[#111615] font-sans flex flex-col antialiased selection:bg-[#C2E5DF] selection:text-[#042420]">
+    <html lang="en" className={cn("scroll-smooth", inter.variable, "font-sans")} suppressHydrationWarning>
+      <body className="min-h-screen bg-[#F6F8F7] text-[#111615] font-sans flex flex-col antialiased selection:bg-[#C2E5DF] selection:text-[#042420]" suppressHydrationWarning>
         <LanguageProvider>
-          <PWAProvider>
-            <ScrollProgressBar />
-            <Navbar />
-            <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6">
-              {children}
-            </main>
-          </PWAProvider>
+          <AuthProvider>
+            <PWAProvider>
+              <ScrollProgressBar />
+              <Navbar />
+              <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6">
+                {children}
+              </main>
+            </PWAProvider>
+          </AuthProvider>
         </LanguageProvider>
       </body>
     </html>

@@ -228,5 +228,7 @@
   "features_bottom_title": "একটি সহজ অ্যাপে সমস্ত সুবিধা",
   "features_bottom_desc": "শুরু করতে প্রস্তুত? একটি স্মৃতি খেলা খেলুন বা আপনার ড্যাশবোর্ড দেখুন।",
   "features_bottom_dashboard": "ড্যাশবোর্ডে যান",
-  "features_bottom_games": "স্মৃতি খেলা শুরু করুন"
+  "features_bottom_games": "স্মৃতি খেলা শুরু করুন",
+  "nav_login": "লগ ইন (Log In)",
+  "nav_logout": "লগ আউট (Log Out)"
 }

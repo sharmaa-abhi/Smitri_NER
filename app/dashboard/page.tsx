@@ -29,6 +29,7 @@ import {
 import VoiceButton from '@/components/VoiceButton';
 import ScrollReveal from '@/components/ScrollReveal';
 import { useLanguage } from '@/lib/i18n';
+import { useAuth } from '@/lib/auth';
 import {
   ResponsiveContainer,
   LineChart,
@@ -41,6 +42,7 @@ import {
 
 export default function DashboardPage() {
   const { t } = useLanguage();
+  const { user: authUser } = useAuth();
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [hydrationCount, setHydrationCount] = useState<number>(4);
@@ -112,7 +114,7 @@ export default function DashboardPage() {
     );
   }
 
-  const user = data?.user || { 
+  const user = data?.user || authUser || { 
     name: 'Kamla Devi', 
     age: 68, 
     city: 'Guwahati, Assam',

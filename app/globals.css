@@ -1,6 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@config "../tailwind.config.js";
 
 @layer base {
   :root {
@@ -48,9 +47,9 @@
     --color-error: #DC2626;
     --color-info: #0B534B;
 
-    --background: #F6F8F7;
-    --foreground: #111615;
-    
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.145 0 0);
+
     /* Global Typography Scale Tokens */
     --font-sans: var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --text-xs: 0.75rem;    /* 12px */
@@ -62,7 +61,7 @@
     --text-3xl: 1.875rem;  /* 30px */
     --text-4xl: 2.25rem;   /* 36px */
     --text-5xl: 2.75rem;   /* 44px */
-    
+
     /* Semantic Text Colour System Tokens */
     --text-primary: #111615;       /* Deep dark neutral / teal headings */
     --text-secondary: #5A6A66;     /* Neutral slate: Readable body & description text */
@@ -81,6 +80,36 @@
     --leading-snug: 1.25;
     --leading-normal: 1.5;
     --leading-relaxed: 1.65;
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.145 0 0);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.145 0 0);
+    --primary: oklch(0.205 0 0);
+    --primary-foreground: oklch(0.985 0 0);
+    --secondary: oklch(0.97 0 0);
+    --secondary-foreground: oklch(0.205 0 0);
+    --muted: oklch(0.97 0 0);
+    --muted-foreground: oklch(0.556 0 0);
+    --accent: oklch(0.97 0 0);
+    --accent-foreground: oklch(0.205 0 0);
+    --destructive: oklch(0.577 0.245 27.325);
+    --border: oklch(0.922 0 0);
+    --input: oklch(0.922 0 0);
+    --ring: oklch(0.708 0 0);
+    --chart-1: oklch(0.87 0 0);
+    --chart-2: oklch(0.556 0 0);
+    --chart-3: oklch(0.439 0 0);
+    --chart-4: oklch(0.371 0 0);
+    --chart-5: oklch(0.269 0 0);
+    --radius: 0.625rem;
+    --sidebar: oklch(0.985 0 0);
+    --sidebar-foreground: oklch(0.145 0 0);
+    --sidebar-primary: oklch(0.205 0 0);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.97 0 0);
+    --sidebar-accent-foreground: oklch(0.205 0 0);
+    --sidebar-border: oklch(0.922 0 0);
+    --sidebar-ring: oklch(0.708 0 0);
   }
 
   body {
@@ -93,6 +122,7 @@
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     overflow-x: hidden;
+    @apply bg-background text-foreground;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -110,12 +140,57 @@
     outline: 3px solid #0B534B;
     outline-offset: 3px;
   }
+  .theme {
+    --font-heading: var(--font-sans);
+    --font-sans: var(--font-sans);
+  }
+  .dark {
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(0.205 0 0);
+    --card-foreground: oklch(0.985 0 0);
+    --popover: oklch(0.205 0 0);
+    --popover-foreground: oklch(0.985 0 0);
+    --primary: oklch(0.922 0 0);
+    --primary-foreground: oklch(0.205 0 0);
+    --secondary: oklch(0.269 0 0);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.269 0 0);
+    --muted-foreground: oklch(0.708 0 0);
+    --accent: oklch(0.269 0 0);
+    --accent-foreground: oklch(0.985 0 0);
+    --destructive: oklch(0.704 0.191 22.216);
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 15%);
+    --ring: oklch(0.556 0 0);
+    --chart-1: oklch(0.87 0 0);
+    --chart-2: oklch(0.556 0 0);
+    --chart-3: oklch(0.439 0 0);
+    --chart-4: oklch(0.371 0 0);
+    --chart-5: oklch(0.269 0 0);
+    --sidebar: oklch(0.205 0 0);
+    --sidebar-foreground: oklch(0.985 0 0);
+    --sidebar-primary: oklch(0.488 0.243 264.376);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.269 0 0);
+    --sidebar-accent-foreground: oklch(0.985 0 0);
+    --sidebar-border: oklch(1 0 0 / 10%);
+    --sidebar-ring: oklch(0.556 0 0);
+  }
+  * {
+    @apply border-border ;
+  }
+  html {
+    @apply font-sans;
+  }
 }
 
 @layer components {
   /* ========================================================================= */
   /* SYSTEMATIC BUTTON DESIGN SYSTEM (5 Standardized Variants)                 */
   /* ========================================================================= */
+
+  /* Base button shared styles (used as a real class in HTML, not @apply) */
   .btn-base {
     @apply inline-flex items-center justify-center gap-2 font-bold transition-all duration-200 select-none;
     @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0B534B];
@@ -125,30 +200,50 @@
 
   /* 1. Primary: Main CTA, Deep Teal #0B534B */
   .btn-primary {
-    @apply btn-base bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white border border-transparent shadow-sm hover:shadow-md;
+    @apply inline-flex items-center justify-center gap-2 font-bold transition-all duration-200 select-none;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0B534B];
+    @apply disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed active:scale-[0.98];
+    @apply bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white border border-transparent shadow-sm hover:shadow-md;
   }
 
   /* 2. Secondary: Supporting action, Emerald Green #10B981 */
   .btn-secondary {
-    @apply btn-base bg-[#10B981] hover:bg-[#059669] active:bg-[#047857] text-white border border-transparent shadow-sm hover:shadow-md;
+    @apply inline-flex items-center justify-center gap-2 font-bold transition-all duration-200 select-none;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0B534B];
+    @apply disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed active:scale-[0.98];
+    @apply bg-[#10B981] hover:bg-[#059669] active:bg-[#047857] text-white border border-transparent shadow-sm hover:shadow-md;
   }
 
   /* 3. Outline / Ghost: Low-emphasis action with primary border */
   .btn-outline {
-    @apply btn-base bg-white hover:bg-[#E6F4F1] text-[#0B534B] border border-[#0B534B] shadow-sm;
+    @apply inline-flex items-center justify-center gap-2 font-bold transition-all duration-200 select-none;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0B534B];
+    @apply disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed active:scale-[0.98];
+    @apply bg-white hover:bg-[#E6F4F1] text-[#0B534B] border border-[#0B534B] shadow-sm;
   }
 
-  /* 4. Tertiary / Warning / Destructive */
+  /* 4. Tertiary / Warning */
   .btn-tertiary {
-    @apply btn-base bg-[#D97706] hover:bg-[#B45309] active:bg-[#92400E] text-white border border-transparent shadow-sm;
+    @apply inline-flex items-center justify-center gap-2 font-bold transition-all duration-200 select-none;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0B534B];
+    @apply disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed active:scale-[0.98];
+    @apply bg-[#D97706] hover:bg-[#B45309] active:bg-[#92400E] text-white border border-transparent shadow-sm;
   }
+
+  /* 4b. Destructive */
   .btn-destructive {
-    @apply btn-base bg-[#DC2626] hover:bg-[#B91C1C] text-white border border-transparent shadow-sm hover:shadow-md focus-visible:ring-red-600;
+    @apply inline-flex items-center justify-center gap-2 font-bold transition-all duration-200 select-none;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-600;
+    @apply disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed active:scale-[0.98];
+    @apply bg-[#DC2626] hover:bg-[#B91C1C] text-white border border-transparent shadow-sm hover:shadow-md;
   }
 
   /* 5. Icon / Icon-only: Small utility controls with accessible touch target */
   .btn-icon {
-    @apply btn-base p-2.5 rounded-full text-[#5A6A66] hover:text-[#111615] hover:bg-[#EBF0EE] border border-transparent min-h-[44px] min-w-[44px];
+    @apply inline-flex items-center justify-center gap-2 font-bold transition-all duration-200 select-none;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0B534B];
+    @apply disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed active:scale-[0.98];
+    @apply p-2.5 rounded-full text-[#5A6A66] hover:text-[#111615] hover:bg-[#EBF0EE] border border-transparent min-h-[44px] min-w-[44px];
   }
 
   /* Standard Size Modifiers */
