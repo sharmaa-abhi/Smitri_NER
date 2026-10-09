@@ -12,7 +12,7 @@
       "emergencyName": "Amit Sharma (Son)",
       "emergencyPhone": "+91 98765 11223",
       "preferredLanguage": "English / Hindi / Assamese",
-      "difficultyLevel": 2,
+      "difficultyLevel": 5,
       "dailyHydrationTarget": 6,
       "currentHydrationGlasses": 5
     }
@@ -262,6 +262,76 @@
       "recommendedDifficulty": 2,
       "feedbackText": "You are doing great! Let's try a slightly higher level.",
       "timestamp": "2026-10-08T13:34:54.118Z"
+    },
+    {
+      "id": "s-1791560680325",
+      "userId": "user_kamla",
+      "gameId": "different-one",
+      "gameTitle": "Find the Different One",
+      "score": 100,
+      "accuracy": 100,
+      "responseTimeSec": 6,
+      "mistakes": 0,
+      "difficultyLevel": 1,
+      "recommendedDifficulty": 2,
+      "feedbackText": "You are doing great! Let's try a slightly higher level.",
+      "timestamp": "2026-10-09T15:44:40.325Z"
+    },
+    {
+      "id": "s-1791560685113",
+      "userId": "user_kamla",
+      "gameId": "different-one",
+      "gameTitle": "Find the Different One",
+      "score": 100,
+      "accuracy": 100,
+      "responseTimeSec": 4,
+      "mistakes": 0,
+      "difficultyLevel": 2,
+      "recommendedDifficulty": 3,
+      "feedbackText": "You are doing great! Let's try a slightly higher level.",
+      "timestamp": "2026-10-09T15:44:45.113Z"
+    },
+    {
+      "id": "s-1791560690642",
+      "userId": "user_kamla",
+      "gameId": "different-one",
+      "gameTitle": "Find the Different One",
+      "score": 100,
+      "accuracy": 100,
+      "responseTimeSec": 4,
+      "mistakes": 0,
+      "difficultyLevel": 3,
+      "recommendedDifficulty": 4,
+      "feedbackText": "You are doing great! Let's try a slightly higher level.",
+      "timestamp": "2026-10-09T15:44:50.642Z"
+    },
+    {
+      "id": "s-1791560696145",
+      "userId": "user_kamla",
+      "gameId": "different-one",
+      "gameTitle": "Find the Different One",
+      "score": 90,
+      "accuracy": 88,
+      "responseTimeSec": 3,
+      "mistakes": 1,
+      "difficultyLevel": 4,
+      "recommendedDifficulty": 5,
+      "feedbackText": "You are doing great! Let's try a slightly higher level.",
+      "timestamp": "2026-10-09T15:44:56.145Z"
+    },
+    {
+      "id": "s-1791560702496",
+      "userId": "user_kamla",
+      "gameId": "different-one",
+      "gameTitle": "Find the Different One",
+      "score": 100,
+      "accuracy": 100,
+      "responseTimeSec": 4,
+      "mistakes": 0,
+      "difficultyLevel": 5,
+      "recommendedDifficulty": 5,
+      "feedbackText": "Outstanding focus! You are at your best pace.",
+      "timestamp": "2026-10-09T15:45:02.496Z"
     }
   ],
   "reminders": [

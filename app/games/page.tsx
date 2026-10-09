@@ -28,7 +28,8 @@ import VoiceButton from '@/components/VoiceButton';
 import ScrollReveal from '@/components/ScrollReveal';
 import { useLanguage } from '@/lib/i18n';
 import { GAME_LEVEL_CONFIG } from '@/data/gameBanks';
-import { getAllGamesProgress, AllGamesProgress, DifficultyLevel, GameId } from '@/lib/gameProgress';
+import { getAllGamesProgress, AllGamesProgress } from '@/lib/gameProgress';
+import { DifficultyLevel, GameId } from '@/types/games';
 import { useAuth } from '@/lib/auth';
 
 type GameCategory = 'all' | 'daily' | 'memory' | 'attention' | 'verbal';

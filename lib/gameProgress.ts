@@ -1,3 +1,5 @@
+import { DifficultyLevel } from '@/types/games';
+
 /**
  * Smitri_NER — Sequential Game Level Progression & Unlocking Manager
  * 
@@ -12,11 +14,14 @@
 
 export interface GameProgress {
   gameId: string;
-  unlockedLevel: number; // 1 to 5
-  completedLevels: number[]; // e.g. [1, 2]
+  unlockedLevel: DifficultyLevel; // 1 to 5
+  completedLevels: DifficultyLevel[]; // e.g. [1, 2]
   highestScores?: Record<number, number>; // level -> score
   updatedAt: string;
 }
+
+export type GameProgressData = GameProgress;
+export type AllGamesProgress = Record<string, GameProgress>;
 
 const STORAGE_PREFIX = 'smitri_game_progress';
 
@@ -46,17 +51,18 @@ export function getGameProgress(gameId: string, userId?: string): GameProgress {
     if (!raw) return defaultProgress;
 
     const parsed = JSON.parse(raw);
-    const unlocked = Math.max(1, Math.min(5, Number(parsed.unlockedLevel) || 1));
-    const completed = Array.isArray(parsed.completedLevels)
-      ? parsed.completedLevels
-          .map((n: unknown) => Number(n))
-          .filter((n: number) => n >= 1 && n <= 5)
-      : [];
+    const unlocked = (Math.max(1, Math.min(5, Number(parsed.unlockedLevel) || 1))) as DifficultyLevel;
+    const rawCompleted = Array.isArray(parsed.completedLevels) ? parsed.completedLevels : [];
+    const completed: DifficultyLevel[] = rawCompleted
+      .map((n: unknown) => Number(n))
+      .filter((n: number) => !isNaN(n) && n >= 1 && n <= 5) as DifficultyLevel[];
+
+    const uniqueCompleted: DifficultyLevel[] = Array.from(new Set(completed)).sort((a, b) => a - b);
 
     return {
       gameId,
       unlockedLevel: unlocked,
-      completedLevels: Array.from(new Set(completed)).sort((a, b) => a - b),
+      completedLevels: uniqueCompleted,
       highestScores: parsed.highestScores || {},
       updatedAt: parsed.updatedAt || new Date().toISOString(),
     };
@@ -80,15 +86,15 @@ export function isLevelUnlocked(gameId: string, level: number, userId?: string):
  */
 export function isLevelCompleted(gameId: string, level: number, userId?: string): boolean {
   const progress = getGameProgress(gameId, userId);
-  return progress.completedLevels.includes(level);
+  return progress.completedLevels.includes(level as DifficultyLevel);
 }
 
 /**
  * Get the highest available unlocked level (1 to 5)
  */
-export function getHighestUnlockedLevel(gameId: string, userId?: string): number {
+export function getHighestUnlockedLevel(gameId: string, userId?: string): DifficultyLevel {
   const progress = getGameProgress(gameId, userId);
-  return Math.max(1, Math.min(5, progress.unlockedLevel));
+  return (Math.max(1, Math.min(5, progress.unlockedLevel))) as DifficultyLevel;
 }
 
 /**
@@ -96,23 +102,27 @@ export function getHighestUnlockedLevel(gameId: string, userId?: string): number
  */
 export function completeLevel(
   gameId: string,
-  level: number,
+  level: DifficultyLevel,
   score: number = 100,
   userId?: string
-): { nextLevel: number | null; isAllCompleted: boolean; wasFirstCompletion: boolean } {
+): GameProgress {
   const current = getGameProgress(gameId, userId);
-  const wasFirstCompletion = !current.completedLevels.includes(level);
 
-  const updatedCompleted = Array.from(new Set([...current.completedLevels, level])).sort((a, b) => a - b);
+  const updatedCompleted: DifficultyLevel[] = Array.from(
+    new Set([...current.completedLevels, level])
+  ).sort((a, b) => a - b);
+
   // Unlocking next level (capped at 5)
-  const nextLevel = level < 5 ? Math.max(current.unlockedLevel, level + 1) : current.unlockedLevel;
+  const nextUnlocked = (level < 5
+    ? Math.max(current.unlockedLevel, level + 1)
+    : current.unlockedLevel) as DifficultyLevel;
 
   const highestScores = { ...(current.highestScores || {}) };
   highestScores[level] = Math.max(highestScores[level] || 0, score);
 
   const newProgress: GameProgress = {
     gameId,
-    unlockedLevel: nextLevel,
+    unlockedLevel: nextUnlocked,
     completedLevels: updatedCompleted,
     highestScores,
     updatedAt: new Date().toISOString(),
@@ -131,18 +141,13 @@ export function completeLevel(
     }
   }
 
-  const isAllCompleted = updatedCompleted.length >= 5 || level === 5;
-  return {
-    nextLevel: level < 5 ? (level + 1) : null,
-    isAllCompleted,
-    wasFirstCompletion,
-  };
+  return newProgress;
 }
 
 /**
  * Get progress summary across all games for the current user
  */
-export function getAllGamesProgress(userId?: string): Record<string, GameProgress> {
+export function getAllGamesProgress(userId?: string): AllGamesProgress {
   const gameIds = [
     'memory-match',
     'sequence-memory',
@@ -155,7 +160,7 @@ export function getAllGamesProgress(userId?: string): Record<string, GameProgres
     'rhyme-completion',
   ];
 
-  const map: Record<string, GameProgress> = {};
+  const map: AllGamesProgress = {};
   for (const id of gameIds) {
     map[id] = getGameProgress(id, userId);
   }

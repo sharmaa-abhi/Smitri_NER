@@ -164,7 +164,7 @@ export const CLOCK_QUESTIONS_BY_LEVEL: Record<DifficultyLevel, ClockQuestion[]> 
     { hours: 7, minutes: 25, timeString: '7:25 AM', label: 'Morning Park Walk & Stretch', decoys: ['7:20 AM', '7:35 AM', '8:25 AM'] },
     { hours: 11, minutes: 35, timeString: '11:35 AM', label: 'Vegetable Basket Unloading', decoys: ['11:25 AM', '11:45 AM', '12:35 PM'] },
     { hours: 3, minutes: 55, timeString: '3:55 PM', label: 'Tea Time Preparation', decoys: ['3:50 PM', '4:05 PM', '4:55 PM'] },
-    { hours: 6, minutes: 05, timeString: '6:05 PM', label: 'Sunset Lamp Glow Routine', decoys: ['6:15 PM', '5:55 PM', '7:05 PM'] },
+    { hours: 6, minutes: 5, timeString: '6:05 PM', label: 'Sunset Lamp Glow Routine', decoys: ['6:15 PM', '5:55 PM', '7:05 PM'] },
     { hours: 9, minutes: 55, timeString: '9:55 PM', label: 'Final Bedtime Routine', decoys: ['9:50 PM', '10:05 PM', '9:45 PM'] },
   ],
 };
