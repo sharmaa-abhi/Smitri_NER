@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { ShoppingBag, Check } from 'lucide-react';
-import { FinishGameStats } from '@/types/games';
-import { GROCERY_ITEMS } from '@/data/gameBanks';
+import { FinishGameStats, DifficultyLevel } from '@/types/games';
+import { GROCERY_ITEMS_BY_LEVEL, GAME_LEVEL_CONFIG } from '@/data/gameBanks';
 import { shuffleArray } from '@/lib/algorithms/shuffle';
 
 interface Props {
@@ -12,28 +12,37 @@ interface Props {
 }
 
 export default function GroceryBasketArena({ difficulty, onFinish }: Props) {
+  const currentDiff = (Math.max(1, Math.min(3, difficulty)) || 1) as DifficultyLevel;
+  const levelMeta = GAME_LEVEL_CONFIG['grocery-basket']?.[currentDiff];
+
   const [targetItems, setTargetItems] = useState<Array<{ name: string; icon: string }>>([]);
   const [options, setOptions] = useState<Array<{ name: string; icon: string; selected: boolean }>>([]);
   const [isMemorizing, setIsMemorizing] = useState(true);
-  const [countdown, setCountdown] = useState(6);
+  const [countdown, setCountdown] = useState(currentDiff === 1 ? 7 : currentDiff === 2 ? 5 : 4);
   const [mistakes, setMistakes] = useState(0);
   const [totalAttempts, setTotalAttempts] = useState(0);
 
   useEffect(() => {
-    const targetCount = difficulty === 1 ? 3 : difficulty === 2 ? 4 : 5;
-    const shuffled = shuffleArray(GROCERY_ITEMS);
+    const itemPool = GROCERY_ITEMS_BY_LEVEL[currentDiff] || GROCERY_ITEMS_BY_LEVEL[1];
+    const targetCount = currentDiff === 1 ? 3 : currentDiff === 2 ? 4 : 5;
+    const shelfCount = currentDiff === 1 ? 6 : currentDiff === 2 ? 8 : 10;
+    const initialCountdown = currentDiff === 1 ? 7 : currentDiff === 2 ? 5 : 4;
+
+    const shuffled = shuffleArray(itemPool);
     const targets = shuffled.slice(0, targetCount);
     setTargetItems(targets);
 
-    const shelfPool = shuffleArray([...targets, ...shuffled.slice(targetCount, targetCount + 3)]);
+    // Shelf items = targets + decoys from the pool
+    const decoys = shuffled.slice(targetCount, targetCount + (shelfCount - targetCount));
+    const shelfPool = shuffleArray([...targets, ...decoys]);
     setOptions(shelfPool.map((item) => ({ ...item, selected: false })));
 
     setIsMemorizing(true);
-    setCountdown(6);
+    setCountdown(initialCountdown);
     setMistakes(0);
     setTotalAttempts(0);
 
-    let count = 6;
+    let count = initialCountdown;
     const interval = setInterval(() => {
       count--;
       setCountdown(count);
@@ -44,7 +53,7 @@ export default function GroceryBasketArena({ difficulty, onFinish }: Props) {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [difficulty]);
+  }, [currentDiff]);
 
   const toggleItem = (name: string) => {
     if (isMemorizing) return;
@@ -77,54 +86,78 @@ export default function GroceryBasketArena({ difficulty, onFinish }: Props) {
   };
 
   return (
-    <div className="space-y-8 w-full max-w-2xl text-center">
+    <div className="space-y-6 w-full max-w-2xl text-center">
+      <div className="flex flex-wrap items-center justify-center gap-2">
+        <span
+          className="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider text-white"
+          style={{ backgroundColor: levelMeta?.color || '#10B981' }}
+        >
+          {levelMeta?.badge || `Level ${currentDiff}`}
+        </span>
+        <div className="inline-flex items-center gap-1.5 bg-[#E6F4F1] text-[#0B534B] border border-[#93CEC5] px-3.5 py-1 rounded-full font-bold text-xs sm:text-sm">
+          <ShoppingBag className="w-3.5 h-3.5 text-[#0B534B]" />
+          <span>
+            {isMemorizing ? `Memorize Basket: Closing in ${countdown}s` : `Find Your ${targetItems.length} Basket Items`}
+          </span>
+        </div>
+      </div>
+
       {isMemorizing ? (
         <div className="space-y-6 animate-fade-in">
-          <div className="inline-flex items-center gap-2 bg-[#E6F4F1] text-[#0B534B] border border-[#93CEC5] px-4 py-1.5 rounded-full font-bold text-sm">
-            <ShoppingBag className="w-4 h-4 text-[#0B534B]" />
-            <span>Memorize Items: Closing in {countdown}s</span>
+          <div className="space-y-1">
+            <h3 className="text-2xl sm:text-3xl font-black text-[#111615]">
+              What is in your market basket?
+            </h3>
+            <p className="text-xs sm:text-sm text-[#0B534B] font-semibold">
+              {levelMeta?.subtitle}
+            </p>
           </div>
-          <h3 className="text-2xl sm:text-3xl font-black text-[#111615]">
-            What is in your market basket?
-          </h3>
+
           <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
             {targetItems.map((item, idx) => (
               <div
                 key={idx}
-                className="bg-[#E6F4F1] border-2 border-[#93CEC5] rounded-2xl p-4 sm:p-5 flex flex-col items-center gap-2 min-w-[130px] shadow-md"
+                className="bg-[#E6F4F1] border-2 border-[#93CEC5] rounded-2xl p-4 sm:p-5 flex flex-col items-center gap-2 min-w-[120px] sm:min-w-[130px] shadow-md transform hover:scale-105 transition-transform"
               >
                 <span className="text-5xl">{item.icon}</span>
                 <span className="text-sm font-bold text-[#0B534B]">{item.name}</span>
               </div>
             ))}
           </div>
+
+          <p className="text-xs text-[#5A6A66]">
+            Take a deep breath and gently look at the items. The market shelf will appear shortly.
+          </p>
         </div>
       ) : (
         <div className="space-y-6">
-          <div className="inline-flex items-center gap-2 bg-[#E6F4F1] text-[#0B534B] border border-[#93CEC5] px-4 py-1.5 rounded-full font-bold text-sm">
-            <span>Tap all items that were in your basket</span>
+          <div className="space-y-1">
+            <h3 className="text-2xl sm:text-3xl font-black text-[#111615]">
+              Select your basket items from the shelf:
+            </h3>
+            <p className="text-xs sm:text-sm text-[#5A6A66] font-medium">
+              Tap each item you placed into your basket. Found: {options.filter(o => o.selected && targetItems.some(t => t.name === o.name)).length} of {targetItems.length}
+            </p>
           </div>
-          <h3 className="text-2xl sm:text-3xl font-black text-[#111615]">
-            Select your basket items:
-          </h3>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-2">
+
+          <div className={`grid gap-3.5 pt-2 ${options.length <= 6 ? 'grid-cols-2 sm:grid-cols-3' : 'grid-cols-2 sm:grid-cols-4 md:grid-cols-5'}`}>
             {options.map((opt, idx) => (
               <button
                 key={idx}
                 type="button"
                 onClick={() => toggleItem(opt.name)}
-                className={`p-4 rounded-2xl border-2 flex flex-col items-center gap-2 transition-all shadow-sm ${
+                className={`p-3.5 sm:p-4 rounded-2xl border-2 flex flex-col items-center gap-1.5 transition-all shadow-sm ${
                   opt.selected
-                    ? 'bg-[#ECFDF5] border-[#10B981] scale-105 shadow-md'
-                    : 'bg-white hover:bg-[#F6F8F7] border-[#D5DFDC]'
+                    ? 'bg-[#ECFDF5] border-[#10B981] scale-105 shadow-md ring-2 ring-[#A7F3D0]'
+                    : 'bg-white hover:bg-[#F6F8F7] border-[#D5DFDC] hover:scale-102'
                 }`}
               >
-                <span className="text-4xl">{opt.icon}</span>
-                <span className="text-sm font-bold text-[#111615]">{opt.name}</span>
+                <span className="text-3xl sm:text-4xl">{opt.icon}</span>
+                <span className="text-xs sm:text-sm font-bold text-[#111615] text-center leading-tight">{opt.name}</span>
                 {opt.selected && (
-                  <div className="inline-flex items-center gap-1 text-xs font-bold text-[#059669]">
-                    <Check className="w-3.5 h-3.5" />
-                    <span>Selected</span>
+                  <div className="inline-flex items-center gap-1 text-[11px] font-bold text-[#059669]">
+                    <Check className="w-3 h-3" />
+                    <span>In Basket</span>
                   </div>
                 )}
               </button>

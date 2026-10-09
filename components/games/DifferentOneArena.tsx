@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { FinishGameStats } from '@/types/games';
-import { ICONS_BANK } from '@/data/gameBanks';
+import { Eye } from 'lucide-react';
+import { FinishGameStats, DifficultyLevel } from '@/types/games';
+import { DIFFERENT_ONE_BY_LEVEL, GAME_LEVEL_CONFIG } from '@/data/gameBanks';
 
 interface Props {
   difficulty: number;
@@ -10,27 +11,34 @@ interface Props {
 }
 
 export default function DifferentOneArena({ difficulty, onFinish }: Props) {
+  const currentDiff = (Math.max(1, Math.min(3, difficulty)) || 1) as DifficultyLevel;
+  const levelMeta = GAME_LEVEL_CONFIG['different-one']?.[currentDiff];
+
   const [round, setRound] = useState(1);
   const [options, setOptions] = useState<Array<{ id: number; icon: string; isOdd: boolean }>>([]);
+  const [roundTheme, setRoundTheme] = useState<string>('');
   const [mistakes, setMistakes] = useState(0);
   const [totalAttempts, setTotalAttempts] = useState(0);
 
   useEffect(() => {
-    setupRound(difficulty, 1);
+    setupRound(currentDiff, 1);
     setMistakes(0);
     setTotalAttempts(0);
-  }, [difficulty]);
+  }, [currentDiff]);
 
-  const setupRound = (diff: number, roundNum: number) => {
+  const setupRound = (diff: DifficultyLevel, roundNum: number) => {
     setRound(roundNum);
-    const count = diff === 1 ? 4 : diff === 2 ? 6 : 8;
-    const baseIcon = ICONS_BANK[(roundNum * 2) % ICONS_BANK.length];
-    const oddIcon = ICONS_BANK[(roundNum * 2 + 1) % ICONS_BANK.length];
+    const sets = DIFFERENT_ONE_BY_LEVEL[diff] || DIFFERENT_ONE_BY_LEVEL[1];
+    const setItem = sets[(roundNum - 1) % sets.length];
+    setRoundTheme(setItem.theme);
+
+    // Level 1: 4 cards (2x2), Level 2: 6 cards (2x3), Level 3: 9 cards (3x3)
+    const count = diff === 1 ? 4 : diff === 2 ? 6 : 9;
     const oddPosition = Math.floor(Math.random() * count);
 
     const opts = Array.from({ length: count }, (_, i) => ({
       id: i,
-      icon: i === oddPosition ? oddIcon : baseIcon,
+      icon: i === oddPosition ? setItem.oddIcon : setItem.baseIcon,
       isOdd: i === oddPosition,
     }));
     setOptions(opts);
@@ -47,7 +55,7 @@ export default function DifferentOneArena({ difficulty, onFinish }: Props) {
           totalAttempts: totalAttempts + 1,
         });
       } else {
-        setupRound(difficulty, round + 1);
+        setupRound(currentDiff, round + 1);
       }
     } else {
       setMistakes((prev) => prev + 1);
@@ -56,22 +64,54 @@ export default function DifferentOneArena({ difficulty, onFinish }: Props) {
 
   return (
     <div className="space-y-6 w-full max-w-xl text-center">
-      <div className="inline-flex items-center gap-2 bg-[#E6F4F1] text-[#0B534B] border border-[#93CEC5] px-4 py-1.5 rounded-full font-bold text-base">
-        <span>Round {round} of 3</span>
+      <div className="flex flex-wrap items-center justify-center gap-2">
+        <span
+          className="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider text-white"
+          style={{ backgroundColor: levelMeta?.color || '#D97706' }}
+        >
+          {levelMeta?.badge || `Level ${currentDiff}`}
+        </span>
+        <div className="inline-flex items-center gap-1.5 bg-[#E6F4F1] text-[#0B534B] border border-[#93CEC5] px-3.5 py-1 rounded-full font-bold text-xs sm:text-sm">
+          <Eye className="w-3.5 h-3.5 text-[#0B534B]" />
+          <span>Visual Discrimination: Round {round} of 3</span>
+        </div>
       </div>
 
-      <h3 className="text-2xl sm:text-3xl font-black text-[#111615]">
-        Which one is different?
-      </h3>
+      <div className="space-y-1">
+        <h3 className="text-2xl sm:text-3xl font-black text-[#111615]">
+          Which one is different?
+        </h3>
+        <p className="text-xs sm:text-sm text-[#0B534B] font-semibold">
+          Challenge: <span className="underline decoration-[#D97706]">{roundTheme}</span>
+        </p>
+        <p className="text-xs text-[#5A6A66]">
+          {levelMeta?.subtitle}
+        </p>
+      </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-4">
+      {/* Dynamic Grid: 2x2 for Level 1, 2x3 for Level 2, 3x3 for Level 3 */}
+      <div
+        className={`gap-4 pt-2 mx-auto grid ${
+          currentDiff === 1
+            ? 'grid-cols-2 max-w-xs'
+            : currentDiff === 2
+            ? 'grid-cols-3 max-w-md'
+            : 'grid-cols-3 max-w-lg'
+        }`}
+      >
         {options.map((opt) => (
           <button
             key={opt.id}
             type="button"
             onClick={() => handleSelect(opt.isOdd)}
-            className="h-32 sm:h-36 bg-white hover:bg-[#E6F4F1] border-2 border-[#D5DFDC] hover:border-[#0B534B] rounded-3xl text-5xl flex items-center justify-center shadow-md hover:scale-105 active:scale-95 transition-all"
-            aria-label="Selection option"
+            className={`bg-white hover:bg-[#E6F4F1] border-2 border-[#D5DFDC] hover:border-[#0B534B] rounded-2xl flex items-center justify-center shadow-md hover:scale-105 active:scale-95 transition-all ${
+              currentDiff === 1
+                ? 'h-32 sm:h-36 text-5xl sm:text-6xl'
+                : currentDiff === 2
+                ? 'h-24 sm:h-28 text-4xl sm:text-5xl'
+                : 'h-20 sm:h-24 text-3xl sm:text-4xl'
+            }`}
+            aria-label="Selection card"
           >
             {opt.icon}
           </button>
