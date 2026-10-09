@@ -348,16 +348,16 @@ export default function RegionalCareMap() {
           </div>
 
           {/* Quick Clickable State Chips */}
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-1.5 pt-3 border-t border-[#127267]/40">
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 pt-3 border-t border-[#127267]/40">
             {CARE_HUBS.map((hub) => (
               <button
                 key={hub.id}
                 type="button"
                 onClick={() => handleSelectHub(hub)}
-                className={`px-2.5 py-1 rounded-full text-[11px] font-bold transition-all ${
+                className={`min-h-[32px] px-2.5 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-bold transition-all cursor-pointer ${
                   activeHub.id === hub.id
                     ? "bg-[#10B981] text-white shadow-md scale-105"
-                    : "bg-white/10 text-[#D5DFDC] hover:bg-white/20"
+                    : "bg-white/10 text-[#D5DFDC] hover:bg-white/20 active:scale-95"
                 }`}
               >
                 {hub.state}

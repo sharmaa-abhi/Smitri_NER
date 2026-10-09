@@ -44,9 +44,9 @@ export default function Navbar() {
   ];
 
   return (
-    <header className="sticky top-3 sm:top-4 z-50 px-3 sm:px-6 lg:px-8 w-full max-w-7xl mx-auto mb-4 sm:mb-6 pointer-events-none transition-all duration-300 animate-in fade-in slide-in-from-top-2 motion-reduce:animate-none">
+    <header className="sticky top-3 sm:top-4 z-50 px-3 sm:px-6 lg:px-8 xl:px-10 w-full max-w-[1536px] 2xl:max-w-[1720px] mx-auto mb-4 sm:mb-6 pointer-events-none transition-all duration-300 animate-in fade-in slide-in-from-top-2 motion-reduce:animate-none">
       <div className="relative">
-        {/* Subtle Gen-Z Ambient Gradient Aura & Micro-decorations behind Floating Navbar */}
+        {/* Subtle Ambient Gradient Aura behind Floating Navbar */}
         <div 
           className="absolute -inset-x-4 -top-3 h-20 -z-10 pointer-events-none overflow-hidden blur-2xl opacity-65 transition-opacity"
           aria-hidden="true"
@@ -58,12 +58,12 @@ export default function Navbar() {
             <div className="absolute left-1/4 top-0 w-72 h-14 rounded-full bg-[#10B981]/18" />
             {/* Very subtle cyan glow in center */}
             <div className="absolute left-1/2 -translate-x-1/2 top-1 w-64 h-12 rounded-full bg-[#67E8F9]/15" />
-            {/* Small creative lavender/pink accent on right (5% creative accent) */}
+            {/* Small creative lavender/pink accent on right */}
             <div className="absolute right-6 top-1 w-44 h-12 rounded-full bg-gradient-to-r from-[#C084FC]/12 to-[#F472B6]/10" />
           </div>
         </div>
 
-        {/* Micro-sparkle decorative accents floating behind capsules */}
+        {/* Micro-sparkle decorative accents floating behind navbar */}
         <svg 
           className="absolute -top-1.5 right-16 w-3.5 h-3.5 text-[#10B981]/50 animate-pulse pointer-events-none -z-10 hidden sm:block" 
           viewBox="0 0 24 24" 
@@ -81,13 +81,13 @@ export default function Navbar() {
           <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
         </svg>
 
-        {/* DESKTOP ASYMMETRIC FLOATING 3-ISLAND NAVBAR (>= lg: 1024px) */}
-        <div className="hidden lg:flex items-center justify-between gap-3 xl:gap-4 pointer-events-auto">
+        {/* DESKTOP UNIFIED PREMIUM GLASSMORPHISM NAVBAR (>= lg: 1024px) */}
+        <div className="hidden lg:flex items-center justify-between w-full px-4 xl:px-6 py-2.5 rounded-full bg-white/92 backdrop-blur-2xl border border-white/80 shadow-[0_4px_24px_-2px_rgba(11,83,75,0.08),0_1px_3px_rgba(0,0,0,0.02)] pointer-events-auto transition-all">
           
-          {/* Island 1: Logo Floating Capsule */}
+          {/* Brand Logo & Tag */}
           <Link 
             href="/" 
-            className="flex items-center gap-2.5 px-3.5 py-2 xl:px-4 xl:py-2.5 rounded-[22px] bg-white/90 backdrop-blur-xl border border-white/80 shadow-[0_4px_20px_-2px_rgba(11,83,75,0.08),0_1px_3px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_25px_-4px_rgba(16,185,129,0.20)] hover:-translate-y-0.5 transition-all duration-200 group flex-shrink-0 cursor-pointer"
+            className="flex items-center gap-2.5 group flex-shrink-0 cursor-pointer hover:opacity-95 transition-opacity"
             aria-label="Smitri_NER Home"
           >
             <div className="w-8 h-8 xl:w-9 xl:h-9 rounded-xl bg-gradient-to-br from-[#0B534B] via-[#0E685E] to-[#10B981] text-white flex items-center justify-center shadow-xs group-hover:scale-105 group-hover:rotate-1 transition-transform">
@@ -103,9 +103,9 @@ export default function Navbar() {
             </div>
           </Link>
 
-          {/* Island 2: Navigation Center Floating Capsule */}
+          {/* Center Navigation Links */}
           <nav 
-            className="flex items-center gap-1 xl:gap-1.5 px-2.5 py-1.5 xl:px-3.5 xl:py-2 rounded-full bg-white/85 backdrop-blur-xl border border-white/80 shadow-[0_4px_20px_-2px_rgba(11,83,75,0.07),0_1px_3px_rgba(0,0,0,0.02)]"
+            className="flex items-center gap-1 xl:gap-2 px-2 py-1 rounded-full bg-[#F6F8F7]/80 border border-[#E6ECEB]"
             aria-label="Main Navigation"
           >
             {mainNav.map((item) => {
@@ -114,54 +114,40 @@ export default function Navbar() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`relative px-2.5 xl:px-3.5 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all duration-200 hover:-translate-y-0.5 cursor-pointer ${
+                  className={`relative px-3 xl:px-3.5 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all duration-200 cursor-pointer ${
                     isActive
                       ? "bg-gradient-to-r from-[#0B534B] to-[#0E685E] text-white shadow-[0_2px_8px_rgba(11,83,75,0.25)] font-bold"
-                      : "text-[#5A6A66] hover:text-[#0B534B] hover:bg-[#E6F4F1]/80 hover:shadow-2xs"
+                      : "text-[#5A6A66] hover:text-[#0B534B] hover:bg-white hover:shadow-2xs"
                   }`}
                   aria-current={isActive ? "page" : undefined}
                 >
                   <span>{item.name}</span>
-                  {isActive && (
-                    <span 
-                      className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#10B981] shadow-[0_0_6px_rgba(16,185,129,0.8)]" 
-                      aria-hidden="true"
-                    />
-                  )}
                 </Link>
               );
             })}
           </nav>
 
-          {/* Island 3: Right Actions Floating Cluster */}
-          <div className="flex items-center gap-2 xl:gap-2.5 p-1.5 xl:p-2 rounded-[22px] xl:rounded-full bg-white/85 backdrop-blur-xl border border-white/80 shadow-[0_4px_20px_-2px_rgba(11,83,75,0.08),0_1px_3px_rgba(0,0,0,0.02)] flex-shrink-0">
-            
-            {/* Language Selector: Compact translucent floating pill */}
+          {/* Right Actions Cluster */}
+          <div className="flex items-center gap-2 xl:gap-2.5 flex-shrink-0">
+            {/* Language Selector */}
             <LanguageSelector buttonVariant="translucent" />
 
-            {/* Dynamic Auth Action Buttons */}
+            {/* Auth Action Buttons */}
             {isLoaded && isLoggedIn ? (
               <div className="flex items-center gap-1.5 xl:gap-2">
-                {/* Primary CTA: Dashboard → */}
                 <Link
                   href="/dashboard"
-                  className="relative group inline-flex items-center gap-1.5 px-4 xl:px-5 py-2 rounded-full text-xs xl:text-sm font-black text-white bg-gradient-to-r from-[#0B534B] via-[#0E685E] to-[#10B981] shadow-[0_4px_14px_rgba(11,83,75,0.28)] hover:shadow-[0_6px_22px_rgba(11,83,75,0.38)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 overflow-hidden min-h-[40px] flex-shrink-0 cursor-pointer"
+                  className="relative group inline-flex items-center gap-1.5 px-4 xl:px-5 py-2 rounded-full text-xs xl:text-sm font-black text-white bg-gradient-to-r from-[#0B534B] via-[#0E685E] to-[#10B981] shadow-[0_4px_14px_rgba(11,83,75,0.28)] hover:shadow-[0_6px_22px_rgba(11,83,75,0.38)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 overflow-hidden min-h-[38px] flex-shrink-0 cursor-pointer"
                   aria-label={t("nav_dashboard") || "Go to Dashboard"}
                 >
-                  {/* Subtle shimmer gradient highlight */}
-                  <span 
-                    className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out pointer-events-none" 
-                    aria-hidden="true"
-                  />
                   <span className="relative z-10">{t("nav_dashboard") || "Dashboard"}</span>
                   <span className="relative z-10 transition-transform duration-200 group-hover:translate-x-0.5">→</span>
                 </Link>
 
-                {/* Secondary Action: Log Out */}
                 <button
                   type="button"
                   onClick={logout}
-                  className="group inline-flex items-center justify-center gap-1 px-3 py-1.5 rounded-full text-xs font-bold text-[#5A6A66] hover:text-red-700 bg-white/70 hover:bg-red-50/80 border border-[#D5DFDC] hover:border-red-200 shadow-2xs transition-all duration-200 hover:-translate-y-0.5 min-h-[40px] cursor-pointer flex-shrink-0"
+                  className="group inline-flex items-center justify-center gap-1 px-3 py-1.5 rounded-full text-xs font-bold text-[#5A6A66] hover:text-red-700 bg-[#F6F8F7] hover:bg-red-50/80 border border-[#D5DFDC] hover:border-red-200 shadow-2xs transition-all duration-200 min-h-[38px] cursor-pointer flex-shrink-0"
                   title={t("nav_logout") || "Log Out"}
                   aria-label={t("nav_logout") || "Log Out"}
                 >
@@ -171,26 +157,20 @@ export default function Navbar() {
               </div>
             ) : (
               <div className="flex items-center gap-1.5 xl:gap-2">
-                {/* Secondary Action: Log In */}
                 <Link
                   href="/login"
-                  className="inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold text-[#0B534B] hover:text-[#083D37] bg-white/70 hover:bg-[#E6F4F1] border border-[#0B534B]/30 hover:border-[#0B534B]/60 shadow-2xs transition-all duration-200 hover:-translate-y-0.5 min-h-[40px] cursor-pointer flex-shrink-0"
+                  className="inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold text-[#0B534B] hover:text-[#083D37] bg-[#F6F8F7] hover:bg-[#E6F4F1] border border-[#0B534B]/30 hover:border-[#0B534B]/60 shadow-2xs transition-all duration-200 min-h-[38px] cursor-pointer flex-shrink-0"
                   aria-label={t("nav_login") || "Log In to Account"}
                 >
                   <LogIn className="w-3.5 h-3.5 text-[#0B534B]" />
                   <span>{t("nav_login") || "Log In"}</span>
                 </Link>
 
-                {/* Primary CTA: Dashboard → */}
                 <Link
                   href="/dashboard"
-                  className="relative group inline-flex items-center gap-1.5 px-4 xl:px-5 py-2 rounded-full text-xs xl:text-sm font-black text-white bg-gradient-to-r from-[#0B534B] via-[#0E685E] to-[#10B981] shadow-[0_4px_14px_rgba(11,83,75,0.28)] hover:shadow-[0_6px_22px_rgba(11,83,75,0.38)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 overflow-hidden min-h-[40px] flex-shrink-0 cursor-pointer"
+                  className="relative group inline-flex items-center gap-1.5 px-4 xl:px-5 py-2 rounded-full text-xs xl:text-sm font-black text-white bg-gradient-to-r from-[#0B534B] via-[#0E685E] to-[#10B981] shadow-[0_4px_14px_rgba(11,83,75,0.28)] hover:shadow-[0_6px_22px_rgba(11,83,75,0.38)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 overflow-hidden min-h-[38px] flex-shrink-0 cursor-pointer"
                   aria-label={t("nav_dashboard") || "Go to Dashboard"}
                 >
-                  <span 
-                    className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out pointer-events-none" 
-                    aria-hidden="true"
-                  />
                   <span className="relative z-10">{t("nav_dashboard") || "Dashboard"}</span>
                   <span className="relative z-10 transition-transform duration-200 group-hover:translate-x-0.5">→</span>
                 </Link>
