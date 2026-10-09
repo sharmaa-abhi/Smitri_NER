@@ -12,10 +12,10 @@ interface Props {
 }
 
 export default function NumberTrailArena({ difficulty, onFinish }: Props) {
-  const currentDiff = (Math.max(1, Math.min(3, difficulty)) || 1) as DifficultyLevel;
+  const currentDiff = (Math.max(1, Math.min(5, difficulty)) || 1) as DifficultyLevel;
   const levelMeta = GAME_LEVEL_CONFIG['number-trail']?.[currentDiff];
 
-  const totalCount = currentDiff === 1 ? 5 : currentDiff === 2 ? 8 : 12;
+  const totalCount = currentDiff === 1 ? 4 : currentDiff === 2 ? 6 : currentDiff === 3 ? 8 : currentDiff === 4 ? 10 : 12;
 
   const [trailNumbers, setTrailNumbers] = useState<Array<{ num: number; x: number; y: number; tapped: boolean }>>([]);
   const [nextExpectedNumber, setNextExpectedNumber] = useState(1);
@@ -29,7 +29,7 @@ export default function NumberTrailArena({ difficulty, onFinish }: Props) {
     setTotalAttempts(0);
 
     const positions: Array<{ x: number; y: number }> = [];
-    const cols = currentDiff === 3 ? 4 : 3;
+    const cols = currentDiff >= 4 ? 4 : 3;
     const rows = Math.ceil(totalCount / cols);
 
     for (let i = 0; i < totalCount; i++) {
@@ -129,9 +129,9 @@ export default function NumberTrailArena({ difficulty, onFinish }: Props) {
                 transform: 'translate(-50%, -50%)',
               }}
               className={`absolute rounded-full font-black shadow-lg border-2 transition-all flex items-center justify-center ${
-                currentDiff === 3
+                currentDiff >= 4
                   ? 'w-11 h-11 sm:w-13 sm:h-13 text-base sm:text-lg'
-                  : currentDiff === 2
+                  : currentDiff >= 2
                   ? 'w-13 h-13 sm:w-15 sm:h-15 text-lg sm:text-xl'
                   : 'w-14 h-14 sm:w-16 sm:h-16 text-xl sm:text-2xl'
               } ${

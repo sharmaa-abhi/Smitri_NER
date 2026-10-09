@@ -9,7 +9,8 @@ export type GameId =
   | 'clock-reading'
   | 'rhyme-completion';
 
-export type DifficultyLevel = 1 | 2 | 3;
+export type DifficultyLevel = 1 | 2 | 3 | 4 | 5;
+export type GameLevel = 1 | 2 | 3 | 4 | 5;
 
 export interface GameMetadata {
   id: GameId;
@@ -28,7 +29,7 @@ export interface FinishGameStats {
 
 export interface LevelDescription {
   level: DifficultyLevel;
-  label: 'Easy' | 'Medium' | 'Advanced';
+  label?: string;
   summary: string;
   features: string[];
 }

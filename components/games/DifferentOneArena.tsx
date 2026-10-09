@@ -11,7 +11,7 @@ interface Props {
 }
 
 export default function DifferentOneArena({ difficulty, onFinish }: Props) {
-  const currentDiff = (Math.max(1, Math.min(3, difficulty)) || 1) as DifficultyLevel;
+  const currentDiff = (Math.max(1, Math.min(5, difficulty)) || 1) as DifficultyLevel;
   const levelMeta = GAME_LEVEL_CONFIG['different-one']?.[currentDiff];
 
   const [round, setRound] = useState(1);
@@ -32,8 +32,8 @@ export default function DifferentOneArena({ difficulty, onFinish }: Props) {
     const setItem = sets[(roundNum - 1) % sets.length];
     setRoundTheme(setItem.theme);
 
-    // Level 1: 4 cards (2x2), Level 2: 6 cards (2x3), Level 3: 9 cards (3x3)
-    const count = diff === 1 ? 4 : diff === 2 ? 6 : 9;
+    // Level 1: 4 cards (2x2), Level 2-3: 6 cards (2x3), Level 4-5: 9 cards (3x3)
+    const count = diff === 1 ? 4 : diff <= 3 ? 6 : 9;
     const oddPosition = Math.floor(Math.random() * count);
 
     const opts = Array.from({ length: count }, (_, i) => ({
@@ -89,12 +89,12 @@ export default function DifferentOneArena({ difficulty, onFinish }: Props) {
         </p>
       </div>
 
-      {/* Dynamic Grid: 2x2 for Level 1, 2x3 for Level 2, 3x3 for Level 3 */}
+      {/* Dynamic Grid: 2x2 for 4 cards, 2x3 for 6 cards, 3x3 for 9 cards */}
       <div
         className={`gap-4 pt-2 mx-auto grid ${
-          currentDiff === 1
+          options.length <= 4
             ? 'grid-cols-2 max-w-xs'
-            : currentDiff === 2
+            : options.length <= 6
             ? 'grid-cols-3 max-w-md'
             : 'grid-cols-3 max-w-lg'
         }`}
@@ -105,9 +105,9 @@ export default function DifferentOneArena({ difficulty, onFinish }: Props) {
             type="button"
             onClick={() => handleSelect(opt.isOdd)}
             className={`bg-white hover:bg-[#E6F4F1] border-2 border-[#D5DFDC] hover:border-[#0B534B] rounded-2xl flex items-center justify-center shadow-md hover:scale-105 active:scale-95 transition-all ${
-              currentDiff === 1
+              options.length <= 4
                 ? 'h-32 sm:h-36 text-5xl sm:text-6xl'
-                : currentDiff === 2
+                : options.length <= 6
                 ? 'h-24 sm:h-28 text-4xl sm:text-5xl'
                 : 'h-20 sm:h-24 text-3xl sm:text-4xl'
             }`}

@@ -152,7 +152,7 @@ export default function ResultsPage() {
               className="flex-1 py-3.5 px-5 bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white rounded-xl font-bold text-sm sm:text-base shadow-sm hover:shadow transition-all flex items-center justify-center gap-2"
             >
               <Sparkles className="w-4 h-4 text-[#F59E0B]" />
-              <span>Play Level {evaluation.recommendedDifficulty} ({evaluation.recommendedDifficulty === 1 ? 'Easy' : evaluation.recommendedDifficulty === 2 ? 'Medium' : 'Advanced'})</span>
+              <span>Play Level {evaluation.recommendedDifficulty || 1}</span>
             </Link>
           )}
 
