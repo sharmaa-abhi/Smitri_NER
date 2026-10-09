@@ -7,29 +7,34 @@ import {
   Sparkles, 
   CheckCircle2, 
   Clock, 
-  AlertCircle, 
   TrendingUp, 
   Droplet, 
   Pill, 
   ShieldAlert,
-  ArrowRight,
-  Heart,
-  Stethoscope,
-  PhoneCall,
-  Calendar,
-  Award,
-  Zap,
-  Check,
-  Plus,
-  Minus,
-  MapPin,
-  Smile,
-  Activity
+  ArrowRight, 
+  PhoneCall, 
+  Calendar, 
+  Award, 
+  Zap, 
+  Check, 
+  Plus, 
+  Minus, 
+  MapPin, 
+  Activity,
+  Brain,
+  Eye,
+  ShoppingBag,
+  Volume2,
+  Trophy,
+  Flame,
+  Layers,
+  RotateCcw
 } from 'lucide-react';
 import VoiceButton from '@/components/VoiceButton';
 import ScrollReveal from '@/components/ScrollReveal';
 import { useLanguage } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
+import { UserExperienceProfile } from '@/lib/experienceEngine';
 import {
   ResponsiveContainer,
   LineChart,
@@ -47,7 +52,6 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [hydrationCount, setHydrationCount] = useState<number>(4);
   const [moodStatus, setMoodStatus] = useState<'great' | 'calm' | 'tired'>('great');
-  const [activeTab, setActiveTab] = useState<'routine' | 'games'>('routine');
 
   useEffect(() => {
     fetch('/api/dashboard')
@@ -62,10 +66,17 @@ export default function DashboardPage() {
       .catch(() => setLoading(false));
   }, []);
 
+  const experienceProfile: UserExperienceProfile | undefined = data?.experienceProfile;
+  const recommendedQuest = experienceProfile?.recommendedQuest;
+
   const handleVoiceCommand = (transcript: string) => {
     const text = transcript.toLowerCase();
     if (text.includes('game') || text.includes('play') || text.includes('start') || text.includes('khel')) {
-      window.location.href = '/games/grocery-basket';
+      if (recommendedQuest) {
+        window.location.href = `/games/${recommendedQuest.gameId}?level=${recommendedQuest.level}`;
+      } else {
+        window.location.href = '/games/grocery-basket';
+      }
     } else if (text.includes('reminder') || text.includes('medicine') || text.includes('dawai') || text.includes('water')) {
       window.location.href = '/reminders';
     } else if (text.includes('emergency') || text.includes('help') || text.includes('doctor') || text.includes('rahul')) {
@@ -109,17 +120,17 @@ export default function DashboardPage() {
     return (
       <div className="py-24 text-center space-y-4">
         <div className="w-16 h-16 border-4 border-[#0B534B] border-t-transparent rounded-full animate-spin mx-auto" />
-        <p className="text-xl sm:text-2xl font-bold text-[#5A6A66]">Loading your wellness dashboard...</p>
+        <p className="text-xl sm:text-2xl font-bold text-[#5A6A66]">Preparing your personalized wellness dashboard...</p>
       </div>
     );
   }
 
   const user = data?.user || authUser || { 
-    name: 'Kamla Devi', 
-    age: 68, 
+    name: 'Sunita Devi', 
+    age: 72, 
     city: 'Guwahati, Assam',
-    emergencyPhone: '+91 98765 43210',
-    emergencyName: 'Rahul Sharma (Son / Caregiver)',
+    emergencyPhone: '+91 98765 11223',
+    emergencyName: 'Amit Sharma (Son / Caregiver)',
     doctorName: 'Dr. Manab Barua',
     doctorPhone: '+91 94350 12345',
     dailyHydrationTarget: 6,
@@ -128,12 +139,11 @@ export default function DashboardPage() {
   const gameSessions = data?.gameSessions || [];
   const reminders = data?.reminders || [];
   
-  // Calculate today's cognitive score and metrics
-  const latestSession = gameSessions[gameSessions.length - 1];
-  const cognitiveScore = latestSession ? latestSession.score : 86;
-  const avgAccuracy = Math.round(
-    gameSessions.reduce((acc: number, s: any) => acc + (s.accuracy || 85), 0) / (gameSessions.length || 1)
-  );
+  // Real metrics derived from experienceProfile
+  const cognitiveScore = experienceProfile ? experienceProfile.overallScore : 86;
+  const avgAccuracy = experienceProfile ? experienceProfile.overallAccuracy : 88;
+  const avgResponseTime = experienceProfile ? experienceProfile.averageResponseTimeSec : 17.5;
+  const highestLevel = experienceProfile ? experienceProfile.highestLevelPlayed : 1;
 
   const completedReminders = reminders.filter((r: any) => r.isCompleted).length;
   const totalReminders = reminders.length || 6;
@@ -150,7 +160,8 @@ export default function DashboardPage() {
     scenario: s.realWorldScenario || s.gameTitle
   }));
 
-  const greetingInstruction = `Namaste ${user.name}. You are doing wonderfully today in ${user.city || 'Guwahati'}. You have completed ${completedReminders} of ${totalReminders} daily routines, and your cognitive wellness score is ${cognitiveScore} out of 100. Your next reminder is: ${nextReminder ? nextReminder.title : 'Take evening rest'}. Would you like to play today's Grocery Basket recall challenge?`;
+  const greetingInstruction = experienceProfile?.adaptiveVoiceGreeting || 
+    `Namaste ${user.name}. You are doing wonderfully today in ${user.city || 'Guwahati'}. You have completed ${completedReminders} of ${totalReminders} daily routines, and your cognitive wellness score is ${cognitiveScore} out of 100.`;
 
   return (
     <div className="space-y-8 pb-16">
@@ -165,7 +176,7 @@ export default function DashboardPage() {
               </h1>
               <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-[#ECFDF5] text-[#065F46] border border-[#10B981]/30 flex items-center gap-1">
                 <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse"></span>
-                {t("feature_caregiver_title") || "Active Caregiver"}: Rahul
+                <span>Active Caregiver: {user.emergencyName?.split(' ')[0] || 'Rahul'}</span>
               </span>
             </div>
             
@@ -196,61 +207,85 @@ export default function DashboardPage() {
             <a
               href={`tel:${user.emergencyPhone || '+919876543210'}`}
               className="inline-flex items-center gap-2 bg-[#0B534B] hover:bg-[#08433C] text-white px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow-sm transition-all"
-              title="Call Caregiver Rahul"
+              title="Call Primary Caregiver"
             >
               <PhoneCall className="w-4 h-4" />
-              <span>{t("emergency_call_caregiver") || "Call Rahul"}</span>
+              <span>Call Caregiver</span>
             </a>
           </div>
         </div>
       </ScrollReveal>
 
-      {/* Hero Banner: Real-World Routine & Daily Cognitive Quest Integration */}
+      {/* Hero Banner: Dynamically Tailored based on User's Game Experience */}
       <ScrollReveal direction="up" delay={80}>
         <div className="bg-gradient-to-br from-[#042420] via-[#0B534B] to-[#042420] rounded-3xl p-6 sm:p-8 text-white shadow-xl border border-[#10B981]/30 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-96 h-96 bg-[#10B981]/15 rounded-full blur-3xl pointer-events-none"></div>
 
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative z-10">
             <div className="space-y-3 max-w-2xl">
-              <div className="inline-flex items-center gap-2 bg-[#10B981]/20 border border-[#10B981]/40 px-3.5 py-1.5 rounded-full text-xs font-bold text-[#ECFDF5]">
-                <Sparkles className="w-4 h-4 text-[#10B981]" />
-                <span>Today's Real-World Exercise • Episode 4</span>
+              <div className="flex flex-wrap items-center gap-2">
+                <div className="inline-flex items-center gap-1.5 bg-[#10B981]/25 border border-[#10B981]/50 px-3 py-1 rounded-full text-xs font-black text-[#A7F3D0]">
+                  <Sparkles className="w-3.5 h-3.5 text-[#F59E0B]" />
+                  <span>Personalized For Your Experience</span>
+                </div>
+                {recommendedQuest && (
+                  <span className="px-2.5 py-0.5 rounded-full text-xs font-black uppercase tracking-wider bg-white/20 text-white border border-white/30">
+                    {recommendedQuest.levelBadge}
+                  </span>
+                )}
               </div>
+
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-tight text-white">
-                Grocery Basket: Weekly Vegetable Bazaar Recall
+                {recommendedQuest ? recommendedQuest.gameTitle : 'Cognitive Quest of the Day'}
               </h2>
+
               <p className="text-sm sm:text-base text-[#D5DFDC] font-normal leading-relaxed">
-                A real-life 2-minute memory puzzle based on remembering your vegetable and pantry shopping list for today's lunch. Proven to stimulate episodic recall and everyday confidence.
+                {recommendedQuest 
+                  ? recommendedQuest.reason 
+                  : 'Handcrafted daily memory exercises designed for real-world elder routines.'}
               </p>
 
-              {/* Quick tags for real-world relevance */}
+              {/* Dynamic Badges reflecting recommended level & real scenario */}
               <div className="flex flex-wrap gap-2 pt-1 text-xs">
-                <span className="bg-white/10 backdrop-blur-sm px-3 py-1 rounded-lg border border-white/10 text-white font-medium flex items-center gap-1.5">
-                  <Check className="w-3.5 h-3.5 text-[#10B981]" /> Real-life Shopping
+                <span className="bg-white/10 backdrop-blur-sm px-3 py-1 rounded-lg border border-white/15 text-white font-medium flex items-center gap-1.5">
+                  <Check className="w-3.5 h-3.5 text-[#10B981]" />
+                  <span>{recommendedQuest?.realWorldScenario || 'Everyday Routine'}</span>
                 </span>
-                <span className="bg-white/10 backdrop-blur-sm px-3 py-1 rounded-lg border border-white/10 text-white font-medium flex items-center gap-1.5">
-                  <Clock className="w-3.5 h-3.5 text-[#FCD34D]" /> 2 Minutes Only
+                <span className="bg-white/10 backdrop-blur-sm px-3 py-1 rounded-lg border border-white/15 text-white font-medium flex items-center gap-1.5">
+                  <Clock className="w-3.5 h-3.5 text-[#FCD34D]" />
+                  <span>{recommendedQuest?.estimatedTimeMin || 2} Minutes • Calm Pace</span>
                 </span>
-                <span className="bg-white/10 backdrop-blur-sm px-3 py-1 rounded-lg border border-white/10 text-white font-medium flex items-center gap-1.5">
-                  <Award className="w-3.5 h-3.5 text-[#10B981]" /> Level 1 (Gentle Pace)
+                <span className="bg-white/10 backdrop-blur-sm px-3 py-1 rounded-lg border border-white/15 text-white font-medium flex items-center gap-1.5">
+                  <Award className="w-3.5 h-3.5 text-[#10B981]" />
+                  <span>{recommendedQuest?.levelSubtitle || 'Adaptive Level'}</span>
                 </span>
               </div>
             </div>
 
             <div className="flex flex-col sm:flex-row lg:flex-col gap-3 w-full lg:w-auto flex-shrink-0">
-              <Link
-                href="/games/grocery-basket"
-                className="inline-flex items-center justify-center gap-3 bg-[#D97706] hover:bg-[#B45309] text-white px-7 py-4 rounded-2xl font-black text-base shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all border border-[#D97706]/40 text-center"
-              >
-                <Play className="w-5 h-5 fill-white" />
-                <span>Start Bazaar Challenge</span>
-              </Link>
+              {recommendedQuest ? (
+                <Link
+                  href={`/games/${recommendedQuest.gameId}?level=${recommendedQuest.level}`}
+                  className="inline-flex items-center justify-center gap-3 bg-[#D97706] hover:bg-[#B45309] text-white px-7 py-4 rounded-2xl font-black text-base shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all border border-[#D97706]/40 text-center"
+                >
+                  <Play className="w-5 h-5 fill-white" />
+                  <span>Start Recommended Quest</span>
+                </Link>
+              ) : (
+                <Link
+                  href="/games/grocery-basket"
+                  className="inline-flex items-center justify-center gap-3 bg-[#D97706] hover:bg-[#B45309] text-white px-7 py-4 rounded-2xl font-black text-base shadow-lg hover:scale-102 transition-all text-center"
+                >
+                  <Play className="w-5 h-5 fill-white" />
+                  <span>Start Bazaar Challenge</span>
+                </Link>
+              )}
 
               <Link
                 href="/games"
                 className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white px-5 py-3 rounded-2xl font-bold text-sm border border-white/20 transition-all text-center"
               >
-                <span>View All 9 Real-Life Games</span>
+                <span>Browse All 9 Games & Levels</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -277,11 +312,11 @@ export default function DashboardPage() {
                 <span className="text-sm font-bold text-[#5A6A66]">/ 100</span>
               </div>
               <p className="text-xs font-semibold text-[#0B534B] bg-[#E6F4F1] px-2.5 py-1 rounded-md border border-[#0B534B]/20 inline-block mt-2">
-                Stable • Healthy Focus
+                Level {highestLevel} Active • {avgAccuracy}% Acc
               </p>
             </div>
             <span className="text-[11px] text-[#5A6A66]">
-              Avg Recall Speed: <strong>17.5s</strong>
+              Avg Recall Speed: <strong>{avgResponseTime}s</strong>
             </span>
           </div>
         </ScrollReveal>
@@ -333,7 +368,7 @@ export default function DashboardPage() {
                 <span className="text-sm font-bold text-[#5A6A66]">/ {user.dailyHydrationTarget || 6} Glasses</span>
               </div>
               <p className="text-[11px] text-[#5A6A66] font-medium mt-1">
-                Warm water & coconut water
+                Warm water & herbal chai
               </p>
             </div>
 
@@ -397,7 +432,7 @@ export default function DashboardPage() {
       {/* Main 2-Column Section: Real-World Routine Checklist + 7-Day Cognitive Analytics */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
-        {/* Left Column: Real-World Daily Timeline (Kamla Devi's Routine) - 7 cols */}
+        {/* Left Column: Real-World Daily Timeline - 7 cols */}
         <div className="lg:col-span-7 space-y-6">
           <ScrollReveal direction="left" delay={150}>
             <div className="bg-white rounded-3xl p-6 sm:p-7 border border-[#D5DFDC] shadow-sm space-y-5">
@@ -499,7 +534,7 @@ export default function DashboardPage() {
               <div className="bg-[#F6F8F7] rounded-2xl p-4 border border-[#D5DFDC] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                 <div className="space-y-0.5">
                   <span className="text-xs font-bold text-[#111615] block">Elder Morning Feeling / Mood:</span>
-                  <span className="text-xs text-[#5A6A66]">Reported to caregiver Rahul daily</span>
+                  <span className="text-xs text-[#5A6A66]">Shared with caregiver daily</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <button
@@ -541,7 +576,7 @@ export default function DashboardPage() {
           </ScrollReveal>
         </div>
 
-        {/* Right Column: 7-Day Cognitive Trajectory & Game Dashboard Mini-Analytics - 5 cols */}
+        {/* Right Column: 7-Day Cognitive Trajectory & Dynamic Domain Abilities - 5 cols */}
         <div className="lg:col-span-5 space-y-6">
           <ScrollReveal direction="right" delay={180}>
             <div className="bg-white rounded-3xl p-6 sm:p-7 border border-[#D5DFDC] shadow-sm space-y-5">
@@ -597,42 +632,78 @@ export default function DashboardPage() {
                 </ResponsiveContainer>
               </div>
 
-              {/* Game Domain Performance Breakdown */}
+              {/* Dynamic Everyday Mental Abilities Breakdown (Real Domain Data from Game History) */}
               <div className="space-y-3 pt-2">
-                <span className="text-xs font-bold text-[#111615] uppercase tracking-wider block">
-                  Everyday Mental Abilities
-                </span>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-[#111615] uppercase tracking-wider block">
+                    Everyday Abilities by Experience
+                  </span>
+                  {experienceProfile?.strongestDomain && (
+                    <span className="text-[10px] font-black uppercase text-[#0B534B] bg-[#E6F4F1] px-2 py-0.5 rounded-full border border-[#0B534B]/20 flex items-center gap-1">
+                      <Trophy className="w-3 h-3 text-[#D97706]" />
+                      <span>Top: {experienceProfile.strongestDomain.title.split(' ')[0]}</span>
+                    </span>
+                  )}
+                </div>
 
                 <div className="space-y-2.5">
-                  <div className="p-3 rounded-xl bg-[#E6F4F1]/60 border border-[#0B534B]/15 flex items-center justify-between">
-                    <div>
-                      <span className="text-xs font-bold text-[#111615] block">Short-Term Memory Recall</span>
-                      <span className="text-[11px] text-[#5A6A66]">Market items & medicine strips</span>
-                    </div>
-                    <span className="text-xs font-black text-[#0B534B] bg-white px-2 py-1 rounded-md border border-[#0B534B]/20">
-                      90% Accuracy
-                    </span>
-                  </div>
+                  {experienceProfile?.domainMetrics ? (
+                    Object.values(experienceProfile.domainMetrics).map((m) => {
+                      const isStrongest = experienceProfile.strongestDomain.domainKey === m.domainKey;
+                      return (
+                        <div
+                          key={m.domainKey}
+                          className={`p-3 rounded-xl border flex items-center justify-between transition-all ${
+                            isStrongest 
+                              ? 'bg-[#E6F4F1]/90 border-[#0B534B]/30 shadow-xs' 
+                              : 'bg-[#F6F8F7] border-[#D5DFDC]'
+                          }`}
+                        >
+                          <div className="space-y-0.5">
+                            <div className="flex items-center gap-1.5">
+                              <span className="text-sm">{m.icon}</span>
+                              <span className="text-xs font-bold text-[#111615]">{m.title}</span>
+                              {isStrongest && (
+                                <span className="text-[9px] font-black uppercase text-amber-800 bg-amber-100 px-1.5 py-0.2 rounded">
+                                  Top Strength
+                                </span>
+                              )}
+                            </div>
+                            <span className="text-[11px] text-[#5A6A66] block">
+                              {m.sessionsCount} sessions • {m.badge}
+                            </span>
+                          </div>
 
-                  <div className="p-3 rounded-xl bg-[#ECFDF5]/60 border border-[#10B981]/20 flex items-center justify-between">
-                    <div>
-                      <span className="text-xs font-bold text-[#111615] block">Time & Routine Orientation</span>
-                      <span className="text-[11px] text-[#5A6A66]">Clock hands, prayer & doctor times</span>
-                    </div>
-                    <span className="text-xs font-black text-[#065F46] bg-white px-2 py-1 rounded-md border border-[#10B981]/30">
-                      96% Precision
-                    </span>
-                  </div>
-
-                  <div className="p-3 rounded-xl bg-[#FFFBEB]/60 border border-[#D97706]/20 flex items-center justify-between">
-                    <div>
-                      <span className="text-xs font-bold text-[#111615] block">Visual Discrimination</span>
-                      <span className="text-[11px] text-[#5A6A66]">Spotting expired labels & signs</span>
-                    </div>
-                    <span className="text-xs font-black text-[#92400E] bg-white px-2 py-1 rounded-md border border-[#D97706]/30">
-                      92% Precision
-                    </span>
-                  </div>
+                          <div className="text-right">
+                            <span className="text-xs font-black text-[#0B534B] bg-white px-2 py-1 rounded-md border border-[#0B534B]/20 inline-block">
+                              {m.averageAccuracy}% Acc
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <>
+                      <div className="p-3 rounded-xl bg-[#E6F4F1]/60 border border-[#0B534B]/15 flex items-center justify-between">
+                        <div>
+                          <span className="text-xs font-bold text-[#111615] block">Short-Term Memory Recall</span>
+                          <span className="text-[11px] text-[#5A6A66]">Market items & medicine strips</span>
+                        </div>
+                        <span className="text-xs font-black text-[#0B534B] bg-white px-2 py-1 rounded-md border border-[#0B534B]/20">
+                          90% Accuracy
+                        </span>
+                      </div>
+                      <div className="p-3 rounded-xl bg-[#ECFDF5]/60 border border-[#10B981]/20 flex items-center justify-between">
+                        <div>
+                          <span className="text-xs font-bold text-[#111615] block">Time & Routine Orientation</span>
+                          <span className="text-[11px] text-[#5A6A66]">Clock hands, prayer & doctor times</span>
+                        </div>
+                        <span className="text-xs font-black text-[#065F46] bg-white px-2 py-1 rounded-md border border-[#10B981]/30">
+                          96% Precision
+                        </span>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
 
@@ -650,6 +721,104 @@ export default function DashboardPage() {
 
       </div>
 
+      {/* Dynamic Section: User's Recent Quests Experience Journey */}
+      {experienceProfile?.recentSessions && experienceProfile.recentSessions.length > 0 && (
+        <ScrollReveal direction="up" delay={190}>
+          <div className="bg-white rounded-3xl p-6 sm:p-7 border border-[#D5DFDC] shadow-sm space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#D5DFDC]/60 pb-3">
+              <div>
+                <h3 className="text-lg sm:text-xl font-extrabold text-[#111615] flex items-center gap-2">
+                  <span>🎮</span> Your Recent Game Experience & Progression
+                </h3>
+                <p className="text-xs sm:text-sm text-[#5A6A66] font-medium">
+                  Past quests tailored to your focus, with level tracking and adaptive difficulty feedback
+                </p>
+              </div>
+              <span className="text-xs font-bold text-[#0B534B] bg-[#E6F4F1] px-3 py-1 rounded-full border border-[#0B534B]/20 self-start sm:self-auto">
+                {experienceProfile.totalGamesPlayed} Quests Completed
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-1">
+              {experienceProfile.recentSessions.map((session) => {
+                const levelColor = session.difficultyLevel === 3 ? 'bg-[#DC2626]' : session.difficultyLevel === 2 ? 'bg-[#D97706]' : 'bg-[#10B981]';
+                const levelName = session.difficultyLevel === 3 ? 'Advanced' : session.difficultyLevel === 2 ? 'Medium' : 'Easy';
+
+                return (
+                  <div
+                    key={session.id}
+                    className="p-4 rounded-2xl border border-[#D5DFDC] bg-[#FAFCFB] hover:border-[#0B534B] hover:shadow-md transition-all flex flex-col justify-between space-y-3"
+                  >
+                    <div className="space-y-1.5">
+                      <div className="flex items-center justify-between gap-1">
+                        <span className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase text-white ${levelColor}`}>
+                          L{session.difficultyLevel} • {levelName}
+                        </span>
+                        <span className="text-xs font-black text-[#0B534B]">
+                          Score: {session.score}
+                        </span>
+                      </div>
+
+                      <h4 className="text-sm font-extrabold text-[#111615] line-clamp-1">
+                        {session.gameTitle}
+                      </h4>
+                      <p className="text-xs text-[#5A6A66] line-clamp-2">
+                        {session.feedbackText}
+                      </p>
+                    </div>
+
+                    <div className="pt-2 border-t border-[#D5DFDC]/60 flex items-center justify-between gap-2">
+                      <span className="text-[11px] text-[#5A6A66]">
+                        {session.accuracy}% Acc
+                      </span>
+
+                      <Link
+                        href={`/games/${session.gameId}?level=${session.difficultyLevel}`}
+                        className="py-1 px-2.5 bg-white hover:bg-[#E6F4F1] border border-[#D5DFDC] hover:border-[#0B534B] rounded-lg text-xs font-bold text-[#0B534B] transition-colors flex items-center gap-1"
+                      >
+                        <RotateCcw className="w-3 h-3" />
+                        <span>Replay</span>
+                      </Link>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </ScrollReveal>
+      )}
+
+      {/* Earned Experience Badges & Cognitive Milestones */}
+      {experienceProfile?.earnedBadges && experienceProfile.earnedBadges.length > 0 && (
+        <ScrollReveal direction="up" delay={200}>
+          <div className="bg-[#FAFCFB] rounded-3xl p-6 sm:p-7 border border-[#D5DFDC] shadow-sm space-y-4">
+            <div className="flex items-center gap-2">
+              <Trophy className="w-5 h-5 text-[#D97706]" />
+              <h3 className="text-lg font-extrabold text-[#111615]">
+                Unlocked Experience Badges & Milestones
+              </h3>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+              {experienceProfile.earnedBadges.map((badge) => (
+                <div
+                  key={badge.id}
+                  className="bg-white p-3.5 rounded-2xl border border-[#D5DFDC] shadow-xs text-center space-y-1 hover:border-[#0B534B] transition-all flex flex-col items-center justify-center"
+                >
+                  <span className="text-3xl block py-0.5">{badge.icon}</span>
+                  <span className="text-xs font-black text-[#111615] block leading-tight">
+                    {badge.title}
+                  </span>
+                  <span className="text-[10px] text-[#5A6A66] block leading-tight">
+                    {badge.description}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </ScrollReveal>
+      )}
+
       {/* Emergency Immediate Action Footer Banner */}
       <ScrollReveal direction="up" delay={220}>
         <div className="bg-[#FEF2F2] border border-[#FECACA] rounded-3xl p-5 sm:p-7 flex flex-col md:flex-row items-center justify-between gap-5 shadow-sm">
@@ -662,18 +831,18 @@ export default function DashboardPage() {
                 Senior Emergency or Feeling Unwell?
               </h4>
               <p className="text-xs sm:text-sm text-[#7F1D1D] font-medium max-w-xl">
-                One-touch direct dial to primary caregiver Rahul ({user.emergencyPhone || '+91 98765 43210'}) or emergency helpline 112.
+                One-touch direct dial to primary caregiver ({user.emergencyPhone || '+91 98765 11223'}) or emergency helpline 112.
               </p>
             </div>
           </div>
 
           <div className="flex flex-wrap items-center gap-3 w-full md:w-auto flex-shrink-0">
             <a
-              href={`tel:${user.emergencyPhone || '+919876543210'}`}
+              href={`tel:${user.emergencyPhone || '+919876511223'}`}
               className="w-full sm:w-auto px-5 py-3 bg-[#DC2626] hover:bg-[#B91C1C] text-white rounded-xl font-bold text-sm shadow-md transition-all text-center flex items-center justify-center gap-2"
             >
               <PhoneCall className="w-4 h-4" />
-              <span>Call Rahul Now</span>
+              <span>Call Caregiver Now</span>
             </a>
             <Link
               href="/emergency"
