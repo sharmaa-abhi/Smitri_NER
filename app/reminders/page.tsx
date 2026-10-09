@@ -201,11 +201,11 @@ export default function RemindersPage() {
             </div>
           </ScrollReveal>
         ) : (
-          <div className="grid grid-cols-1 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
             {pendingList.map((rem, idx) => (
               <ScrollReveal key={rem.id} direction="up" delay={60 + idx * 50}>
                 <div
-                  className="bg-white rounded-2xl p-4 sm:p-5 border border-[#D5DFDC] shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 hover:border-[#0B534B] transition-all"
+                  className="bg-white rounded-2xl p-4 sm:p-5 border border-[#D5DFDC] shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 hover:border-[#0B534B] transition-all h-full"
                 >
                   <div className="flex items-start sm:items-center gap-3.5">
                     <div className="p-2.5 bg-[#F6F8F7] rounded-xl border border-[#D5DFDC] flex-shrink-0">
@@ -251,7 +251,7 @@ export default function RemindersPage() {
               Completed Today ({completedList.length})
             </h2>
 
-            <div className="grid grid-cols-1 gap-2.5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {completedList.map((rem) => (
                 <div
                   key={rem.id}

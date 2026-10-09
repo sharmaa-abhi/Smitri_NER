@@ -38,13 +38,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={cn("scroll-smooth", inter.variable, "font-sans")} suppressHydrationWarning>
-      <body className="min-h-screen bg-[#F6F8F7] text-[#111615] font-sans flex flex-col antialiased selection:bg-[#C2E5DF] selection:text-[#042420]" suppressHydrationWarning>
+      <body className="min-h-screen bg-[#F6F8F7] text-[#111615] font-sans flex flex-col antialiased selection:bg-[#C2E5DF] selection:text-[#042420] overflow-x-hidden" suppressHydrationWarning>
         <LanguageProvider>
           <AuthProvider>
             <PWAProvider>
               <ScrollProgressBar />
               <Navbar />
-              <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6">
+              <main className="flex-1 w-full max-w-[1536px] 2xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 flex flex-col">
                 {children}
               </main>
             </PWAProvider>

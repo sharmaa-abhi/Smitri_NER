@@ -360,7 +360,7 @@ export default function FeaturesPage() {
         {/* ======================================================================= */}
         {/* RIGHT COLUMN: STEP CARDS                                                */}
         {/* ======================================================================= */}
-        <main className="lg:col-span-8 space-y-10 sm:space-y-14">
+        <div className="lg:col-span-8 space-y-10 sm:space-y-14">
 
           {/* =================================================================== */}
           {/* STEP 1: BRAIN & MEMORY GAMES                                        */}
@@ -865,7 +865,7 @@ export default function FeaturesPage() {
             </div>
           </section>
 
-        </main>
+        </div>
       </div>
     </div>
   );

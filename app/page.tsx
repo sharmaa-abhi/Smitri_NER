@@ -164,13 +164,13 @@ export default function HomePage() {
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#111615] tracking-tight leading-snug">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-black text-[#111615] tracking-tight leading-snug">
               {t("hero_title_1") || "Stronger Memories,"} <br />
               <span className="text-gradient">{t("hero_title_2") || "Brighter Days"}</span>
             </h1>
 
             {/* Supporting Text */}
-            <p className="text-sm sm:text-base text-[#5A6A66] font-medium max-w-xl mx-auto lg:mx-0 leading-relaxed">
+            <p className="text-sm sm:text-base lg:text-lg text-[#5A6A66] font-medium max-w-xl xl:max-w-2xl mx-auto lg:mx-0 leading-relaxed">
               {t("hero_desc") || "Smitri_NER is an AI-powered cognitive care platform designed to support elderly users through memory games, cognitive activities, personalized assistance, and caregiver support."}
             </p>
 
@@ -230,9 +230,9 @@ export default function HomePage() {
           </div>
 
           {/* RIGHT SIDE: Elderly Care Hero Visual with Floating Feature Badges */}
-          <div className="lg:col-span-5 relative flex flex-col items-center justify-center">
+          <div className="lg:col-span-5 relative flex flex-col items-center justify-center w-full">
             {/* 3D Glassmorphism Tilt Card Frame */}
-            <TiltCard className="rounded-3xl shadow-xl w-full max-w-[390px]" maxTilt={6}>
+            <TiltCard className="rounded-3xl shadow-xl w-full max-w-[360px] sm:max-w-[400px] lg:max-w-[440px] xl:max-w-[480px]" maxTilt={6}>
               <div className="group relative w-full aspect-square rounded-3xl overflow-hidden border-4 border-white bg-gradient-to-tr from-[#E6F4F1] via-white to-[#ECFDF5]">
                 <Image
                   src={HERO_IMAGES[currentImageIndex].src}
@@ -240,7 +240,7 @@ export default function HomePage() {
                   fill
                   priority
                   className="object-cover object-center transform group-hover:scale-105 transition-all duration-700"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 45vw, 390px"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 45vw, 480px"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#042420]/60 via-transparent to-transparent pointer-events-none" />
                 
@@ -254,7 +254,7 @@ export default function HomePage() {
             </TiltCard>
 
             {/* Floating Feature Badge 1: Top Left - Play Cognitive Games */}
-            <div className="absolute -top-3 -left-3 sm:-left-6 bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-full border border-[#D5DFDC] shadow-md flex items-center gap-2 animate-float-gentle">
+            <div className="hidden sm:flex absolute -top-3 sm:-left-3 lg:-left-6 bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-full border border-[#D5DFDC] shadow-md items-center gap-2 animate-float-gentle pointer-events-none">
               <div className="w-7 h-7 rounded-full bg-[#E6F4F1] text-[#0B534B] flex items-center justify-center">
                 <Gamepad2 className="w-3.5 h-3.5" />
               </div>
@@ -262,7 +262,7 @@ export default function HomePage() {
             </div>
 
             {/* Floating Feature Badge 2: Top Right - Boost Memory */}
-            <div className="absolute -top-3 -right-3 sm:-right-4 bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-full border border-[#D5DFDC] shadow-md flex items-center gap-2 animate-float-gentle-alt">
+            <div className="hidden sm:flex absolute -top-3 sm:-right-3 lg:-right-6 bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-full border border-[#D5DFDC] shadow-md items-center gap-2 animate-float-gentle-alt pointer-events-none">
               <div className="w-7 h-7 rounded-full bg-[#ECFDF5] text-[#10B981] flex items-center justify-center">
                 <Brain className="w-3.5 h-3.5" />
               </div>
@@ -270,7 +270,7 @@ export default function HomePage() {
             </div>
 
             {/* Floating Feature Badge 3: Bottom Left - Better Wellbeing */}
-            <div className="absolute bottom-6 -left-3 sm:-left-4 bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-full border border-[#D5DFDC] shadow-md flex items-center gap-2 animate-float-gentle-alt">
+            <div className="hidden sm:flex absolute bottom-6 sm:-left-3 lg:-left-5 bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-full border border-[#D5DFDC] shadow-md items-center gap-2 animate-float-gentle-alt pointer-events-none">
               <div className="w-7 h-7 rounded-full bg-[#FFFBEB] text-[#D97706] flex items-center justify-center">
                 <Heart className="w-3.5 h-3.5" />
               </div>
@@ -278,11 +278,39 @@ export default function HomePage() {
             </div>
 
             {/* Floating Feature Badge 4: Bottom Right - Caregiver Support */}
-            <div className="absolute bottom-6 -right-3 sm:-right-6 bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-full border border-[#D5DFDC] shadow-md flex items-center gap-2 animate-float-gentle">
+            <div className="hidden sm:flex absolute bottom-6 sm:-right-3 lg:-right-5 bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-full border border-[#D5DFDC] shadow-md items-center gap-2 animate-float-gentle pointer-events-none">
               <div className="w-7 h-7 rounded-full bg-[#FEE2E2] text-[#DC2626] flex items-center justify-center">
                 <Users className="w-3.5 h-3.5" />
               </div>
               <span className="text-xs font-bold text-[#111615]">{t("hero_badge_caregiver") || "Caregiver Support"}</span>
+            </div>
+
+            {/* Mobile Feature Badges Grid (Clean responsive 2x2 on phones, eliminating overflow) */}
+            <div className="sm:hidden grid grid-cols-2 gap-2 mt-4 w-full">
+              <div className="bg-white/95 px-3 py-2 rounded-xl border border-[#D5DFDC] shadow-2xs flex items-center gap-2">
+                <div className="w-6 h-6 rounded-lg bg-[#E6F4F1] text-[#0B534B] flex items-center justify-center flex-shrink-0">
+                  <Gamepad2 className="w-3.5 h-3.5" />
+                </div>
+                <span className="text-[11px] font-bold text-[#111615] leading-tight">{t("hero_badge_games") || "Cognitive Games"}</span>
+              </div>
+              <div className="bg-white/95 px-3 py-2 rounded-xl border border-[#D5DFDC] shadow-2xs flex items-center gap-2">
+                <div className="w-6 h-6 rounded-lg bg-[#ECFDF5] text-[#10B981] flex items-center justify-center flex-shrink-0">
+                  <Brain className="w-3.5 h-3.5" />
+                </div>
+                <span className="text-[11px] font-bold text-[#111615] leading-tight">{t("hero_badge_boost") || "Boost Memory"}</span>
+              </div>
+              <div className="bg-white/95 px-3 py-2 rounded-xl border border-[#D5DFDC] shadow-2xs flex items-center gap-2">
+                <div className="w-6 h-6 rounded-lg bg-[#FFFBEB] text-[#D97706] flex items-center justify-center flex-shrink-0">
+                  <Heart className="w-3.5 h-3.5" />
+                </div>
+                <span className="text-[11px] font-bold text-[#111615] leading-tight">{t("hero_badge_wellbeing") || "Better Wellbeing"}</span>
+              </div>
+              <div className="bg-white/95 px-3 py-2 rounded-xl border border-[#D5DFDC] shadow-2xs flex items-center gap-2">
+                <div className="w-6 h-6 rounded-lg bg-[#FEE2E2] text-[#DC2626] flex items-center justify-center flex-shrink-0">
+                  <Users className="w-3.5 h-3.5" />
+                </div>
+                <span className="text-[11px] font-bold text-[#111615] leading-tight">{t("hero_badge_caregiver") || "Caregiver Support"}</span>
+              </div>
             </div>
           </div>
         </div>
@@ -344,7 +372,7 @@ export default function HomePage() {
       {/* SECTION: FEATURES                                                         */}
       {/* ========================================================================= */}
       <ScrollReveal direction="up">
-        <section id="features" className="space-y-7 scroll-mt-24">
+        <section id="features" className="space-y-7 scroll-mt-28">
           <div className="text-center space-y-2.5 max-w-2xl mx-auto">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E6F4F1] text-[#0B534B] text-xs font-bold tracking-wider border border-[#0B534B]/20">
               {t("section_features_badge") || "Platform Capabilities"}
@@ -422,7 +450,7 @@ export default function HomePage() {
       {/* SECTION: HOW IT WORKS                                                     */}
       {/* ========================================================================= */}
       <ScrollReveal direction="up">
-        <section id="how-it-works" className="relative overflow-hidden bg-gradient-to-br from-[#042420] via-[#0B534B] to-[#042420] border border-[#10B981]/30 rounded-3xl p-6 sm:p-10 lg:p-12 shadow-xl space-y-8 scroll-mt-24 text-white">
+        <section id="how-it-works" className="relative overflow-hidden bg-gradient-to-br from-[#042420] via-[#0B534B] to-[#042420] border border-[#10B981]/30 rounded-3xl p-6 sm:p-10 lg:p-12 shadow-xl space-y-8 scroll-mt-28 text-white">
           {/* Ambient background glow effect */}
           <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#10B981]/15 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-[#10B981]/10 rounded-full blur-3xl pointer-events-none" />
@@ -512,7 +540,7 @@ export default function HomePage() {
       {/* SECTION: ABOUT & NORTH EASTERN REGION (NER) FOCUS                         */}
       {/* ========================================================================= */}
       <ScrollReveal direction="up">
-        <section id="about" className="bg-gradient-to-br from-[#042420] via-[#0B534B] to-[#042420] border border-[#10B981]/25 text-white rounded-3xl p-6 sm:p-10 lg:p-12 space-y-7 scroll-mt-24 shadow-xl">
+        <section id="about" className="bg-gradient-to-br from-[#042420] via-[#0B534B] to-[#042420] border border-[#10B981]/25 text-white rounded-3xl p-6 sm:p-10 lg:p-12 space-y-7 scroll-mt-28 shadow-xl">
           <div className="max-w-3xl space-y-3.5">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#10B981]/20 text-[#ECFDF5] text-xs font-bold tracking-wider border border-[#10B981]/40">
               <Compass className="w-4 h-4 text-[#10B981]" />
@@ -558,7 +586,7 @@ export default function HomePage() {
       {/* SECTION: BLOG & HEALTHCARE TIPS                                           */}
       {/* ========================================================================= */}
       <ScrollReveal direction="up">
-        <section id="blog" className="space-y-6 scroll-mt-24">
+        <section id="blog" className="space-y-6 scroll-mt-28">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div>
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E6F4F1] text-[#0B534B] text-xs font-bold tracking-wider mb-2 border border-[#0B534B]/20">
@@ -605,7 +633,7 @@ export default function HomePage() {
       {/* ========================================================================= */}
       {/* FOOTER & CONTACT                                                          */}
       {/* ========================================================================= */}
-      <footer id="contact" className="border-t border-[#D5DFDC] pt-12 pb-8 space-y-8 scroll-mt-24">
+      <footer id="contact" className="border-t border-[#D5DFDC] pt-12 pb-8 space-y-8 scroll-mt-28">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-[#0B534B] text-white flex items-center justify-center shadow-sm">
