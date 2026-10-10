@@ -165,7 +165,7 @@ export default function CaregiverAlertSimulator() {
             {/* Screen Inner */}
             <div className="bg-[#F2F8F6] rounded-[28px] overflow-hidden flex flex-col h-[400px] border border-[#08433C]/40">
               {/* Phone Status Bar */}
-              <div className="bg-[#0B534B] text-white px-4 py-2 flex items-center justify-between text-[11px] font-bold">
+              <div className="bg-[#0B534B] text-white px-4 py-2 flex items-center justify-between text-xs font-bold">
                 <div className="flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse"></span>
                   <span>Smitri Safety Dispatch</span>
@@ -211,8 +211,8 @@ export default function CaregiverAlertSimulator() {
                     {current.messagePreview}
                   </p>
                   <div className="pt-2 text-xs text-[#5A6A66] flex items-center justify-between font-medium">
-                    <span>Delivered via WhatsApp / SMS</span>
-                    <span className="text-[#0B534B] font-bold">✓✓ Read</span>
+                    <span className="text-xs">Delivered via WhatsApp / SMS</span>
+                    <span className="text-[#0B534B] font-bold text-xs">✓✓ Read</span>
                   </div>
                 </div>
 
@@ -233,7 +233,7 @@ export default function CaregiverAlertSimulator() {
               </div>
 
               {/* Bottom Phone Bar */}
-              <div className="bg-white/90 p-2 text-center text-[10px] font-semibold text-[#7A8D88] border-t border-[#D5DFDC]">
+              <div className="bg-white/90 p-2 text-center text-xs font-semibold text-[#7A8D88] border-t border-[#D5DFDC]">
                 Encrypted Senior-Caregiver Channel
               </div>
             </div>

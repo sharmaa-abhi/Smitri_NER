@@ -12,7 +12,7 @@ interface Props {
 }
 
 export default function MemoryMatchArena({ difficulty, onFinish }: Props) {
-  const currentDiff = (Math.max(1, Math.min(3, difficulty)) || 1) as DifficultyLevel;
+  const currentDiff = (Math.max(1, Math.min(5, difficulty)) || 1) as DifficultyLevel;
   const levelMeta = GAME_LEVEL_CONFIG['memory-match']?.[currentDiff];
 
   const [cards, setCards] = useState<Array<{ id: number; icon: string; flipped: boolean; matched: boolean }>>([]);

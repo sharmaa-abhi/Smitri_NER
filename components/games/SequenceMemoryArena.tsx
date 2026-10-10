@@ -14,14 +14,14 @@ interface Props {
 const TONES: number[] = [261.63, 329.63, 392.00, 523.25, 587.33, 659.25];
 
 export default function SequenceMemoryArena({ difficulty, onFinish }: Props) {
-  const currentDiff = (Math.max(1, Math.min(3, difficulty)) || 1) as DifficultyLevel;
+  const currentDiff = (Math.max(1, Math.min(5, difficulty)) || 1) as DifficultyLevel;
   const levelMeta = GAME_LEVEL_CONFIG['sequence-memory']?.[currentDiff];
 
-  // Level 1: 4 pads, 3 steps. Level 2: 4 pads, 5 steps. Level 3: 6 pads, 6 steps.
-  const padCount = currentDiff === 3 ? 6 : 4;
-  const sequenceLength = currentDiff === 1 ? 3 : currentDiff === 2 ? 5 : 6;
-  const flashInterval = currentDiff === 1 ? 1100 : currentDiff === 2 ? 850 : 650;
-  const activeDuration = currentDiff === 1 ? 650 : currentDiff === 2 ? 500 : 380;
+  // Level 1: 4 pads, 3 steps. Level 2: 4 pads, 4 steps. Level 3: 4 pads, 5 steps. Level 4: 6 pads, 5 steps. Level 5: 6 pads, 6 steps.
+  const padCount = currentDiff >= 4 ? 6 : 4;
+  const sequenceLength = currentDiff === 1 ? 3 : currentDiff === 2 ? 4 : currentDiff === 3 ? 5 : currentDiff === 4 ? 5 : 6;
+  const flashInterval = currentDiff === 1 ? 1100 : currentDiff === 2 ? 950 : currentDiff === 3 ? 850 : currentDiff === 4 ? 750 : 650;
+  const activeDuration = currentDiff === 1 ? 650 : currentDiff === 2 ? 550 : currentDiff === 3 ? 500 : currentDiff === 4 ? 440 : 380;
 
   const [sequence, setSequence] = useState<number[]>([]);
   const [userSequenceIndex, setUserSequenceIndex] = useState(0);

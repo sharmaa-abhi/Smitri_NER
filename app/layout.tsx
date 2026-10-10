@@ -7,6 +7,8 @@ import { LanguageProvider } from "@/lib/i18n";
 import { AuthProvider } from "@/lib/auth";
 import { PWAProvider } from "@/components/PWAProvider";
 import { cn } from "@/lib/utils";
+import { Analytics } from "@vercel/analytics/next";
+import AccessibilityDock from "@/components/AccessibilityDock";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -47,9 +49,11 @@ export default function RootLayout({
               <main className="flex-1 w-full max-w-[1536px] 2xl:max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 flex flex-col">
                 {children}
               </main>
+              <AccessibilityDock />
             </PWAProvider>
           </AuthProvider>
         </LanguageProvider>
+        <Analytics />
       </body>
     </html>
   );
