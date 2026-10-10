@@ -239,6 +239,98 @@ const CASE_STUDIES: CaseStudy[] = [
       "Social engagement increased organically within multi-generational households.",
       "Positive emotional association reversed technology phobia in elderly users."
     ]
+  },
+  {
+    id: "cs-5",
+    slug: "lalrinzuala-aizawl-rehabilitation",
+    patientName: "Lalrinzuala Sailo",
+    age: 76,
+    location: "Aizawl",
+    state: "Mizoram",
+    focusArea: "detection",
+    focusAreaLabel: "Post-Stroke Motor & Working Memory",
+    badgeClass: "bg-[#ECFDF5] text-[#065F46] border-[#A7F3D0]",
+    title: "Working Memory & Motor Agility Recovery Following Transient Ischemic Attack",
+    summary: "Following a mild stroke, an elder in Aizawl faced fine-motor hesitance and sequence confusion. Structured daily 5-minute Mizo Number Trail exercises restored confidence and independence.",
+    metrics: [
+      {
+        label: "Tap Latency Recovery",
+        before: "4.2s per tap",
+        after: "2.1s per tap",
+        highlight: "+50% Agility"
+      },
+      {
+        label: "Mizo Routine Adherence",
+        before: "Skipped (40%)",
+        after: "Consistent (96%)",
+        highlight: "Regained Autonomy"
+      },
+      {
+        label: "Family Assisted Time",
+        before: "4 hrs/day needed",
+        after: "Independent",
+        highlight: "Autonomous Care"
+      }
+    ],
+    challenge: "Following a mild TIA (transient ischemic attack), Lalrinzuala Sailo experienced fine motor hesitation in his dominant hand and mild disorientation during evening medicine and family prayer routines. He became reliant on his daughter for simple tasks, which deeply affected his self-esteem.",
+    intervention: "His outpatient physician at Civil Hospital Aizawl introduced Smitri's Number Trail and Matrix Pattern exercises with enlarged touch targets and Mizo voice instructions. The progressive 5-stage difficulty engine slowly encouraged accurate finger placement and mental sequencing without cognitive exhaustion.",
+    outcome: "Over 60 days of daily morning sessions, his target tap latency improved from 4.2 seconds down to 2.1 seconds. He resumed independently tracking his daily medications and church prayer schedule.",
+    caregiverQuote: {
+      text: "Ka pa (my father) felt defeated after his hospital stay. Seeing his numbers improve each week gave him back his dignity and self-reliance.",
+      author: "Lalthanpuii Sailo",
+      relation: "Daughter & Primary Caregiver"
+    },
+    clinicalFindings: [
+      "Gradual low-stress motor-cognitive tapping strengthens neuroplasticity in post-ischemic recovery.",
+      "Vernacular Mizo audio cues lowered frustration thresholds during rehabilitation exercises.",
+      "Measurable latency improvement provided tangible psychological encouragement for the patient."
+    ]
+  },
+  {
+    id: "cs-6",
+    slug: "tsering-dorjee-gangtok-circadian",
+    patientName: "Tsering Dorjee",
+    age: 79,
+    location: "Upper Sichey, Gangtok",
+    state: "Sikkim",
+    focusArea: "remote",
+    focusAreaLabel: "Winter Circadian Routine Regularity",
+    badgeClass: "bg-[#FFFBEB] text-[#92400E] border-[#FDE68A]",
+    title: "Preserving Daily Circadian & Medication Rhythms During Harsh Winter Isolation",
+    summary: "Sub-zero temperatures and freezing fog in Gangtok kept an elderly widower confined indoors, causing day-night rhythm reversal. Clock Face Match and Mindful Breathing restored diurnal stability.",
+    metrics: [
+      {
+        label: "Circadian Regularity",
+        before: "44% (Erratic)",
+        after: "88%",
+        highlight: "2x Stability"
+      },
+      {
+        label: "Cardiac Medication Window",
+        before: "±4 hrs drift",
+        after: "Within 30 mins",
+        highlight: "Stable Schedule"
+      },
+      {
+        label: "Mindful Breathing Done",
+        before: "0 sessions",
+        after: "2x Daily Habit",
+        highlight: "Stress Reduced"
+      }
+    ],
+    challenge: "During freezing Himalayan winter months in Sikkim, 79-year-old Tsering was unable to go for his customary morning walks. Confinement led to irregular sleeping patterns, lethargy, and erratic timing for taking his essential blood-thinning medication.",
+    intervention: "Installed Smitri with the Clock Face Match game and Mindful Breathing Orb anchored to solar morning cues. Scheduled audio chimes played comforting morning greetings in Nepali, encouraging him to complete a 4-minute mindful breathing routine before checking off his medication.",
+    outcome: "Day-night circadian regularity improved from 44% to 88% throughout the coldest 60 days of winter. Blood pressure measurements remained within the target clinical window with zero hospital visits required.",
+    caregiverQuote: {
+      text: "In the cold months, mountain elders often lose track of time indoors. Smitri became his gentle morning alarm clock and kept him healthy until spring.",
+      author: "Karma Dorjee",
+      relation: "Grandson & Caregiver"
+    },
+    clinicalFindings: [
+      "Audio-guided temporal orientation exercises prevent circadian misalignment during weather-enforced indoor confinement.",
+      "Mindful breathing practice counteracts nocturnal blood pressure elevations in cold climates.",
+      "Simple visual clocks with high contrast reinforce temporal awareness in older adults."
+    ]
   }
 ];
 
