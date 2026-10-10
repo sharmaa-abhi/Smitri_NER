@@ -596,7 +596,7 @@ export default function HomePage() {
                 {t("blog_title") || "Cognitive Wellness Articles"}
               </h2>
             </div>
-            <Link href="/dashboard" className="text-xs sm:text-sm font-bold text-[#0B534B] hover:text-[#08433C] inline-flex items-center gap-1">
+            <Link href="/blog" className="text-xs sm:text-sm font-bold text-[#0B534B] hover:text-[#08433C] inline-flex items-center gap-1">
               <span>{t("blog_explore") || "Explore all insights"}</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
@@ -648,8 +648,9 @@ export default function HomePage() {
           <div className="flex flex-wrap items-center gap-6 text-sm font-semibold text-[#5A6A66]">
             <Link href="/dashboard" className="hover:text-[#0B534B] transition-colors">{t("nav_dashboard") || "Dashboard"}</Link>
             <Link href="/games" className="hover:text-[#0B534B] transition-colors">{t("nav_games") || "Games"}</Link>
+            <Link href="/blog" className="hover:text-[#0B534B] transition-colors">{t("nav_blog") || "Blog"}</Link>
+            <Link href="/case-studies" className="hover:text-[#0B534B] transition-colors">Case Studies</Link>
             <Link href="/reminders" className="hover:text-[#0B534B] transition-colors">{t("nav_reminders") || "Reminders"}</Link>
-            <Link href="/progress" className="hover:text-[#0B534B] transition-colors">{t("nav_progress") || "Progress"}</Link>
             <Link href="/caregiver" className="hover:text-[#0B534B] transition-colors">{t("nav_caregiver") || "Caregiver"}</Link>
             <Link href="/emergency" className="text-[#DC2626] hover:text-[#B91C1C] font-bold transition-colors">{t("nav_emergency") || "Emergency Help"}</Link>
           </div>
