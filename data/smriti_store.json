@@ -332,6 +332,20 @@
       "recommendedDifficulty": 5,
       "feedbackText": "Outstanding focus! You are at your best pace.",
       "timestamp": "2026-10-09T15:45:02.496Z"
+    },
+    {
+      "id": "s-1791561273755",
+      "userId": "user_kamla",
+      "gameId": "memory-match",
+      "gameTitle": "Memory Match",
+      "score": 65,
+      "accuracy": 92,
+      "responseTimeSec": 282,
+      "mistakes": 1,
+      "difficultyLevel": 1,
+      "recommendedDifficulty": 1,
+      "feedbackText": "Good steady pace! Keep enjoying your daily games.",
+      "timestamp": "2026-10-09T15:54:33.755Z"
     }
   ],
   "reminders": [
