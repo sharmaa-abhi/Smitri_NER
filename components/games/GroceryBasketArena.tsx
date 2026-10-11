@@ -12,21 +12,22 @@ interface Props {
 }
 
 export default function GroceryBasketArena({ difficulty, onFinish }: Props) {
-  const currentDiff = (Math.max(1, Math.min(3, difficulty)) || 1) as DifficultyLevel;
+  const currentDiff = (Math.max(1, Math.min(5, difficulty)) || 1) as DifficultyLevel;
   const levelMeta = GAME_LEVEL_CONFIG['grocery-basket']?.[currentDiff];
+
+  const targetCount = currentDiff === 1 ? 2 : currentDiff === 2 ? 3 : currentDiff === 3 ? 4 : currentDiff === 4 ? 5 : 6;
+  const shelfCount = currentDiff === 1 ? 5 : currentDiff === 2 ? 6 : currentDiff === 3 ? 8 : currentDiff === 4 ? 10 : 12;
+  const initialCountdown = currentDiff === 1 ? 8 : currentDiff === 2 ? 7 : currentDiff === 3 ? 6 : 5;
 
   const [targetItems, setTargetItems] = useState<Array<{ name: string; icon: string }>>([]);
   const [options, setOptions] = useState<Array<{ name: string; icon: string; selected: boolean }>>([]);
   const [isMemorizing, setIsMemorizing] = useState(true);
-  const [countdown, setCountdown] = useState(currentDiff === 1 ? 7 : currentDiff === 2 ? 5 : 4);
+  const [countdown, setCountdown] = useState(initialCountdown);
   const [mistakes, setMistakes] = useState(0);
   const [totalAttempts, setTotalAttempts] = useState(0);
 
   useEffect(() => {
     const itemPool = GROCERY_ITEMS_BY_LEVEL[currentDiff] || GROCERY_ITEMS_BY_LEVEL[1];
-    const targetCount = currentDiff === 1 ? 3 : currentDiff === 2 ? 4 : 5;
-    const shelfCount = currentDiff === 1 ? 6 : currentDiff === 2 ? 8 : 10;
-    const initialCountdown = currentDiff === 1 ? 7 : currentDiff === 2 ? 5 : 4;
 
     const shuffled = shuffleArray(itemPool);
     const targets = shuffled.slice(0, targetCount);

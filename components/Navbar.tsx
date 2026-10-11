@@ -28,9 +28,9 @@ export default function Navbar() {
     { name: t("nav_home") || "Home", href: "/" },
     { name: t("nav_games") || "Games", href: "/games" },
     { name: t("nav_features") || "Features", href: "/features" },
-    { name: t("nav_how_it_works") || "How It Works", href: "/#how-it-works" },
+    { name: t("nav_blog") || "Blog", href: "/blog" },
+    { name: "Case Studies", href: "/case-studies" },
     { name: t("nav_about") || "About", href: "/#about" },
-    { name: t("nav_blog") || "Blog", href: "/#blog" },
     { name: t("nav_contact") || "Contact", href: "/#contact" },
   ];
 
@@ -41,6 +41,7 @@ export default function Navbar() {
     { name: t("nav_reminders") || "Reminders", href: "/reminders" },
     { name: t("nav_progress") || "Progress", href: "/progress" },
     { name: t("nav_caregiver") || "Caregiver", href: "/caregiver" },
+    { name: "Case Studies", href: "/case-studies" },
   ];
 
   return (

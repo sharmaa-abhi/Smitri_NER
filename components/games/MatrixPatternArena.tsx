@@ -12,22 +12,23 @@ interface Props {
 }
 
 export default function MatrixPatternArena({ difficulty, onFinish }: Props) {
-  const currentDiff = (Math.max(1, Math.min(3, difficulty)) || 1) as DifficultyLevel;
+  const currentDiff = (Math.max(1, Math.min(5, difficulty)) || 1) as DifficultyLevel;
   const levelMeta = GAME_LEVEL_CONFIG['pattern-match']?.[currentDiff];
 
-  const gridSize = currentDiff === 3 ? 4 : 3;
+  const gridSize = currentDiff >= 4 ? 4 : 3;
   const totalCells = gridSize * gridSize; // 9 or 16
+
+  const litCount = currentDiff === 1 ? 3 : currentDiff === 2 ? 4 : currentDiff === 3 ? 5 : currentDiff === 4 ? 5 : 6;
+  const initialCountdown = currentDiff === 1 ? 5 : currentDiff === 2 ? 4 : currentDiff === 3 ? 4 : currentDiff === 4 ? 4 : 3;
 
   const [targetCells, setTargetCells] = useState<number[]>([]);
   const [selectedCells, setSelectedCells] = useState<number[]>([]);
   const [isShowingPattern, setIsShowingPattern] = useState(true);
-  const [countdown, setCountdown] = useState(currentDiff === 1 ? 5 : 3);
+  const [countdown, setCountdown] = useState(initialCountdown);
   const [mistakes, setMistakes] = useState(0);
   const [totalAttempts, setTotalAttempts] = useState(0);
 
   useEffect(() => {
-    const litCount = currentDiff === 1 ? 3 : currentDiff === 2 ? 5 : 6;
-    const initialCountdown = currentDiff === 1 ? 5 : currentDiff === 2 ? 4 : 3;
     const allCells = Array.from({ length: totalCells }, (_, i) => i);
     const chosen = sampleArray(allCells, litCount);
     setTargetCells(chosen);

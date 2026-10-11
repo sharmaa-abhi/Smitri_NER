@@ -13,7 +13,7 @@ interface Props {
 }
 
 export default function SoundWordMatchArena({ difficulty, onFinish }: Props) {
-  const currentDiff = (Math.max(1, Math.min(3, difficulty)) || 1) as DifficultyLevel;
+  const currentDiff = (Math.max(1, Math.min(5, difficulty)) || 1) as DifficultyLevel;
   const levelMeta = GAME_LEVEL_CONFIG['sound-word-match']?.[currentDiff];
 
   const [round, setRound] = useState(1);
@@ -34,8 +34,8 @@ export default function SoundWordMatchArena({ difficulty, onFinish }: Props) {
     const promptItem = bank[(roundNum - 1) % bank.length];
     setCurrentPrompt(promptItem);
 
-    // Level 1: 2 decoys (3 options), Level 2 & 3: 3 decoys (4 options)
-    const decoyCount = diff === 1 ? 2 : 3;
+    // Level 1-2: 2 decoys (3 options), Level 3-5: 3 decoys (4 options)
+    const decoyCount = diff <= 2 ? 2 : 3;
     const opts = shuffleArray([
       { icon: promptItem.icon, isCorrect: true },
       ...promptItem.decoys.slice(0, decoyCount).map((icon) => ({

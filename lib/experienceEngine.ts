@@ -224,8 +224,8 @@ export function buildUserExperienceProfile(
     score: s.score,
     accuracy: s.accuracy,
     responseTimeSec: s.responseTimeSec,
-    difficultyLevel: (Math.max(1, Math.min(3, s.difficultyLevel || 1))) as DifficultyLevel,
-    recommendedDifficulty: (Math.max(1, Math.min(3, s.recommendedDifficulty || 1))) as DifficultyLevel,
+    difficultyLevel: (Math.max(1, Math.min(5, s.difficultyLevel || 1))) as DifficultyLevel,
+    recommendedDifficulty: (Math.max(1, Math.min(5, s.recommendedDifficulty || 1))) as DifficultyLevel,
     feedbackText: s.feedbackText,
     timestamp: s.timestamp,
     realWorldScenario: s.realWorldScenario,
@@ -293,7 +293,7 @@ function computeDomainMetric(key: CognitiveDomainKey, sessions: GameSession[]): 
   if (avgAcc >= 92 && maxDiff >= 2) status = 'Mastered';
   else if (avgAcc >= 85) status = 'Strong';
 
-  const badgeText = maxDiff === 3 ? 'Level 3: Master Agility' : maxDiff === 2 ? 'Level 2: Balanced' : 'Level 1: Gentle';
+  const badgeText = `Level ${maxDiff}`;
 
   return {
     domainKey: key,
@@ -324,8 +324,8 @@ function determineNextQuest(
       gameTitle: 'Grocery Basket Recall',
       category: 'daily',
       level: 1,
-      levelBadge: 'Level 1: Easy',
-      levelSubtitle: 'Morning Essentials • 3 Items',
+      levelBadge: 'Level 1',
+      levelSubtitle: 'Morning Essentials • 2 Items',
       reason: 'A relaxing starter puzzle to stimulate everyday market list memory.',
       realWorldScenario: 'Weekly Local Bazaar & Vegetable Shopping List',
       realWorldBenefit: 'Helps elderly navigate market shopping without forgetting essentials',
@@ -336,9 +336,9 @@ function determineNextQuest(
 
   // If latest session scored high (>=80), suggest advancing or complementary game
   if (latest.score >= 80) {
-    const nextLevel = (Math.min(3, (latest.recommendedDifficulty || latest.difficultyLevel || 1))) as DifficultyLevel;
+    const nextLevel = (Math.min(5, (latest.recommendedDifficulty || latest.difficultyLevel || 1))) as DifficultyLevel;
 
-    // If the user played clock reading with great success, recommend Level 2 or 3!
+    // If the user played clock reading with great success, recommend next level!
     if (latest.gameId === 'clock-reading') {
       const config = GAME_LEVEL_CONFIG['clock-reading']?.[nextLevel];
       return {
@@ -346,7 +346,7 @@ function determineNextQuest(
         gameTitle: 'Clock Face Match',
         category: 'daily',
         level: nextLevel,
-        levelBadge: `Level ${nextLevel}: ${nextLevel === 1 ? 'Easy' : nextLevel === 2 ? 'Medium' : 'Advanced'}`,
+        levelBadge: `Level ${nextLevel}`,
         levelSubtitle: config?.subtitle || 'Time Orientation',
         reason: `You scored ${latest.score}% in your previous time check! Ready for ${config?.badge || 'Level ' + nextLevel}.`,
         realWorldScenario: 'Timetable for Morning Puja, Medicine & Doctor Visits',
@@ -365,7 +365,7 @@ function determineNextQuest(
         gameTitle: formatTitle(targetGameId),
         category: growthKey,
         level: 1,
-        levelBadge: 'Level 1: Easy',
+        levelBadge: 'Level 1',
         levelSubtitle: targetConfig?.subtitle || 'Gentle Practice',
         reason: `Your ${COGNITIVE_DOMAINS[latest.gameId.includes('clock') ? 'daily' : 'memory'].title} is strong! Let's enrich your mind with a gentle ${COGNITIVE_DOMAINS[growthKey].title} quest.`,
         realWorldScenario: 'Everyday Household Awareness',
@@ -383,9 +383,9 @@ function determineNextQuest(
       gameTitle: formatTitle(partnerId),
       category: getDomainOfGame(partnerId),
       level: nextLevel,
-      levelBadge: `Level ${nextLevel}: ${nextLevel === 1 ? 'Easy' : nextLevel === 2 ? 'Medium' : 'Advanced'}`,
-      levelSubtitle: partnerConfig?.subtitle || 'Adaptive Challenge',
-      reason: `Based on your recent ${latest.gameTitle} score (${latest.score}%), this ${nextLevel === 1 ? 'easy' : nextLevel === 2 ? 'medium' : 'advanced'} quest is tailored to your focus.`,
+      levelBadge: `Level ${nextLevel}`,
+      levelSubtitle: partnerConfig?.subtitle || 'Sequential Practice',
+      reason: `Based on your recent ${latest.gameTitle} score (${latest.score}%), Level ${nextLevel} is ready for you.`,
       realWorldScenario: partnerConfig?.description || 'Everyday Senior Memory and Focus',
       realWorldBenefit: 'Maintains mental agility across real-world situations',
       estimatedTimeMin: 2,
@@ -393,14 +393,14 @@ function determineNextQuest(
     };
   }
 
-  // If latest score was moderate or needs practice (<80), suggest a reassuring Level 1 quest
+  // If latest score was moderate or needs practice (<80), suggest Level 1 quest
   return {
     gameId: 'grocery-basket',
     gameTitle: 'Grocery Basket Recall',
     category: 'daily',
     level: 1,
-    levelBadge: 'Level 1: Gentle',
-    levelSubtitle: 'Morning Essentials • 3 Items',
+    levelBadge: 'Level 1',
+    levelSubtitle: 'Morning Essentials • 2 Items',
     reason: 'A calm, stress-free market recall quest to maintain rhythm with zero time pressure.',
     realWorldScenario: 'Weekly Local Bazaar & Vegetable Shopping List',
     realWorldBenefit: 'Helps elderly navigate market shopping without forgetting essentials',

@@ -55,7 +55,7 @@ export function evaluateCognitivePerformance(input: ScoreCalculationInput): Cogn
   if (score >= 80) {
     category = 'Excellent';
     // Adaptive increase
-    recommendedDifficulty = Math.min(3, currentDifficulty + 1);
+    recommendedDifficulty = Math.min(5, currentDifficulty + 1);
     feedback = recommendedDifficulty > currentDifficulty 
       ? "You are doing great! Let's try a slightly higher level." 
       : "Outstanding focus! You are at your best pace.";

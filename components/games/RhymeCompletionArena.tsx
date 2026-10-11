@@ -13,7 +13,7 @@ interface Props {
 }
 
 export default function RhymeCompletionArena({ difficulty, onFinish }: Props) {
-  const currentDiff = (Math.max(1, Math.min(3, difficulty)) || 1) as DifficultyLevel;
+  const currentDiff = (Math.max(1, Math.min(5, difficulty)) || 1) as DifficultyLevel;
   const levelMeta = GAME_LEVEL_CONFIG['rhyme-completion']?.[currentDiff];
 
   const [round, setRound] = useState(1);
