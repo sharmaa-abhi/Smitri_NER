@@ -23,26 +23,24 @@ export default function Navbar() {
   const { t } = useLanguage();
   const { user, isLoggedIn, isLoaded, logout } = useAuth();
 
-  // Primary navigation links preserving exact labels and routes
-  const mainNav = [
+  // Guest/Visitor navigation links (Clean & focused)
+  const guestNav = [
     { name: t("nav_home") || "Home", href: "/" },
-    { name: t("nav_games") || "Games", href: "/games" },
     { name: t("nav_features") || "Features", href: "/features" },
+    { name: t("nav_games") || "Games", href: "/games" },
     { name: t("nav_blog") || "Blog", href: "/blog" },
-    { name: "Case Studies", href: "/case-studies" },
-    { name: t("nav_about") || "About", href: "/#about" },
-    { name: t("nav_contact") || "Contact", href: "/#contact" },
   ];
 
-  // Application links available inside mobile drawer
-  const appNav = [
+  // Logged-in navigation links (Elderly & Caregiver App features)
+  const authNav = [
     { name: t("nav_dashboard") || "Dashboard", href: "/dashboard" },
     { name: t("nav_games") || "Games", href: "/games" },
     { name: t("nav_reminders") || "Reminders", href: "/reminders" },
-    { name: t("nav_progress") || "Progress", href: "/progress" },
     { name: t("nav_caregiver") || "Caregiver", href: "/caregiver" },
-    { name: "Case Studies", href: "/case-studies" },
+    { name: t("nav_progress") || "Progress", href: "/progress" },
   ];
+
+  const currentNav = isLoaded && isLoggedIn ? authNav : guestNav;
 
   return (
     <header className="sticky top-3 sm:top-4 z-50 px-3 sm:px-6 lg:px-8 xl:px-10 w-full max-w-[1536px] 2xl:max-w-[1720px] mx-auto mb-4 sm:mb-6 pointer-events-none transition-all duration-300 animate-in fade-in slide-in-from-top-2 motion-reduce:animate-none">
@@ -104,18 +102,18 @@ export default function Navbar() {
             </div>
           </Link>
 
-          {/* Center Navigation Links */}
+          {/* Center Navigation Links - Dynamic per Auth State */}
           <nav 
             className="flex items-center gap-1 xl:gap-2 px-2 py-1 rounded-full bg-[#F6F8F7]/80 border border-[#E6ECEB]"
             aria-label="Main Navigation"
           >
-            {mainNav.map((item) => {
+            {currentNav.map((item) => {
               const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href) && item.href !== "/";
               return (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`relative px-3 xl:px-3.5 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all duration-200 cursor-pointer ${
+                  className={`relative px-3.5 xl:px-4 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all duration-200 cursor-pointer ${
                     isActive
                       ? "bg-gradient-to-r from-[#0B534B] to-[#0E685E] text-white shadow-[0_2px_8px_rgba(11,83,75,0.25)] font-bold"
                       : "text-[#5A6A66] hover:text-[#0B534B] hover:bg-white hover:shadow-2xs"
@@ -136,15 +134,28 @@ export default function Navbar() {
             {/* Auth Action Buttons */}
             {isLoaded && isLoggedIn ? (
               <div className="flex items-center gap-1.5 xl:gap-2">
+                {/* Emergency SOS Quick Button */}
                 <Link
-                  href="/dashboard"
-                  className="relative group inline-flex items-center gap-1.5 px-4 xl:px-5 py-2 rounded-full text-xs xl:text-sm font-black text-white bg-gradient-to-r from-[#0B534B] via-[#0E685E] to-[#10B981] shadow-[0_4px_14px_rgba(11,83,75,0.28)] hover:shadow-[0_6px_22px_rgba(11,83,75,0.38)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 overflow-hidden min-h-[38px] flex-shrink-0 cursor-pointer"
-                  aria-label={t("nav_dashboard") || "Go to Dashboard"}
+                  href="/emergency"
+                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-bold text-red-700 bg-red-50 hover:bg-red-100/90 border border-red-200/90 shadow-2xs transition-all duration-200 min-h-[38px] cursor-pointer"
+                  title={t("nav_emergency") || "Emergency SOS"}
+                  aria-label={t("nav_emergency") || "Emergency SOS"}
                 >
-                  <span className="relative z-10">{t("nav_dashboard") || "Dashboard"}</span>
-                  <span className="relative z-10 transition-transform duration-200 group-hover:translate-x-0.5">→</span>
+                  <ShieldAlert className="w-3.5 h-3.5 text-red-600 animate-pulse" />
+                  <span className="font-extrabold tracking-wide">SOS</span>
                 </Link>
 
+                {/* Profile Shortcut */}
+                <Link
+                  href="/profile"
+                  className="inline-flex items-center justify-center p-2 rounded-full text-[#5A6A66] hover:text-[#0B534B] bg-[#F6F8F7] hover:bg-[#E6F4F1] border border-[#D5DFDC] transition-all min-h-[38px] min-w-[38px] cursor-pointer"
+                  title={t("nav_profile") || "Profile"}
+                  aria-label={t("nav_profile") || "Profile"}
+                >
+                  <UserCircle className="w-4 h-4 text-[#0B534B]" />
+                </Link>
+
+                {/* Log Out */}
                 <button
                   type="button"
                   onClick={logout}
@@ -204,10 +215,21 @@ export default function Navbar() {
               <LanguageSelector buttonVariant="translucent" />
             </div>
 
+            {/* Emergency SOS quick pill on mobile */}
+            <Link
+              href="/emergency"
+              className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-full text-xs font-black text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 min-h-[38px] cursor-pointer"
+              title={t("nav_emergency") || "Emergency SOS"}
+              aria-label={t("nav_emergency") || "Emergency SOS"}
+            >
+              <ShieldAlert className="w-3.5 h-3.5 text-red-600 animate-pulse" />
+              <span>SOS</span>
+            </Link>
+
             {/* Primary CTA on mobile: Dashboard → */}
             <Link
               href="/dashboard"
-              className="inline-flex items-center gap-1 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full text-xs font-black text-white bg-gradient-to-r from-[#0B534B] to-[#10B981] shadow-[0_2px_10px_rgba(11,83,75,0.25)] hover:shadow-[0_4px_14px_rgba(11,83,75,0.35)] min-h-[40px] cursor-pointer"
+              className="inline-flex items-center gap-1 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full text-xs font-black text-white bg-gradient-to-r from-[#0B534B] to-[#10B981] shadow-[0_2px_10px_rgba(11,83,75,0.25)] hover:shadow-[0_4px_14px_rgba(11,83,75,0.35)] min-h-[38px] cursor-pointer"
               aria-label={t("nav_dashboard") || "Go to Dashboard"}
             >
               <span>Dashboard</span>
@@ -218,7 +240,7 @@ export default function Navbar() {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="min-h-[44px] min-w-[44px] flex items-center justify-center p-2 rounded-full border border-[#D5DFDC] bg-white/80 hover:bg-[#E6F4F1] transition-colors cursor-pointer"
+              className="min-h-[38px] min-w-[38px] flex items-center justify-center p-2 rounded-full border border-[#D5DFDC] bg-white/80 hover:bg-[#E6F4F1] transition-colors cursor-pointer"
               aria-label={mobileMenuOpen ? "Close Navigation Menu" : "Open Navigation Menu"}
               aria-expanded={mobileMenuOpen}
             >
@@ -283,13 +305,13 @@ export default function Navbar() {
               </div>
             )}
 
-            {/* Main Navigation links */}
+            {/* Dynamic Navigation links */}
             <div className="space-y-1">
               <span className="text-xs font-bold tracking-wider text-[#5A6A66]">
                 {t("nav_navigation") || "Navigation"}
               </span>
               <div className="space-y-0.5 pt-1">
-                {mainNav.map((item) => {
+                {currentNav.map((item) => {
                   const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href) && item.href !== "/";
                   return (
                     <Link
@@ -311,40 +333,21 @@ export default function Navbar() {
               </div>
             </div>
 
-            {/* Elderly & Caregiver quick feature links */}
-            <div className="border-t border-[#EBF0EE] pt-3 space-y-1">
-              <span className="text-xs font-bold tracking-wider text-[#5A6A66]">
-                {t("nav_care_features") || "Elderly & Caregiver Features"}
-              </span>
-              <div className="grid grid-cols-2 gap-2 pt-1">
-                {appNav.map((item) => (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-center min-h-[44px] px-3 py-2 rounded-xl text-sm font-bold bg-[#F6F8F7] text-[#111615] hover:bg-[#E6F4F1] hover:text-[#0B534B] text-center transition-colors cursor-pointer"
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            {/* Emergency and Profile links */}
-            <div className="border-t border-[#EBF0EE] pt-3 flex items-center justify-between gap-2">
+            {/* Quick Actions (Emergency SOS + Profile) */}
+            <div className="border-t border-[#EBF0EE] pt-3 grid grid-cols-2 gap-2">
               <Link
                 href="/emergency"
                 onClick={() => setMobileMenuOpen(false)}
-                className="inline-flex items-center justify-center min-h-[44px] gap-2 px-4 py-2 rounded-xl text-sm font-bold text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 transition-colors cursor-pointer"
+                className="inline-flex items-center justify-center min-h-[44px] gap-2 px-3 py-2 rounded-xl text-sm font-bold text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 transition-colors cursor-pointer"
               >
-                <ShieldAlert className="w-4 h-4" />
-                <span>{t("nav_emergency") || "Emergency Help"}</span>
+                <ShieldAlert className="w-4 h-4 text-red-600 animate-pulse" />
+                <span>{t("nav_emergency") || "Emergency SOS"}</span>
               </Link>
 
               <Link
                 href="/profile"
                 onClick={() => setMobileMenuOpen(false)}
-                className="inline-flex items-center justify-center min-h-[44px] gap-1.5 px-4 py-2 rounded-xl text-sm font-bold text-[#5A6A66] bg-[#F6F8F7] hover:bg-[#E6F4F1] hover:text-[#0B534B] transition-colors cursor-pointer"
+                className="inline-flex items-center justify-center min-h-[44px] gap-1.5 px-3 py-2 rounded-xl text-sm font-bold text-[#0B534B] bg-[#E6F4F1] hover:bg-[#d4ede7] border border-[#0B534B]/20 transition-colors cursor-pointer"
               >
                 <UserCircle className="w-4 h-4" />
                 <span>{t("nav_profile") || "Profile"}</span>
