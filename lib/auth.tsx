@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/client";
+import { useUser, useClerk } from "@clerk/nextjs";
 
 export interface AuthUser {
   id?: string;
@@ -53,6 +54,36 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const router = useRouter();
+  const { user: clerkUser, isLoaded: isClerkLoaded, isSignedIn: isClerkSignedIn } = useUser();
+  const { signOut: clerkSignOut } = useClerk();
+
+  // Sync Clerk authentication state
+  useEffect(() => {
+    if (!isClerkLoaded) return;
+    if (isClerkSignedIn && clerkUser) {
+      const email = clerkUser.primaryEmailAddress?.emailAddress || "";
+      const name = clerkUser.fullName || clerkUser.firstName || email.split("@")[0] || "Elderly Member";
+      const authUser: AuthUser = {
+        id: clerkUser.id,
+        email,
+        name,
+        age: (clerkUser.publicMetadata?.age as number) || 68,
+        emergencyName: (clerkUser.publicMetadata?.emergencyName as string) || "Caregiver",
+        emergencyPhone: (clerkUser.publicMetadata?.emergencyPhone as string) || "+91 98765 43210",
+        isDemo: false,
+      };
+      setUser(authUser);
+      setIsLoggedIn(true);
+      setIsLoaded(true);
+      try {
+        localStorage.setItem(LOGGED_IN_KEY, "true");
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(authUser));
+        document.cookie = `smitri_auth=true; path=/; max-age=${30 * 24 * 60 * 60}; SameSite=Lax`;
+      } catch (e) {
+        console.warn("Storage write error", e);
+      }
+    }
+  }, [isClerkLoaded, isClerkSignedIn, clerkUser]);
 
   // Initialize session from Supabase or localStorage
   useEffect(() => {
@@ -255,6 +286,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const logout = async () => {
     setUser(null);
     setIsLoggedIn(false);
+
+    try {
+      if (isClerkSignedIn) {
+        await clerkSignOut();
+      }
+    } catch (e) {
+      console.warn("Clerk signOut error:", e);
+    }
 
     try {
       const supabase = createClient();
