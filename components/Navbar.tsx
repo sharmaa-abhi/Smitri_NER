@@ -16,6 +16,7 @@ import {
 import LanguageSelector from "@/components/LanguageSelector";
 import { useLanguage } from "@/lib/i18n";
 import { useAuth } from "@/lib/auth";
+import { SignInButton, SignUpButton, Show, UserButton } from "@clerk/nextjs";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -131,9 +132,33 @@ export default function Navbar() {
             {/* Language Selector */}
             <LanguageSelector buttonVariant="translucent" />
 
-            {/* Auth Action Buttons */}
-            {isLoaded && isLoggedIn ? (
-              <div className="flex items-center gap-1.5 xl:gap-2">
+            {/* Clerk Authentication Controls */}
+            <div className="flex items-center gap-1.5 xl:gap-2">
+              <Show when="signed-out">
+                <SignInButton mode="modal">
+                  <button
+                    type="button"
+                    className="inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold text-[#0B534B] hover:text-[#083D37] bg-[#F6F8F7] hover:bg-[#E6F4F1] border border-[#0B534B]/30 hover:border-[#0B534B]/60 shadow-2xs transition-all duration-200 min-h-[38px] cursor-pointer flex-shrink-0"
+                    aria-label="Sign In"
+                  >
+                    <LogIn className="w-3.5 h-3.5 text-[#0B534B]" />
+                    <span>Sign In</span>
+                  </button>
+                </SignInButton>
+
+                <SignUpButton mode="modal">
+                  <button
+                    type="button"
+                    className="relative group inline-flex items-center gap-1.5 px-4 xl:px-5 py-2 rounded-full text-xs xl:text-sm font-black text-white bg-gradient-to-r from-[#0B534B] via-[#0E685E] to-[#10B981] shadow-[0_4px_14px_rgba(11,83,75,0.28)] hover:shadow-[0_6px_22px_rgba(11,83,75,0.38)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 overflow-hidden min-h-[38px] flex-shrink-0 cursor-pointer"
+                    aria-label="Sign Up"
+                  >
+                    <span className="relative z-10">Sign Up</span>
+                    <span className="relative z-10 transition-transform duration-200 group-hover:translate-x-0.5">→</span>
+                  </button>
+                </SignUpButton>
+              </Show>
+
+              <Show when="signed-in">
                 {/* Emergency SOS Quick Button */}
                 <Link
                   href="/emergency"
@@ -145,49 +170,13 @@ export default function Navbar() {
                   <span className="font-extrabold tracking-wide">SOS</span>
                 </Link>
 
-                {/* Profile Shortcut */}
-                <Link
-                  href="/profile"
-                  className="inline-flex items-center justify-center p-2 rounded-full text-[#5A6A66] hover:text-[#0B534B] bg-[#F6F8F7] hover:bg-[#E6F4F1] border border-[#D5DFDC] transition-all min-h-[38px] min-w-[38px] cursor-pointer"
-                  title={t("nav_profile") || "Profile"}
-                  aria-label={t("nav_profile") || "Profile"}
-                >
-                  <UserCircle className="w-4 h-4 text-[#0B534B]" />
-                </Link>
+                {/* Clerk User Button with built-in Profile & Account Management */}
+                <div className="flex items-center justify-center min-h-[38px] px-1">
+                  <UserButton />
+                </div>
+              </Show>
+            </div>
 
-                {/* Log Out */}
-                <button
-                  type="button"
-                  onClick={logout}
-                  className="group inline-flex items-center justify-center gap-1 px-3 py-1.5 rounded-full text-xs font-bold text-[#5A6A66] hover:text-red-700 bg-[#F6F8F7] hover:bg-red-50/80 border border-[#D5DFDC] hover:border-red-200 shadow-2xs transition-all duration-200 min-h-[38px] cursor-pointer flex-shrink-0"
-                  title={t("nav_logout") || "Log Out"}
-                  aria-label={t("nav_logout") || "Log Out"}
-                >
-                  <LogOut className="w-3.5 h-3.5 text-[#7A8D88] group-hover:text-red-600 transition-colors" />
-                  <span className="hidden xl:inline">{t("nav_logout") || "Log Out"}</span>
-                </button>
-              </div>
-            ) : (
-              <div className="flex items-center gap-1.5 xl:gap-2">
-                <Link
-                  href="/login"
-                  className="inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold text-[#0B534B] hover:text-[#083D37] bg-[#F6F8F7] hover:bg-[#E6F4F1] border border-[#0B534B]/30 hover:border-[#0B534B]/60 shadow-2xs transition-all duration-200 min-h-[38px] cursor-pointer flex-shrink-0"
-                  aria-label={t("nav_login") || "Log In to Account"}
-                >
-                  <LogIn className="w-3.5 h-3.5 text-[#0B534B]" />
-                  <span>{t("nav_login") || "Log In"}</span>
-                </Link>
-
-                <Link
-                  href="/dashboard"
-                  className="relative group inline-flex items-center gap-1.5 px-4 xl:px-5 py-2 rounded-full text-xs xl:text-sm font-black text-white bg-gradient-to-r from-[#0B534B] via-[#0E685E] to-[#10B981] shadow-[0_4px_14px_rgba(11,83,75,0.28)] hover:shadow-[0_6px_22px_rgba(11,83,75,0.38)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 overflow-hidden min-h-[38px] flex-shrink-0 cursor-pointer"
-                  aria-label={t("nav_dashboard") || "Go to Dashboard"}
-                >
-                  <span className="relative z-10">{t("nav_dashboard") || "Dashboard"}</span>
-                  <span className="relative z-10 transition-transform duration-200 group-hover:translate-x-0.5">→</span>
-                </Link>
-              </div>
-            )}
           </div>
         </div>
 
@@ -226,15 +215,22 @@ export default function Navbar() {
               <span>SOS</span>
             </Link>
 
-            {/* Primary CTA on mobile: Dashboard → */}
-            <Link
-              href="/dashboard"
-              className="inline-flex items-center gap-1 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full text-xs font-black text-white bg-gradient-to-r from-[#0B534B] to-[#10B981] shadow-[0_2px_10px_rgba(11,83,75,0.25)] hover:shadow-[0_4px_14px_rgba(11,83,75,0.35)] min-h-[38px] cursor-pointer"
-              aria-label={t("nav_dashboard") || "Go to Dashboard"}
-            >
-              <span>Dashboard</span>
-              <span className="text-[11px]">→</span>
-            </Link>
+            <Show when="signed-in">
+              <div className="flex items-center justify-center min-h-[38px]">
+                <UserButton />
+              </div>
+            </Show>
+            <Show when="signed-out">
+              <SignInButton mode="modal">
+                <button
+                  type="button"
+                  className="inline-flex items-center gap-1 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full text-xs font-black text-white bg-gradient-to-r from-[#0B534B] to-[#10B981] shadow-[0_2px_10px_rgba(11,83,75,0.25)] min-h-[38px] cursor-pointer"
+                >
+                  <span>Sign In</span>
+                </button>
+              </SignInButton>
+            </Show>
+
 
             {/* Accessible Hamburger Menu Button */}
             <button
@@ -262,48 +258,48 @@ export default function Navbar() {
             </div>
 
             {/* Auth Session State inside Drawer */}
-            {isLoggedIn ? (
-              <div className="bg-[#E6F4F1]/80 rounded-2xl p-3.5 border border-[#0B534B]/20 flex items-center justify-between">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-full bg-[#0B534B] text-white flex items-center justify-center font-bold text-xs">
-                    {user?.name ? user.name.charAt(0) : "U"}
+            <div className="pb-2">
+              <Show when="signed-in">
+                <div className="bg-[#E6F4F1]/80 rounded-2xl p-3 border border-[#0B534B]/20 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <UserButton />
+                    <span className="text-xs font-bold text-[#111615]">{user?.name || "Active Session"}</span>
                   </div>
-                  <div>
-                    <p className="text-xs font-bold text-[#111615] leading-tight">{user?.name || "Elderly Member"}</p>
-                    <p className="text-[10px] text-[#0B534B] font-semibold">Active Session</p>
-                  </div>
+                  <Link
+                    href="/emergency"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold text-red-600 bg-red-50 border border-red-200 cursor-pointer"
+                  >
+                    <ShieldAlert className="w-3.5 h-3.5 text-red-600 animate-pulse" />
+                    <span>SOS</span>
+                  </Link>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => {
-                    logout();
-                    setMobileMenuOpen(false);
-                  }}
-                  className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold text-red-600 bg-red-50 hover:bg-red-100 border border-red-200 cursor-pointer"
-                >
-                  <LogOut className="w-3.5 h-3.5" />
-                  <span>{t("nav_logout") || "Log Out"}</span>
-                </button>
-              </div>
-            ) : (
-              <div className="grid grid-cols-2 gap-2 pt-1">
-                <Link
-                  href="/login"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl text-sm font-bold text-[#0B534B] bg-[#E6F4F1] hover:bg-[#d4ede7] border border-[#0B534B]/20 text-center cursor-pointer"
-                >
-                  <LogIn className="w-4 h-4" />
-                  <span>{t("nav_login") || "Log In"}</span>
-                </Link>
-                <Link
-                  href="/dashboard"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-[#0B534B] to-[#10B981] shadow-xs text-center cursor-pointer"
-                >
-                  <span>Dashboard →</span>
-                </Link>
-              </div>
-            )}
+              </Show>
+              <Show when="signed-out">
+                <div className="grid grid-cols-2 gap-2 pt-1">
+                  <SignInButton mode="modal">
+                    <button
+                      type="button"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="w-full inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl text-sm font-bold text-[#0B534B] bg-[#E6F4F1] hover:bg-[#d4ede7] border border-[#0B534B]/20 text-center cursor-pointer"
+                    >
+                      <LogIn className="w-4 h-4" />
+                      <span>Sign In</span>
+                    </button>
+                  </SignInButton>
+                  <SignUpButton mode="modal">
+                    <button
+                      type="button"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="w-full inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-[#0B534B] to-[#10B981] shadow-xs text-center cursor-pointer"
+                    >
+                      <span>Sign Up →</span>
+                    </button>
+                  </SignUpButton>
+                </div>
+              </Show>
+            </div>
+
 
             {/* Dynamic Navigation links */}
             <div className="space-y-1">
@@ -333,24 +329,15 @@ export default function Navbar() {
               </div>
             </div>
 
-            {/* Quick Actions (Emergency SOS + Profile) */}
-            <div className="border-t border-[#EBF0EE] pt-3 grid grid-cols-2 gap-2">
+            {/* Quick Action: Emergency SOS */}
+            <div className="border-t border-[#EBF0EE] pt-3">
               <Link
                 href="/emergency"
                 onClick={() => setMobileMenuOpen(false)}
-                className="inline-flex items-center justify-center min-h-[44px] gap-2 px-3 py-2 rounded-xl text-sm font-bold text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 transition-colors cursor-pointer"
+                className="w-full inline-flex items-center justify-center min-h-[44px] gap-2 px-3 py-2 rounded-xl text-sm font-bold text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 transition-colors cursor-pointer"
               >
                 <ShieldAlert className="w-4 h-4 text-red-600 animate-pulse" />
                 <span>{t("nav_emergency") || "Emergency SOS"}</span>
-              </Link>
-
-              <Link
-                href="/profile"
-                onClick={() => setMobileMenuOpen(false)}
-                className="inline-flex items-center justify-center min-h-[44px] gap-1.5 px-3 py-2 rounded-xl text-sm font-bold text-[#0B534B] bg-[#E6F4F1] hover:bg-[#d4ede7] border border-[#0B534B]/20 transition-colors cursor-pointer"
-              >
-                <UserCircle className="w-4 h-4" />
-                <span>{t("nav_profile") || "Profile"}</span>
               </Link>
             </div>
           </div>

@@ -28,8 +28,12 @@ import {
 } from 'recharts';
 
 import ScrollReveal from '@/components/ScrollReveal';
+import { useUser } from '@clerk/nextjs';
+import { useAuth } from '@/lib/auth';
 
 export default function CaregiverPortalPage() {
+  const { user: clerkUser } = useUser();
+  const { user: authUser } = useAuth();
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [alertSending, setAlertSending] = useState(false);
@@ -75,7 +79,21 @@ export default function CaregiverPortalPage() {
       .catch(() => setLoading(false));
   }, []);
 
-  const user = data?.user || { name: 'Kamla Devi', age: 68, emergencyPhone: '+91 98765 43210' };
+  const clerkName = clerkUser?.fullName || 
+    [clerkUser?.firstName, clerkUser?.lastName].filter(Boolean).join(' ') || 
+    clerkUser?.firstName || 
+    clerkUser?.username || 
+    clerkUser?.primaryEmailAddress?.emailAddress?.split('@')[0];
+
+  const displayName = clerkName || authUser?.name || data?.user?.name || 'Member';
+
+  const user = {
+    ...(data?.user || {}),
+    ...(authUser || {}),
+    name: displayName,
+    age: data?.user?.age || authUser?.age || 68,
+    emergencyPhone: data?.user?.emergencyPhone || authUser?.emergencyPhone || '+91 98765 43210',
+  };
   const gameSessions = data?.gameSessions || [];
   const reminders = data?.reminders || [];
   const alerts = data?.caregiverAlerts || [];
