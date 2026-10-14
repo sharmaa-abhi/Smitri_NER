@@ -170,17 +170,7 @@ export default function Navbar() {
                   <span className="font-extrabold tracking-wide">SOS</span>
                 </Link>
 
-                {/* Profile Shortcut */}
-                <Link
-                  href="/profile"
-                  className="inline-flex items-center justify-center p-2 rounded-full text-[#5A6A66] hover:text-[#0B534B] bg-[#F6F8F7] hover:bg-[#E6F4F1] border border-[#D5DFDC] transition-all min-h-[38px] min-w-[38px] cursor-pointer"
-                  title={t("nav_profile") || "Profile"}
-                  aria-label={t("nav_profile") || "Profile"}
-                >
-                  <UserCircle className="w-4 h-4 text-[#0B534B]" />
-                </Link>
-
-                {/* Clerk User Button */}
+                {/* Clerk User Button with built-in Profile & Account Management */}
                 <div className="flex items-center justify-center min-h-[38px] px-1">
                   <UserButton />
                 </div>
@@ -273,7 +263,7 @@ export default function Navbar() {
                 <div className="bg-[#E6F4F1]/80 rounded-2xl p-3 border border-[#0B534B]/20 flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <UserButton />
-                    <span className="text-xs font-bold text-[#111615]">Account Profile</span>
+                    <span className="text-xs font-bold text-[#111615]">{user?.name || "Active Session"}</span>
                   </div>
                   <Link
                     href="/emergency"
@@ -339,24 +329,15 @@ export default function Navbar() {
               </div>
             </div>
 
-            {/* Quick Actions (Emergency SOS + Profile) */}
-            <div className="border-t border-[#EBF0EE] pt-3 grid grid-cols-2 gap-2">
+            {/* Quick Action: Emergency SOS */}
+            <div className="border-t border-[#EBF0EE] pt-3">
               <Link
                 href="/emergency"
                 onClick={() => setMobileMenuOpen(false)}
-                className="inline-flex items-center justify-center min-h-[44px] gap-2 px-3 py-2 rounded-xl text-sm font-bold text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 transition-colors cursor-pointer"
+                className="w-full inline-flex items-center justify-center min-h-[44px] gap-2 px-3 py-2 rounded-xl text-sm font-bold text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 transition-colors cursor-pointer"
               >
                 <ShieldAlert className="w-4 h-4 text-red-600 animate-pulse" />
                 <span>{t("nav_emergency") || "Emergency SOS"}</span>
-              </Link>
-
-              <Link
-                href="/profile"
-                onClick={() => setMobileMenuOpen(false)}
-                className="inline-flex items-center justify-center min-h-[44px] gap-1.5 px-3 py-2 rounded-xl text-sm font-bold text-[#0B534B] bg-[#E6F4F1] hover:bg-[#d4ede7] border border-[#0B534B]/20 transition-colors cursor-pointer"
-              >
-                <UserCircle className="w-4 h-4" />
-                <span>{t("nav_profile") || "Profile"}</span>
               </Link>
             </div>
           </div>

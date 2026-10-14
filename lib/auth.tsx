@@ -62,7 +62,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (!isClerkLoaded) return;
     if (isClerkSignedIn && clerkUser) {
       const email = clerkUser.primaryEmailAddress?.emailAddress || "";
-      const name = clerkUser.fullName || clerkUser.firstName || email.split("@")[0] || "Elderly Member";
+      const name = clerkUser.fullName || 
+                   [clerkUser.firstName, clerkUser.lastName].filter(Boolean).join(" ") || 
+                   clerkUser.firstName || 
+                   clerkUser.username || 
+                   (email ? email.split("@")[0] : "") || 
+                   "Member";
       const authUser: AuthUser = {
         id: clerkUser.id,
         email,

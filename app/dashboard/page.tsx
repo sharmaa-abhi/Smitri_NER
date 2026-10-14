@@ -34,6 +34,7 @@ import VoiceButton from '@/components/VoiceButton';
 import ScrollReveal from '@/components/ScrollReveal';
 import { useLanguage } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
+import { useUser } from '@clerk/nextjs';
 import { UserExperienceProfile } from '@/lib/experienceEngine';
 import {
   ResponsiveContainer,
@@ -48,6 +49,7 @@ import {
 export default function DashboardPage() {
   const { t } = useLanguage();
   const { user: authUser } = useAuth();
+  const { user: clerkUser } = useUser();
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [hydrationCount, setHydrationCount] = useState<number>(4);
@@ -125,16 +127,26 @@ export default function DashboardPage() {
     );
   }
 
-  const user = data?.user || authUser || { 
-    name: 'Sunita Devi', 
-    age: 72, 
-    city: 'Guwahati, Assam',
-    emergencyPhone: '+91 98765 11223',
-    emergencyName: 'Amit Sharma (Son / Caregiver)',
-    doctorName: 'Dr. Manab Barua',
-    doctorPhone: '+91 94350 12345',
-    dailyHydrationTarget: 6,
-    currentHydrationGlasses: 4
+  const clerkName = clerkUser?.fullName || 
+    [clerkUser?.firstName, clerkUser?.lastName].filter(Boolean).join(' ') || 
+    clerkUser?.firstName || 
+    clerkUser?.username || 
+    clerkUser?.primaryEmailAddress?.emailAddress?.split('@')[0];
+
+  const resolvedName = clerkName || authUser?.name || data?.user?.name || 'Member';
+
+  const user = {
+    ...(data?.user || {}),
+    ...(authUser || {}),
+    name: resolvedName,
+    age: data?.user?.age || authUser?.age || 68,
+    city: data?.user?.city || authUser?.city || 'Guwahati, Assam',
+    emergencyPhone: data?.user?.emergencyPhone || authUser?.emergencyPhone || '+91 98765 11223',
+    emergencyName: data?.user?.emergencyName || authUser?.emergencyName || 'Amit Sharma (Caregiver)',
+    doctorName: data?.user?.doctorName || authUser?.doctorName || 'Dr. Manab Barua',
+    doctorPhone: data?.user?.doctorPhone || authUser?.doctorPhone || '+91 94350 12345',
+    dailyHydrationTarget: data?.user?.dailyHydrationTarget || 6,
+    currentHydrationGlasses: hydrationCount,
   };
   const gameSessions = data?.gameSessions || [];
   const reminders = data?.reminders || [];
