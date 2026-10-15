@@ -138,6 +138,23 @@ function GameArenaContent() {
   const [gameFinished, setGameFinished] = useState<boolean>(false);
   const [gameKey, setGameKey] = useState<number>(0);
   const [completionData, setCompletionData] = useState<CompletionModalData | null>(null);
+  const [audioEnabled, setAudioEnabled] = useState<boolean>(true);
+  const [isSaving, setIsSaving] = useState<boolean>(false);
+
+  useEffect(() => {
+    setAudioEnabled(isGameAudioEnabled());
+    const handleAudioChange = (e: any) => {
+      if (e?.detail?.enabled !== undefined) setAudioEnabled(e.detail.enabled);
+    };
+    window.addEventListener('smitri_game_audio_changed', handleAudioChange);
+    return () => window.removeEventListener('smitri_game_audio_changed', handleAudioChange);
+  }, []);
+
+  const toggleAudio = () => {
+    const next = !audioEnabled;
+    setAudioEnabled(next);
+    setGameAudioEnabled(next);
+  };
 
   // URL verification: guard against manual URL manipulation attempting to access locked levels
   useEffect(() => {
@@ -196,6 +213,7 @@ function GameArenaContent() {
 
   const handleFinishGame = async (stats: FinishGameStats) => {
     setGameFinished(true);
+    setIsSaving(true);
 
     const safeAccuracy = Math.max(20, Math.min(100, stats.accuracy));
     const responseSec = elapsedTime;
@@ -239,12 +257,28 @@ function GameArenaContent() {
         sessionStorage.setItem('lastGameResult', JSON.stringify(data));
       }
     } catch {
+      const computedScore = Math.max(10, Math.min(100, Math.round(payload.accuracy * 0.5 + Math.min(30, (25 / Math.max(1, payload.responseTimeSec)) * 30) + Math.max(0, 20 - payload.mistakes * 4))));
+      const offlineSession = {
+        id: `s-${Date.now()}`,
+        userId,
+        gameId,
+        gameTitle: payload.gameTitle,
+        score: computedScore,
+        accuracy: payload.accuracy,
+        responseTimeSec: payload.responseTimeSec,
+        mistakes: payload.mistakes,
+        difficultyLevel: payload.currentDifficulty,
+        recommendedDifficulty: nextLvl || difficulty,
+        feedbackText: 'Great focus! Your level progress is recorded safely on your device.',
+        timestamp: new Date().toISOString(),
+      };
+
       try {
         await saveGameResultOffline({
           userId: userId || 'user_kamla',
           gameId,
           gameTitle: payload.gameTitle,
-          score: payload.accuracy,
+          score: computedScore,
           accuracy: payload.accuracy,
           responseTimeSec: payload.responseTimeSec,
           mistakes: payload.mistakes,
@@ -259,13 +293,18 @@ function GameArenaContent() {
         'lastGameResult',
         JSON.stringify({
           offline: true,
+          session: offlineSession,
           evaluation: {
-            score: payload.accuracy,
+            score: computedScore,
+            category: computedScore >= 80 ? 'Excellent' : computedScore >= 60 ? 'Good' : 'Needs Practice',
             recommendedDifficulty: nextLvl || difficulty,
             feedback: 'Offline Mode: Level progress recorded and saved safely on your device.',
+            voiceFeedback: 'Great job! Your progress has been saved.',
           },
         })
       );
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -305,6 +344,26 @@ function GameArenaContent() {
         </div>
 
         <div className="flex items-center gap-2.5">
+          {/* Sound Mute/Unmute Toggle */}
+          <button
+            type="button"
+            onClick={toggleAudio}
+            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl border text-sm font-bold transition-all cursor-pointer ${
+              audioEnabled
+                ? 'bg-[#E6F4F1] hover:bg-[#C2E5DF] border-[#93CEC5] text-[#0B534B]'
+                : 'bg-[#F6F8F7] hover:bg-[#E6F4F1] border-[#D5DFDC] text-[#5A6A66]'
+            }`}
+            aria-label={audioEnabled ? 'Mute game sound effects' : 'Turn on game sound effects'}
+            title={audioEnabled ? 'Mute game sound effects' : 'Turn on game sound effects'}
+          >
+            {audioEnabled ? (
+              <Volume2 className="w-4 h-4 text-[#0B534B]" />
+            ) : (
+              <VolumeX className="w-4 h-4 text-[#5A6A66]" />
+            )}
+            <span className="hidden sm:inline">{audioEnabled ? 'Sound On' : 'Muted'}</span>
+          </button>
+
           <div className="flex items-center gap-1.5 bg-[#F6F8F7] px-3.5 py-2 rounded-xl border border-[#D5DFDC] text-sm font-bold text-[#111615]">
             <Clock className="w-4 h-4 text-[#0B534B]" />
             <span>{elapsedTime}s</span>
@@ -314,12 +373,24 @@ function GameArenaContent() {
             type="button"
             onClick={restartGame}
             className="flex items-center gap-1.5 bg-[#F6F8F7] hover:bg-[#E6F4F1] px-3.5 py-2 rounded-xl border border-[#D5DFDC] text-sm font-bold text-[#0B534B] transition-colors cursor-pointer"
+            aria-label="Restart this level"
           >
             <RotateCcw className="w-4 h-4" />
-            <span>Restart</span>
+            <span className="hidden sm:inline">Restart</span>
           </button>
         </div>
       </div>
+
+      {/* Reassuring Saving State Feedback Banner */}
+      {isSaving && (
+        <div
+          className="bg-[#E6F4F1] border-2 border-[#10B981] p-3 rounded-2xl flex items-center justify-center gap-2.5 text-[#065F46] font-bold text-xs sm:text-sm shadow-sm animate-fade-in"
+          role="status"
+        >
+          <Loader2 className="w-4 h-4 animate-spin text-[#0B534B]" />
+          <span>Saving your exercise progress safely...</span>
+        </div>
+      )}
 
       {/* Sequential 5-Level Selection Bar */}
       <div className="bg-white rounded-2xl p-4 sm:p-5 border border-[#D5DFDC] shadow-sm space-y-3">
@@ -526,30 +597,34 @@ function GameArenaContent() {
 
             {/* Action Buttons */}
             <div className="space-y-3 pt-2">
-              {!completionData.isGameFullyCompleted && completionData.nextLevel ? (
+              {!completionData.isGameFullyCompleted && completionData.nextLevel && (
                 <button
                   type="button"
                   onClick={handleProceedToNextLevel}
-                  className="w-full py-4 px-6 bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white rounded-xl font-extrabold text-base shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full py-4 px-6 bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white rounded-xl font-extrabold text-base shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-[#10B981]"
                 >
-                  <span>Play Level {completionData.nextLevel}</span>
+                  <span>Continue to Level {completionData.nextLevel}</span>
                   <ArrowRight className="w-5 h-5" />
                 </button>
-              ) : (
-                <Link
-                  href="/results"
-                  className="w-full py-4 px-6 bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white rounded-xl font-extrabold text-base shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2"
-                >
-                  <Award className="w-5 h-5 text-[#F59E0B]" />
-                  <span>View Full Game Results & Analysis</span>
-                </Link>
               )}
+
+              <Link
+                href="/results"
+                className={`w-full py-3.5 px-6 rounded-xl font-extrabold text-sm sm:text-base transition-all flex items-center justify-center gap-2 ${
+                  completionData.isGameFullyCompleted || !completionData.nextLevel
+                    ? 'bg-[#0B534B] hover:bg-[#08433C] text-white shadow-md'
+                    : 'bg-[#E6F4F1] hover:bg-[#C2E5DF] text-[#0B534B] border border-[#93CEC5]'
+                }`}
+              >
+                <Award className="w-5 h-5 text-[#D97706]" />
+                <span>View Full Results &amp; Audio Report</span>
+              </Link>
 
               <div className="grid grid-cols-2 gap-3">
                 <button
                   type="button"
                   onClick={restartGame}
-                  className="py-3 px-4 bg-[#F6F8F7] hover:bg-[#E6F4F1] border border-[#D5DFDC] text-[#0B534B] rounded-xl font-bold text-sm transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="py-3 px-3 bg-[#F6F8F7] hover:bg-[#E6F4F1] border border-[#D5DFDC] text-[#0B534B] rounded-xl font-bold text-xs sm:text-sm transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   <RotateCcw className="w-4 h-4" />
                   <span>Replay Level {completionData.completedLevel}</span>
@@ -557,9 +632,19 @@ function GameArenaContent() {
 
                 <Link
                   href="/games"
-                  className="py-3 px-4 bg-[#F6F8F7] hover:bg-[#E6F4F1] border border-[#D5DFDC] text-[#111615] rounded-xl font-bold text-sm transition-colors flex items-center justify-center gap-1.5"
+                  className="py-3 px-3 bg-[#F6F8F7] hover:bg-[#E6F4F1] border border-[#D5DFDC] text-[#111615] rounded-xl font-bold text-xs sm:text-sm transition-colors flex items-center justify-center gap-1.5"
                 >
                   <span>Back to Games</span>
+                </Link>
+              </div>
+
+              <div className="pt-1 border-t border-[#D5DFDC]">
+                <Link
+                  href="/dashboard"
+                  className="w-full py-2.5 px-4 text-[#5A6A66] hover:text-[#0B534B] font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-colors"
+                >
+                  <Home className="w-4 h-4" />
+                  <span>Return to Main Dashboard</span>
                 </Link>
               </div>
             </div>
