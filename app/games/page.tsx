@@ -212,7 +212,7 @@ export default function GamesHubPage() {
             />
             <Link
               href="/dashboard"
-              className="px-4 py-2.5 bg-[#F6F8F7] hover:bg-[#E6F4F1] text-[#0B534B] font-bold text-xs sm:text-sm rounded-xl border border-[#D5DFDC] transition-colors"
+              className="py-2.5 px-4 bg-[#E6F4F1] hover:bg-[#C2E5DF] text-[#0B534B] font-bold text-xs sm:text-sm rounded-xl border border-[#93CEC5] transition-all"
             >
               {t("Back to Dashboard") || "Back to Dashboard"}
             </Link>
@@ -247,10 +247,10 @@ export default function GamesHubPage() {
                 key={stg.level} 
                 className="bg-[#F8FAF9] border border-[#D5DFDC] rounded-2xl p-3.5 space-y-1 text-center"
               >
-                <div className="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-black uppercase text-white bg-[#0B534B]">
+                <div className="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold text-white bg-[#0B534B]">
                   {stg.label}
                 </div>
-                <p className="text-[11px] text-[#5A6A66] font-medium leading-snug pt-1">
+                <p className="text-xs text-[#5A6A66] font-medium leading-snug pt-1">
                   {stg.desc}
                 </p>
               </div>
@@ -264,9 +264,9 @@ export default function GamesHubPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="bg-gradient-to-br from-[#042420] to-[#0B534B] text-white p-5 rounded-2xl shadow-md border border-[#0B534B] flex items-center justify-between">
             <div className="space-y-1">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#A7F3D0]">Consistency Streak</span>
+              <span className="text-xs font-bold text-[#A7F3D0]">Consistency Streak</span>
               <div className="text-3xl font-black">7 Days 🔥</div>
-              <p className="text-[11px] text-[#E6F4F1]/90">Played daily without missing</p>
+              <p className="text-xs text-white/90">Played daily without missing</p>
             </div>
             <div className="w-12 h-12 rounded-xl bg-white/15 flex items-center justify-center font-bold text-xl">
               🎯
@@ -275,20 +275,20 @@ export default function GamesHubPage() {
 
           <div className="bg-white p-5 rounded-2xl border border-[#D5DFDC] shadow-sm flex items-center justify-between">
             <div className="space-y-1">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#5A6A66]">Overall Accuracy</span>
+              <span className="text-xs font-bold text-[#5A6A66]">Overall Accuracy</span>
               <div className="text-3xl font-black text-[#10B981]">88%</div>
-              <p className="text-[11px] text-[#5A6A66]">Across all 9 real-life games</p>
+              <p className="text-xs text-[#5A6A66]">Across all 9 real-life games</p>
             </div>
-            <div className="w-12 h-12 rounded-xl bg-[#ECFDF5] text-[#047857] border border-[#10B981]/30 flex items-center justify-center font-bold text-lg">
+            <div className="w-12 h-12 rounded-xl bg-[#ECFDF5] text-[#0B534B] border border-[#10B981]/30 flex items-center justify-center font-bold text-lg">
               ✓
             </div>
           </div>
 
           <div className="bg-white p-5 rounded-2xl border border-[#D5DFDC] shadow-sm flex items-center justify-between">
             <div className="space-y-1">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#5A6A66]">Levels Available</span>
+              <span className="text-xs font-bold text-[#5A6A66]">Levels Available</span>
               <div className="text-2xl font-black text-[#111615]">45 Levels</div>
-              <p className="text-[11px] text-[#0B534B] font-semibold">5 Sequential per game</p>
+              <p className="text-xs text-[#0B534B] font-semibold">5 Sequential per game</p>
             </div>
             <div className="w-12 h-12 rounded-xl bg-[#E6F4F1] text-[#0B534B] border border-[#0B534B]/20 flex items-center justify-center font-bold text-lg">
               ⚡
@@ -297,11 +297,11 @@ export default function GamesHubPage() {
 
           <div className="bg-white p-5 rounded-2xl border border-[#D5DFDC] shadow-sm flex items-center justify-between">
             <div className="space-y-1">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#5A6A66]">Adaptive Engine</span>
+              <span className="text-xs font-bold text-[#5A6A66]">Adaptive Engine</span>
               <div className="text-2xl font-black text-[#D97706]">Active</div>
-              <p className="text-[11px] text-[#5A6A66]">Sequential level unlock</p>
+              <p className="text-xs text-[#5A6A66]">Sequential level unlock</p>
             </div>
-            <div className="w-12 h-12 rounded-xl bg-[#FFFBEB] text-[#B45309] border border-[#D97706]/30 flex items-center justify-center font-bold text-lg">
+            <div className="w-12 h-12 rounded-xl bg-[#FFFBEB] text-[#D97706] border border-[#D97706]/30 flex items-center justify-center font-bold text-lg">
               ★
             </div>
           </div>
@@ -364,10 +364,10 @@ export default function GamesHubPage() {
                       <Icon className="w-6 h-6" />
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-[10px] font-black uppercase tracking-wider bg-[#F6F8F7] text-[#5A6A66] px-2.5 py-1 rounded-full border border-[#D5DFDC]">
+                      <span className="text-xs font-bold bg-[#F6F8F7] text-[#5A6A66] px-3 py-1 rounded-full border border-[#D5DFDC]">
                         {game.tag}
                       </span>
-                      <span className="text-xs font-black text-[#0B534B] bg-[#E6F4F1] border border-[#0B534B]/20 px-2 py-0.5 rounded-md">
+                      <span className="text-xs font-bold text-[#0B534B] bg-[#E6F4F1] border border-[#0B534B]/20 px-2.5 py-0.5 rounded-md">
                         {isGameAllCompleted ? '5/5 Mastered 🏆' : `Level ${highestUnlocked}/5`}
                       </span>
                     </div>
@@ -386,10 +386,10 @@ export default function GamesHubPage() {
                   {/* 5-Level Sequential Progress Chips */}
                   <div className="bg-[#FAFCFB] rounded-2xl p-3 border border-[#D5DFDC] space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-[11px] font-black uppercase tracking-wider text-[#0B534B] flex items-center gap-1">
-                        <Zap className="w-3 h-3 text-[#D97706]" /> 5 Progressive Levels:
+                      <span className="text-xs font-bold text-[#0B534B] flex items-center gap-1.5">
+                        <Zap className="w-3.5 h-3.5 text-[#D97706]" /> 5 Progressive Levels:
                       </span>
-                      <span className="text-[10px] text-[#5A6A66] font-bold">
+                      <span className="text-xs text-[#5A6A66] font-medium">
                         {completedSet.size} of 5 Completed
                       </span>
                     </div>
@@ -404,11 +404,11 @@ export default function GamesHubPage() {
                             <Link
                               key={lvl}
                               href={`/games/${game.id}?level=${lvl}`}
-                              className="py-1 px-1 bg-[#ECFDF5] hover:bg-[#D1FAE5] border border-[#10B981] rounded-xl text-center transition-all flex flex-col items-center justify-center gap-0.5"
+                              className="py-1.5 px-2 bg-[#ECFDF5] hover:bg-[#D1FAE5] border border-[#10B981] rounded-xl text-center transition-all flex flex-col items-center justify-center gap-0.5"
                               title={`Level ${lvl} Completed (Replayable)`}
                             >
-                              <span className="text-[10px] font-black text-[#065F46] flex items-center gap-0.5">
-                                L{lvl} <Check className="w-2.5 h-2.5 text-[#059669]" />
+                              <span className="text-xs font-bold text-[#0B534B] flex items-center gap-1">
+                                L{lvl} <Check className="w-3 h-3 text-[#0B534B]" />
                               </span>
                             </Link>
                           );
@@ -419,11 +419,11 @@ export default function GamesHubPage() {
                             <Link
                               key={lvl}
                               href={`/games/${game.id}?level=${lvl}`}
-                              className="py-1 px-1 bg-[#E6F4F1] hover:bg-[#C2E5DF] border border-[#0B534B] rounded-xl text-center transition-all flex flex-col items-center justify-center gap-0.5 shadow-sm"
+                              className="py-1.5 px-2 bg-[#E6F4F1] hover:bg-[#C2E5DF] border border-[#0B534B] rounded-xl text-center transition-all flex flex-col items-center justify-center gap-0.5 shadow-sm"
                               title={`Level ${lvl} Unlocked (Play)`}
                             >
-                              <span className="text-[10px] font-black text-[#0B534B] flex items-center gap-0.5">
-                                L{lvl} <Play className="w-2.5 h-2.5 fill-[#0B534B]" />
+                              <span className="text-xs font-bold text-[#0B534B] flex items-center gap-1">
+                                L{lvl} <Play className="w-3 h-3 fill-[#0B534B]" />
                               </span>
                             </Link>
                           );
@@ -432,11 +432,11 @@ export default function GamesHubPage() {
                         return (
                           <div
                             key={lvl}
-                            className="py-1 px-1 bg-[#F3F5F4] border border-[#E5E9E8] rounded-xl text-center flex flex-col items-center justify-center gap-0.5 opacity-60 cursor-not-allowed"
+                            className="py-1.5 px-2 bg-[#F8FAF9] border border-[#D5DFDC] rounded-xl text-center flex flex-col items-center justify-center gap-0.5 opacity-60 cursor-not-allowed"
                             title={`Level ${lvl} Locked (Complete Level ${lvl - 1} first)`}
                           >
-                            <span className="text-[10px] font-bold text-[#9CA3AF] flex items-center gap-0.5">
-                              L{lvl} <Lock className="w-2.5 h-2.5 text-[#9CA3AF]" />
+                            <span className="text-xs font-semibold text-[#5A6A66] flex items-center gap-1">
+                              L{lvl} <Lock className="w-3 h-3 text-[#5A6A66]" />
                             </span>
                           </div>
                         );
@@ -466,7 +466,7 @@ export default function GamesHubPage() {
 
                   <Link
                     href={`/games/${game.id}?level=${highestUnlocked}`}
-                    className="w-full py-3.5 px-5 bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white rounded-xl font-extrabold text-sm sm:text-base shadow-sm hover:shadow transition-all flex items-center justify-center gap-2 cursor-pointer"
+                    className="w-full py-3.5 px-5 bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white rounded-xl font-bold text-sm sm:text-base shadow-sm hover:shadow transition-all flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <Play className="w-4 h-4 fill-white" />
                     <span>
@@ -486,21 +486,21 @@ export default function GamesHubPage() {
       <ScrollReveal direction="up" delay={150}>
         <div className="bg-gradient-to-r from-[#042420] to-[#0B534B] text-white rounded-3xl p-6 sm:p-7 border border-[#0B534B]/30 shadow-md flex flex-col md:flex-row items-center justify-between gap-5">
           <div className="space-y-1.5 text-center md:text-left">
-            <div className="inline-flex items-center gap-2 text-[#F59E0B] text-xs font-bold">
+            <div className="inline-flex items-center gap-2 text-[#D97706] text-xs font-bold">
               <ShieldCheck className="w-4 h-4" />
               <span>Dignity & Calm-First Design</span>
             </div>
             <h3 className="text-lg sm:text-xl font-bold">
               Cognitive Exercises Designed for Real Senior Life
             </h3>
-            <p className="text-xs sm:text-sm text-[#E6F4F1]/90 max-w-2xl leading-relaxed">
+            <p className="text-xs sm:text-sm text-white/90 max-w-2xl leading-relaxed">
               Scores are never penalized for slow response or errors. Players begin at Level 1 and advance through all five levels at their own relaxed pace.
             </p>
           </div>
 
           <Link
             href="/dashboard"
-            className="px-6 py-3.5 bg-[#10B981] hover:bg-[#059669] text-white rounded-xl font-black text-sm shadow-md transition-all flex items-center gap-2 flex-shrink-0"
+            className="py-3.5 px-6 bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white rounded-xl font-bold text-sm shadow-sm hover:shadow transition-all flex items-center gap-2 flex-shrink-0 border border-white/20"
           >
             <span>Return to Daily Routine</span>
             <ArrowRight className="w-4 h-4" />
