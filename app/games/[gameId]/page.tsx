@@ -14,12 +14,17 @@ import {
   Play, 
   Trophy, 
   ArrowRight,
-  Award
+  Award,
+  Volume2,
+  VolumeX,
+  Home,
+  Loader2
 } from 'lucide-react';
 import VoiceButton from '@/components/VoiceButton';
 import { GameId, FinishGameStats, DifficultyLevel } from '@/types/games';
 import { saveGameResultOffline } from '@/lib/offlineStorage';
 import { GAME_LEVEL_CONFIG } from '@/data/gameBanks';
+import { isGameAudioEnabled, setGameAudioEnabled } from '@/lib/gameAudio';
 import { 
   getGameProgress, 
   isLevelUnlocked, 

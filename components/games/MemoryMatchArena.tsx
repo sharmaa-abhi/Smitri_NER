@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-import { Shapes } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Shapes, CheckCircle2, Sparkles, Heart } from 'lucide-react';
 import { FinishGameStats, DifficultyLevel } from '@/types/games';
 import { ICONS_BANK_BY_LEVEL, GAME_LEVEL_CONFIG } from '@/data/gameBanks';
 import { shuffleArray } from '@/lib/algorithms/shuffle';
+import { playSoftTapSound, playGentleSuccessSound, playGentleRetrySound, playCelebrationSound } from '@/lib/gameAudio';
 
 interface Props {
   difficulty: number;
@@ -20,6 +21,9 @@ export default function MemoryMatchArena({ difficulty, onFinish }: Props) {
   const [mistakes, setMistakes] = useState(0);
   const [totalAttempts, setTotalAttempts] = useState(0);
   const [announcement, setAnnouncement] = useState<string>('');
+  const [feedbackMessage, setFeedbackMessage] = useState<string>('Tap two cards to find a matching pair.');
+  const [isProcessing, setIsProcessing] = useState(false);
+  const finishTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const iconSet = ICONS_BANK_BY_LEVEL[currentDiff] || ICONS_BANK_BY_LEVEL[1];
@@ -33,10 +37,18 @@ export default function MemoryMatchArena({ difficulty, onFinish }: Props) {
     setFlippedCards([]);
     setMistakes(0);
     setTotalAttempts(0);
+    setIsProcessing(false);
+    setFeedbackMessage('Tap any card to turn it over.');
+    return () => {
+      if (finishTimeoutRef.current) clearTimeout(finishTimeoutRef.current);
+    };
   }, [currentDiff]);
 
   const handleCardClick = (index: number) => {
-    if (cards[index].flipped || cards[index].matched || flippedCards.length === 2) return;
+    // Guard against clicks when processing or already revealed
+    if (isProcessing || cards[index].flipped || cards[index].matched || flippedCards.length === 2) return;
+
+    playSoftTapSound();
 
     const newCards = [...cards];
     newCards[index].flipped = true;
@@ -47,37 +59,57 @@ export default function MemoryMatchArena({ difficulty, onFinish }: Props) {
 
     if (newFlipped.length === 1) {
       setAnnouncement(`First card flipped: ${newCards[index].icon}`);
+      setFeedbackMessage(`Card opened! Now tap another card to find the matching pair.`);
     }
 
     if (newFlipped.length === 2) {
-      setTotalAttempts((prev) => prev + 1);
+      setIsProcessing(true);
+      const newAttempts = totalAttempts + 1;
+      setTotalAttempts(newAttempts);
       const [firstIdx, secondIdx] = newFlipped;
 
       if (newCards[firstIdx].icon === newCards[secondIdx].icon) {
+        playGentleSuccessSound();
         setAnnouncement(`Match found! Pair of ${newCards[firstIdx].icon}`);
+        setFeedbackMessage(`Wonderful match! Pair found. ✓`);
+
         setTimeout(() => {
           newCards[firstIdx].matched = true;
           newCards[secondIdx].matched = true;
           setCards([...newCards]);
           setFlippedCards([]);
+          setIsProcessing(false);
 
-          if (newCards.every((c) => c.matched)) {
+          const allMatched = newCards.every((c) => c.matched);
+          if (allMatched) {
+            playCelebrationSound();
             setAnnouncement('All pairs matched! Fantastic work!');
-            onFinish({
-              accuracy: Math.max(50, 100 - mistakes * 8),
-              mistakes,
-              totalAttempts: totalAttempts + 1,
-            });
+            setFeedbackMessage('All pairs successfully matched! Great job!');
+            finishTimeoutRef.current = setTimeout(() => {
+              onFinish({
+                accuracy: Math.max(50, 100 - mistakes * 8),
+                mistakes,
+                totalAttempts: newAttempts,
+              });
+            }, 600);
+          } else {
+            setFeedbackMessage(`Great! Find the next matching pair.`);
           }
-        }, 500);
+        }, 550);
       } else {
-        setMistakes((prev) => prev + 1);
-        setAnnouncement('Not a match. Cards will flip back.');
+        playGentleRetrySound();
+        const newMistakes = mistakes + 1;
+        setMistakes(newMistakes);
+        setAnnouncement('Not a match. Cards will gently flip back.');
+        setFeedbackMessage(`Not quite matching. Take your time to remember where they were.`);
+
         setTimeout(() => {
           newCards[firstIdx].flipped = false;
           newCards[secondIdx].flipped = false;
           setCards([...newCards]);
           setFlippedCards([]);
+          setIsProcessing(false);
+          setFeedbackMessage(`Pick two cards to try again.`);
         }, 1100);
       }
     }
@@ -101,18 +133,27 @@ export default function MemoryMatchArena({ difficulty, onFinish }: Props) {
           {levelMeta?.badge || `Level ${currentDiff}`}
         </span>
         <div className="inline-flex items-center gap-1.5 bg-[#E6F4F1] text-[#0B534B] border border-[#93CEC5] px-3.5 py-1 rounded-full font-bold text-xs sm:text-sm">
-          <Shapes className="w-3.5 h-3.5 text-[#0B534B]" />
+          <Shapes className="w-4 h-4 text-[#0B534B]" />
           <span>Matched {matchedPairsCount} of {totalPairsCount} Pairs</span>
         </div>
       </div>
 
-      <div className="text-center space-y-0.5">
+      <div className="text-center space-y-1">
         <h3 className="text-2xl sm:text-3xl font-black text-[#111615]">
           Find the Matching Pairs
         </h3>
         <p className="text-xs sm:text-sm text-[#0B534B] font-semibold">
-          {levelMeta?.subtitle}
+          {levelMeta?.subtitle || 'Tap two cards to reveal and pair them up.'}
         </p>
+      </div>
+
+      {/* Reassuring In-Game Feedback Banner */}
+      <div
+        className="w-full max-w-md py-2 px-4 rounded-xl text-xs sm:text-sm font-bold bg-[#F2F8F6] text-[#0B534B] border border-[#93CEC5] flex items-center justify-center gap-2 text-center"
+        role="status"
+      >
+        <Sparkles className="w-4 h-4 text-[#D97706] flex-shrink-0" />
+        <span>{feedbackMessage}</span>
       </div>
 
       <div
@@ -136,8 +177,8 @@ export default function MemoryMatchArena({ difficulty, onFinish }: Props) {
               key={card.id}
               type="button"
               onClick={() => handleCardClick(idx)}
-              disabled={card.flipped || card.matched}
-              className={`rounded-2xl font-bold flex items-center justify-center transition-all duration-300 shadow-md border-2 cursor-pointer focus-visible:ring-2 focus-visible:ring-[#0B534B] focus-visible:ring-offset-2 ${
+              disabled={card.flipped || card.matched || isProcessing}
+              className={`rounded-2xl font-bold flex flex-col items-center justify-center transition-all duration-300 shadow-md border-2 cursor-pointer focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-[#0B534B] focus-visible:ring-offset-2 ${
                 cards.length <= 8
                   ? 'h-28 sm:h-32 text-4xl sm:text-5xl'
                   : cards.length <= 12
@@ -145,14 +186,17 @@ export default function MemoryMatchArena({ difficulty, onFinish }: Props) {
                   : 'h-20 sm:h-24 text-2xl sm:text-3xl'
               } ${
                 card.matched
-                  ? 'bg-[#ECFDF5] border-[#10B981] text-[#059669] opacity-90 scale-95'
+                  ? 'bg-[#ECFDF5] border-[#10B981] text-[#059669] ring-2 ring-[#A7F3D0] shadow-none'
                   : card.flipped
-                  ? 'bg-[#FFFBEB] border-[#D97706] text-[#111615] scale-105 shadow-lg'
-                  : 'bg-[#0B534B] hover:bg-[#08433C] border-[#06342E] text-white hover:scale-102'
+                  ? 'bg-[#FFFBEB] border-[#D97706] text-[#111615] ring-2 ring-[#FDE68A] shadow-lg'
+                  : 'bg-[#0B534B] hover:bg-[#08433C] border-[#06342E] text-white hover:scale-102 active:scale-98'
               }`}
               aria-label={cardLabel}
             >
-              {card.flipped || card.matched ? card.icon : '❓'}
+              <span>{card.flipped || card.matched ? card.icon : '❓'}</span>
+              {card.matched && (
+                <span className="text-[10px] font-extrabold text-[#059669] mt-0.5">✓ Matched</span>
+              )}
             </button>
           );
         })}
