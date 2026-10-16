@@ -29,7 +29,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="max-w-xl mx-auto py-8 px-4 flex flex-col items-center justify-center space-y-6">
+    <div className="max-w-xl mx-auto py-8 pb-36 sm:pb-44 px-4 flex flex-col items-center justify-center space-y-6">
       {/* Clerk Official Sign In Component */}
       <div className="w-full flex justify-center">
         <SignIn routing="hash" signUpUrl="/register" fallbackRedirectUrl="/dashboard" />
@@ -55,6 +55,9 @@ export default function LoginPage() {
         <Shield className="w-4 h-4 text-[#0B534B]" />
         <span>Secured by Clerk Authentication & Smitri_NER</span>
       </div>
+
+      {/* Trailing clearance spacer so floating SOS dock never covers content */}
+      <div className="h-10 sm:h-14 w-full pointer-events-none" />
     </div>
   );
 }

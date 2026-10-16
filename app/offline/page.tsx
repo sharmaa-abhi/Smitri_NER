@@ -11,7 +11,7 @@ export default function OfflineFallbackPage() {
   };
 
   return (
-    <div className="min-h-[70vh] flex items-center justify-center py-10 px-4">
+    <div className="min-h-[70vh] flex flex-col items-center justify-center py-10 pb-36 sm:pb-44 px-4">
       <div className="max-w-xl w-full bg-white rounded-3xl p-8 sm:p-10 shadow-sm border-2 border-[#D5DFDC] text-center">
         {/* Offline Icon Badge */}
         <div className="w-20 h-20 bg-[#FFFBEB] rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-[#D97706]/30">
@@ -64,6 +64,9 @@ export default function OfflineFallbackPage() {
           <span>Everything will automatically sync with your caregiver when internet returns.</span>
         </div>
       </div>
+
+      {/* Trailing clearance spacer so floating SOS dock never covers content */}
+      <div className="h-10 sm:h-14 w-full pointer-events-none" />
     </div>
   );
 }

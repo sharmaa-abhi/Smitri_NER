@@ -205,7 +205,7 @@ export default function FeaturesPage() {
   };
 
   return (
-    <div className="space-y-10 py-2 pb-24 max-w-6xl mx-auto">
+    <div className="space-y-10 py-2 pb-36 sm:pb-44 max-w-6xl mx-auto">
       {/* ========================================================================= */}
       {/* SIMPLE CLEAN HEADER                                                       */}
       {/* ========================================================================= */}
@@ -867,6 +867,9 @@ export default function FeaturesPage() {
 
         </div>
       </div>
+
+      {/* Trailing clearance spacer so floating SOS dock never covers content */}
+      <div className="h-10 sm:h-14 w-full pointer-events-none" />
     </div>
   );
 }

@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-import { Clock } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Clock, CheckCircle2, HelpCircle } from 'lucide-react';
 import { FinishGameStats, DifficultyLevel } from '@/types/games';
 import { CLOCK_QUESTIONS_BY_LEVEL, GAME_LEVEL_CONFIG, ClockQuestion } from '@/data/gameBanks';
 import { shuffleArray } from '@/lib/algorithms/shuffle';
 import { calculateClockAngles } from '@/lib/algorithms/clockTrig';
+import { playGentleSuccessSound, playGentleRetrySound, playCelebrationSound } from '@/lib/gameAudio';
 
 interface Props {
   difficulty: number;
@@ -22,40 +23,79 @@ export default function ClockReadingArena({ difficulty, onFinish }: Props) {
   const [mistakes, setMistakes] = useState(0);
   const [totalAttempts, setTotalAttempts] = useState(0);
 
+  // UX Feedback states
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [feedback, setFeedback] = useState<{ message: string; type: 'success' | 'retry' | null }>({
+    message: '',
+    type: null,
+  });
+  const [isProcessing, setIsProcessing] = useState(false);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
   useEffect(() => {
     setupRound(currentDiff, 1);
     setMistakes(0);
     setTotalAttempts(0);
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
   }, [currentDiff]);
 
   const setupRound = (diff: DifficultyLevel, roundNum: number) => {
     setRound(roundNum);
+    setSelectedOption(null);
+    setFeedback({ message: '', type: null });
+    setIsProcessing(false);
+
     const bank = CLOCK_QUESTIONS_BY_LEVEL[diff] || CLOCK_QUESTIONS_BY_LEVEL[1];
     const q = bank[(roundNum - 1) % bank.length];
     setCurrentQuestion(q);
 
-    // Level 1 has 2 decoys (3 options), Level 2 & 3 have 3 decoys (4 options)
     const decoyCount = diff === 1 ? 2 : 3;
     const opts = shuffleArray([q.timeString, ...q.decoys.slice(0, decoyCount)]);
     setOptions(opts);
   };
 
   const handleSelect = (chosenTime: string) => {
-    if (!currentQuestion) return;
-    setTotalAttempts((prev) => prev + 1);
+    if (!currentQuestion || isProcessing) return;
+
+    setIsProcessing(true);
+    setSelectedOption(chosenTime);
+    const newAttempts = totalAttempts + 1;
+    setTotalAttempts(newAttempts);
 
     if (chosenTime === currentQuestion.timeString) {
-      if (round >= 3) {
-        onFinish({
-          accuracy: Math.max(60, 100 - mistakes * 12),
-          mistakes,
-          totalAttempts: totalAttempts + 1,
-        });
-      } else {
-        setupRound(currentDiff, round + 1);
-      }
+      playGentleSuccessSound();
+      setFeedback({
+        message: `Spot on! The clock shows ${currentQuestion.timeString} — ${currentQuestion.label}. ✓`,
+        type: 'success',
+      });
+
+      timerRef.current = setTimeout(() => {
+        if (round >= 3) {
+          playCelebrationSound();
+          onFinish({
+            accuracy: Math.max(60, 100 - mistakes * 12),
+            mistakes,
+            totalAttempts: newAttempts,
+          });
+        } else {
+          setupRound(currentDiff, round + 1);
+        }
+      }, 700);
     } else {
-      setMistakes((prev) => prev + 1);
+      playGentleRetrySound();
+      const newMistakes = mistakes + 1;
+      setMistakes(newMistakes);
+      setFeedback({
+        message: `Not quite. Look carefully at where the short hour hand is pointing. Try another!`,
+        type: 'retry',
+      });
+
+      timerRef.current = setTimeout(() => {
+        setSelectedOption(null);
+        setIsProcessing(false);
+      }, 800);
     }
   };
 
@@ -65,6 +105,11 @@ export default function ClockReadingArena({ difficulty, onFinish }: Props) {
 
   return (
     <div className="space-y-6 w-full max-w-xl text-center">
+      {/* Screen Reader Live Region */}
+      <div className="sr-only" role="status" aria-live="polite">
+        {feedback.message}
+      </div>
+
       <div className="flex flex-wrap items-center justify-center gap-2">
         <span
           className="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider text-white"
@@ -73,7 +118,7 @@ export default function ClockReadingArena({ difficulty, onFinish }: Props) {
           {levelMeta?.badge || `Level ${currentDiff}`}
         </span>
         <div className="inline-flex items-center gap-1.5 bg-[#E6F4F1] text-[#0B534B] border border-[#93CEC5] px-3.5 py-1 rounded-full font-bold text-xs sm:text-sm">
-          <Clock className="w-3.5 h-3.5 text-[#0B534B]" />
+          <Clock className="w-4 h-4 text-[#0B534B]" />
           <span>Routine Time Check {round} of 3</span>
         </div>
       </div>
@@ -83,12 +128,31 @@ export default function ClockReadingArena({ difficulty, onFinish }: Props) {
           What time does the clock show?
         </h3>
         <p className="text-xs sm:text-sm font-semibold text-[#0B534B]">
-          Routine: <span className="underline decoration-[#D97706] decoration-2">{currentQuestion.label}</span>
+          Daily Moment: <span className="underline decoration-[#D97706] decoration-2">{currentQuestion.label}</span>
         </p>
         <p className="text-xs text-[#5A6A66]">
-          {levelMeta?.subtitle}
+          {levelMeta?.subtitle || 'Match the analog clock hands to the routine moment.'}
         </p>
       </div>
+
+      {/* Gentle In-Game Guidance Message */}
+      {feedback.message && (
+        <div
+          className={`py-2 px-4 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all ${
+            feedback.type === 'success'
+              ? 'bg-[#ECFDF5] text-[#065F46] border border-[#10B981]'
+              : 'bg-[#FFFBEB] text-[#92400E] border border-[#FDE68A]'
+          }`}
+          role="status"
+        >
+          {feedback.type === 'success' ? (
+            <CheckCircle2 className="w-4 h-4 text-[#10B981] flex-shrink-0" />
+          ) : (
+            <HelpCircle className="w-4 h-4 text-[#D97706] flex-shrink-0" />
+          )}
+          <span>{feedback.message}</span>
+        </div>
+      )}
 
       {/* SVG Analog Clock Face */}
       <div className="flex justify-center py-2">
@@ -111,7 +175,7 @@ export default function ClockReadingArena({ difficulty, onFinish }: Props) {
             />
           ))}
 
-          <svg className="w-full h-full" viewBox="0 0 200 200">
+          <svg className="w-full h-full" viewBox="0 0 200 200" aria-label="Analog clock face">
             {/* Hour Hand */}
             <line
               x1="100"
@@ -140,18 +204,36 @@ export default function ClockReadingArena({ difficulty, onFinish }: Props) {
         </div>
       </div>
 
-      {/* Digital Time Options */}
+      {/* Digital Time Options (Large, Touch-Friendly, Accessible) */}
       <div className={`grid gap-3.5 pt-2 max-w-md mx-auto ${options.length <= 3 ? 'grid-cols-3' : 'grid-cols-2 sm:grid-cols-4'}`}>
-        {options.map((timeOpt, idx) => (
-          <button
-            key={idx}
-            type="button"
-            onClick={() => handleSelect(timeOpt)}
-            className="py-3.5 px-3 bg-white hover:bg-[#E6F4F1] border-2 border-[#D5DFDC] hover:border-[#0B534B] rounded-2xl font-black text-base sm:text-lg text-[#111615] shadow-sm hover:scale-105 active:scale-95 transition-all"
-          >
-            {timeOpt}
-          </button>
-        ))}
+        {options.map((timeOpt, idx) => {
+          const isSelected = selectedOption === timeOpt;
+          const isCorrect = isSelected && timeOpt === currentQuestion.timeString;
+          const isWrong = isSelected && timeOpt !== currentQuestion.timeString;
+
+          let btnStyles = 'bg-white hover:bg-[#E6F4F1] border-[#D5DFDC] hover:border-[#0B534B] text-[#111615]';
+          if (isCorrect) {
+            btnStyles = 'bg-[#ECFDF5] border-3 border-[#10B981] text-[#047857] ring-4 ring-[#A7F3D0] shadow-md';
+          } else if (isWrong) {
+            btnStyles = 'bg-[#FFFBEB] border-3 border-[#F59E0B] text-[#92400E] ring-4 ring-[#FDE68A]';
+          }
+
+          return (
+            <button
+              key={idx}
+              type="button"
+              disabled={isProcessing}
+              onClick={() => handleSelect(timeOpt)}
+              aria-label={`Time option: ${timeOpt}`}
+              className={`py-4 px-3 border-2 rounded-2xl font-black text-base sm:text-lg shadow-sm transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-[#0B534B] ${btnStyles} ${
+                !isProcessing ? 'hover:scale-104 active:scale-96' : ''
+              }`}
+            >
+              <span>{timeOpt}</span>
+              {isCorrect && <span className="block text-xs font-bold mt-0.5">✓ Correct</span>}
+            </button>
+          );
+        })}
       </div>
     </div>
   );

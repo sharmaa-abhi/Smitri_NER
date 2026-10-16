@@ -8,7 +8,8 @@ import {
   Clock, 
   Target, 
   CheckCircle2, 
-  AlertCircle 
+  AlertCircle,
+  Activity
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -23,7 +24,6 @@ import {
   Legend,
 } from 'recharts';
 import VoiceButton from '@/components/VoiceButton';
-import ScrollReveal from '@/components/ScrollReveal';
 
 export default function ProgressPage() {
   const [data, setData] = useState<any>(null);
@@ -44,7 +44,6 @@ export default function ProgressPage() {
   const count = timeRange === '7' ? 7 : 30;
   const sessions = gameSessions.slice(-count);
 
-  // Compute metrics
   const avgScore = sessions.length
     ? Math.round(sessions.reduce((acc: number, s: any) => acc + s.score, 0) / sessions.length)
     : 76;
@@ -55,7 +54,7 @@ export default function ProgressPage() {
     ? (sessions.reduce((acc: number, s: any) => acc + s.responseTimeSec, 0) / sessions.length).toFixed(1)
     : '21.0';
 
-  const chartData = sessions.map((s: any, idx: number) => ({
+  const chartData = sessions.map((s: any) => ({
     name: new Date(s.timestamp).toLocaleDateString(undefined, { weekday: 'short', month: 'numeric', day: 'numeric' }),
     score: s.score,
     accuracy: s.accuracy,
@@ -65,152 +64,191 @@ export default function ProgressPage() {
   const voiceSummary = `In your past ${timeRange} days of exercises, your average cognitive score is ${avgScore} out of 100, and your average accuracy is ${avgAccuracy} percent. Keep up your wonderful steady rhythm!`;
 
   return (
-    <div className="space-y-6 pb-16">
-      {/* Header */}
-      <ScrollReveal direction="down">
-        <div className="bg-white rounded-2xl p-5 sm:p-7 border border-[#D5DFDC] shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div className="space-y-1.5">
-            <div className="inline-flex items-center gap-1.5 bg-[#FFFBEB] text-[#B45309] px-3 py-1 rounded-full text-xs font-bold border border-[#D97706]/30">
-              <TrendingUp className="w-3.5 h-3.5 text-[#D97706]" />
-              <span>Rhythm & Growth History</span>
+    <div className="space-y-8 pb-36 sm:pb-44 max-w-5xl mx-auto">
+      {/* ─── 1. Header ─── */}
+      <header className="bg-white rounded-2xl p-6 sm:p-7 border border-[#D5DFDC] shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-5">
+        <div className="space-y-2">
+          <div className="inline-flex items-center gap-2 bg-[#ECFDF5] text-[#065F46] px-3 py-1 rounded-full text-xs font-bold border border-[#A7F3D0]">
+            <TrendingUp className="w-4 h-4 text-[#059669]" />
+            <span>Cognitive History &amp; Vitality</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#111615] tracking-tight">
+            Your Cognitive Progress
+          </h1>
+          <p className="text-[17px] sm:text-[18px] text-[#374151] font-normal leading-relaxed">
+            Review your consistency, recall accuracy, and cognitive rhythm over time.
+          </p>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-3 flex-shrink-0 pt-2 md:pt-0">
+          <VoiceButton
+            textToRead={voiceSummary}
+            buttonLabel="Read Progress"
+            className="min-h-[48px] px-5 text-base font-semibold"
+          />
+
+          {/* Range Switcher */}
+          <div className="flex bg-[#F9FAFB] p-1.5 rounded-xl border border-[#D5DFDC]">
+            <button
+              type="button"
+              onClick={() => setTimeRange('7')}
+              className={`min-h-[40px] px-4 py-2 rounded-lg font-bold text-sm transition-all cursor-pointer ${
+                timeRange === '7' ? 'bg-[#0B534B] text-white shadow-xs' : 'text-[#4B5563] hover:text-[#0B534B]'
+              }`}
+            >
+              Past 7 Days
+            </button>
+            <button
+              type="button"
+              onClick={() => setTimeRange('30')}
+              className={`min-h-[40px] px-4 py-2 rounded-lg font-bold text-sm transition-all cursor-pointer ${
+                timeRange === '30' ? 'bg-[#0B534B] text-white shadow-xs' : 'text-[#4B5563] hover:text-[#0B534B]'
+              }`}
+            >
+              Past 30 Days
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* ─── 2. Metric Overview Cards ─── */}
+      <section aria-label="Progress metrics">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
+          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-xs flex flex-col justify-between min-h-[148px]">
+            <div className="flex items-center justify-between">
+              <span className="text-xs sm:text-sm font-bold text-[#5A6A66] uppercase tracking-wider">
+                Average Score
+              </span>
+              <div className="w-11 h-11 rounded-xl bg-[#E6F4F1] text-[#0B534B] border border-[#93CEC5] flex items-center justify-center">
+                <Award className="w-5 h-5" />
+              </div>
             </div>
-            <h1 className="text-xl sm:text-2xl font-extrabold text-[#111615] tracking-tight">
-              Your Progress & History
-            </h1>
-            <p className="text-xs sm:text-sm text-[#5A6A66] font-medium">
-              Celebrate your consistency and cognitive exercises over time.
-            </p>
+            <div className="pt-2">
+              <div className="flex items-baseline gap-1">
+                <span className="text-3xl sm:text-4xl font-extrabold text-[#0B534B]">{avgScore}</span>
+                <span className="text-base font-bold text-[#5A6A66]">/ 100</span>
+              </div>
+              <p className="text-sm font-medium text-[#4B5563] mt-1">Across {sessions.length} sessions</p>
+            </div>
           </div>
 
-          <div className="flex items-center gap-2.5">
-            <VoiceButton
-              textToRead={voiceSummary}
-              buttonLabel="Read Progress"
-            />
+          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-xs flex flex-col justify-between min-h-[148px]">
+            <div className="flex items-center justify-between">
+              <span className="text-xs sm:text-sm font-bold text-[#5A6A66] uppercase tracking-wider">
+                Average Accuracy
+              </span>
+              <div className="w-11 h-11 rounded-xl bg-[#ECFDF5] text-[#059669] border border-[#A7F3D0] flex items-center justify-center">
+                <CheckCircle2 className="w-5 h-5" />
+              </div>
+            </div>
+            <div className="pt-2">
+              <span className="text-3xl sm:text-4xl font-extrabold text-[#059669]">{avgAccuracy}%</span>
+              <p className="text-sm font-medium text-[#4B5563] mt-1">Precise choice rate</p>
+            </div>
+          </div>
 
-            {/* Range Switcher */}
-            <div className="flex bg-[#F6F8F7] p-1 rounded-xl border border-[#D5DFDC]">
-              <button
-                type="button"
-                onClick={() => setTimeRange('7')}
-                className={`px-3.5 py-1.5 rounded-lg font-bold text-xs transition-all ${
-                  timeRange === '7' ? 'bg-[#0B534B] text-white shadow-sm' : 'text-[#5A6A66] hover:text-[#0B534B]'
-                }`}
-              >
-                7 Days
-              </button>
-              <button
-                type="button"
-                onClick={() => setTimeRange('30')}
-                className={`px-3.5 py-1.5 rounded-lg font-bold text-xs transition-all ${
-                  timeRange === '30' ? 'bg-[#0B534B] text-white shadow-sm' : 'text-[#5A6A66] hover:text-[#0B534B]'
-                }`}
-              >
-                30 Days
-              </button>
+          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-xs flex flex-col justify-between min-h-[148px]">
+            <div className="flex items-center justify-between">
+              <span className="text-xs sm:text-sm font-bold text-[#5A6A66] uppercase tracking-wider">
+                Average Response Time
+              </span>
+              <div className="w-11 h-11 rounded-xl bg-[#FFFBEB] text-[#D97706] border border-[#FDE68A] flex items-center justify-center">
+                <Clock className="w-5 h-5" />
+              </div>
+            </div>
+            <div className="pt-2">
+              <div className="flex items-baseline gap-1">
+                <span className="text-3xl sm:text-4xl font-extrabold text-[#111615]">{avgResponse}</span>
+                <span className="text-base font-bold text-[#5A6A66]">seconds</span>
+              </div>
+              <p className="text-sm font-medium text-[#4B5563] mt-1">Comfortable, unrushed speed</p>
             </div>
           </div>
         </div>
-      </ScrollReveal>
+      </section>
 
-      {/* Summary KPI Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        {[
-          {
-            label: 'Average Score',
-            val: avgScore,
-            sub: '/ 100',
-            desc: 'Steady focus across all games',
-            color: 'text-[#0B534B]',
-            icon: Award,
-            iconColor: 'text-[#0B534B]',
-          },
-          {
-            label: 'Average Accuracy',
-            val: `${avgAccuracy}%`,
-            desc: 'Careful and deliberate matching',
-            color: 'text-[#10B981]',
-            icon: Target,
-            iconColor: 'text-[#10B981]',
-          },
-          {
-            label: 'Avg Response Time',
-            val: `${avgResponse}s`,
-            desc: 'Calm and comfortable speed',
-            color: 'text-[#D97706]',
-            icon: Clock,
-            iconColor: 'text-[#D97706]',
-          },
-        ].map((card, idx) => (
-          <ScrollReveal key={card.label} direction="up" delay={80 + idx * 60}>
-            <div className="bg-white rounded-2xl p-4 sm:p-5 border border-[#D5DFDC] shadow-sm space-y-1.5 h-full">
-              <div className="flex items-center justify-between text-[#5A6A66]">
-                <span className="text-[11px] font-bold uppercase tracking-wider">{card.label}</span>
-                <card.icon className={`w-4 h-4 ${card.iconColor}`} />
-              </div>
-              <div className={`text-3xl sm:text-4xl font-black ${card.color}`}>
-                {card.val} {card.sub && <span className="text-base font-semibold text-[#5A6A66]">{card.sub}</span>}
-              </div>
-              <p className="text-xs text-[#5A6A66] font-medium">{card.desc}</p>
+      {/* ─── 3. Score Trajectory Chart ─── */}
+      <section aria-label="Score trajectory chart">
+        <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#D5DFDC] shadow-xs space-y-4">
+          <div className="flex items-center justify-between pb-3 border-b border-[#E5E7EB]">
+            <div>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-[#111615]">
+                Cognitive Vitality Over Time
+              </h2>
+              <p className="text-sm text-[#4B5563]">
+                Daily score consistency over the past {timeRange} days
+              </p>
             </div>
-          </ScrollReveal>
-        ))}
-      </div>
+          </div>
 
-      {/* Chart 1: Daily Cognitive Score Trend */}
-      <ScrollReveal direction="up" delay={150}>
-        <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-sm space-y-3.5">
-          <h2 className="text-lg sm:text-xl font-bold text-[#111615]">
-            Cognitive Score Evolution ({timeRange}-Day View)
-          </h2>
-
-          <div className="h-72 w-full pt-4">
+          <div className="h-64 w-full pt-2">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={chartData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#D5DFDC" />
-                <XAxis dataKey="name" stroke="#5A6A66" fontSize={13} fontWeight="bold" />
-                <YAxis domain={[40, 100]} stroke="#5A6A66" fontSize={13} fontWeight="bold" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+                <XAxis dataKey="name" stroke="#6B7280" fontSize={12} fontWeight="600" />
+                <YAxis domain={[50, 100]} stroke="#6B7280" fontSize={12} fontWeight="600" />
                 <Tooltip
                   contentStyle={{
                     backgroundColor: '#042420',
                     color: '#fff',
                     borderRadius: '12px',
-                    border: '1px solid #0B534B',
-                    fontWeight: 'bold',
+                    border: '1px solid rgba(16, 185, 129, 0.3)',
+                    fontSize: '13px',
                   }}
                 />
-                <Legend />
                 <Line
                   type="monotone"
-                  name="Cognitive Score"
                   dataKey="score"
                   stroke="#0B534B"
-                  strokeWidth={4}
-                  dot={{ r: 5, fill: '#0B534B' }}
-                />
-                <Line
-                  type="monotone"
-                  name="Accuracy %"
-                  dataKey="accuracy"
-                  stroke="#10B981"
                   strokeWidth={3}
-                  strokeDasharray="4 4"
+                  dot={{ r: 5, fill: '#0B534B' }}
+                  activeDot={{ r: 7, fill: '#059669' }}
                 />
               </LineChart>
             </ResponsiveContainer>
           </div>
         </div>
-      </ScrollReveal>
+      </section>
 
-      {/* Non-Medical Notice Footer */}
-      <ScrollReveal direction="up" delay={180}>
-        <div className="bg-[#F6F8F7] rounded-2xl p-6 border border-[#D5DFDC] flex items-start gap-4">
-          <AlertCircle className="w-6 h-6 text-[#5A6A66] flex-shrink-0 mt-0.5" />
-          <p className="text-base text-[#5A6A66] font-medium leading-relaxed">
-            These scores are for prototype demonstration and cognitive engagement purposes only. They do not constitute a medical diagnosis, clinical test, or dementia screen.
-          </p>
+      {/* ─── 4. Response Time Bar Chart ─── */}
+      <section aria-label="Response time chart">
+        <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#D5DFDC] shadow-xs space-y-4">
+          <div className="flex items-center justify-between pb-3 border-b border-[#E5E7EB]">
+            <div>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-[#111615]">
+                Recall Response Time (Seconds)
+              </h2>
+              <p className="text-sm text-[#4B5563]">
+                Pacing per exercise (unhurried and relaxed)
+              </p>
+            </div>
+          </div>
+
+          <div className="h-64 w-full pt-2">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={chartData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+                <XAxis dataKey="name" stroke="#6B7280" fontSize={12} fontWeight="600" />
+                <YAxis stroke="#6B7280" fontSize={12} fontWeight="600" />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: '#042420',
+                    color: '#fff',
+                    borderRadius: '12px',
+                    border: '1px solid rgba(16, 185, 129, 0.3)',
+                    fontSize: '13px',
+                  }}
+                  formatter={(val: any) => [`${val}s`, 'Pace']}
+                />
+                <Bar dataKey="response" fill="#10B981" radius={[8, 8, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
         </div>
-      </ScrollReveal>
+      </section>
+
+      {/* ─── 5. Clearance Buffer for Floating SOS Control ─── */}
+      <div className="h-10 sm:h-14 w-full pointer-events-none" aria-hidden="true" />
     </div>
   );
 }

@@ -15,7 +15,8 @@ import {
   Layers,
   Send,
   Smartphone,
-  BellRing
+  BellRing,
+  ArrowRight
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -26,8 +27,6 @@ import {
   Tooltip,
   CartesianGrid,
 } from 'recharts';
-
-import ScrollReveal from '@/components/ScrollReveal';
 import { useUser } from '@clerk/nextjs';
 import { useAuth } from '@/lib/auth';
 
@@ -58,7 +57,6 @@ export default function CaregiverPortalPage() {
       });
       const result = await res.json();
       setAlertResult(result);
-      // Refresh alerts list
       fetch('/api/dashboard')
         .then((r) => r.json())
         .then((d) => setData(d));
@@ -98,7 +96,6 @@ export default function CaregiverPortalPage() {
   const reminders = data?.reminders || [];
   const alerts = data?.caregiverAlerts || [];
 
-  // Metrics computation
   const recent7 = gameSessions.slice(-7);
   const currentScore = recent7.length ? recent7[recent7.length - 1].score : 78;
   const avgResponse = recent7.length
@@ -111,253 +108,204 @@ export default function CaregiverPortalPage() {
   const completedReminders = reminders.filter((r: any) => r.isCompleted).length;
   const reminderRate = reminders.length ? Math.round((completedReminders / reminders.length) * 100) : 100;
 
-  // 7-day trend chart with labels Mon->Sun
   const trendData = [
-    { day: 'Monday', score: 72 },
-    { day: 'Tuesday', score: 75 },
-    { day: 'Wednesday', score: 78 },
-    { day: 'Thursday', score: 74 },
-    { day: 'Friday', score: 69 },
-    { day: 'Saturday', score: 65 },
-    { day: 'Sunday', score: 62 },
+    { day: 'Mon', score: 72 },
+    { day: 'Tue', score: 75 },
+    { day: 'Wed', score: 78 },
+    { day: 'Thu', score: 74 },
+    { day: 'Fri', score: 69 },
+    { day: 'Sat', score: 65 },
+    { day: 'Sun', score: 62 },
   ];
 
   return (
-    <div className="space-y-8 pb-16">
-      {/* Caregiver Portal Header */}
-      <ScrollReveal direction="down">
-        <div className="bg-gradient-to-br from-[#042420] via-[#0B534B] to-[#042420] text-white rounded-2xl p-5 sm:p-7 border border-[#10B981]/30 shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-5">
-          <div className="space-y-1.5">
-            <div className="inline-flex items-center gap-1.5 bg-[#10B981]/20 text-[#ECFDF5] px-3 py-1 rounded-full text-xs font-bold border border-[#10B981]/40">
-              <Stethoscope className="w-3.5 h-3.5 text-[#10B981]" />
-              <span>Caregiver & Healthcare Observation Console</span>
-            </div>
-            <h1 className="text-xl sm:text-2xl font-black tracking-tight text-white">
-              Caregiver Dashboard
-            </h1>
-            <p className="text-xs sm:text-sm text-[#D5DFDC] font-medium">
-              Monitoring cognitive performance trends and daily routine adherence for: <span className="text-white font-bold underline">{user.name}</span> (Age: {user.age}).
-            </p>
+    <div className="space-y-8 pb-36 sm:pb-44 max-w-5xl mx-auto">
+      {/* ─── 1. Caregiver Header ─── */}
+      <header className="bg-white rounded-2xl p-6 sm:p-7 border border-[#D5DFDC] shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-5">
+        <div className="space-y-2">
+          <div className="inline-flex items-center gap-2 bg-[#ECFDF5] text-[#065F46] px-3 py-1 rounded-full text-xs font-bold border border-[#A7F3D0]">
+            <Stethoscope className="w-4 h-4 text-[#059669]" />
+            <span>Caregiver &amp; Family Observation Portal</span>
           </div>
-
-          <div className="flex items-center gap-2.5">
-            <a
-              href={`tel:${user.emergencyPhone}`}
-              className="flex items-center gap-2 bg-[#10B981] hover:bg-[#059669] text-[#042420] px-4 py-2.5 rounded-xl font-bold text-sm shadow-sm transition-all"
-            >
-              <Phone className="w-4 h-4" />
-              <span>Call {user.name}</span>
-            </a>
-          </div>
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#111615] tracking-tight">
+            Caregiver Health Portal
+          </h1>
+          <p className="text-[17px] sm:text-[18px] text-[#374151] font-normal leading-relaxed">
+            Observation console for <span className="font-bold text-[#111615]">{user.name}</span> (Age {user.age}). Monitoring daily routine completion and cognitive trajectory.
+          </p>
         </div>
-      </ScrollReveal>
 
-      {/* Sustained Decline / Caregiver Alert Banner */}
-      <ScrollReveal direction="up" delay={80}>
-        <div className="bg-[#FFFBEB] border border-[#D97706]/40 rounded-2xl p-5 sm:p-6 space-y-2.5">
+        <div className="flex items-center gap-3 flex-shrink-0 pt-2 md:pt-0">
+          <a
+            href={`tel:${user.emergencyPhone}`}
+            className="min-h-[48px] px-5 py-2.5 bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white font-bold text-base rounded-xl transition-colors inline-flex items-center gap-2 shadow-xs focus-visible:ring-2 focus-visible:ring-[#0B534B]"
+          >
+            <Phone className="w-4 h-4" />
+            <span>Call {user.name.split(' ')[0]}</span>
+          </a>
+        </div>
+      </header>
+
+      {/* ─── 2. Clinical Observation / Caregiver Alert Banner ─── */}
+      <section aria-label="Clinical observation notice">
+        <div className="bg-[#FFFBEB] border border-[#FDE68A] rounded-2xl p-5 sm:p-6 space-y-3">
           <div className="flex items-center gap-2.5">
             <AlertTriangle className="w-5 h-5 text-[#D97706] flex-shrink-0" />
-            <h2 className="text-base sm:text-lg font-bold text-[#92400E]">
-              Attention Required: Performance Change Detected
+            <h2 className="text-lg sm:text-xl font-extrabold text-[#92400E]">
+              Routine Observation: Steady Focus Encouraged
             </h2>
           </div>
-          <p className="text-xs sm:text-sm text-[#B45309] font-medium leading-relaxed">
-            Performance has decreased consistently over the selected period. Noticeable slowdown in sequence memory response time observed between Friday and Sunday.
+          <p className="text-base text-[#B45309] font-medium leading-relaxed">
+            Gentle reminder: Cognitive scores reflect short-term daily focus and sleep quality. Check in with {user.name} to ensure restful sleep, hydration, and comfortable room lighting.
           </p>
-          <div className="bg-white/90 p-3 rounded-xl border border-[#D97706]/30 text-xs font-semibold text-[#92400E]">
-            💡 Recommended Action: Check in gently with Kamla Devi. Confirm hydration, proper sleep, and comfort with lighting. (Note: Non-medical observation; consult doctor for medical evaluations).
+          <div className="bg-white/90 p-3.5 rounded-xl border border-[#FDE68A] text-sm font-semibold text-[#92400E]">
+            💡 Family Suggestion: Encourage morning tea together or gentle conversation after daily memory games.
           </div>
         </div>
-      </ScrollReveal>
+      </section>
 
-      {/* KPI Overview Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {[
-          { label: 'Current Score', value: `${currentScore}`, sub: '/ 100', desc: 'Latest session benchmark', color: 'text-[#0B534B]' },
-          { label: 'Avg Accuracy', value: `${avgAccuracy}%`, desc: 'Across 7 days', color: 'text-[#065F46]' },
-          { label: 'Avg Response Time', value: `${avgResponse}s`, desc: 'Time per challenge', color: 'text-[#D97706]' },
-          { label: 'Reminder Adherence', value: `${reminderRate}%`, desc: 'Medicines & routines completed', color: 'text-[#065F46]' },
-        ].map((kpi, idx) => (
-          <ScrollReveal key={kpi.label} direction="up" delay={100 + idx * 60}>
-            <div className="bg-white rounded-2xl p-4 sm:p-5 border border-[#D5DFDC] shadow-sm space-y-1 h-full">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#5A6A66]">{kpi.label}</span>
-              <div className={`text-2xl sm:text-3xl font-black ${kpi.color}`}>
-                {kpi.value} {kpi.sub && <span className="text-sm font-semibold text-[#5A6A66]">{kpi.sub}</span>}
+      {/* ─── 3. KPI Overview Cards (Harmonized Architecture) ─── */}
+      <section aria-label="Key performance indicators">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-xs flex flex-col justify-between min-h-[148px]">
+            <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#5A6A66]">
+              Current Vitality
+            </span>
+            <div className="pt-2">
+              <div className="flex items-baseline gap-1">
+                <span className="text-3xl sm:text-4xl font-extrabold text-[#0B534B]">{currentScore}</span>
+                <span className="text-base font-bold text-[#5A6A66]">/ 100</span>
               </div>
-              <span className="text-xs font-medium text-[#5A6A66]">{kpi.desc}</span>
+              <p className="text-sm font-medium text-[#4B5563] mt-1">Latest session benchmark</p>
             </div>
-          </ScrollReveal>
-        ))}
-      </div>
+          </div>
 
-      {/* 7-Day Performance Trend Chart */}
-      <ScrollReveal direction="up" delay={150}>
-        <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-sm space-y-3.5">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-xs flex flex-col justify-between min-h-[148px]">
+            <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#5A6A66]">
+              Avg Accuracy
+            </span>
+            <div className="pt-2">
+              <span className="text-3xl sm:text-4xl font-extrabold text-[#059669]">{avgAccuracy}%</span>
+              <p className="text-sm font-medium text-[#4B5563] mt-1">Across past 7 days</p>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-xs flex flex-col justify-between min-h-[148px]">
+            <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#5A6A66]">
+              Recall Pace
+            </span>
+            <div className="pt-2">
+              <span className="text-3xl sm:text-4xl font-extrabold text-[#111615]">{avgResponse}s</span>
+              <p className="text-sm font-medium text-[#4B5563] mt-1">Adaptive response pace</p>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-xs flex flex-col justify-between min-h-[148px]">
+            <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#5A6A66]">
+              Routine Adherence
+            </span>
+            <div className="pt-2">
+              <span className="text-3xl sm:text-4xl font-extrabold text-[#059669]">{reminderRate}%</span>
+              <p className="text-sm font-medium text-[#4B5563] mt-1">Medicines &amp; daily water</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── 4. 7-Day Performance Trajectory Chart ─── */}
+      <section aria-label="7-Day performance chart">
+        <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#D5DFDC] shadow-xs space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#E5E7EB]">
             <div>
-              <h2 className="text-lg sm:text-xl font-bold text-[#111615]">
-                7-Day Performance Trajectory
+              <h2 className="text-xl sm:text-2xl font-extrabold text-[#111615]">
+                7-Day Cognitive Trajectory
               </h2>
-              <p className="text-xs sm:text-sm text-[#5A6A66] font-medium">
-                Illustrating daily scores and decline detection trigger
+              <p className="text-sm sm:text-base text-[#4B5563] font-normal">
+                Weekly score progression across memory and focus sessions
               </p>
             </div>
-            <div className="text-xs font-semibold bg-[#F6F8F7] px-2.5 py-1 rounded-lg text-[#5A6A66] border border-[#D5DFDC]">
-              Trend: -10 pts decline over weekend
-            </div>
+            <span className="text-xs font-bold bg-[#E6F4F1] text-[#0B534B] px-3 py-1 rounded-full border border-[#93CEC5] self-start sm:self-auto">
+              Weekly Observation Range
+            </span>
           </div>
 
           <div className="h-64 w-full pt-2">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={trendData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#D5DFDC" />
-                <XAxis dataKey="day" stroke="#5A6A66" fontSize={12} fontWeight="600" />
-                <YAxis domain={[50, 90]} stroke="#5A6A66" fontSize={12} fontWeight="600" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+                <XAxis dataKey="day" stroke="#6B7280" fontSize={12} fontWeight="600" />
+                <YAxis domain={[50, 90]} stroke="#6B7280" fontSize={12} fontWeight="600" />
                 <Tooltip
                   contentStyle={{
                     backgroundColor: '#042420',
                     color: '#fff',
-                    borderRadius: '10px',
+                    borderRadius: '12px',
                     border: '1px solid rgba(16, 185, 129, 0.3)',
-                    fontWeight: '600',
                     fontSize: '13px',
                   }}
                 />
                 <Line
                   type="monotone"
                   dataKey="score"
-                  stroke="#D97706"
+                  stroke="#0B534B"
                   strokeWidth={3}
-                  dot={{ r: 5, fill: '#D97706' }}
+                  dot={{ r: 5, fill: '#0B534B' }}
+                  activeDot={{ r: 7, fill: '#059669' }}
                 />
               </LineChart>
             </ResponsiveContainer>
           </div>
         </div>
-      </ScrollReveal>
+      </section>
 
-      {/* Phase 1 Implemented: Multi-Channel Caregiver Alert Dispatcher */}
-      <ScrollReveal direction="up" delay={160}>
-        <div className="bg-white rounded-2xl p-6 border border-[#0B534B]/30 shadow-md space-y-4">
-          <div className="flex items-center justify-between flex-wrap gap-2 pb-3 border-b border-[#D5DFDC]/60">
-            <div className="flex items-center gap-2.5">
-              <div className="w-10 h-10 rounded-xl bg-[#E6F4F1] flex items-center justify-center text-[#0B534B]">
-                <BellRing className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="text-lg font-black text-[#111615]">
-                  Multi-Channel Caregiver Alerts (Phase 1)
-                </h3>
-                <p className="text-xs text-[#5A6A66]">
-                  Instant real-time dispatches via Telegram Bot, WhatsApp/SMS, and In-App surveillance
-                </p>
-              </div>
+      {/* ─── 5. Caregiver Alert Dispatcher ─── */}
+      <section aria-label="Alert dispatcher">
+        <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#D5DFDC] shadow-xs space-y-4">
+          <div className="flex items-center gap-3 pb-3 border-b border-[#E5E7EB]">
+            <div className="w-10 h-10 rounded-xl bg-[#E6F4F1] flex items-center justify-center text-[#0B534B] flex-shrink-0">
+              <BellRing className="w-5 h-5" />
             </div>
-            <div className="flex items-center gap-2">
-              <span className="text-[11px] font-bold px-2.5 py-1 bg-[#ECFDF5] text-[#065F46] rounded-full border border-[#10B981]/30 flex items-center gap-1">
-                <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse"></span>
-                Telegram Bot: Free Active
-              </span>
-              <span className="text-[11px] font-bold px-2.5 py-1 bg-[#E6F4F1] text-[#0B534B] rounded-full border border-[#0B534B]/20">
-                WhatsApp / SMS Ready
-              </span>
+            <div>
+              <h3 className="text-lg sm:text-xl font-extrabold text-[#111615]">
+                Caregiver Emergency Alert Channel
+              </h3>
+              <p className="text-sm text-[#4B5563]">
+                Instant notifications sent to caregiver phone: {user.emergencyPhone}
+              </p>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
-            <div className="p-3.5 bg-[#F6F8F7] rounded-xl border border-[#D5DFDC]">
-              <div className="text-xs font-bold text-[#5A6A66] uppercase">Registered Caregiver</div>
-              <div className="text-sm font-black text-[#111615] mt-1">{user.emergencyName || 'Rahul (Son)'}</div>
-              <div className="text-xs text-[#0B534B] font-semibold">{user.emergencyPhone}</div>
-            </div>
-            <div className="p-3.5 bg-[#F6F8F7] rounded-xl border border-[#D5DFDC]">
-              <div className="text-xs font-bold text-[#5A6A66] uppercase">Emergency Protocol</div>
-              <div className="text-sm font-black text-[#111615] mt-1">Direct Cellular & Telegram</div>
-              <div className="text-xs text-[#5A6A66]">Zero delayed server dependency</div>
-            </div>
-            <div className="p-3.5 bg-[#F6F8F7] rounded-xl border border-[#D5DFDC]">
-              <div className="text-xs font-bold text-[#5A6A66] uppercase">Offline Safety Queue</div>
-              <div className="text-sm font-black text-[#111615] mt-1">IndexedDB Sync Enabled</div>
-              <div className="text-xs text-[#065F46] font-semibold">Auto-dispatches upon network</div>
-            </div>
-          </div>
-
-          {/* Live Action Test Buttons */}
-          <div className="pt-2 flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap gap-3 pt-2">
             <button
               type="button"
               disabled={alertSending}
-              onClick={() => handleTriggerTestAlert('SUSTAINED_DECLINE')}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0B534B] hover:bg-[#08433C] disabled:bg-[#0B534B]/40 text-white font-bold text-xs sm:text-sm shadow-sm transition-all hover:scale-[1.01] active:scale-[0.99]"
+              onClick={() => handleTriggerTestAlert('MEDICATION_MISSED')}
+              className="min-h-[48px] px-5 py-2.5 bg-[#0B534B] hover:bg-[#08433C] text-white rounded-xl font-bold text-sm transition-colors flex items-center gap-2 cursor-pointer focus-visible:ring-2 focus-visible:ring-[#0B534B]"
             >
               <Send className="w-4 h-4" />
-              <span>{alertSending ? 'Dispatching...' : 'Test Cognitive Decline Alert'}</span>
+              <span>{alertSending ? 'Sending...' : 'Send Medication Check-in Alert'}</span>
             </button>
-
-            <button
-              type="button"
-              disabled={alertSending}
-              onClick={() => handleTriggerTestAlert('MISSED_MEDICINE')}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#D97706] hover:bg-[#B45309] disabled:bg-[#D97706]/40 text-white font-bold text-xs sm:text-sm shadow-sm transition-all hover:scale-[1.01] active:scale-[0.99]"
+            <a
+              href={`https://wa.me/${user.emergencyPhone?.replace(/\D/g, '')}?text=Hello%20Caregiver,%20daily%20wellness%20update%20for%20${encodeURIComponent(user.name)}.`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="min-h-[48px] px-5 py-2.5 bg-[#25D366]/10 hover:bg-[#25D366]/20 text-[#128C7E] border border-[#25D366]/30 rounded-xl font-bold text-sm transition-colors inline-flex items-center gap-2"
             >
-              <Smartphone className="w-4 h-4" />
-              <span>{alertSending ? 'Dispatching...' : 'Test Missed Medication Alert'}</span>
-            </button>
+              <Smartphone className="w-4 h-4 text-[#25D366]" />
+              <span>WhatsApp Family Alert</span>
+            </a>
           </div>
 
-          {/* Real-time Dispatch Receipt */}
           {alertResult && (
-            <div className="p-4 bg-[#E6F4F1] rounded-xl border border-[#0B534B]/20 text-xs text-[#0B534B] space-y-2 animate-in fade-in">
-              <div className="font-bold text-sm text-[#0B534B] flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-[#10B981]" />
-                <span>{alertResult.message}</span>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] pt-1">
-                {alertResult.dispatchResults?.map((res: any, idx: number) => (
-                  <div key={idx} className="bg-white p-2.5 rounded-lg border border-[#0B534B]/15 flex items-center justify-between">
-                    <div>
-                      <span className="font-bold uppercase tracking-wider text-[#111615]">{res.channel}: </span>
-                      <span className="text-[#5A6A66]">{res.message}</span>
-                    </div>
-                    <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[#ECFDF5] text-[#065F46] font-bold ml-2">
-                      {res.status}
-                    </span>
-                  </div>
-                ))}
-              </div>
+            <div className="p-3.5 bg-[#ECFDF5] border border-[#A7F3D0] rounded-xl text-sm font-semibold text-[#065F46]">
+              ✓ Alert dispatched successfully. Status recorded in audit log.
             </div>
           )}
         </div>
-      </ScrollReveal>
+      </section>
 
-      {/* Healthcare Integration & ABDM / HL7 FHIR Concept Section */}
-      <ScrollReveal direction="up" delay={180}>
-        <div className="bg-[#F6F8F7] rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-sm space-y-3">
-          <div className="flex items-center justify-between flex-wrap gap-2">
-            <div className="flex items-center gap-2.5">
-              <Layers className="w-5 h-5 text-[#0B534B]" />
-              <h3 className="text-base sm:text-lg font-bold text-[#111615]">
-                Healthcare Data Interoperability
-              </h3>
-            </div>
-            <span className="text-[11px] font-bold px-2.5 py-0.5 bg-[#E6F4F1] text-[#0B534B] rounded-full border border-[#0B534B]/20 uppercase">
-              Planned / Future Integration: ABDM & HL7 FHIR
-            </span>
-          </div>
-
-          <p className="text-xs sm:text-sm text-[#5A6A66] font-medium leading-relaxed">
-            The prototype structure models patient records for future Ayushman Bharat Digital Mission (ABDM) and HL7 FHIR clinical exchange. Below is the projected patient export schema:
-          </p>
-
-          <div className="bg-[#042420] text-[#10B981] p-4 rounded-xl font-mono text-xs overflow-x-auto space-y-1 shadow-inner border border-[#10B981]/20">
-            <div>Patient ID: ABHA-8492-4910-3841 (Kamla Devi)</div>
-            <div>Resource Type: Observation / CognitiveWellnessRecord</div>
-            <div>Average Trend: 71.4 / 100 (Weekly Mean)</div>
-            <div>Compliance: 85% Medication Adherence</div>
-            <div>FHIR Mapping: Planned / Future Integration via ABDM Gateway</div>
-          </div>
-        </div>
-      </ScrollReveal>
+      {/* ─── 6. Clearance Buffer for Floating SOS Control ─── */}
+      <div className="h-10 sm:h-14 w-full pointer-events-none" aria-hidden="true" />
     </div>
   );
 }

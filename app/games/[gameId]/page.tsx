@@ -14,12 +14,17 @@ import {
   Play, 
   Trophy, 
   ArrowRight,
-  Award
+  Award,
+  Volume2,
+  VolumeX,
+  Home,
+  Loader2
 } from 'lucide-react';
 import VoiceButton from '@/components/VoiceButton';
 import { GameId, FinishGameStats, DifficultyLevel } from '@/types/games';
 import { saveGameResultOffline } from '@/lib/offlineStorage';
 import { GAME_LEVEL_CONFIG } from '@/data/gameBanks';
+import { isGameAudioEnabled, setGameAudioEnabled } from '@/lib/gameAudio';
 import { 
   getGameProgress, 
   isLevelUnlocked, 
@@ -51,7 +56,7 @@ const GAME_METADATA: Record<string, { title: string; instruction: string }> = {
     instruction: 'Watch carefully as the colored chime tiles illuminate. Once finished, tap the tiles in the exact same sequence.',
   },
   'different-one': {
-    title: 'Find the Different One',
+    title: 'Spot the Difference',
     instruction: 'Look at the group of symbols. One of them is different from all the others. Tap the different symbol.',
   },
   'grocery-basket': {
@@ -71,11 +76,11 @@ const GAME_METADATA: Record<string, { title: string; instruction: string }> = {
     instruction: 'Listen to the spoken audio cue or tap the speaker button, then choose the picture that matches the description.',
   },
   'clock-reading': {
-    title: 'Clock Face Match',
+    title: 'Clock Face & Timings',
     instruction: 'Look at the analog clock hands representing a familiar daily moment, and select the matching digital time.',
   },
   'rhyme-completion': {
-    title: 'Rhyme & Word Completion',
+    title: 'Rhyme & Proverb Complete',
     instruction: 'Listen to the classic phrase or proverb, and tap the missing word that completes the rhythm.',
   },
 };
@@ -123,7 +128,6 @@ function GameArenaContent() {
     if (parsed >= 1 && parsed <= 5 && isLevelUnlocked(gameId, parsed as DifficultyLevel, userId)) {
       return parsed as DifficultyLevel;
     }
-    // Fall back to highest unlocked level or Level 1
     return getHighestUnlockedLevel(gameId, userId);
   };
 
@@ -133,6 +137,23 @@ function GameArenaContent() {
   const [gameFinished, setGameFinished] = useState<boolean>(false);
   const [gameKey, setGameKey] = useState<number>(0);
   const [completionData, setCompletionData] = useState<CompletionModalData | null>(null);
+  const [audioEnabled, setAudioEnabled] = useState<boolean>(true);
+  const [isSaving, setIsSaving] = useState<boolean>(false);
+
+  useEffect(() => {
+    setAudioEnabled(isGameAudioEnabled());
+    const handleAudioChange = (e: any) => {
+      if (e?.detail?.enabled !== undefined) setAudioEnabled(e.detail.enabled);
+    };
+    window.addEventListener('smitri_game_audio_changed', handleAudioChange);
+    return () => window.removeEventListener('smitri_game_audio_changed', handleAudioChange);
+  }, []);
+
+  const toggleAudio = () => {
+    const next = !audioEnabled;
+    setAudioEnabled(next);
+    setGameAudioEnabled(next);
+  };
 
   // URL verification: guard against manual URL manipulation attempting to access locked levels
   useEffect(() => {
@@ -140,7 +161,6 @@ function GameArenaContent() {
     if (!param) return;
     const requested = parseInt(param, 10);
     if (isNaN(requested) || requested < 1 || requested > 5 || !isLevelUnlocked(gameId, requested as DifficultyLevel, userId)) {
-      // Locked level requested via URL tampering! Fallback to highest unlocked
       const fallback = getHighestUnlockedLevel(gameId, userId);
       setDifficulty(fallback);
       if (typeof window !== 'undefined') {
@@ -171,7 +191,6 @@ function GameArenaContent() {
   };
 
   const handleLevelSelect = (targetLevel: DifficultyLevel) => {
-    // Strictly prevent clicking locked levels
     if (!isLevelUnlocked(gameId, targetLevel, userId)) return;
     if (targetLevel === difficulty && !gameFinished && !completionData) return;
 
@@ -191,6 +210,7 @@ function GameArenaContent() {
 
   const handleFinishGame = async (stats: FinishGameStats) => {
     setGameFinished(true);
+    setIsSaving(true);
 
     const safeAccuracy = Math.max(20, Math.min(100, stats.accuracy));
     const responseSec = elapsedTime;
@@ -229,44 +249,57 @@ function GameArenaContent() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
-      if (res.ok) {
-        const data = await res.json();
+
+      if (!res.ok) throw new Error('Network failed, saving to offline database');
+
+      const data = await res.json();
+      if (typeof window !== 'undefined') {
         sessionStorage.setItem('lastGameResult', JSON.stringify(data));
       }
     } catch {
-      try {
-        await saveGameResultOffline({
-          userId: userId || 'user_kamla',
-          gameId,
-          gameTitle: payload.gameTitle,
-          score: payload.accuracy,
-          accuracy: payload.accuracy,
-          responseTimeSec: payload.responseTimeSec,
-          mistakes: payload.mistakes,
-          difficultyLevel: payload.currentDifficulty,
-          timestamp: new Date().toISOString(),
-        });
-      } catch (err) {
-        console.warn('Could not save game result offline:', err);
-      }
+      await saveGameResultOffline({
+        userId,
+        gameId,
+        gameTitle: GAME_METADATA[gameId]?.title || 'Cognitive Quest',
+        score: safeAccuracy,
+        accuracy: safeAccuracy,
+        responseTimeSec: responseSec,
+        mistakes: stats.mistakes,
+        difficultyLevel: difficulty,
+        timestamp: new Date().toISOString(),
+      }).catch((e) => console.warn('Offline save error:', e));
 
-      sessionStorage.setItem(
-        'lastGameResult',
-        JSON.stringify({
-          offline: true,
-          evaluation: {
-            score: payload.accuracy,
-            recommendedDifficulty: nextLvl || difficulty,
-            feedback: 'Offline Mode: Level progress recorded and saved safely on your device.',
-          },
-        })
-      );
+      if (typeof window !== 'undefined') {
+        sessionStorage.setItem(
+          'lastGameResult',
+          JSON.stringify({
+            session: {
+              ...payload,
+              score: safeAccuracy,
+              feedbackText: 'Great focus! Your offline result has been saved locally.',
+            },
+          })
+        );
+      }
+    } finally {
+      setIsSaving(false);
     }
   };
 
   const handleProceedToNextLevel = () => {
-    if (completionData?.nextLevel) {
-      handleLevelSelect(completionData.nextLevel);
+    if (!completionData?.nextLevel) return;
+    const next = completionData.nextLevel;
+    setDifficulty(next);
+    setCompletionData(null);
+    setGameFinished(false);
+    setStartTime(Date.now());
+    setElapsedTime(0);
+    setGameKey((prev) => prev + 1);
+
+    if (typeof window !== 'undefined') {
+      const url = new URL(window.location.href);
+      url.searchParams.set('level', next.toString());
+      window.history.replaceState({}, '', url.toString());
     }
   };
 
@@ -278,163 +311,166 @@ function GameArenaContent() {
     : currentInfo.instruction;
 
   return (
-    <div className="space-y-6 pb-16">
-      {/* Navigation & Controls Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 sm:p-6 rounded-2xl border border-[#D5DFDC] shadow-sm">
+    <div className="space-y-6 pb-36 sm:pb-44 max-w-5xl mx-auto">
+      
+      {/* ─── 1. Spacious Top Header & Navigation Bar ─── */}
+      <header className="bg-white p-5 sm:p-6 rounded-2xl border border-[#D5DFDC] shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex items-center gap-3.5">
           <Link
             href="/games"
-            className="p-2.5 bg-[#F6F8F7] hover:bg-[#E6F4F1] rounded-xl text-[#0B534B] transition-colors border border-[#D5DFDC]"
-            aria-label="Back to Games"
+            className="min-h-[48px] px-4 py-2.5 bg-[#E6F4F1] hover:bg-[#D4EFEA] rounded-xl text-[#0B534B] font-bold text-base transition-colors border border-[#93CEC5] inline-flex items-center gap-2 focus-visible:ring-2 focus-visible:ring-[#0B534B]"
+            aria-label="Back to all games"
           >
             <ArrowLeft className="w-5 h-5" />
+            <span>Back to Games</span>
           </Link>
           <div>
-            <h1 className="text-xl sm:text-2xl font-black text-[#111615] tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#111615] tracking-tight">
               {currentInfo.title}
             </h1>
-            <p className="text-xs sm:text-sm text-[#0B534B] font-bold">
+            <p className="text-sm font-bold text-[#0B534B]">
               Level {difficulty} of 5 • {currentLevelConfig?.subtitle || 'Sequential Cognitive Progression'}
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-2.5">
-          <div className="flex items-center gap-1.5 bg-[#F6F8F7] px-3.5 py-2 rounded-xl border border-[#D5DFDC] text-sm font-bold text-[#111615]">
+        <div className="flex items-center gap-2.5 flex-wrap">
+          {/* Sound Toggle */}
+          <button
+            type="button"
+            onClick={toggleAudio}
+            className={`min-h-[44px] px-3.5 py-2 rounded-xl border text-sm font-bold transition-all cursor-pointer flex items-center gap-2 focus-visible:ring-2 focus-visible:ring-[#0B534B] ${
+              audioEnabled
+                ? 'bg-[#E6F4F1] hover:bg-[#D4EFEA] border-[#93CEC5] text-[#0B534B]'
+                : 'bg-[#F9FAFB] hover:bg-[#E5E7EB] border-[#D5DFDC] text-[#6B7280]'
+            }`}
+            aria-label={audioEnabled ? 'Mute game sound effects' : 'Turn on game sound effects'}
+            title={audioEnabled ? 'Mute game sound effects' : 'Turn on game sound effects'}
+          >
+            {audioEnabled ? (
+              <Volume2 className="w-4 h-4 text-[#0B534B]" />
+            ) : (
+              <VolumeX className="w-4 h-4 text-[#6B7280]" />
+            )}
+            <span>{audioEnabled ? 'Sound On' : 'Muted'}</span>
+          </button>
+
+          {/* Gentle Elapsed Timer */}
+          <div className="min-h-[44px] flex items-center gap-1.5 bg-[#F9FAFB] px-4 py-2 rounded-xl border border-[#D5DFDC] text-sm font-bold text-[#111615]">
             <Clock className="w-4 h-4 text-[#0B534B]" />
             <span>{elapsedTime}s</span>
           </div>
 
+          {/* Restart Level */}
           <button
             type="button"
             onClick={restartGame}
-            className="flex items-center gap-1.5 bg-[#F6F8F7] hover:bg-[#E6F4F1] px-3.5 py-2 rounded-xl border border-[#D5DFDC] text-sm font-bold text-[#0B534B] transition-colors cursor-pointer"
+            className="min-h-[44px] flex items-center gap-1.5 bg-[#F9FAFB] hover:bg-[#E6F4F1] px-4 py-2 rounded-xl border border-[#D5DFDC] text-sm font-bold text-[#0B534B] transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-[#0B534B]"
+            aria-label="Restart this level"
           >
             <RotateCcw className="w-4 h-4" />
             <span>Restart</span>
           </button>
         </div>
-      </div>
+      </header>
 
-      {/* Sequential 5-Level Selection Bar */}
-      <div className="bg-white rounded-2xl p-4 sm:p-5 border border-[#D5DFDC] shadow-sm space-y-3">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-[#D97706]" />
-            <span className="text-xs sm:text-sm font-extrabold text-[#111615] uppercase tracking-wider">
-              Sequential Level Progression (1 → 5)
+      {/* ─── 2. Clear Instruction & Voice Bar ─── */}
+      <section aria-label="Exercise instructions" className="bg-[#F0FDF4] border border-[#BBF7D0] p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="flex items-start gap-3">
+          <HelpCircle className="w-6 h-6 text-[#059669] flex-shrink-0 mt-0.5" />
+          <div className="space-y-1">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#065F46] block">
+              Exercise Instructions
             </span>
+            <p className="text-base sm:text-lg text-[#1F2937] font-medium leading-relaxed">
+              {currentInfo.instruction}
+            </p>
           </div>
-          <span className="text-xs font-semibold text-[#5A6A66]">
-            Complete each level to unlock the next
-          </span>
-        </div>
-
-        {/* 5 Level Buttons Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 sm:gap-3">
-          {ALL_LEVELS.map((lvl) => {
-            const isUnlocked = isLevelUnlocked(gameId, lvl, userId);
-            const isCompleted = isLevelCompleted(gameId, lvl, userId);
-            const isCurrent = difficulty === lvl;
-
-            let buttonStyles = '';
-            let statusLabel = '';
-            let statusIcon = null;
-
-            if (isCurrent) {
-              buttonStyles = 'bg-[#E6F4F1] border-[#0B534B] ring-2 ring-[#0B534B]/30 shadow-md text-[#0B534B] cursor-pointer';
-              statusLabel = isCompleted ? 'Completed' : 'Playing Now';
-              statusIcon = isCompleted ? <Check className="w-3.5 h-3.5 text-[#059669]" /> : <Play className="w-3.5 h-3.5 fill-[#0B534B]" />;
-            } else if (isCompleted) {
-              buttonStyles = 'bg-[#F2FAF6] border-[#A7F3D0] hover:border-[#10B981] hover:bg-[#E6F9F0] text-[#065F46] cursor-pointer';
-              statusLabel = 'Completed';
-              statusIcon = <Check className="w-3.5 h-3.5 text-[#059669]" />;
-            } else if (isUnlocked) {
-              buttonStyles = 'bg-white border-[#93CEC5] hover:border-[#0B534B] hover:bg-[#F2F8F6] text-[#0B534B] cursor-pointer';
-              statusLabel = 'Unlocked';
-              statusIcon = <Play className="w-3.5 h-3.5" />;
-            } else {
-              buttonStyles = 'bg-[#F8FAF9] border-[#E5E9E8] text-[#9CA3AF] opacity-65 cursor-not-allowed';
-              statusLabel = 'Locked';
-              statusIcon = <Lock className="w-3.5 h-3.5 text-[#9CA3AF]" />;
-            }
-
-            return (
-              <button
-                key={lvl}
-                type="button"
-                disabled={!isUnlocked}
-                onClick={() => handleLevelSelect(lvl)}
-                aria-label={`Level ${lvl}: ${statusLabel}`}
-                className={`py-3 px-3 rounded-xl border-2 text-left transition-all flex flex-col gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0B534B] ${buttonStyles}`}
-              >
-                <div className="flex items-center justify-between gap-1">
-                  <span className="text-xs sm:text-sm font-black text-[#111615]">
-                    Level {lvl}
-                  </span>
-                  <span className="flex-shrink-0">
-                    {statusIcon}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between text-[11px] font-semibold">
-                  <span className={isUnlocked ? (isCompleted ? 'text-[#059669]' : 'text-[#0B534B]') : 'text-[#9CA3AF]'}>
-                    {statusLabel}
-                  </span>
-                  {isCompleted && (
-                    <span className="text-[10px] text-[#5A6A66]">Replayable</span>
-                  )}
-                </div>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Current Level Description */}
-        {currentLevelConfig && (
-          <div className="mt-2 p-3.5 bg-[#E6F4F1] border border-[#0B534B]/20 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div className="space-y-0.5">
-              <div className="flex items-center gap-2">
-                <span
-                  className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase text-white tracking-wider"
-                  style={{ backgroundColor: currentLevelConfig.color || '#0B534B' }}
-                >
-                  Level {difficulty}
-                </span>
-                <span className="text-xs sm:text-sm font-bold text-[#111615]">
-                  {currentLevelConfig.subtitle}
-                </span>
-              </div>
-              <p className="text-xs text-[#5A6A66] leading-relaxed">
-                {currentLevelConfig.description}
-              </p>
-            </div>
-
-            <VoiceButton
-              textToRead={levelVoiceText}
-              buttonLabel="Read Level Guide"
-              className="flex-shrink-0"
-            />
-          </div>
-        )}
-      </div>
-
-      {/* Senior Voice Instructions Card */}
-      <div className="bg-[#FFFBEB] border border-[#D97706]/30 p-4 sm:p-5 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3.5">
-        <div className="flex items-start gap-2.5">
-          <HelpCircle className="w-5 h-5 text-[#D97706] flex-shrink-0 mt-0.5" />
-          <p className="text-sm sm:text-base text-[#78350F] font-medium leading-snug">
-            {currentInfo.instruction}
-          </p>
         </div>
         <VoiceButton
-          textToRead={currentInfo.instruction}
-          buttonLabel="Read Instructions"
-          className="flex-shrink-0"
+          textToRead={levelVoiceText}
+          buttonLabel="Listen Instructions"
+          className="min-h-[44px] px-4 text-sm font-semibold flex-shrink-0 self-start sm:self-auto"
         />
-      </div>
+      </section>
 
-      {/* Main Game Stage */}
-      <div className="bg-white rounded-3xl p-6 sm:p-10 border-2 border-[#D5DFDC] shadow-sm min-h-[440px] flex flex-col items-center justify-center relative">
+      {/* ─── 3. Compact 5-Stage Level Selector ─── */}
+      <section aria-label="Level selection">
+        <div className="bg-white rounded-2xl p-4 sm:p-5 border border-[#D5DFDC] shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <Sparkles className="w-4 h-4 text-[#D97706]" />
+            <span className="text-sm font-extrabold text-[#111615]">
+              Sequential Levels (1 → 5):
+            </span>
+          </div>
+
+          <div className="grid grid-cols-5 gap-2 sm:gap-2.5 w-full sm:w-auto">
+            {ALL_LEVELS.map((lvl) => {
+              const isUnlocked = isLevelUnlocked(gameId, lvl, userId);
+              const isCompleted = isLevelCompleted(gameId, lvl, userId);
+              const isCurrent = difficulty === lvl;
+
+              if (isCurrent) {
+                return (
+                  <button
+                    key={lvl}
+                    type="button"
+                    onClick={() => handleLevelSelect(lvl)}
+                    className="min-h-[44px] px-3 py-2 rounded-xl bg-[#0B534B] text-white border-2 border-[#0B534B] font-bold text-sm shadow-xs flex items-center justify-center gap-1.5 ring-2 ring-[#0B534B]/30 ring-offset-2 cursor-pointer focus-visible:ring-2 focus-visible:ring-[#0B534B]"
+                    title={`Level ${lvl} — Current Active Level`}
+                    aria-label={`Level ${lvl} (Current active)`}
+                  >
+                    <Play className="w-3.5 h-3.5 fill-white" />
+                    <span>L{lvl}</span>
+                  </button>
+                );
+              }
+
+              if (isCompleted) {
+                return (
+                  <button
+                    key={lvl}
+                    type="button"
+                    onClick={() => handleLevelSelect(lvl)}
+                    className="min-h-[44px] px-3 py-2 rounded-xl bg-[#ECFDF5] hover:bg-[#D1FAE5] text-[#065F46] border-2 border-[#059669] font-bold text-sm flex items-center justify-center gap-1.5 cursor-pointer focus-visible:ring-2 focus-visible:ring-[#0B534B]"
+                    title={`Level ${lvl} — Completed. Tap to replay.`}
+                    aria-label={`Level ${lvl} completed (Replay)`}
+                  >
+                    <Check className="w-4 h-4 stroke-[3]" />
+                    <span>L{lvl}</span>
+                  </button>
+                );
+              }
+
+              return (
+                <div
+                  key={lvl}
+                  className="min-h-[44px] px-3 py-2 rounded-xl bg-[#F9FAFB] text-[#9CA3AF] border border-[#E5E7EB] font-semibold text-sm flex items-center justify-center gap-1.5 cursor-not-allowed select-none"
+                  title={`Level ${lvl} — Locked`}
+                  aria-label={`Level ${lvl} (Locked)`}
+                >
+                  <Lock className="w-3.5 h-3.5" />
+                  <span>L{lvl}</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── 4. Reassuring Saving State Feedback Banner ─── */}
+      {isSaving && (
+        <div
+          className="bg-[#E6F4F1] border-2 border-[#10B981] p-3.5 rounded-2xl flex items-center justify-center gap-2.5 text-[#065F46] font-bold text-sm shadow-xs animate-fade-in"
+          role="status"
+        >
+          <Loader2 className="w-4 h-4 animate-spin text-[#0B534B]" />
+          <span>Saving your exercise progress safely...</span>
+        </div>
+      )}
+
+      {/* ─── 5. Spacious Active Game Stage ─── */}
+      <main className="bg-white rounded-3xl p-6 sm:p-10 border border-[#D5DFDC] shadow-xs min-h-[480px] flex flex-col items-center justify-center relative">
         {gameId === 'memory-match' && (
           <MemoryMatchArena key={`${gameKey}-${difficulty}`} difficulty={difficulty} onFinish={handleFinishGame} />
         )}
@@ -462,21 +498,22 @@ function GameArenaContent() {
         {gameId === 'rhyme-completion' && (
           <RhymeCompletionArena key={`${gameKey}-${difficulty}`} difficulty={difficulty} onFinish={handleFinishGame} />
         )}
-      </div>
+      </main>
 
-      {/* Level Completion / All-Levels Mastered Modal */}
+      {/* ─── 6. Level Completion / Mastery Modal ─── */}
       {completionData && (
         <div 
-          className="fixed inset-0 bg-[#042420]/75 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fade-in"
+          className="fixed inset-0 bg-[#042420]/75 backdrop-blur-xs flex items-center justify-center z-50 p-4 animate-fade-in"
           role="dialog"
           aria-modal="true"
           aria-labelledby="completion-title"
         >
-          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full text-center space-y-6 shadow-2xl border-2 border-[#0B534B]">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full text-center space-y-6 shadow-xl border-2 border-[#0B534B]">
             {/* Header Icon */}
-            <div className="w-20 h-20 rounded-full mx-auto flex items-center justify-center shadow-lg border-2 border-white"
+            <div
+              className="w-20 h-20 rounded-full mx-auto flex items-center justify-center shadow-md border-2 border-white"
               style={{
-                backgroundColor: completionData.isGameFullyCompleted ? '#F59E0B' : '#10B981',
+                backgroundColor: completionData.isGameFullyCompleted ? '#D97706' : '#059669',
               }}
             >
               {completionData.isGameFullyCompleted ? (
@@ -488,63 +525,67 @@ function GameArenaContent() {
 
             {/* Title & Subtitle */}
             <div className="space-y-2">
-              <span className="inline-block px-3 py-1 bg-[#E6F4F1] text-[#0B534B] border border-[#93CEC5] rounded-full text-xs font-black uppercase tracking-wider">
+              <span className="inline-block px-3.5 py-1 bg-[#E6F4F1] text-[#0B534B] border border-[#93CEC5] rounded-full text-xs font-black uppercase tracking-wider">
                 {completionData.isGameFullyCompleted ? 'Mastery Achieved' : `Level ${completionData.completedLevel} Finished`}
               </span>
-              <h2 id="completion-title" className="text-2xl sm:text-3xl font-black text-[#111615]">
+              <h2 id="completion-title" className="text-2xl sm:text-3xl font-extrabold text-[#111615]">
                 {completionData.isGameFullyCompleted
                   ? '🏆 All 5 Levels Mastered!'
                   : `Level ${completionData.completedLevel} Completed!`}
               </h2>
-              <p className="text-sm text-[#5A6A66] font-medium max-w-md mx-auto leading-relaxed">
+              <p className="text-base text-[#4B5563] font-normal max-w-md mx-auto leading-relaxed">
                 {completionData.isGameFullyCompleted
-                  ? `Incredible achievement! You have successfully conquered all 5 levels of ${currentInfo.title}.`
-                  : `Outstanding work! You finished Level ${completionData.completedLevel} with calm focus and attention. Level ${completionData.nextLevel} is now unlocked!`}
+                  ? `Incredible achievement! You have successfully mastered all 5 levels of ${currentInfo.title}.`
+                  : `Outstanding work! You finished Level ${completionData.completedLevel} with calm focus. Level ${completionData.nextLevel} is now unlocked!`}
               </p>
             </div>
 
             {/* Score Stats Summary */}
-            <div className="grid grid-cols-3 gap-3 bg-[#F6F8F7] p-3.5 rounded-2xl border border-[#D5DFDC]">
+            <div className="grid grid-cols-3 gap-3 bg-[#F9FAFB] p-4 rounded-2xl border border-[#D5DFDC]">
               <div className="space-y-0.5">
-                <span className="text-[11px] font-bold text-[#5A6A66] uppercase">Accuracy</span>
-                <p className="text-xl sm:text-2xl font-black text-[#0B534B]">{completionData.accuracy}%</p>
+                <span className="text-xs font-bold text-[#5A6A66] uppercase">Accuracy</span>
+                <p className="text-2xl font-black text-[#059669]">{completionData.accuracy}%</p>
               </div>
               <div className="space-y-0.5">
-                <span className="text-[11px] font-bold text-[#5A6A66] uppercase">Time</span>
-                <p className="text-xl sm:text-2xl font-black text-[#111615]">{completionData.responseTimeSec}s</p>
+                <span className="text-xs font-bold text-[#5A6A66] uppercase">Time</span>
+                <p className="text-2xl font-black text-[#111615]">{completionData.responseTimeSec}s</p>
               </div>
               <div className="space-y-0.5">
-                <span className="text-[11px] font-bold text-[#5A6A66] uppercase">Mistakes</span>
-                <p className="text-xl sm:text-2xl font-black text-[#D97706]">{completionData.mistakes}</p>
+                <span className="text-xs font-bold text-[#5A6A66] uppercase">Mistakes</span>
+                <p className="text-2xl font-black text-[#D97706]">{completionData.mistakes}</p>
               </div>
             </div>
 
             {/* Action Buttons */}
             <div className="space-y-3 pt-2">
-              {!completionData.isGameFullyCompleted && completionData.nextLevel ? (
+              {!completionData.isGameFullyCompleted && completionData.nextLevel && (
                 <button
                   type="button"
                   onClick={handleProceedToNextLevel}
-                  className="w-full py-4 px-6 bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white rounded-xl font-extrabold text-base shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full min-h-[52px] py-3.5 px-6 bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white rounded-xl font-bold text-lg shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer focus-visible:ring-2 focus-visible:ring-[#0B534B]"
                 >
-                  <span>Play Level {completionData.nextLevel}</span>
+                  <span>Continue to Level {completionData.nextLevel}</span>
                   <ArrowRight className="w-5 h-5" />
                 </button>
-              ) : (
-                <Link
-                  href="/results"
-                  className="w-full py-4 px-6 bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white rounded-xl font-extrabold text-base shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2"
-                >
-                  <Award className="w-5 h-5 text-[#F59E0B]" />
-                  <span>View Full Game Results & Analysis</span>
-                </Link>
               )}
+
+              <Link
+                href="/results"
+                className={`w-full min-h-[48px] py-3 px-6 rounded-xl font-bold text-base transition-all flex items-center justify-center gap-2 ${
+                  completionData.isGameFullyCompleted || !completionData.nextLevel
+                    ? 'bg-[#0B534B] hover:bg-[#08433C] text-white shadow-sm'
+                    : 'bg-[#E6F4F1] hover:bg-[#D4EFEA] text-[#0B534B] border border-[#93CEC5]'
+                }`}
+              >
+                <Award className="w-5 h-5 text-[#D97706]" />
+                <span>View Full Results &amp; Report</span>
+              </Link>
 
               <div className="grid grid-cols-2 gap-3">
                 <button
                   type="button"
                   onClick={restartGame}
-                  className="py-3 px-4 bg-[#F6F8F7] hover:bg-[#E6F4F1] border border-[#D5DFDC] text-[#0B534B] rounded-xl font-bold text-sm transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="min-h-[44px] py-2.5 px-3 bg-[#F9FAFB] hover:bg-[#E6F4F1] border border-[#D5DFDC] text-[#0B534B] rounded-xl font-bold text-sm transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   <RotateCcw className="w-4 h-4" />
                   <span>Replay Level {completionData.completedLevel}</span>
@@ -552,15 +593,28 @@ function GameArenaContent() {
 
                 <Link
                   href="/games"
-                  className="py-3 px-4 bg-[#F6F8F7] hover:bg-[#E6F4F1] border border-[#D5DFDC] text-[#111615] rounded-xl font-bold text-sm transition-colors flex items-center justify-center gap-1.5"
+                  className="min-h-[44px] py-2.5 px-3 bg-[#F9FAFB] hover:bg-[#E6F4F1] border border-[#D5DFDC] text-[#111615] rounded-xl font-bold text-sm transition-colors flex items-center justify-center gap-1.5"
                 >
                   <span>Back to Games</span>
+                </Link>
+              </div>
+
+              <div className="pt-2 border-t border-[#E5E7EB]">
+                <Link
+                  href="/dashboard"
+                  className="w-full py-2 px-4 text-[#4B5563] hover:text-[#0B534B] font-semibold text-sm flex items-center justify-center gap-1.5 transition-colors"
+                >
+                  <Home className="w-4 h-4" />
+                  <span>Return to Main Dashboard</span>
                 </Link>
               </div>
             </div>
           </div>
         </div>
       )}
+
+      {/* ─── 7. Safe Clearance Buffer for Floating SOS Control ─── */}
+      <div className="h-10 sm:h-14 w-full pointer-events-none" aria-hidden="true" />
     </div>
   );
 }
@@ -569,8 +623,9 @@ export default function GameArenaPage() {
   return (
     <Suspense
       fallback={
-        <div className="p-8 text-center text-[#0B534B] font-bold">
-          Loading game arena...
+        <div className="py-24 text-center space-y-4">
+          <div className="w-14 h-14 border-4 border-[#0B534B] border-t-transparent rounded-full animate-spin mx-auto" />
+          <p className="text-xl font-bold text-[#5A6A66]">Preparing your cognitive exercise...</p>
         </div>
       }
     >
