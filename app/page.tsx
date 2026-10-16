@@ -702,7 +702,7 @@ export default function HomePage() {
       {/* ========================================================================= */}
       {/* FOOTER & CONTACT                                                          */}
       {/* ========================================================================= */}
-      <footer id="contact" className="border-t border-[#D5DFDC] pt-12 pb-8 space-y-8 scroll-mt-28">
+      <footer id="contact" className="border-t border-[#D5DFDC] pt-12 pb-36 sm:pb-44 space-y-8 scroll-mt-28">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-[#0B534B] text-white flex items-center justify-center shadow-sm">
@@ -729,6 +729,9 @@ export default function HomePage() {
           <p>{t("footer_copyright") || "© 2026 Smitri_NER Platform. Prototype cognitive wellness system. Not intended for clinical or medical diagnosis."}</p>
           <p className="font-semibold text-[#111615]">{t("footer_contact") || "Contact: support@smitriner.care"}</p>
         </div>
+
+        {/* Trailing clearance spacer so floating SOS dock never covers content */}
+        <div className="h-10 sm:h-14 w-full pointer-events-none" />
       </footer>
 
       {/* ========================================================================= */}

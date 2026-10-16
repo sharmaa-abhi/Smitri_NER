@@ -161,7 +161,7 @@ export default function ResultsPage() {
     : '/games';
 
   return (
-    <div className="max-w-3xl mx-auto space-y-6 sm:space-y-8 py-4 pb-20 px-3 sm:px-6">
+    <div className="max-w-3xl mx-auto space-y-6 sm:space-y-8 py-4 pb-36 sm:pb-44 px-3 sm:px-6">
       {/* Screen Reader Live Announcement */}
       <div className="sr-only" role="status" aria-live="polite">
         {speechStatus === 'playing' ? 'Reading exercise results aloud...' : ''}
@@ -508,6 +508,9 @@ export default function ResultsPage() {
           </p>
         </div>
       </ScrollReveal>
+
+      {/* Trailing clearance spacer so floating SOS dock never covers content */}
+      <div className="h-10 sm:h-14 w-full pointer-events-none" />
     </div>
   );
 }

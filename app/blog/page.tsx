@@ -494,7 +494,7 @@ export default function BlogPage() {
   };
 
   return (
-    <div className="py-6 sm:py-10 space-y-10 sm:space-y-14 animate-in fade-in duration-300">
+    <div className="py-6 sm:py-10 pb-36 sm:pb-44 space-y-10 sm:space-y-14 animate-in fade-in duration-300">
       
       {/* ========================================================================= */}
       {/* BREADCRUMB & HEADER                                                       */}
@@ -1257,6 +1257,8 @@ export default function BlogPage() {
         </div>
       )}
 
+      {/* Trailing clearance spacer so floating SOS dock never covers content */}
+      <div className="h-10 sm:h-14 w-full pointer-events-none" />
     </div>
   );
 }
