@@ -753,8 +753,7 @@ export default function DashboardPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-1">
               {experienceProfile.recentSessions.map((session) => {
-                const levelColor = session.difficultyLevel === 3 ? 'bg-[#DC2626]' : session.difficultyLevel === 2 ? 'bg-[#D97706]' : 'bg-[#10B981]';
-                const levelName = session.difficultyLevel === 3 ? 'Advanced' : session.difficultyLevel === 2 ? 'Medium' : 'Easy';
+                const levelColor = 'bg-[#0B534B]';
 
                 return (
                   <div
@@ -764,7 +763,7 @@ export default function DashboardPage() {
                     <div className="space-y-1.5">
                       <div className="flex items-center justify-between gap-1">
                         <span className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase text-white ${levelColor}`}>
-                          L{session.difficultyLevel} • {levelName}
+                          Level {session.difficultyLevel}
                         </span>
                         <span className="text-xs font-black text-[#0B534B]">
                           Score: {session.score}
