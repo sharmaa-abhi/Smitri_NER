@@ -2,30 +2,28 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import { 
-  Play, 
-  Sparkles, 
-  Brain, 
-  Shapes, 
-  Eye, 
-  ShoppingBag, 
-  Hash, 
-  Grid3X3, 
-  Volume2, 
-  Clock, 
-  BookOpen, 
-  Award, 
-  Zap, 
-  Filter, 
-  ArrowRight, 
+import {
+  Play,
+  Brain,
+  Shapes,
+  Eye,
+  ShoppingBag,
+  Hash,
+  Grid3X3,
+  Volume2,
+  Clock,
+  BookOpen,
+  Award,
+  Zap,
+  Filter,
+  ArrowRight,
   ShieldCheck,
   CheckCircle2,
-  Layers,
   Lock,
-  Check
+  Check,
+  Flame,
 } from 'lucide-react';
 import VoiceButton from '@/components/VoiceButton';
-import ScrollReveal from '@/components/ScrollReveal';
 import { useLanguage } from '@/lib/i18n';
 import { GAME_LEVEL_CONFIG } from '@/data/gameBanks';
 import { getAllGamesProgress, AllGamesProgress } from '@/lib/gameProgress';
@@ -61,10 +59,7 @@ export default function GamesHubPage() {
       color: 'bg-[#10B981]',
       category: 'daily',
       tag: 'Everyday Market Recall',
-      difficulty: '5 Sequential Levels (Level 1 → 5)',
       realWorldScenario: 'Weekly Local Bazaar & Vegetable Shopping List',
-      realWorldBenefit: 'Helps elderly navigate market shopping without forgetting essentials',
-      lastPlayedScore: 82,
       audioInstruction: 'Welcome to Grocery Basket Recall. Memorize the items in your basket, then pick them out from the market shelves. Advance sequentially through five progressive levels from 2 to 6 basket items.',
     },
     {
@@ -75,10 +70,7 @@ export default function GamesHubPage() {
       color: 'bg-[#0B534B]',
       category: 'daily',
       tag: 'Daily Routine & Time',
-      difficulty: '5 Sequential Levels (Level 1 → 5)',
       realWorldScenario: 'Timetable for Morning Puja, Medicine & Doctor Visits',
-      realWorldBenefit: 'Reinforces daily temporal awareness and appointment punctuality',
-      lastPlayedScore: 92,
       audioInstruction: 'Welcome to Clock Face Match. Look at the clock hands and select the matching routine time. Advance through 5 sequential levels covering morning, afternoon, and evening milestones.',
     },
     {
@@ -89,10 +81,7 @@ export default function GamesHubPage() {
       color: 'bg-[#D97706]',
       category: 'attention',
       tag: 'Visual Attention',
-      difficulty: '5 Sequential Levels (Level 1 → 5)',
       realWorldScenario: 'Spotting Expired Medicine vs Safe Medicine Labels',
-      realWorldBenefit: 'Prevents medication mix-ups by training visual discrimination',
-      lastPlayedScore: 88,
       audioInstruction: 'Welcome to Find the Different One. Look carefully at the icons and tap the one that does not match the rest. Complete all 5 sequential stages with increasing card counts and nuanced differences.',
     },
     {
@@ -103,10 +92,7 @@ export default function GamesHubPage() {
       color: 'bg-[#0B534B]',
       category: 'memory',
       tag: 'Visual Memory',
-      difficulty: '5 Sequential Levels (Level 1 → 5)',
       realWorldScenario: 'Finding Household Items & Kitchen Utensils',
-      realWorldBenefit: 'Strengthens recall of where spectacles, keys, and cups are kept',
-      lastPlayedScore: 84,
       audioInstruction: 'Welcome to Memory Match. Flip two cards to find matching pairs. Five sequential levels gradually expand the deck from 6 to 16 cards.',
     },
     {
@@ -117,10 +103,7 @@ export default function GamesHubPage() {
       color: 'bg-[#10B981]',
       category: 'attention',
       tag: 'Numerical Order',
-      difficulty: '5 Sequential Levels (Level 1 → 5)',
       realWorldScenario: 'Counting Currency Rupee Notes & Reading Bank Passbooks',
-      realWorldBenefit: 'Maintains financial numeracy and sequential coordination',
-      lastPlayedScore: 79,
       audioInstruction: 'Welcome to Number Trail. Look at the numbered river stones and tap them in order starting from 1. Advance sequentially through five levels from 4 up to 12 stones.',
     },
     {
@@ -131,10 +114,7 @@ export default function GamesHubPage() {
       color: 'bg-[#D97706]',
       category: 'verbal',
       tag: 'Auditory & Semantic',
-      difficulty: '5 Sequential Levels (Level 1 → 5)',
       realWorldScenario: 'Household Safety Sounds (Doorbell, Whistle, Phone Ring)',
-      realWorldBenefit: 'Sharpens auditory processing and environmental awareness',
-      lastPlayedScore: 86,
       audioInstruction: 'Welcome to Daily Word and Sound Match. Listen to the audio cue, then select the matching picture. Five sequential levels present comforting sounds, kitchen cues, and safety tones.',
     },
     {
@@ -145,10 +125,7 @@ export default function GamesHubPage() {
       color: 'bg-[#0B534B]',
       category: 'memory',
       tag: 'Pattern Recall',
-      difficulty: '5 Sequential Levels (Level 1 → 5)',
       realWorldScenario: 'Remembering Appliance Buttons & Traffic Signals',
-      realWorldBenefit: 'Boosts working memory capacity for multi-step home tasks',
-      lastPlayedScore: 75,
       audioInstruction: 'Welcome to Sequence Memory. Watch the chime tiles light up, then repeat the sequence in order. Five sequential stages progress from 3 steps up to 6 musical tones.',
     },
     {
@@ -159,10 +136,7 @@ export default function GamesHubPage() {
       color: 'bg-[#10B981]',
       category: 'memory',
       tag: 'Spatial Memory',
-      difficulty: '5 Sequential Levels (Level 1 → 5)',
       realWorldScenario: 'Home Room Layout & Furniture Placement Spatial Awareness',
-      realWorldBenefit: 'Reduces disorientation and helps spatial stability at home',
-      lastPlayedScore: 80,
       audioInstruction: 'Welcome to Matrix Pattern Recall. Watch the glowing squares on the grid, then tap those exact locations. Five sequential levels scale from 3 illuminated cells to 16-cell grids.',
     },
     {
@@ -173,35 +147,60 @@ export default function GamesHubPage() {
       color: 'bg-[#0B534B]',
       category: 'verbal',
       tag: 'Verbal Fluency',
-      difficulty: '5 Sequential Levels (Level 1 → 5)',
       realWorldScenario: 'Traditional Storytelling & Cultural Proverbs with Grandchildren',
-      realWorldBenefit: 'Maintains rich vocabulary and social communication joy',
-      lastPlayedScore: 90,
       audioInstruction: 'Welcome to Rhyme and Proverb Complete. Listen to the phrase and choose the missing word. Progress through five sequential levels of folk rhymes, daily proverbs, and comforting wisdom.',
     },
   ];
 
-  const filteredGames = selectedCategory === 'all' 
-    ? games 
+  const filteredGames = selectedCategory === 'all'
+    ? games
     : games.filter(g => g.category === selectedCategory);
 
-  const voiceSummary = `Welcome to the Cognitive Games Hub. Every game features 5 sequential levels. Level 1 is unlocked to begin, and completing each level unlocks the next stage up to Level 5. Completed levels can be replayed anytime.`;
+  // ── Computed Statistics from Real Progress Data ──
+  const progressValues = Object.values(progressMap);
+
+  const totalCompletedLevels = progressValues.reduce(
+    (sum, p) => sum + (p.completedLevels?.length || 0), 0
+  );
+
+  const allScores: number[] = progressValues.flatMap(
+    p => Object.values(p.highestScores || {})
+  );
+  const overallAccuracy = allScores.length > 0
+    ? Math.round(allScores.reduce((a, b) => a + b, 0) / allScores.length)
+    : 0;
+
+  const activityDates = progressValues
+    .filter(p => (p.completedLevels?.length || 0) > 0 && p.updatedAt)
+    .map(p => new Date(p.updatedAt).toDateString());
+  const streakDays = new Set(activityDates).size;
+
+  const maxUnlockedLevel = progressValues.length > 0
+    ? Math.max(...progressValues.map(p => p.unlockedLevel || 1))
+    : 1;
+
+  const categories = [
+    { id: 'all' as GameCategory, label: 'All Games' },
+    { id: 'daily' as GameCategory, label: '🛒 Everyday Routine' },
+    { id: 'memory' as GameCategory, label: '🧠 Memory & Recall' },
+    { id: 'attention' as GameCategory, label: '👀 Focus & Attention' },
+    { id: 'verbal' as GameCategory, label: '🗣️ Language & Sound' },
+  ];
+
+  const voiceSummary = `Welcome to the Cognitive Games Hub. There are 9 games, each with 5 sequential levels. Level 1 is unlocked to begin. Completing each level unlocks the next stage up to Level 5. Completed levels can be replayed anytime.`;
 
   return (
-    <div className="space-y-8 pb-16">
-      {/* Header with Game Hub Description & Voice Reader */}
-      <ScrollReveal direction="down">
-        <div className="bg-white rounded-3xl p-5 sm:p-7 border border-[#D5DFDC] shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-5">
-          <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 bg-[#E6F4F1] text-[#0B534B] px-3.5 py-1 rounded-full text-xs font-bold border border-[#0B534B]/20">
-              <Sparkles className="w-3.5 h-3.5 text-[#D97706]" />
-              <span>Real-World Cognitive Gaming Hub • 9 Scenarios • 5 Sequential Levels Each</span>
-            </div>
+    <div className="space-y-6 pb-28">
+
+      {/* ─── Page Header ─── */}
+      <header className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC]">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="space-y-1.5">
             <h1 className="text-2xl sm:text-3xl font-extrabold text-[#111615] tracking-tight">
-              {t("games_title") || "Games Dashboard & Everyday Quests"}
+              {t("games_title") || "Games Dashboard"}
             </h1>
-            <p className="text-xs sm:text-sm text-[#5A6A66] font-medium max-w-2xl leading-relaxed">
-              Every game features 5 progressive levels. Level 1 is ready to play. Satisfying each level&apos;s objective unlocks the next stage in sequence up to Level 5.
+            <p className="text-base sm:text-lg text-[#5A6A66] font-medium leading-relaxed max-w-2xl">
+              9 cognitive exercises with 5 progressive levels each. Complete each level to unlock the next.
             </p>
           </div>
 
@@ -212,132 +211,114 @@ export default function GamesHubPage() {
             />
             <Link
               href="/dashboard"
-              className="py-2.5 px-4 bg-[#E6F4F1] hover:bg-[#C2E5DF] text-[#0B534B] font-bold text-xs sm:text-sm rounded-xl border border-[#93CEC5] transition-all"
+              className="min-h-[44px] py-2.5 px-5 bg-[#E6F4F1] hover:bg-[#C2E5DF] text-[#0B534B] font-bold text-sm sm:text-base rounded-xl border border-[#93CEC5] transition-colors inline-flex items-center"
             >
               {t("Back to Dashboard") || "Back to Dashboard"}
             </Link>
           </div>
         </div>
-      </ScrollReveal>
+      </header>
 
-      {/* Sequential 5-Level Progression Guide Banner */}
-      <ScrollReveal direction="up" delay={50}>
-        <div className="bg-white rounded-3xl p-5 sm:p-6 border border-[#D5DFDC] shadow-sm space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-            <div className="flex items-center gap-2">
-              <Layers className="w-4 h-4 text-[#0B534B]" />
-              <h2 className="text-sm sm:text-base font-extrabold text-[#111615]">
-                Sequential 5-Level Progression
-              </h2>
+      {/* ─── Statistics Cards ─── */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4" role="region" aria-label="Your game statistics">
+
+        {/* Stat 1: Consistency Streak */}
+        <div className="bg-[#0B534B] text-white rounded-2xl p-5 flex flex-col justify-between min-h-[130px]">
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-bold text-[#A7F3D0] uppercase tracking-wider">Consistency</span>
+            <div className="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center">
+              <Flame className="w-5 h-5 text-[#FCD34D]" />
             </div>
-            <span className="text-xs text-[#5A6A66] font-semibold">
-              Level 1 → Level 2 → Level 3 → Level 4 → Level 5
-            </span>
           </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
-            {[
-              { level: 1, label: 'Level 1', desc: 'Gentle start • Unlocked by default' },
-              { level: 2, label: 'Level 2', desc: 'Expands upon Level 1 completion' },
-              { level: 3, label: 'Level 3', desc: 'Expands upon Level 2 completion' },
-              { level: 4, label: 'Level 4', desc: 'Expands upon Level 3 completion' },
-              { level: 5, label: 'Level 5', desc: 'Mastery stage • Game completion' },
-            ].map((stg) => (
-              <div 
-                key={stg.level} 
-                className="bg-[#F8FAF9] border border-[#D5DFDC] rounded-2xl p-3.5 space-y-1 text-center"
-              >
-                <div className="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold text-white bg-[#0B534B]">
-                  {stg.label}
-                </div>
-                <p className="text-xs text-[#5A6A66] font-medium leading-snug pt-1">
-                  {stg.desc}
-                </p>
-              </div>
-            ))}
+          <div>
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-3xl sm:text-4xl font-black">{streakDays}</span>
+              <span className="text-base font-bold text-white/80">Days</span>
+            </div>
+            <p className="text-sm text-white/70 mt-0.5">Days with game activity</p>
           </div>
         </div>
-      </ScrollReveal>
 
-      {/* Real-World Game Analytics Bar */}
-      <ScrollReveal direction="up" delay={80}>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-gradient-to-br from-[#042420] to-[#0B534B] text-white p-5 rounded-2xl shadow-md border border-[#0B534B] flex items-center justify-between">
-            <div className="space-y-1">
-              <span className="text-xs font-bold text-[#A7F3D0]">Consistency Streak</span>
-              <div className="text-3xl font-black">7 Days 🔥</div>
-              <p className="text-xs text-white/90">Played daily without missing</p>
-            </div>
-            <div className="w-12 h-12 rounded-xl bg-white/15 flex items-center justify-center font-bold text-xl">
-              🎯
+        {/* Stat 2: Overall Accuracy */}
+        <div className="bg-white rounded-2xl p-5 border border-[#D5DFDC] flex flex-col justify-between min-h-[130px]">
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-bold text-[#5A6A66] uppercase tracking-wider">Accuracy</span>
+            <div className="w-10 h-10 rounded-xl bg-[#ECFDF5] text-[#065F46] border border-[#10B981]/30 flex items-center justify-center">
+              <Award className="w-5 h-5" />
             </div>
           </div>
-
-          <div className="bg-white p-5 rounded-2xl border border-[#D5DFDC] shadow-sm flex items-center justify-between">
-            <div className="space-y-1">
-              <span className="text-xs font-bold text-[#5A6A66]">Overall Accuracy</span>
-              <div className="text-3xl font-black text-[#10B981]">88%</div>
-              <p className="text-xs text-[#5A6A66]">Across all 9 real-life games</p>
+          <div>
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-3xl sm:text-4xl font-black text-[#10B981]">
+                {allScores.length > 0 ? `${overallAccuracy}%` : '—'}
+              </span>
             </div>
-            <div className="w-12 h-12 rounded-xl bg-[#ECFDF5] text-[#0B534B] border border-[#10B981]/30 flex items-center justify-center font-bold text-lg">
-              ✓
-            </div>
-          </div>
-
-          <div className="bg-white p-5 rounded-2xl border border-[#D5DFDC] shadow-sm flex items-center justify-between">
-            <div className="space-y-1">
-              <span className="text-xs font-bold text-[#5A6A66]">Levels Available</span>
-              <div className="text-2xl font-black text-[#111615]">45 Levels</div>
-              <p className="text-xs text-[#0B534B] font-semibold">5 Sequential per game</p>
-            </div>
-            <div className="w-12 h-12 rounded-xl bg-[#E6F4F1] text-[#0B534B] border border-[#0B534B]/20 flex items-center justify-center font-bold text-lg">
-              ⚡
-            </div>
-          </div>
-
-          <div className="bg-white p-5 rounded-2xl border border-[#D5DFDC] shadow-sm flex items-center justify-between">
-            <div className="space-y-1">
-              <span className="text-xs font-bold text-[#5A6A66]">Adaptive Engine</span>
-              <div className="text-2xl font-black text-[#D97706]">Active</div>
-              <p className="text-xs text-[#5A6A66]">Sequential level unlock</p>
-            </div>
-            <div className="w-12 h-12 rounded-xl bg-[#FFFBEB] text-[#D97706] border border-[#D97706]/30 flex items-center justify-center font-bold text-lg">
-              ★
-            </div>
+            <p className="text-sm text-[#5A6A66] mt-0.5">
+              {allScores.length > 0 ? `Across ${allScores.length} completed levels` : 'Play to see your score'}
+            </p>
           </div>
         </div>
-      </ScrollReveal>
 
-      {/* Category Filter Pills */}
-      <div className="flex flex-wrap items-center gap-2">
-        <span className="text-xs font-bold text-[#5A6A66] flex items-center gap-1.5 mr-2">
-          <Filter className="w-3.5 h-3.5 text-[#0B534B]" /> Filter By Scenario:
+        {/* Stat 3: Levels Completed */}
+        <div className="bg-white rounded-2xl p-5 border border-[#D5DFDC] flex flex-col justify-between min-h-[130px]">
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-bold text-[#5A6A66] uppercase tracking-wider">Levels Done</span>
+            <div className="w-10 h-10 rounded-xl bg-[#E6F4F1] text-[#0B534B] border border-[#0B534B]/20 flex items-center justify-center">
+              <CheckCircle2 className="w-5 h-5" />
+            </div>
+          </div>
+          <div>
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-3xl sm:text-4xl font-black text-[#111615]">{totalCompletedLevels}</span>
+              <span className="text-base font-bold text-[#5A6A66]">/ 45</span>
+            </div>
+            <p className="text-sm text-[#5A6A66] mt-0.5">Total levels completed</p>
+          </div>
+        </div>
+
+        {/* Stat 4: Highest Level Reached */}
+        <div className="bg-white rounded-2xl p-5 border border-[#D5DFDC] flex flex-col justify-between min-h-[130px]">
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-bold text-[#5A6A66] uppercase tracking-wider">Highest Level</span>
+            <div className="w-10 h-10 rounded-xl bg-[#FFFBEB] text-[#D97706] border border-[#D97706]/30 flex items-center justify-center">
+              <Zap className="w-5 h-5" />
+            </div>
+          </div>
+          <div>
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-3xl sm:text-4xl font-black text-[#D97706]">Level {maxUnlockedLevel}</span>
+            </div>
+            <p className="text-sm text-[#5A6A66] mt-0.5">Highest level reached in any game</p>
+          </div>
+        </div>
+      </div>
+
+      {/* ─── Category Filters ─── */}
+      <nav aria-label="Game category filters" className="flex flex-wrap items-center gap-2.5">
+        <span className="text-sm sm:text-base font-bold text-[#5A6A66] flex items-center gap-1.5 mr-1">
+          <Filter className="w-4 h-4 text-[#0B534B]" />
+          <span>Filter:</span>
         </span>
-        {[
-          { id: 'all', label: 'All 9 Games' },
-          { id: 'daily', label: '🛒 Everyday Routine & Bazaar' },
-          { id: 'memory', label: '🧠 Visual & Spatial Recall' },
-          { id: 'attention', label: '👀 Focus & Detail Discrimination' },
-          { id: 'verbal', label: '🗣️ Language, Sounds & Proverbs' },
-        ].map((tab) => (
+        {categories.map((tab) => (
           <button
             key={tab.id}
             type="button"
-            onClick={() => setSelectedCategory(tab.id as GameCategory)}
-            className={`px-4 py-2 rounded-xl font-bold text-xs sm:text-sm transition-all border ${
+            onClick={() => setSelectedCategory(tab.id)}
+            aria-pressed={selectedCategory === tab.id}
+            className={`min-h-[44px] px-4 sm:px-5 py-2.5 rounded-xl font-bold text-sm sm:text-base transition-colors border cursor-pointer ${
               selectedCategory === tab.id
-                ? 'bg-[#0B534B] text-white border-[#08433C] shadow-sm'
+                ? 'bg-[#0B534B] text-white border-[#08433C]'
                 : 'bg-white text-[#5A6A66] border-[#D5DFDC] hover:bg-[#F6F8F7]'
             }`}
           >
             {tab.label}
           </button>
         ))}
-      </div>
+      </nav>
 
-      {/* Game Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredGames.map((game, idx) => {
+      {/* ─── Game Cards Grid ─── */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+        {filteredGames.map((game) => {
           const Icon = game.icon;
           const gameProg = progressMap[game.id] || {
             gameId: game.id,
@@ -347,166 +328,177 @@ export default function GamesHubPage() {
           const highestUnlocked = (gameProg.unlockedLevel || 1) as DifficultyLevel;
           const completedSet = new Set(gameProg.completedLevels || []);
           const isGameAllCompleted = completedSet.size >= 5;
+          const progressPercent = (completedSet.size / 5) * 100;
+
+          // Determine primary action label
+          let actionLabel = `Play Level ${highestUnlocked}`;
+          if (isGameAllCompleted) {
+            actionLabel = 'Replay (All Mastered)';
+          } else if (completedSet.size > 0 && !completedSet.has(highestUnlocked as DifficultyLevel)) {
+            actionLabel = `Continue — Level ${highestUnlocked}`;
+          }
 
           return (
-            <ScrollReveal
+            <article
               key={game.id}
-              direction="up"
-              delay={idx * 40}
-              className="h-full"
+              className="bg-white rounded-2xl border border-[#D5DFDC] hover:border-[#0B534B]/40 transition-colors flex flex-col h-full group"
+              aria-label={`${game.title} — ${completedSet.size} of 5 levels completed`}
             >
-              <div className="bg-white rounded-3xl p-6 border border-[#D5DFDC] shadow-sm hover:border-[#0B534B] hover:shadow-md transition-all flex flex-col justify-between space-y-5 h-full relative group">
-                
-                <div className="space-y-3.5">
-                  {/* Top Bar: Icon + Category Tag + Progress Badge */}
-                  <div className="flex items-center justify-between">
-                    <div className={`w-12 h-12 rounded-2xl ${game.color} text-white flex items-center justify-center shadow-sm`}>
-                      <Icon className="w-6 h-6" />
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-bold bg-[#F6F8F7] text-[#5A6A66] px-3 py-1 rounded-full border border-[#D5DFDC]">
-                        {game.tag}
-                      </span>
-                      <span className="text-xs font-bold text-[#0B534B] bg-[#E6F4F1] border border-[#0B534B]/20 px-2.5 py-0.5 rounded-md">
-                        {isGameAllCompleted ? '5/5 Mastered 🏆' : `Level ${highestUnlocked}/5`}
-                      </span>
-                    </div>
-                  </div>
+              {/* Card Body */}
+              <div className="p-5 sm:p-6 space-y-4 flex-1">
 
-                  {/* Title & Description */}
-                  <div className="space-y-1.5">
-                    <h2 className="text-xl font-extrabold text-[#111615] group-hover:text-[#0B534B] transition-colors">
+                {/* Icon + Title + Category */}
+                <div className="flex items-start gap-3.5">
+                  <div className={`w-12 h-12 rounded-xl ${game.color} text-white flex items-center justify-center flex-shrink-0`}>
+                    <Icon className="w-6 h-6" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h2 className="text-xl sm:text-2xl font-extrabold text-[#111615] leading-tight group-hover:text-[#0B534B] transition-colors">
                       {game.title}
                     </h2>
-                    <p className="text-xs sm:text-sm text-[#5A6A66] font-medium leading-relaxed">
-                      {game.desc}
-                    </p>
-                  </div>
-
-                  {/* 5-Level Sequential Progress Chips */}
-                  <div className="bg-[#FAFCFB] rounded-2xl p-3 border border-[#D5DFDC] space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-[#0B534B] flex items-center gap-1.5">
-                        <Zap className="w-3.5 h-3.5 text-[#D97706]" /> 5 Progressive Levels:
-                      </span>
-                      <span className="text-xs text-[#5A6A66] font-medium">
-                        {completedSet.size} of 5 Completed
-                      </span>
-                    </div>
-
-                    <div className="grid grid-cols-5 gap-1.5">
-                      {([1, 2, 3, 4, 5] as DifficultyLevel[]).map((lvl) => {
-                        const isUnlocked = lvl <= highestUnlocked;
-                        const isCompleted = completedSet.has(lvl);
-
-                        if (isCompleted) {
-                          return (
-                            <Link
-                              key={lvl}
-                              href={`/games/${game.id}?level=${lvl}`}
-                              className="py-1.5 px-2 bg-[#ECFDF5] hover:bg-[#D1FAE5] border border-[#10B981] rounded-xl text-center transition-all flex flex-col items-center justify-center gap-0.5"
-                              title={`Level ${lvl} Completed (Replayable)`}
-                            >
-                              <span className="text-xs font-bold text-[#0B534B] flex items-center gap-1">
-                                L{lvl} <Check className="w-3 h-3 text-[#0B534B]" />
-                              </span>
-                            </Link>
-                          );
-                        }
-
-                        if (isUnlocked) {
-                          return (
-                            <Link
-                              key={lvl}
-                              href={`/games/${game.id}?level=${lvl}`}
-                              className="py-1.5 px-2 bg-[#E6F4F1] hover:bg-[#C2E5DF] border border-[#0B534B] rounded-xl text-center transition-all flex flex-col items-center justify-center gap-0.5 shadow-sm"
-                              title={`Level ${lvl} Unlocked (Play)`}
-                            >
-                              <span className="text-xs font-bold text-[#0B534B] flex items-center gap-1">
-                                L{lvl} <Play className="w-3 h-3 fill-[#0B534B]" />
-                              </span>
-                            </Link>
-                          );
-                        }
-
-                        return (
-                          <div
-                            key={lvl}
-                            className="py-1.5 px-2 bg-[#F8FAF9] border border-[#D5DFDC] rounded-xl text-center flex flex-col items-center justify-center gap-0.5 opacity-60 cursor-not-allowed"
-                            title={`Level ${lvl} Locked (Complete Level ${lvl - 1} first)`}
-                          >
-                            <span className="text-xs font-semibold text-[#5A6A66] flex items-center gap-1">
-                              L{lvl} <Lock className="w-3 h-3 text-[#5A6A66]" />
-                            </span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  {/* Real-World Scenario Box */}
-                  <div className="bg-[#F6F8F7] rounded-2xl p-3 border border-[#D5DFDC] space-y-1">
-                    <div className="flex items-start gap-1.5 text-xs font-bold text-[#111615]">
-                      <span className="text-[#D97706] flex-shrink-0">🌟</span>
-                      <span>Everyday Routine:</span>
-                    </div>
-                    <p className="text-xs text-[#5A6A66] font-semibold pl-5">
-                      {game.realWorldScenario}
-                    </p>
+                    <span className="text-sm font-semibold text-[#5A6A66] mt-0.5 block">
+                      {game.tag}
+                    </span>
                   </div>
                 </div>
 
-                {/* Actions: Audio Guide + Start Button */}
-                <div className="space-y-2.5 pt-2 border-t border-[#D5DFDC]/60">
-                  <VoiceButton
-                    textToRead={game.audioInstruction}
-                    buttonLabel="Listen Instructions"
-                    className="w-full text-center justify-center"
-                  />
+                {/* Description */}
+                <p className="text-base text-[#5A6A66] leading-relaxed">
+                  {game.desc}
+                </p>
 
-                  <Link
-                    href={`/games/${game.id}?level=${highestUnlocked}`}
-                    className="w-full py-3.5 px-5 bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white rounded-xl font-bold text-sm sm:text-base shadow-sm hover:shadow transition-all flex items-center justify-center gap-2 cursor-pointer"
-                  >
-                    <Play className="w-4 h-4 fill-white" />
-                    <span>
-                      {isGameAllCompleted 
-                        ? 'Replay Levels (All Mastered 🏆)' 
-                        : `Play Level ${highestUnlocked}`}
+                {/* Progress Bar */}
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-bold text-[#111615]">
+                      {isGameAllCompleted
+                        ? '✓ All Levels Mastered'
+                        : `Level ${highestUnlocked} of 5`}
                     </span>
-                  </Link>
+                    <span className="text-sm font-semibold text-[#5A6A66]">
+                      {completedSet.size}/5 completed
+                    </span>
+                  </div>
+                  <div
+                    className="w-full h-2.5 bg-[#EBF0EE] rounded-full overflow-hidden"
+                    role="progressbar"
+                    aria-valuenow={completedSet.size}
+                    aria-valuemin={0}
+                    aria-valuemax={5}
+                    aria-label={`${completedSet.size} of 5 levels completed`}
+                  >
+                    <div
+                      className="h-full bg-[#10B981] rounded-full transition-all duration-300"
+                      style={{ width: `${progressPercent}%` }}
+                    />
+                  </div>
+                </div>
+
+                {/* Level Step Indicators */}
+                <div
+                  className="flex items-center"
+                  role="group"
+                  aria-label={`Level progress for ${game.title}`}
+                >
+                  {([1, 2, 3, 4, 5] as DifficultyLevel[]).map((lvl) => {
+                    const isCompleted = completedSet.has(lvl);
+                    const isUnlocked = lvl <= highestUnlocked;
+
+                    return (
+                      <div key={lvl} className="flex items-center flex-1 last:flex-initial">
+                        {isCompleted ? (
+                          <Link
+                            href={`/games/${game.id}?level=${lvl}`}
+                            className="w-9 h-9 rounded-full bg-[#10B981] text-white flex items-center justify-center flex-shrink-0 hover:bg-[#059669] transition-colors"
+                            aria-label={`Level ${lvl} completed — tap to replay`}
+                            title={`Level ${lvl} — Completed (Replay)`}
+                          >
+                            <Check className="w-4 h-4" aria-hidden="true" />
+                          </Link>
+                        ) : isUnlocked ? (
+                          <Link
+                            href={`/games/${game.id}?level=${lvl}`}
+                            className="w-9 h-9 rounded-full bg-[#0B534B] text-white flex items-center justify-center flex-shrink-0 ring-2 ring-[#0B534B]/20 ring-offset-2 hover:bg-[#08433C] transition-colors"
+                            aria-label={`Level ${lvl} — available, tap to play`}
+                            title={`Level ${lvl} — Play`}
+                          >
+                            <span className="text-sm font-bold" aria-hidden="true">{lvl}</span>
+                          </Link>
+                        ) : (
+                          <div
+                            className="w-9 h-9 rounded-full bg-[#F6F8F7] border border-[#D5DFDC] text-[#B2C2BD] flex items-center justify-center flex-shrink-0"
+                            aria-label={`Level ${lvl} — locked, complete Level ${lvl - 1} first`}
+                            title={`Level ${lvl} — Locked`}
+                          >
+                            <Lock className="w-3.5 h-3.5" aria-hidden="true" />
+                          </div>
+                        )}
+                        {lvl < 5 && (
+                          <div
+                            className={`flex-1 h-0.5 mx-1 rounded-full ${
+                              isCompleted ? 'bg-[#10B981]' : 'bg-[#D5DFDC]'
+                            }`}
+                            aria-hidden="true"
+                          />
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Real-World Scenario */}
+                <div className="flex items-start gap-2 text-sm sm:text-base text-[#5A6A66]">
+                  <span className="text-[#D97706] flex-shrink-0 mt-0.5" aria-hidden="true">🌟</span>
+                  <span>
+                    <span className="font-semibold text-[#111615]">Daily routine: </span>
+                    {game.realWorldScenario}
+                  </span>
                 </div>
               </div>
-            </ScrollReveal>
+
+              {/* Card Actions */}
+              <div className="p-5 sm:p-6 pt-4 space-y-3 border-t border-[#D5DFDC]/60">
+                <Link
+                  href={`/games/${game.id}?level=${highestUnlocked}`}
+                  className="w-full min-h-[48px] py-3 px-5 bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white rounded-xl font-bold text-base sm:text-lg flex items-center justify-center gap-2.5 transition-colors"
+                >
+                  <Play className="w-5 h-5 fill-white" aria-hidden="true" />
+                  <span>{actionLabel}</span>
+                </Link>
+                <VoiceButton
+                  textToRead={game.audioInstruction}
+                  buttonLabel="Listen Instructions"
+                  className="w-full text-center justify-center"
+                />
+              </div>
+            </article>
           );
         })}
       </div>
 
-      {/* Senior Encouragement & Safety Note Footer */}
-      <ScrollReveal direction="up" delay={150}>
-        <div className="bg-gradient-to-r from-[#042420] to-[#0B534B] text-white rounded-3xl p-6 sm:p-7 border border-[#0B534B]/30 shadow-md flex flex-col md:flex-row items-center justify-between gap-5">
-          <div className="space-y-1.5 text-center md:text-left">
-            <div className="inline-flex items-center gap-2 text-[#D97706] text-xs font-bold">
-              <ShieldCheck className="w-4 h-4" />
-              <span>Dignity & Calm-First Design</span>
-            </div>
-            <h3 className="text-lg sm:text-xl font-bold">
-              Cognitive Exercises Designed for Real Senior Life
-            </h3>
-            <p className="text-xs sm:text-sm text-white/90 max-w-2xl leading-relaxed">
-              Scores are never penalized for slow response or errors. Players begin at Level 1 and advance through all five levels at their own relaxed pace.
-            </p>
+      {/* ─── Footer Encouragement ─── */}
+      <footer className="bg-[#0B534B] text-white rounded-2xl p-6 sm:p-7 flex flex-col md:flex-row items-center justify-between gap-5">
+        <div className="space-y-1.5 text-center md:text-left">
+          <div className="inline-flex items-center gap-2 text-sm font-bold text-[#A7F3D0]">
+            <ShieldCheck className="w-4 h-4" />
+            <span>Dignity & Calm-First Design</span>
           </div>
-
-          <Link
-            href="/dashboard"
-            className="py-3.5 px-6 bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white rounded-xl font-bold text-sm shadow-sm hover:shadow transition-all flex items-center gap-2 flex-shrink-0 border border-white/20"
-          >
-            <span>Return to Daily Routine</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+          <p className="text-lg sm:text-xl font-bold">
+            Cognitive Exercises Designed for Real Senior Life
+          </p>
+          <p className="text-sm sm:text-base text-white/80 max-w-2xl leading-relaxed">
+            Scores are never penalized for slow response or errors. Begin at Level 1 and advance through all five levels at your own relaxed pace.
+          </p>
         </div>
-      </ScrollReveal>
+
+        <Link
+          href="/dashboard"
+          className="min-h-[48px] py-3 px-6 bg-white/10 hover:bg-white/20 text-white rounded-xl font-bold text-base border border-white/20 transition-colors flex items-center gap-2 flex-shrink-0"
+        >
+          <span>Return to Dashboard</span>
+          <ArrowRight className="w-4 h-4" aria-hidden="true" />
+        </Link>
+      </footer>
     </div>
   );
 }
