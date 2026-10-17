@@ -143,9 +143,9 @@ export default function RemindersPage() {
   return (
     <div className="space-y-8 pb-36 sm:pb-44 max-w-5xl mx-auto">
       {/* ─── 1. Header ─── */}
-      <header className="bg-white rounded-2xl p-6 sm:p-7 border border-[#D5DFDC] shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-5">
+      <header className="bg-white rounded-2xl p-6 sm:p-8 border border-[#D5DFDC] shadow-[0_2px_12px_rgba(11,83,75,0.06)] flex flex-col md:flex-row md:items-center justify-between gap-5">
         <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 bg-[#ECFDF5] text-[#065F46] px-3 py-1 rounded-full text-xs font-bold border border-[#A7F3D0]">
+          <div className="inline-flex items-center gap-2 bg-[#ECFDF5] text-[#065F46] px-3.5 py-1 rounded-full text-xs font-bold border border-[#A7F3D0]">
             <Bell className="w-4 h-4 text-[#059669]" />
             <span>{t("Daily Routine & Reminders") || "Daily Routine Assistant"}</span>
           </div>
@@ -167,7 +167,7 @@ export default function RemindersPage() {
           <button
             type="button"
             onClick={() => setShowAddModal(true)}
-            className="min-h-[48px] flex items-center gap-2 bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white px-5 py-2.5 rounded-xl font-bold text-base shadow-xs transition-all focus-visible:ring-2 focus-visible:ring-[#0B534B]"
+            className="min-h-[48px] flex items-center gap-2 bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white px-5 py-2.5 rounded-xl font-bold text-base shadow-xs hover:shadow-sm transition-all focus-visible:ring-2 focus-visible:ring-[#0B534B]"
           >
             <Plus className="w-5 h-5" />
             <span>{t("Add Reminder") || "Add Reminder"}</span>
@@ -201,10 +201,10 @@ export default function RemindersPage() {
             {pendingList.map((rem) => (
               <div
                 key={rem.id}
-                className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-xs flex flex-col justify-between gap-4 hover:border-[#0B534B] transition-all h-full"
+                className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-[0_2px_10px_rgba(11,83,75,0.04)] flex flex-col justify-between gap-4 hover:border-[#0B534B] transition-all h-full"
               >
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-[#F9FAFB] border border-[#E5E7EB] flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 rounded-xl bg-[#E6F4F1] border border-[#93CEC5] flex items-center justify-center flex-shrink-0 text-[#0B534B]">
                     {getCategoryIcon(rem.category)}
                   </div>
                   <div className="space-y-1 min-w-0">
@@ -234,7 +234,7 @@ export default function RemindersPage() {
 
                     <div className="pt-1">
                       <span className="text-sm font-bold text-[#D97706] flex items-center gap-1.5">
-                        <Clock className="w-4 h-4" /> {rem.time}
+                        <Clock className="w-4 h-4" /> <span>{rem.time}</span>
                       </span>
                     </div>
                   </div>
@@ -243,7 +243,7 @@ export default function RemindersPage() {
                 <button
                   type="button"
                   onClick={() => handleToggleComplete(rem.id, rem.isCompleted)}
-                  className="w-full min-h-[48px] py-2.5 px-5 bg-[#059669] hover:bg-[#047857] active:bg-[#065F46] text-white rounded-xl font-bold text-base shadow-xs transition-all flex items-center justify-center gap-2 cursor-pointer focus-visible:ring-2 focus-visible:ring-[#059669]"
+                  className="w-full min-h-[50px] py-3 px-5 bg-[#059669] hover:bg-[#047857] active:bg-[#065F46] text-white rounded-xl font-bold text-base shadow-xs hover:shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer focus-visible:ring-2 focus-visible:ring-[#059669]"
                 >
                   <CheckCircle2 className="w-5 h-5" />
                   <span>Mark as Completed</span>

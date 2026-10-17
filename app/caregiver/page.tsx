@@ -121,9 +121,9 @@ export default function CaregiverPortalPage() {
   return (
     <div className="space-y-8 pb-36 sm:pb-44 max-w-5xl mx-auto">
       {/* ─── 1. Caregiver Header ─── */}
-      <header className="bg-white rounded-2xl p-6 sm:p-7 border border-[#D5DFDC] shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-5">
-        <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 bg-[#ECFDF5] text-[#065F46] px-3 py-1 rounded-full text-xs font-bold border border-[#A7F3D0]">
+      <header className="bg-white rounded-2xl p-6 sm:p-8 border border-[#D5DFDC] shadow-[0_2px_12px_rgba(11,83,75,0.06)] flex flex-col md:flex-row md:items-center justify-between gap-5">
+        <div className="space-y-2.5">
+          <div className="inline-flex items-center gap-2 bg-[#ECFDF5] text-[#065F46] px-3.5 py-1 rounded-full text-xs font-bold border border-[#A7F3D0]">
             <Stethoscope className="w-4 h-4 text-[#059669]" />
             <span>Caregiver &amp; Family Observation Portal</span>
           </div>
@@ -138,7 +138,7 @@ export default function CaregiverPortalPage() {
         <div className="flex items-center gap-3 flex-shrink-0 pt-2 md:pt-0">
           <a
             href={`tel:${user.emergencyPhone}`}
-            className="min-h-[48px] px-5 py-2.5 bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white font-bold text-base rounded-xl transition-colors inline-flex items-center gap-2 shadow-xs focus-visible:ring-2 focus-visible:ring-[#0B534B]"
+            className="min-h-[48px] px-5 py-2.5 bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white font-bold text-base rounded-xl transition-colors inline-flex items-center gap-2 shadow-xs hover:shadow-sm focus-visible:ring-2 focus-visible:ring-[#0B534B]"
           >
             <Phone className="w-4 h-4" />
             <span>Call {user.name.split(' ')[0]}</span>
@@ -148,7 +148,7 @@ export default function CaregiverPortalPage() {
 
       {/* ─── 2. Clinical Observation / Caregiver Alert Banner ─── */}
       <section aria-label="Clinical observation notice">
-        <div className="bg-[#FFFBEB] border border-[#FDE68A] rounded-2xl p-5 sm:p-6 space-y-3">
+        <div className="bg-[#FFFBEB] border border-[#FDE68A] rounded-2xl p-5 sm:p-6 space-y-3.5 shadow-[0_2px_10px_rgba(217,119,6,0.04)]">
           <div className="flex items-center gap-2.5">
             <AlertTriangle className="w-5 h-5 text-[#D97706] flex-shrink-0" />
             <h2 className="text-lg sm:text-xl font-extrabold text-[#92400E]">
@@ -158,7 +158,7 @@ export default function CaregiverPortalPage() {
           <p className="text-base text-[#B45309] font-medium leading-relaxed">
             Gentle reminder: Cognitive scores reflect short-term daily focus and sleep quality. Check in with {user.name} to ensure restful sleep, hydration, and comfortable room lighting.
           </p>
-          <div className="bg-white/90 p-3.5 rounded-xl border border-[#FDE68A] text-sm font-semibold text-[#92400E]">
+          <div className="bg-white/95 p-4 rounded-xl border border-[#FDE68A] text-sm font-semibold text-[#92400E] shadow-2xs">
             💡 Family Suggestion: Encourage morning tea together or gentle conversation after daily memory games.
           </div>
         </div>
@@ -167,7 +167,7 @@ export default function CaregiverPortalPage() {
       {/* ─── 3. KPI Overview Cards (Harmonized Architecture) ─── */}
       <section aria-label="Key performance indicators">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
-          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-xs flex flex-col justify-between min-h-[148px]">
+          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-[0_2px_10px_rgba(11,83,75,0.04)] flex flex-col justify-between min-h-[156px]">
             <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#5A6A66]">
               Current Vitality
             </span>
@@ -180,7 +180,7 @@ export default function CaregiverPortalPage() {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-xs flex flex-col justify-between min-h-[148px]">
+          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-[0_2px_10px_rgba(11,83,75,0.04)] flex flex-col justify-between min-h-[156px]">
             <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#5A6A66]">
               Avg Accuracy
             </span>
@@ -190,7 +190,7 @@ export default function CaregiverPortalPage() {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-xs flex flex-col justify-between min-h-[148px]">
+          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-[0_2px_10px_rgba(11,83,75,0.04)] flex flex-col justify-between min-h-[156px]">
             <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#5A6A66]">
               Recall Pace
             </span>
@@ -200,7 +200,7 @@ export default function CaregiverPortalPage() {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-xs flex flex-col justify-between min-h-[148px]">
+          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-[0_2px_10px_rgba(11,83,75,0.04)] flex flex-col justify-between min-h-[156px]">
             <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#5A6A66]">
               Routine Adherence
             </span>
@@ -214,7 +214,7 @@ export default function CaregiverPortalPage() {
 
       {/* ─── 4. 7-Day Performance Trajectory Chart ─── */}
       <section aria-label="7-Day performance chart">
-        <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#D5DFDC] shadow-xs space-y-4">
+        <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#D5DFDC] shadow-[0_2px_12px_rgba(11,83,75,0.06)] space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#E5E7EB]">
             <div>
               <h2 className="text-xl sm:text-2xl font-extrabold text-[#111615]">

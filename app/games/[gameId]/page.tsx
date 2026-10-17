@@ -314,7 +314,7 @@ function GameArenaContent() {
     <div className="space-y-6 pb-36 sm:pb-44 max-w-5xl mx-auto">
       
       {/* ─── 1. Spacious Top Header & Navigation Bar ─── */}
-      <header className="bg-white p-5 sm:p-6 rounded-2xl border border-[#D5DFDC] shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <header className="bg-white p-5 sm:p-6 rounded-2xl border border-[#D5DFDC] shadow-[0_2px_12px_rgba(11,83,75,0.06)] flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex items-center gap-3.5">
           <Link
             href="/games"
@@ -375,14 +375,14 @@ function GameArenaContent() {
       </header>
 
       {/* ─── 2. Clear Instruction & Voice Bar ─── */}
-      <section aria-label="Exercise instructions" className="bg-[#F0FDF4] border border-[#BBF7D0] p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div className="flex items-start gap-3">
+      <section aria-label="Exercise instructions" className="bg-[#ECFDF5] border border-[#A7F3D0] p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-[0_2px_10px_rgba(11,83,75,0.04)]">
+        <div className="flex items-start gap-3.5">
           <HelpCircle className="w-6 h-6 text-[#059669] flex-shrink-0 mt-0.5" />
           <div className="space-y-1">
             <span className="text-xs font-bold uppercase tracking-wider text-[#065F46] block">
               Exercise Instructions
             </span>
-            <p className="text-base sm:text-lg text-[#1F2937] font-medium leading-relaxed">
+            <p className="text-base sm:text-lg text-[#111615] font-medium leading-relaxed">
               {currentInfo.instruction}
             </p>
           </div>
@@ -396,7 +396,7 @@ function GameArenaContent() {
 
       {/* ─── 3. Compact 5-Stage Level Selector ─── */}
       <section aria-label="Level selection">
-        <div className="bg-white rounded-2xl p-4 sm:p-5 border border-[#D5DFDC] shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="bg-white rounded-2xl p-4 sm:p-5 border border-[#D5DFDC] shadow-[0_2px_10px_rgba(11,83,75,0.04)] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-[#D97706]" />
             <span className="text-sm font-extrabold text-[#111615]">

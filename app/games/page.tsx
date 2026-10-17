@@ -199,13 +199,13 @@ export default function GamesHubPage() {
   const voiceSummary = `Welcome to the Senior Cognitive Games Dashboard. There are 9 exercises designed for everyday living, with 5 progressive levels each. Begin at Level 1 and unlock subsequent stages sequentially. Completed levels can be replayed at any time without time pressure.`;
 
   return (
-    <div className="space-y-8 pb-36 sm:pb-44">
+    <div className="space-y-8 pb-36 sm:pb-44 max-w-7xl mx-auto">
 
       {/* ─── 1. Calm Healthcare Page Header ─── */}
-      <header className="bg-white rounded-2xl p-6 sm:p-7 border border-[#D5DFDC] shadow-xs">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
-          <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ECFDF5] text-[#065F46] border border-[#A7F3D0] text-xs font-bold tracking-wide">
+      <header className="bg-white rounded-2xl p-6 sm:p-8 border border-[#D5DFDC] shadow-[0_2px_12px_rgba(11,83,75,0.06)]">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div className="space-y-2.5">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#ECFDF5] text-[#065F46] border border-[#A7F3D0] text-xs font-bold tracking-wide">
               <ShieldCheck className="w-4 h-4 text-[#059669]" />
               <span>Dignity-First Cognitive Health Program</span>
             </div>
@@ -239,12 +239,12 @@ export default function GamesHubPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
 
           {/* Stat 1: Consistency Streak */}
-          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-xs flex flex-col justify-between min-h-[148px]">
+          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-[0_2px_10px_rgba(11,83,75,0.04)] flex flex-col justify-between min-h-[156px]">
             <div className="flex items-center justify-between">
               <span className="text-xs sm:text-sm font-bold text-[#5A6A66] uppercase tracking-wider">
                 Consistency Streak
               </span>
-              <div className="w-11 h-11 rounded-xl bg-[#FFFBEB] text-[#D97706] border border-[#FDE68A] flex items-center justify-center flex-shrink-0">
+              <div className="w-11 h-11 rounded-xl bg-[#FFFBEB] text-[#D97706] border border-[#FDE68A] flex items-center justify-center flex-shrink-0 shadow-2xs">
                 <Flame className="w-5 h-5 text-[#D97706]" aria-hidden="true" />
               </div>
             </div>
@@ -264,12 +264,12 @@ export default function GamesHubPage() {
           </div>
 
           {/* Stat 2: Overall Accuracy */}
-          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-xs flex flex-col justify-between min-h-[148px]">
+          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-[0_2px_10px_rgba(11,83,75,0.04)] flex flex-col justify-between min-h-[156px]">
             <div className="flex items-center justify-between">
               <span className="text-xs sm:text-sm font-bold text-[#5A6A66] uppercase tracking-wider">
                 Overall Accuracy
               </span>
-              <div className="w-11 h-11 rounded-xl bg-[#ECFDF5] text-[#059669] border border-[#A7F3D0] flex items-center justify-center flex-shrink-0">
+              <div className="w-11 h-11 rounded-xl bg-[#ECFDF5] text-[#059669] border border-[#A7F3D0] flex items-center justify-center flex-shrink-0 shadow-2xs">
                 <Award className="w-5 h-5 text-[#059669]" aria-hidden="true" />
               </div>
             </div>
@@ -286,12 +286,12 @@ export default function GamesHubPage() {
           </div>
 
           {/* Stat 3: Levels Completed */}
-          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-xs flex flex-col justify-between min-h-[148px]">
+          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-[0_2px_10px_rgba(11,83,75,0.04)] flex flex-col justify-between min-h-[156px]">
             <div className="flex items-center justify-between">
               <span className="text-xs sm:text-sm font-bold text-[#5A6A66] uppercase tracking-wider">
                 Levels Completed
               </span>
-              <div className="w-11 h-11 rounded-xl bg-[#E6F4F1] text-[#0B534B] border border-[#93CEC5] flex items-center justify-center flex-shrink-0">
+              <div className="w-11 h-11 rounded-xl bg-[#E6F4F1] text-[#0B534B] border border-[#93CEC5] flex items-center justify-center flex-shrink-0 shadow-2xs">
                 <CheckCircle2 className="w-5 h-5 text-[#0B534B]" aria-hidden="true" />
               </div>
             </div>
@@ -309,12 +309,12 @@ export default function GamesHubPage() {
           </div>
 
           {/* Stat 4: Engine Pace (Connected to application response engine) */}
-          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-xs flex flex-col justify-between min-h-[148px]">
+          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-[0_2px_10px_rgba(11,83,75,0.04)] flex flex-col justify-between min-h-[156px]">
             <div className="flex items-center justify-between">
               <span className="text-xs sm:text-sm font-bold text-[#5A6A66] uppercase tracking-wider">
                 Engine Pace
               </span>
-              <div className="w-11 h-11 rounded-xl bg-[#E6F4F1] text-[#0B534B] border border-[#93CEC5] flex items-center justify-center flex-shrink-0">
+              <div className="w-11 h-11 rounded-xl bg-[#E6F4F1] text-[#0B534B] border border-[#93CEC5] flex items-center justify-center flex-shrink-0 shadow-2xs">
                 <Activity className="w-5 h-5 text-[#0B534B]" aria-hidden="true" />
               </div>
             </div>
@@ -364,7 +364,7 @@ export default function GamesHubPage() {
                   {tab.icon && <span aria-hidden="true">{tab.icon}</span>}
                   <span>{tab.label}</span>
                   <span
-                    className={`text-xs px-2 py-0.5 rounded-full font-extrabold ${
+                    className={`text-xs px-2.5 py-0.5 rounded-full font-extrabold ${
                       isSelected
                         ? 'bg-white/20 text-white'
                         : 'bg-[#F3F4F6] text-[#4B5563]'
@@ -409,17 +409,17 @@ export default function GamesHubPage() {
           return (
             <article
               key={game.id}
-              className="bg-white rounded-2xl border border-[#D5DFDC] hover:border-[#0B534B]/50 transition-all duration-200 flex flex-col h-full shadow-xs hover:shadow-sm"
+              className="bg-white rounded-2xl border border-[#D5DFDC] hover:border-[#0B534B]/60 transition-all duration-200 flex flex-col h-full shadow-[0_2px_12px_rgba(11,83,75,0.05)] hover:shadow-[0_8px_24px_rgba(11,83,75,0.1)]"
               aria-label={`${game.title} — ${completedSet.size} of 5 levels completed`}
             >
               {/* Card Body */}
               <div className="p-6 sm:p-7 space-y-5 flex-1 flex flex-col justify-between">
 
                 {/* Top: Icon + Title + Category Tag */}
-                <div className="space-y-3">
+                <div className="space-y-3.5">
                   <div className="flex items-start justify-between gap-3">
                     <div
-                      className={`w-14 h-14 rounded-2xl ${game.color} text-white flex items-center justify-center flex-shrink-0 shadow-xs`}
+                      className={`w-14 h-14 rounded-2xl ${game.color} text-white flex items-center justify-center flex-shrink-0 shadow-sm`}
                       aria-hidden="true"
                     >
                       <Icon className="w-7 h-7" />
@@ -462,7 +462,7 @@ export default function GamesHubPage() {
                     </div>
 
                     <div
-                      className="w-full h-2 bg-[#E5E7EB] rounded-full overflow-hidden"
+                      className="w-full h-2.5 bg-[#E5E7EB] rounded-full overflow-hidden"
                       role="progressbar"
                       aria-valuenow={completedSet.size}
                       aria-valuemin={0}
@@ -547,7 +547,7 @@ export default function GamesHubPage() {
               <div className="p-6 sm:p-7 pt-4 space-y-3 border-t border-[#E5E7EB] bg-[#FAFCFB] rounded-b-2xl">
                 <Link
                   href={`/games/${game.id}?level=${highestUnlocked}`}
-                  className="w-full min-h-[52px] py-3.5 px-6 bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white rounded-xl font-bold text-lg flex items-center justify-center gap-2.5 transition-all shadow-sm focus-visible:ring-2 focus-visible:ring-[#0B534B] focus-visible:ring-offset-2"
+                  className="w-full min-h-[52px] py-3.5 px-6 bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white rounded-xl font-bold text-lg flex items-center justify-center gap-2.5 transition-all shadow-sm hover:shadow-md focus-visible:ring-2 focus-visible:ring-[#0B534B] focus-visible:ring-offset-2"
                 >
                   {isGameAllCompleted ? (
                     <>
@@ -573,11 +573,11 @@ export default function GamesHubPage() {
       </section>
 
       {/* ─── 5. Supportive Healthcare Encouragement Footer ─── */}
-      <footer className="bg-[#0B534B] text-white rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
+      <footer className="bg-gradient-to-r from-[#0B534B] via-[#0E685E] to-[#08433C] text-white rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-[0_4px_20px_rgba(11,83,75,0.15)]">
         <div className="space-y-2 text-center md:text-left">
           <div className="inline-flex items-center gap-2 text-sm font-bold text-[#A7F3D0]">
             <ShieldCheck className="w-4 h-4 text-[#A7F3D0]" />
-            <span>Calm & Dignity-First Experience</span>
+            <span>Calm &amp; Dignity-First Experience</span>
           </div>
           <p className="text-xl sm:text-2xl font-extrabold text-white">
             Cognitive Exercises Designed for Real Senior Life
@@ -589,7 +589,7 @@ export default function GamesHubPage() {
 
         <Link
           href="/dashboard"
-          className="min-h-[50px] py-3 px-6 bg-white/10 hover:bg-white/20 active:bg-white/25 text-white rounded-xl font-bold text-base border border-white/30 transition-colors flex items-center gap-2 flex-shrink-0 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B534B]"
+          className="min-h-[50px] py-3 px-6 bg-white/15 hover:bg-white/25 active:bg-white/30 text-white rounded-xl font-bold text-base border border-white/30 transition-colors flex items-center gap-2 flex-shrink-0 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B534B]"
         >
           <span>Return to Dashboard</span>
           <ArrowRight className="w-4 h-4" aria-hidden="true" />
