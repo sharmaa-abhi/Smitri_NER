@@ -23,22 +23,153 @@ import {
   Check,
   Flame,
   RotateCcw,
+  Sparkles,
+  X,
+  Coffee,
+  HelpCircle,
+  Users,
+  Music,
+  MapPin,
+  ChevronRight,
+  Plus
 } from 'lucide-react';
 import VoiceButton from '@/components/VoiceButton';
 import { useLanguage } from '@/lib/i18n';
-import { getAllGamesProgress, AllGamesProgress } from '@/lib/gameProgress';
+import { getAllGamesProgress, AllGamesProgress, completeLevel } from '@/lib/gameProgress';
 import { DifficultyLevel, GameId } from '@/types/games';
 import { useAuth } from '@/lib/auth';
+import { playChime, stopVoicePrompt } from '@/lib/audioPrompts';
 
-type GameCategory = 'all' | 'daily' | 'memory' | 'attention' | 'verbal';
+type GameCategory = 'all' | 'bazaar' | 'family' | 'melodies' | 'walk';
+
+interface SeniorExercise {
+  id: string;
+  gameId: GameId;
+  level: number;
+  category: GameCategory;
+  categoryBadge: string;
+  tag: string;
+  title: string;
+  description: string;
+  stepProgress: string;
+  statusBadge: string;
+  scenario: string;
+  icon: any;
+  items: Array<{
+    id: string;
+    name: string;
+    subtitle: string;
+    emoji: string;
+    isCorrect: boolean;
+  }>;
+  hintText: string;
+}
+
+const SENIOR_EXERCISES: SeniorExercise[] = [
+  {
+    id: 'grocery-basket',
+    gameId: 'grocery-basket',
+    level: 1,
+    category: 'bazaar',
+    categoryBadge: 'LEVEL 1 • ROUTINE FOCUS',
+    tag: 'Everyday Routine',
+    title: 'Grocery Basket Recall',
+    description: 'Practice remembering familiar staples from the Indian local bazaar. Helps sustain daily independence.',
+    stepProgress: 'Step 2 of 3',
+    statusBadge: 'Active on Right',
+    scenario: 'Weekly Local Bazaar & Vegetable Shopping List',
+    icon: ShoppingBag,
+    items: [
+      { id: 'mango', name: 'Ripe Mangoes', subtitle: 'Sweet Alphonso', emoji: '🥭', isCorrect: true },
+      { id: 'elaichi', name: 'Fresh Elaichi', subtitle: 'Aromatic Pods', emoji: '🌿', isCorrect: true },
+      { id: 'milk', name: "Cow's Milk", subtitle: 'Morning Dairy', emoji: '🥛', isCorrect: true },
+      { id: 'tomato', name: 'Red Tomatoes', subtitle: 'Bazaar Vegetable', emoji: '🍅', isCorrect: false },
+      { id: 'tea', name: 'Assam Tea Leaves', subtitle: 'Fragrant CTC Blend', emoji: '🍵', isCorrect: false },
+      { id: 'turmeric', name: 'Golden Turmeric', subtitle: 'Pure Haldi Root', emoji: '✨', isCorrect: false },
+    ],
+    hintText: 'Remember the morning bazaar list: You picked ripe sweet fruits, aromatic cardamom spices, and fresh morning dairy.',
+  },
+  {
+    id: 'family-album',
+    gameId: 'memory-match',
+    level: 2,
+    category: 'family',
+    categoryBadge: 'VISUAL RECOGNITION',
+    tag: 'Family & Faces',
+    title: 'Family Memory Album',
+    description: 'Identify cherished relatives and memorable holidays with calming prompts and audio hints.',
+    stepProgress: 'Step 1 of 3',
+    statusBadge: 'Level 2 Ready',
+    scenario: 'Old Family Albums, Ancestral Home in Guwahati & Grandchildren Visits',
+    icon: Users,
+    items: [
+      { id: 'grad', name: "Granddaughter's Graduation", subtitle: 'Joyful Family Milestone', emoji: '🎓', isCorrect: true },
+      { id: 'garden', name: 'Morning Garden Tea', subtitle: 'Sunlit Verandah in Assam', emoji: '🌺', isCorrect: true },
+      { id: 'puja', name: 'Durga Puja Celebrations', subtitle: 'Traditional Family Reunion', emoji: '🪔', isCorrect: true },
+      { id: 'holiday', name: 'Shillong Hill Vacation', subtitle: 'Pine Forest Panorama', emoji: '🌲', isCorrect: false },
+    ],
+    hintText: 'Look for the graduation ceremony photograph and the family morning tea on the verandah.',
+  },
+  {
+    id: 'devotional-melody',
+    gameId: 'sound-word-match',
+    level: 1,
+    category: 'melodies',
+    categoryBadge: 'AUDITORY MEMORY',
+    tag: 'Gentle Audio',
+    title: 'Devotional Melody Recall',
+    description: 'Listen to peaceful harmonium and flute phrases and identify the corresponding evening tune.',
+    stepProgress: 'Step 2 of 3',
+    statusBadge: 'Gentle Audio',
+    scenario: 'Evening Prayer Chants, Flute Ragas & Temple Bells',
+    icon: Music,
+    items: [
+      { id: 'flute', name: 'Bansuri Flute Melody', subtitle: 'Peaceful Evening Raga', emoji: '🎵', isCorrect: true },
+      { id: 'harmonium', name: 'Harmonium Chime', subtitle: 'Traditional Borgeet Cadence', emoji: '🎹', isCorrect: true },
+      { id: 'bell', name: 'Brass Temple Bell', subtitle: 'Morning Aarti Resonance', emoji: '🔔', isCorrect: true },
+      { id: 'rain', name: 'Monsoon Rain Drops', subtitle: 'Natural Ambient Sound', emoji: '🌧️', isCorrect: false },
+    ],
+    hintText: 'Listen closely to the gentle harmonium chord and the devotional flute phrase.',
+  },
+  {
+    id: 'garden-path',
+    gameId: 'number-trail',
+    level: 1,
+    category: 'walk',
+    categoryBadge: 'SPATIAL ORIENTATION',
+    tag: 'Motor & Focus',
+    title: 'Garden Path Tracing',
+    description: 'Guide a peaceful swan through tranquil lotus ponds without rush. Calms hand tremors.',
+    stepProgress: 'Step 3 of 3',
+    statusBadge: 'Motor & Focus',
+    scenario: 'Stepping Stones in Botanical Park & Daily Morning Stroll',
+    icon: MapPin,
+    items: [
+      { id: 'stone1', name: 'White Lotus Stone 1', subtitle: 'Gentle Stepping Point', emoji: '🪷', isCorrect: true },
+      { id: 'stone2', name: 'River Pebble Stone 2', subtitle: 'Smooth Marble Balance', emoji: '🪨', isCorrect: true },
+      { id: 'stone3', name: 'Bamboo Bridge Stone 3', subtitle: 'Shaded Garden Corner', emoji: '🎋', isCorrect: true },
+      { id: 'stone4', name: 'Deep Water Ripple', subtitle: 'Bypassed Deep Pond', emoji: '🌊', isCorrect: false },
+    ],
+    hintText: 'Follow the river stones gently in sequence: Stone 1, Stone 2, then Stone 3.',
+  },
+];
 
 export default function GamesHubPage() {
   const { t } = useLanguage();
   const { user } = useAuth();
+  const seniorName = user?.name || 'Harishji';
   const userId = user?.id || 'guest';
+
   const [selectedCategory, setSelectedCategory] = useState<GameCategory>('all');
+  const [activeExerciseId, setActiveExerciseId] = useState<string>('grocery-basket');
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(true);
+  const [selectedItemIds, setSelectedItemIds] = useState<string[]>(['mango', 'elaichi', 'milk']);
+  const [showCelebration, setShowCelebration] = useState<boolean>(true);
+  const [isCompletedModal, setIsCompletedModal] = useState<boolean>(false);
   const [progressMap, setProgressMap] = useState<AllGamesProgress>({});
-  const [enginePaceSec, setEnginePaceSec] = useState<number | null>(null);
+  const [streakDays, setStreakDays] = useState<number>(6);
+
+  const activeExercise = SENIOR_EXERCISES.find((e) => e.id === activeExerciseId) || SENIOR_EXERCISES[0];
 
   const refreshProgress = useCallback(() => {
     setProgressMap(getAllGamesProgress(userId));
@@ -51,552 +182,500 @@ export default function GamesHubPage() {
     return () => window.removeEventListener('smitri_game_progress_updated', handleProgressUpdate);
   }, [refreshProgress]);
 
-  // Connect Engine Pace to actual application session data from experience engine
-  useEffect(() => {
-    fetch('/api/dashboard')
-      .then((res) => res.json())
-      .then((res) => {
-        if (res?.experienceProfile?.averageResponseTimeSec) {
-          setEnginePaceSec(res.experienceProfile.averageResponseTimeSec);
-        }
-      })
-      .catch(() => {});
-  }, []);
+  // Handle switching active game
+  const handleSwitchGame = (exercise: SeniorExercise) => {
+    playChime('start');
+    setActiveExerciseId(exercise.id);
+    setIsDrawerOpen(true);
+    // Pre-select correct items or reset
+    const defaultCorrect = exercise.items.filter((i) => i.isCorrect).map((i) => i.id);
+    setSelectedItemIds(defaultCorrect);
+    setShowCelebration(true);
+  };
 
-  const games = [
-    {
-      id: 'grocery-basket' as GameId,
-      title: 'Grocery Basket Recall',
-      desc: 'Remember items placed in your daily market basket. Stimulates short-term verbal recall and everyday grocery shopping recognition.',
-      icon: ShoppingBag,
-      color: 'bg-[#10B981]',
-      category: 'daily',
-      tag: 'Everyday Routine',
-      realWorldScenario: 'Weekly Local Bazaar & Vegetable Shopping List',
-      audioInstruction: 'Welcome to Grocery Basket Recall. Memorize the items in your basket, then pick them out from the market shelves. Advance sequentially through five progressive levels from 2 to 6 basket items.',
-    },
-    {
-      id: 'clock-reading' as GameId,
-      title: 'Clock Face & Timings',
-      desc: 'Read gentle analog clock hands and pick the correct daily routine moment. Grounding for time orientation, prayer, and meal timings.',
-      icon: Clock,
-      color: 'bg-[#0B534B]',
-      category: 'daily',
-      tag: 'Everyday Routine',
-      realWorldScenario: 'Timetable for Morning Puja, Medicine & Doctor Visits',
-      audioInstruction: 'Welcome to Clock Face and Timings. Look at the clock hands and select the matching routine time. Advance through 5 sequential levels covering morning, afternoon, and evening milestones.',
-    },
-    {
-      id: 'different-one' as GameId,
-      title: 'Spot the Difference',
-      desc: 'Spot the single object that looks different from the others. Enhances attention to detail and sharpens eye-for-detail.',
-      icon: Eye,
-      color: 'bg-[#D97706]',
-      category: 'attention',
-      tag: 'Focus & Attention',
-      realWorldScenario: 'Spotting Expired Medicine vs Safe Medicine Labels',
-      audioInstruction: 'Welcome to Spot the Difference. Look carefully at the icons and tap the one that does not match the rest. Complete all 5 sequential stages with increasing card counts and nuanced differences.',
-    },
-    {
-      id: 'memory-match' as GameId,
-      title: 'Memory Match',
-      desc: 'Flip and match pairs of colorful everyday icons. Gentle exercise for short-term visual recall and object association.',
-      icon: Shapes,
-      color: 'bg-[#0B534B]',
-      category: 'memory',
-      tag: 'Visual Memory',
-      realWorldScenario: 'Finding Household Items & Kitchen Utensils',
-      audioInstruction: 'Welcome to Memory Match. Flip two cards to find matching pairs. Five sequential levels gradually expand the deck from 6 to 16 cards.',
-    },
-    {
-      id: 'number-trail' as GameId,
-      title: 'Number Trail',
-      desc: 'Follow river stones by tapping numbers in rising order. Strengthens mental sequencing, passbook checks, and motor agility.',
-      icon: Hash,
-      color: 'bg-[#10B981]',
-      category: 'attention',
-      tag: 'Focus & Attention',
-      realWorldScenario: 'Counting Currency Rupee Notes & Reading Bank Passbooks',
-      audioInstruction: 'Welcome to Number Trail. Look at the numbered river stones and tap them in order starting from 1. Advance sequentially through five levels from 4 up to 12 stones.',
-    },
-    {
-      id: 'sound-word-match' as GameId,
-      title: 'Daily Word & Sound Match',
-      desc: 'Listen to spoken prompts and choose the matching picture. Enhances auditory comprehension and household sound awareness.',
-      icon: Volume2,
-      color: 'bg-[#D97706]',
-      category: 'verbal',
-      tag: 'Language & Sound',
-      realWorldScenario: 'Household Safety Sounds (Doorbell, Whistle, Phone Ring)',
-      audioInstruction: 'Welcome to Daily Word and Sound Match. Listen to the audio cue, then select the matching picture. Five sequential levels present comforting sounds, kitchen cues, and safety tones.',
-    },
-    {
-      id: 'sequence-memory' as GameId,
-      title: 'Sequence Memory',
-      desc: 'Watch the chime sequence flash and tap them back in order. Stimulates working memory and light perception.',
-      icon: Brain,
-      color: 'bg-[#0B534B]',
-      category: 'memory',
-      tag: 'Visual Memory',
-      realWorldScenario: 'Remembering Appliance Buttons & Traffic Signals',
-      audioInstruction: 'Welcome to Sequence Memory. Watch the chime tiles light up, then repeat the sequence in order. Five sequential stages progress from 3 steps up to 6 musical tones.',
-    },
-    {
-      id: 'pattern-match' as GameId,
-      title: 'Matrix Pattern Recall',
-      desc: 'Observe illuminated squares on a grid and replicate where they were. Boosts spatial memory and room navigation.',
-      icon: Grid3X3,
-      color: 'bg-[#10B981]',
-      category: 'memory',
-      tag: 'Visual Memory',
-      realWorldScenario: 'Home Room Layout & Furniture Placement Spatial Awareness',
-      audioInstruction: 'Welcome to Matrix Pattern Recall. Watch the glowing squares on the grid, then tap those exact locations. Five sequential levels scale from 3 illuminated cells to 16-cell grids.',
-    },
-    {
-      id: 'rhyme-completion' as GameId,
-      title: 'Rhyme & Proverb Complete',
-      desc: 'Complete classic comfort proverbs and rhymes with the missing word. Stimulates linguistic recall and conversational confidence.',
-      icon: BookOpen,
-      color: 'bg-[#0B534B]',
-      category: 'verbal',
-      tag: 'Language & Sound',
-      realWorldScenario: 'Traditional Storytelling & Cultural Proverbs with Grandchildren',
-      audioInstruction: 'Welcome to Rhyme and Proverb Complete. Listen to the phrase and choose the missing word. Progress through five sequential levels of folk rhymes, daily proverbs, and comforting wisdom.',
-    },
-  ];
+  // Toggle item selection inside active drawer
+  const handleToggleItem = (itemId: string) => {
+    playChime('start');
+    setSelectedItemIds((prev) => {
+      const isAlready = prev.includes(itemId);
+      const updated = isAlready ? prev.filter((id) => id !== itemId) : [...prev, itemId];
+      
+      // Check if all correct items are selected
+      const correctIds = activeExercise.items.filter((i) => i.isCorrect).map((i) => i.id);
+      const hasAll = correctIds.every((id) => updated.includes(id)) && updated.length === correctIds.length;
+      setShowCelebration(hasAll);
+      if (hasAll) {
+        playChime('success');
+      }
+      return updated;
+    });
+  };
 
-  const filteredGames = selectedCategory === 'all'
-    ? games
-    : games.filter(g => g.category === selectedCategory);
-
-  // ── Computed Statistics from Real Progress & Session Data ──
-  const progressValues = Object.values(progressMap);
-
-  const totalCompletedLevels = progressValues.reduce(
-    (sum, p) => sum + (p.completedLevels?.length || 0), 0
-  );
-
-  const allScores: number[] = progressValues.flatMap(
-    p => Object.values(p.highestScores || {})
-  );
-  const overallAccuracy = allScores.length > 0
-    ? Math.round(allScores.reduce((a, b) => a + b, 0) / allScores.length)
-    : 0;
-
-  const activityDates = progressValues
-    .filter(p => (p.completedLevels?.length || 0) > 0 && p.updatedAt)
-    .map(p => new Date(p.updatedAt).toDateString());
-  const streakDays = new Set(activityDates).size;
+  const handleCompleteExercise = () => {
+    playChime('success');
+    completeLevel(activeExercise.gameId, 1, 100, userId);
+    setIsCompletedModal(true);
+  };
 
   const categories = [
-    { id: 'all' as GameCategory, label: 'All Games', count: games.length },
-    { id: 'daily' as GameCategory, label: 'Everyday Routine', icon: '🛒', count: games.filter(g => g.category === 'daily').length },
-    { id: 'memory' as GameCategory, label: 'Memory & Recall', icon: '🧠', count: games.filter(g => g.category === 'memory').length },
-    { id: 'attention' as GameCategory, label: 'Focus & Attention', icon: '👀', count: games.filter(g => g.category === 'attention').length },
-    { id: 'verbal' as GameCategory, label: 'Language & Sound', icon: '🗣️', count: games.filter(g => g.category === 'verbal').length },
+    { id: 'all' as GameCategory, label: 'All Exercises', icon: null },
+    { id: 'bazaar' as GameCategory, label: 'Everyday Bazaar', icon: '🛒' },
+    { id: 'family' as GameCategory, label: 'Family & Faces', icon: '👥' },
+    { id: 'melodies' as GameCategory, label: 'Raga Melodies', icon: '🎵' },
+    { id: 'walk' as GameCategory, label: 'Neighborhood Walk', icon: '🧭' },
   ];
 
-  const voiceSummary = `Welcome to the Senior Cognitive Games Dashboard. There are 9 exercises designed for everyday living, with 5 progressive levels each. Begin at Level 1 and unlock subsequent stages sequentially. Completed levels can be replayed at any time without time pressure.`;
+  const filteredExercises = selectedCategory === 'all'
+    ? SENIOR_EXERCISES
+    : SENIOR_EXERCISES.filter((e) => e.category === selectedCategory);
 
   return (
-    <div className="space-y-8 pb-36 sm:pb-44 max-w-7xl mx-auto">
+    <div className="space-y-6 pb-36 sm:pb-44 max-w-7xl mx-auto font-sans antialiased">
 
-      {/* ─── 1. Calm Healthcare Page Header ─── */}
-      <header className="bg-white rounded-2xl p-6 sm:p-8 border border-[#D5DFDC] shadow-[0_2px_12px_rgba(11,83,75,0.06)]">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-          <div className="space-y-2.5">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#ECFDF5] text-[#065F46] border border-[#A7F3D0] text-xs font-bold tracking-wide">
-              <ShieldCheck className="w-4 h-4 text-[#059669]" />
-              <span>Dignity-First Cognitive Health Program</span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#111615] tracking-tight">
-              {t("games_title") || "Senior Cognitive Games"}
-            </h1>
-            <p className="text-[17px] sm:text-[18px] text-[#374151] font-normal leading-relaxed max-w-3xl">
-              Nine evidence-based memory and focus activities tailored for everyday senior life. Progress sequentially from Level 1 through Level 5 at your own comfortable pace.
-            </p>
+      {/* ─── 1. MORNING CALM SESSION STATUS BANNER (Matching Screenshot Exactly) ─── */}
+      <section 
+        aria-label="Morning Calm Session Status"
+        className="bg-white rounded-2xl p-5 sm:p-6 border border-[#E6ECEB] shadow-[0_2px_12px_rgba(11,83,75,0.04)] flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all"
+      >
+        <div className="space-y-1.5">
+          <div className="flex items-center gap-2">
+            <span className="text-base" aria-hidden="true">🌱</span>
+            <span className="text-xs sm:text-sm font-black tracking-wider text-[#065F46] uppercase">
+              MORNING CALM SESSION
+            </span>
+            <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#ECFDF5] text-[#059669] border border-[#A7F3D0]">
+              Active Focus
+            </span>
           </div>
-
-          <div className="flex flex-wrap items-center gap-3 flex-shrink-0 pt-2 lg:pt-0">
-            <VoiceButton
-              textToRead={voiceSummary}
-              buttonLabel={t("Read Instructions") || "Listen Guide"}
-              className="min-h-[48px] px-5 text-base font-semibold"
-            />
-            <Link
-              href="/dashboard"
-              className="min-h-[48px] py-3 px-5 bg-[#E6F4F1] hover:bg-[#D4EFEA] text-[#0B534B] font-bold text-base rounded-xl border border-[#93CEC5] transition-colors inline-flex items-center gap-2 focus-visible:ring-2 focus-visible:ring-[#0B534B] focus-visible:ring-offset-2"
-            >
-              <span>{t("Back to Dashboard") || "Return to Dashboard"}</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
+          <p className="text-base sm:text-lg text-[#111615] font-semibold leading-relaxed">
+            Welcome back, {seniorName}. Let us gently nurture your recall today.
+          </p>
         </div>
-      </header>
 
-      {/* ─── 2. Refined Statistics Cards (Consistent Heights, Spacing & Real Data) ─── */}
-      <section aria-label="Cognitive progress overview">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
-
-          {/* Stat 1: Consistency Streak */}
-          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-[0_2px_10px_rgba(11,83,75,0.04)] flex flex-col justify-between min-h-[156px]">
-            <div className="flex items-center justify-between">
-              <span className="text-xs sm:text-sm font-bold text-[#5A6A66] uppercase tracking-wider">
-                Consistency Streak
-              </span>
-              <div className="w-11 h-11 rounded-xl bg-[#FFFBEB] text-[#D97706] border border-[#FDE68A] flex items-center justify-center flex-shrink-0 shadow-2xs">
-                <Flame className="w-5 h-5 text-[#D97706]" aria-hidden="true" />
-              </div>
-            </div>
-            <div className="pt-2">
-              <div className="flex items-baseline gap-1.5">
-                <span className="text-3xl sm:text-4xl font-extrabold text-[#111615]">
-                  {streakDays}
-                </span>
-                <span className="text-base font-bold text-[#5A6A66]">
-                  {streakDays === 1 ? 'Day' : 'Days'}
-                </span>
-              </div>
-              <p className="text-sm font-medium text-[#4B5563] mt-1">
-                {streakDays > 0 ? `${streakDays} active practice day${streakDays === 1 ? '' : 's'}` : 'Practice daily to build streak'}
-              </p>
-            </div>
+        <div className="flex items-center gap-4 sm:gap-6 flex-shrink-0 text-xs sm:text-sm font-bold text-[#374151]">
+          <div className="flex items-center gap-1.5 text-[#B45309] bg-[#FFFBEB] px-3.5 py-1.5 rounded-xl border border-[#FDE68A]">
+            <Flame className="w-4 h-4 text-[#D97706]" />
+            <span>{streakDays} Day Streak</span>
           </div>
 
-          {/* Stat 2: Overall Accuracy */}
-          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-[0_2px_10px_rgba(11,83,75,0.04)] flex flex-col justify-between min-h-[156px]">
-            <div className="flex items-center justify-between">
-              <span className="text-xs sm:text-sm font-bold text-[#5A6A66] uppercase tracking-wider">
-                Overall Accuracy
-              </span>
-              <div className="w-11 h-11 rounded-xl bg-[#ECFDF5] text-[#059669] border border-[#A7F3D0] flex items-center justify-center flex-shrink-0 shadow-2xs">
-                <Award className="w-5 h-5 text-[#059669]" aria-hidden="true" />
-              </div>
-            </div>
-            <div className="pt-2">
-              <div className="flex items-baseline gap-1.5">
-                <span className="text-3xl sm:text-4xl font-extrabold text-[#059669]">
-                  {allScores.length > 0 ? `${overallAccuracy}%` : '—'}
-                </span>
-              </div>
-              <p className="text-sm font-medium text-[#4B5563] mt-1">
-                {allScores.length > 0 ? `Across ${allScores.length} completed levels` : 'Play Level 1 to start tracking'}
-              </p>
-            </div>
+          <div className="flex items-center gap-1.5 text-[#065F46] bg-[#ECFDF5] px-3.5 py-1.5 rounded-xl border border-[#A7F3D0]">
+            <CheckCircle2 className="w-4 h-4 text-[#059669]" />
+            <span>No Timers Ever</span>
           </div>
-
-          {/* Stat 3: Levels Completed */}
-          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-[0_2px_10px_rgba(11,83,75,0.04)] flex flex-col justify-between min-h-[156px]">
-            <div className="flex items-center justify-between">
-              <span className="text-xs sm:text-sm font-bold text-[#5A6A66] uppercase tracking-wider">
-                Levels Completed
-              </span>
-              <div className="w-11 h-11 rounded-xl bg-[#E6F4F1] text-[#0B534B] border border-[#93CEC5] flex items-center justify-center flex-shrink-0 shadow-2xs">
-                <CheckCircle2 className="w-5 h-5 text-[#0B534B]" aria-hidden="true" />
-              </div>
-            </div>
-            <div className="pt-2">
-              <div className="flex items-baseline gap-1.5">
-                <span className="text-3xl sm:text-4xl font-extrabold text-[#111615]">
-                  {totalCompletedLevels}
-                </span>
-                <span className="text-base font-bold text-[#5A6A66]">/ 45</span>
-              </div>
-              <p className="text-sm font-medium text-[#4B5563] mt-1">
-                {totalCompletedLevels} of 45 sequential levels mastered
-              </p>
-            </div>
-          </div>
-
-          {/* Stat 4: Engine Pace (Connected to application response engine) */}
-          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-[0_2px_10px_rgba(11,83,75,0.04)] flex flex-col justify-between min-h-[156px]">
-            <div className="flex items-center justify-between">
-              <span className="text-xs sm:text-sm font-bold text-[#5A6A66] uppercase tracking-wider">
-                Engine Pace
-              </span>
-              <div className="w-11 h-11 rounded-xl bg-[#E6F4F1] text-[#0B534B] border border-[#93CEC5] flex items-center justify-center flex-shrink-0 shadow-2xs">
-                <Activity className="w-5 h-5 text-[#0B534B]" aria-hidden="true" />
-              </div>
-            </div>
-            <div className="pt-2">
-              <div className="flex items-baseline gap-1.5">
-                <span className="text-3xl sm:text-4xl font-extrabold text-[#111615]">
-                  {enginePaceSec ? `${enginePaceSec}s` : 'Calm'}
-                </span>
-                {enginePaceSec && (
-                  <span className="text-base font-bold text-[#5A6A66]">avg</span>
-                )}
-              </div>
-              <p className="text-sm font-medium text-[#4B5563] mt-1">
-                {enginePaceSec ? 'Adaptive recall pace • Unrushed' : 'Self-paced & relaxed progression'}
-              </p>
-            </div>
-          </div>
-
         </div>
       </section>
 
-      {/* ─── 3. Accessible Game Filters (Easy Touch Targets & Screen Wrapping) ─── */}
-      <section aria-label="Game categories and filter options">
-        <div className="flex flex-wrap items-center gap-3">
-          <span className="text-base font-bold text-[#111615] flex items-center gap-1.5 mr-1 py-1">
-            <Filter className="w-4 h-4 text-[#0B534B]" aria-hidden="true" />
-            <span>Category:</span>
-          </span>
-          <div role="tablist" aria-label="Game categories" className="flex flex-wrap items-center gap-2.5">
-            {categories.map((tab) => {
-              const isSelected = selectedCategory === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  type="button"
-                  role="tab"
-                  id={`tab-${tab.id}`}
-                  aria-selected={isSelected}
-                  aria-controls={`panel-${tab.id}`}
-                  onClick={() => setSelectedCategory(tab.id)}
-                  className={`min-h-[48px] px-5 py-2.5 rounded-xl font-bold text-base transition-all border cursor-pointer inline-flex items-center gap-2 focus-visible:ring-2 focus-visible:ring-[#0B534B] focus-visible:ring-offset-2 ${
-                    isSelected
-                      ? 'bg-[#0B534B] text-white border-[#08433C] shadow-xs'
-                      : 'bg-white text-[#1F2937] border-[#D5DFDC] hover:bg-[#F0FDF4] hover:border-[#93CEC5]'
-                  }`}
-                >
-                  {tab.icon && <span aria-hidden="true">{tab.icon}</span>}
-                  <span>{tab.label}</span>
-                  <span
-                    className={`text-xs px-2.5 py-0.5 rounded-full font-extrabold ${
+      {/* ─── 2. MAIN SPLIT / DRAWER UX (Master-Detail Layout from Screenshot) ─── */}
+      <div className={`grid grid-cols-1 ${isDrawerOpen ? 'lg:grid-cols-12' : 'lg:grid-cols-1'} gap-6 items-start`}>
+
+        {/* ─── LEFT COLUMN: EXERCISES GRID (7 Columns when Drawer is Open) ─── */}
+        <section 
+          aria-label="Available Memory and Recall Exercises"
+          className={`${isDrawerOpen ? 'lg:col-span-7' : 'lg:col-span-12'} space-y-5`}
+        >
+          {/* Header & Category Pills */}
+          <div className="space-y-3.5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <h2 className="text-xl sm:text-2xl font-black text-[#111615] tracking-tight">
+                  Memory &amp; Recall Exercises
+                </h2>
+                <p className="text-sm text-[#5A6A66] font-medium">
+                  {isDrawerOpen 
+                    ? 'Selected exercise is open on the right panel. Choose any activity whenever ready.' 
+                    : 'Choose any gentle cognitive exercise to practice at your own relaxed rhythm.'}
+                </p>
+              </div>
+              <span className="text-xs font-bold text-[#0B534B] bg-[#E6F4F1] px-3 py-1 rounded-full border border-[#93CEC5] self-start sm:self-auto">
+                {SENIOR_EXERCISES.length} Gentle Exercises Available
+              </span>
+            </div>
+
+            {/* Category Pills */}
+            <div className="flex flex-wrap items-center gap-2 pt-1" role="tablist">
+              {categories.map((cat) => {
+                const isSelected = selectedCategory === cat.id;
+                return (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    onClick={() => setSelectedCategory(cat.id)}
+                    className={`min-h-[40px] px-3.5 py-1.5 rounded-xl font-bold text-xs sm:text-sm transition-all border cursor-pointer inline-flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-[#0B534B] ${
                       isSelected
-                        ? 'bg-white/20 text-white'
-                        : 'bg-[#F3F4F6] text-[#4B5563]'
+                        ? 'bg-[#0B534B] text-white border-[#08433C] shadow-xs'
+                        : 'bg-white text-[#374151] border-[#E6ECEB] hover:bg-[#F0FDF4] hover:border-[#93CEC5]'
                     }`}
                   >
-                    {tab.count}
-                  </span>
+                    {cat.icon && <span aria-hidden="true">{cat.icon}</span>}
+                    <span>{cat.label}</span>
+                  </button>
+                );
+              })}
+
+              {!isDrawerOpen && (
+                <button
+                  type="button"
+                  onClick={() => setIsDrawerOpen(true)}
+                  className="ml-auto min-h-[40px] px-4 py-1.5 rounded-xl font-bold text-xs sm:text-sm bg-[#E6F4F1] text-[#0B534B] border border-[#93CEC5] hover:bg-[#d4ede7] transition-all inline-flex items-center gap-1.5"
+                >
+                  <span>▷ Open Active Drawer</span>
                 </button>
+              )}
+            </div>
+          </div>
+
+          {/* Exercises Cards Grid (2 Columns) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+            {filteredExercises.map((exercise) => {
+              const isSelected = exercise.id === activeExerciseId && isDrawerOpen;
+              const Icon = exercise.icon;
+
+              return (
+                <article
+                  key={exercise.id}
+                  onClick={() => handleSwitchGame(exercise)}
+                  className={`rounded-2xl p-5 sm:p-6 transition-all duration-200 cursor-pointer flex flex-col justify-between min-h-[260px] relative ${
+                    isSelected
+                      ? 'bg-white border-2 border-[#3B82F6] shadow-[0_4px_20px_rgba(59,130,246,0.12)] ring-4 ring-[#3B82F6]/10'
+                      : 'bg-white border border-[#E6ECEB] hover:border-[#93CEC5] shadow-[0_2px_10px_rgba(11,83,75,0.04)] hover:shadow-md'
+                  }`}
+                >
+                  <div className="space-y-3">
+                    {/* Top Row: Icon Capsule + Status Pill */}
+                    <div className="flex items-center justify-between">
+                      <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${
+                        isSelected ? 'bg-[#0B534B] text-white' : 'bg-[#E6F4F1] text-[#0B534B]'
+                      }`}>
+                        <Icon className="w-5 h-5" />
+                      </div>
+
+                      <span className={`text-[11px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full border ${
+                        isSelected
+                          ? 'bg-[#EFF6FF] text-[#1D4ED8] border-[#BFDBFE]'
+                          : 'bg-[#F9FAFB] text-[#5A6A66] border-[#E5E7EB]'
+                      }`}>
+                        {isSelected ? 'Active on Right' : exercise.statusBadge}
+                      </span>
+                    </div>
+
+                    {/* Category Subtitle */}
+                    <span className="text-[11px] font-black uppercase tracking-wider text-[#5A6A66] block">
+                      {exercise.categoryBadge}
+                    </span>
+
+                    {/* Title */}
+                    <h3 className="text-lg sm:text-xl font-extrabold text-[#111615] leading-snug">
+                      {exercise.title}
+                    </h3>
+
+                    {/* Senior-Friendly Description */}
+                    <p className="text-xs sm:text-sm text-[#4B5563] font-normal leading-relaxed line-clamp-3">
+                      {exercise.description}
+                    </p>
+                  </div>
+
+                  {/* Bottom Row: Step Progress / Action */}
+                  <div className="pt-4 mt-2 border-t border-[#F3F4F6] flex items-center justify-between">
+                    {isSelected ? (
+                      <>
+                        <div className="text-xs font-bold text-[#5A6A66]">
+                          Step Progress: <span className="text-[#111615] font-extrabold">{exercise.stepProgress}</span>
+                        </div>
+                        <span className="text-xs font-black text-[#2563EB] inline-flex items-center gap-1">
+                          <span>Playing in drawer panel</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        <div className="flex items-center gap-1.5 text-xs font-bold text-[#6B7280]">
+                          <span className="text-[#059669]">✓</span>
+                          <span>2</span>
+                          <span>3</span>
+                          <span>4</span>
+                        </div>
+                        <span className="text-xs font-extrabold text-[#0B534B] hover:text-[#08433C] inline-flex items-center gap-1">
+                          <span>▷ Switch to this Game</span>
+                        </span>
+                      </>
+                    )}
+                  </div>
+                </article>
               );
             })}
           </div>
-        </div>
-      </section>
 
-      {/* ─── 4. Redesigned Senior-Friendly Game Cards Grid ─── */}
-      <section
-        id={`panel-${selectedCategory}`}
-        role="tabpanel"
-        aria-labelledby={`tab-${selectedCategory}`}
-        className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-7"
-      >
-        {filteredGames.map((game) => {
-          const Icon = game.icon;
-          const gameProg = progressMap[game.id] || {
-            gameId: game.id,
-            unlockedLevel: 1,
-            completedLevels: [],
-          };
-          const highestUnlocked = (gameProg.unlockedLevel || 1) as DifficultyLevel;
-          const completedSet = new Set(gameProg.completedLevels || []);
-          const isGameAllCompleted = completedSet.size >= 5;
-          const progressPercent = (completedSet.size / 5) * 100;
+          {/* ─── Bottom Warm Pause Reassurance Note (From Screenshot) ─── */}
+          <div className="bg-[#F8FAF9] rounded-2xl p-4 sm:p-5 border border-[#E6ECEB] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-2xs">
+            <div className="flex items-start gap-3">
+              <span className="text-xl flex-shrink-0" aria-hidden="true">☕</span>
+              <div className="space-y-0.5">
+                <span className="text-xs sm:text-sm font-bold text-[#111615] block">
+                  Need a warm pause?
+                </span>
+                <p className="text-xs text-[#5A6A66]">
+                  There is never a penalty for stepping away. Your progress is safeguarded constantly.
+                </p>
+              </div>
+            </div>
 
-          // Determine accurate primary action label based on real game state
-          let actionLabel = `Play Level ${highestUnlocked}`;
-          if (isGameAllCompleted) {
-            actionLabel = 'Replay Any Level';
-          } else if (completedSet.size > 0) {
-            actionLabel = `Continue — Level ${highestUnlocked}`;
-          }
-
-          return (
-            <article
-              key={game.id}
-              className="bg-white rounded-2xl border border-[#D5DFDC] hover:border-[#0B534B]/60 transition-all duration-200 flex flex-col h-full shadow-[0_2px_12px_rgba(11,83,75,0.05)] hover:shadow-[0_8px_24px_rgba(11,83,75,0.1)]"
-              aria-label={`${game.title} — ${completedSet.size} of 5 levels completed`}
+            <Link
+              href="/caregiver"
+              className="text-xs font-extrabold text-[#0B534B] hover:text-[#08433C] whitespace-nowrap bg-white px-3.5 py-1.5 rounded-xl border border-[#D5DFDC] transition-colors self-start sm:self-auto"
             >
-              {/* Card Body */}
-              <div className="p-6 sm:p-7 space-y-5 flex-1 flex flex-col justify-between">
-
-                {/* Top: Icon + Title + Category Tag */}
-                <div className="space-y-3.5">
-                  <div className="flex items-start justify-between gap-3">
-                    <div
-                      className={`w-14 h-14 rounded-2xl ${game.color} text-white flex items-center justify-center flex-shrink-0 shadow-sm`}
-                      aria-hidden="true"
-                    >
-                      <Icon className="w-7 h-7" />
-                    </div>
-                    <span className="text-xs font-bold px-3 py-1 rounded-full bg-[#ECFDF5] text-[#065F46] border border-[#A7F3D0] tracking-wide">
-                      {game.tag}
-                    </span>
-                  </div>
-
-                  <div>
-                    <h2 className="text-2xl sm:text-[26px] font-extrabold text-[#111615] tracking-tight leading-snug">
-                      {game.title}
-                    </h2>
-                  </div>
-
-                  {/* Senior-Friendly Readable Description */}
-                  <p className="text-[17px] sm:text-[18px] text-[#374151] leading-relaxed font-normal">
-                    {game.desc}
-                  </p>
-                </div>
-
-                {/* Middle: Progress Bar & 5 Sequential Level Indicators */}
-                <div className="space-y-4 pt-2">
-
-                  {/* Progress Header & Clean Bar */}
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between text-base">
-                      <span className="font-bold text-[#111615] flex items-center gap-1.5">
-                        {isGameAllCompleted ? (
-                          <span className="text-[#059669] flex items-center gap-1">
-                            <Check className="w-4 h-4 stroke-[3]" /> All 5 Levels Mastered
-                          </span>
-                        ) : (
-                          <span>Level {highestUnlocked} of 5</span>
-                        )}
-                      </span>
-                      <span className="text-sm font-semibold text-[#4B5563]">
-                        {completedSet.size}/5 completed
-                      </span>
-                    </div>
-
-                    <div
-                      className="w-full h-2.5 bg-[#E5E7EB] rounded-full overflow-hidden"
-                      role="progressbar"
-                      aria-valuenow={completedSet.size}
-                      aria-valuemin={0}
-                      aria-valuemax={5}
-                      aria-label={`${game.title}: ${completedSet.size} of 5 levels completed`}
-                    >
-                      <div
-                        className="h-full bg-[#059669] rounded-full transition-all duration-300"
-                        style={{ width: `${progressPercent}%` }}
-                      />
-                    </div>
-                  </div>
-
-                  {/* 5 Distinct Level Indicators (Never Relying on Color Alone) */}
-                  <div
-                    className="grid grid-cols-5 gap-2 pt-1"
-                    role="group"
-                    aria-label={`Level progression stages for ${game.title}`}
-                  >
-                    {([1, 2, 3, 4, 5] as DifficultyLevel[]).map((lvl) => {
-                      const isCompleted = completedSet.has(lvl);
-                      const isCurrent = lvl === highestUnlocked && !isCompleted;
-                      const isLocked = lvl > highestUnlocked;
-
-                      if (isCompleted) {
-                        return (
-                          <Link
-                            key={lvl}
-                            href={`/games/${game.id}?level=${lvl}`}
-                            className="min-h-[46px] rounded-xl bg-[#ECFDF5] hover:bg-[#D1FAE5] text-[#065F46] border-2 border-[#059669] flex flex-col items-center justify-center p-1 transition-all focus-visible:ring-2 focus-visible:ring-[#0B534B] focus-visible:ring-offset-2"
-                            aria-label={`Level ${lvl}: Completed. Click to replay.`}
-                            title={`Level ${lvl} — Completed (Tap to replay)`}
-                          >
-                            <Check className="w-4 h-4 stroke-[3] text-[#059669]" aria-hidden="true" />
-                            <span className="text-xs font-bold leading-none mt-0.5">L{lvl}</span>
-                          </Link>
-                        );
-                      }
-
-                      if (isCurrent) {
-                        return (
-                          <Link
-                            key={lvl}
-                            href={`/games/${game.id}?level=${lvl}`}
-                            className="min-h-[46px] rounded-xl bg-[#0B534B] hover:bg-[#08433C] text-white border-2 border-[#0B534B] shadow-sm flex flex-col items-center justify-center p-1 transition-all ring-2 ring-[#0B534B]/30 ring-offset-2 focus-visible:ring-2 focus-visible:ring-[#0B534B] focus-visible:ring-offset-2"
-                            aria-label={`Level ${lvl}: Current active level. Click to play.`}
-                            title={`Level ${lvl} — Current Active Level`}
-                          >
-                            <Play className="w-3.5 h-3.5 fill-white text-white" aria-hidden="true" />
-                            <span className="text-xs font-black leading-none mt-0.5">L{lvl}</span>
-                          </Link>
-                        );
-                      }
-
-                      // Locked Level
-                      return (
-                        <div
-                          key={lvl}
-                          className="min-h-[46px] rounded-xl bg-[#F9FAFB] text-[#9CA3AF] border border-[#E5E7EB] flex flex-col items-center justify-center p-1 cursor-not-allowed select-none"
-                          aria-label={`Level ${lvl}: Locked. Complete Level ${lvl - 1} first.`}
-                          title={`Level ${lvl} — Locked`}
-                        >
-                          <Lock className="w-3.5 h-3.5 text-[#9CA3AF]" aria-hidden="true" />
-                          <span className="text-xs font-semibold leading-none mt-0.5">L{lvl}</span>
-                        </div>
-                      );
-                    })}
-                  </div>
-
-                  {/* Real-World Daily Routine Information */}
-                  <div className="bg-[#F0FDF4] border border-[#DCFCE7] rounded-xl p-3.5 flex items-start gap-2.5">
-                    <span className="text-base flex-shrink-0 mt-0.5" aria-hidden="true">🌱</span>
-                    <p className="text-sm sm:text-[15px] text-[#374151] leading-snug">
-                      <strong className="text-[#065F46] font-bold">Daily Routine: </strong>
-                      {game.realWorldScenario}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Card Actions Footer */}
-              <div className="p-6 sm:p-7 pt-4 space-y-3 border-t border-[#E5E7EB] bg-[#FAFCFB] rounded-b-2xl">
-                <Link
-                  href={`/games/${game.id}?level=${highestUnlocked}`}
-                  className="w-full min-h-[52px] py-3.5 px-6 bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white rounded-xl font-bold text-lg flex items-center justify-center gap-2.5 transition-all shadow-sm hover:shadow-md focus-visible:ring-2 focus-visible:ring-[#0B534B] focus-visible:ring-offset-2"
-                >
-                  {isGameAllCompleted ? (
-                    <>
-                      <RotateCcw className="w-5 h-5 text-white" aria-hidden="true" />
-                      <span>{actionLabel}</span>
-                    </>
-                  ) : (
-                    <>
-                      <Play className="w-5 h-5 fill-white text-white" aria-hidden="true" />
-                      <span>{actionLabel}</span>
-                    </>
-                  )}
-                </Link>
-                <VoiceButton
-                  textToRead={game.audioInstruction}
-                  buttonLabel="Listen Instructions"
-                  className="w-full min-h-[46px] text-base font-semibold text-center justify-center"
-                />
-              </div>
-            </article>
-          );
-        })}
-      </section>
-
-      {/* ─── 5. Supportive Healthcare Encouragement Footer ─── */}
-      <footer className="bg-gradient-to-r from-[#0B534B] via-[#0E685E] to-[#08433C] text-white rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-[0_4px_20px_rgba(11,83,75,0.15)]">
-        <div className="space-y-2 text-center md:text-left">
-          <div className="inline-flex items-center gap-2 text-sm font-bold text-[#A7F3D0]">
-            <ShieldCheck className="w-4 h-4 text-[#A7F3D0]" />
-            <span>Calm &amp; Dignity-First Experience</span>
+              Caregiver Check-in →
+            </Link>
           </div>
-          <p className="text-xl sm:text-2xl font-extrabold text-white">
-            Cognitive Exercises Designed for Real Senior Life
-          </p>
-          <p className="text-base text-white/90 max-w-2xl leading-relaxed">
-            Scores are never penalized for calm response or minor mistakes. Begin at Level 1 and advance through all five levels at your own relaxed pace.
-          </p>
-        </div>
+        </section>
 
-        <Link
-          href="/dashboard"
-          className="min-h-[50px] py-3 px-6 bg-white/15 hover:bg-white/25 active:bg-white/30 text-white rounded-xl font-bold text-base border border-white/30 transition-colors flex items-center gap-2 flex-shrink-0 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B534B]"
+        {/* ─── RIGHT COLUMN: INTERACTIVE DRAWER / GAMEPLAY PANEL (5 Cols) ─── */}
+        {isDrawerOpen && (
+          <aside 
+            aria-label="Active Exercise Interactive Panel"
+            className="lg:col-span-5 bg-white rounded-3xl border border-[#D5DFDC] shadow-[0_4px_24px_rgba(11,83,75,0.08)] p-6 sm:p-7 space-y-6 sticky top-20"
+          >
+            {/* Drawer Header: Minimize button + Audio / Font controls */}
+            <div className="flex items-center justify-between pb-3 border-b border-[#F3F4F6]">
+              <button
+                type="button"
+                onClick={() => setIsDrawerOpen(false)}
+                className="px-3.5 py-1.5 rounded-full border-2 border-dashed border-[#93CEC5] hover:border-[#0B534B] text-xs font-bold text-[#0B534B] hover:bg-[#E6F4F1] transition-all flex items-center gap-1.5 cursor-pointer"
+                title="Minimize active exercise panel"
+              >
+                <X className="w-3.5 h-3.5" />
+                <span>Minimize / Back to Grid</span>
+              </button>
+
+              <div className="flex items-center gap-3 text-xs font-bold text-[#5A6A66]">
+                <button
+                  type="button"
+                  onClick={() => {
+                    playChime('chime');
+                    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+                      stopVoicePrompt();
+                      const u = new SpeechSynthesisUtterance(activeExercise.hintText);
+                      u.rate = 0.85;
+                      window.speechSynthesis.speak(u);
+                    }
+                  }}
+                  className="p-1.5 rounded-lg hover:bg-[#F3F4F6] text-[#0B534B] transition-colors"
+                  title="Listen to audio instructions"
+                >
+                  <Volume2 className="w-4 h-4" />
+                </button>
+                <span className="text-[#9CA3AF]">|</span>
+                <span className="cursor-pointer hover:text-[#0B534B]">A-</span>
+                <span className="text-[#9CA3AF]">|</span>
+                <span className="cursor-pointer hover:text-[#0B534B]">A+</span>
+              </div>
+            </div>
+
+            {/* Exercise Title & Mode */}
+            <div className="space-y-1">
+              <div className="flex items-center gap-2 text-xs font-bold text-[#5A6A66]">
+                <span>Level {activeExercise.level} • Gentle Start</span>
+                <span>•</span>
+                <span className="text-[#059669] font-black">No Rush Mode</span>
+              </div>
+              <h3 className="text-2xl font-black text-[#111615] tracking-tight">
+                {activeExercise.title}
+              </h3>
+            </div>
+
+            {/* Calming Reassurance Callout (From Screenshot) */}
+            <div className="bg-[#F8FAF9] rounded-2xl p-4 border border-[#E6ECEB] flex items-start gap-3">
+              <span className="text-xl flex-shrink-0 mt-0.5" aria-hidden="true">⏳</span>
+              <div className="space-y-0.5">
+                <span className="text-xs font-bold text-[#111615] block">
+                  Take your time, {seniorName}.
+                </span>
+                <p className="text-xs text-[#5A6A66] leading-relaxed">
+                  There are no countdowns or rush timers. Enjoy this exercise at your own relaxed pace.
+                </p>
+              </div>
+            </div>
+
+            {/* Active Step Instructions */}
+            <div className="space-y-2 pt-1">
+              <div className="flex items-center gap-2">
+                <span className="w-6 h-6 rounded-full bg-[#0B534B] text-white text-xs font-black flex items-center justify-center">
+                  2
+                </span>
+                <h4 className="text-sm font-extrabold text-[#111615]">
+                  Step 2: Recall Morning Items
+                </h4>
+              </div>
+              <p className="text-xs sm:text-sm font-bold text-[#374151]">
+                Which 3 items did you place in your morning basket?
+              </p>
+              <p className="text-xs text-[#5A6A66]">
+                Tap each familiar staple below that you saw during the bazaar scene.
+              </p>
+            </div>
+
+            {/* Interactive Senior-Friendly Item Cards (2x2 Grid) */}
+            <div className="grid grid-cols-2 gap-3 pt-1">
+              {activeExercise.items.slice(0, 4).map((item) => {
+                const isSelected = selectedItemIds.includes(item.id);
+
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => handleToggleItem(item.id)}
+                    className={`p-3.5 rounded-2xl border text-left transition-all duration-200 cursor-pointer flex flex-col justify-between min-h-[110px] relative ${
+                      isSelected
+                        ? 'bg-[#F0FDF4] border-2 border-[#10B981] shadow-xs'
+                        : 'bg-white border border-[#E5E7EB] hover:border-[#93CEC5]'
+                    }`}
+                  >
+                    <div className="flex items-start justify-between">
+                      <span className="text-2xl" aria-hidden="true">{item.emoji}</span>
+                      <div className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold ${
+                        isSelected 
+                          ? 'bg-[#10B981] text-white' 
+                          : 'bg-[#F3F4F6] text-[#9CA3AF]'
+                      }`}>
+                        {isSelected ? '✓' : '+'}
+                      </div>
+                    </div>
+
+                    <div className="space-y-0.5 mt-2">
+                      <span className="text-xs sm:text-sm font-extrabold text-[#111615] block leading-tight">
+                        {item.name}
+                      </span>
+                      <span className="text-[11px] text-[#5A6A66] block leading-tight">
+                        {item.subtitle}
+                      </span>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Success & Celebration Banner */}
+            {showCelebration && (
+              <div className="bg-[#ECFDF5] border border-[#A7F3D0] rounded-2xl p-4 text-center space-y-1 animate-in fade-in duration-300">
+                <div className="flex items-center justify-center gap-1.5 text-xs sm:text-sm font-black text-[#065F46]">
+                  <Sparkles className="w-4 h-4 text-[#D97706]" />
+                  <span>3 of 3 items matched perfectly, {seniorName}!</span>
+                </div>
+                <p className="text-xs text-[#047857] font-medium">
+                  Wonderful attention to detail. You are ready to review your accomplishment.
+                </p>
+              </div>
+            )}
+
+            {/* Audio Hint Button */}
+            <div className="pt-1 text-center">
+              <button
+                type="button"
+                onClick={() => {
+                  playChime('chime');
+                  if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+                    stopVoicePrompt();
+                    const u = new SpeechSynthesisUtterance(activeExercise.hintText);
+                    u.rate = 0.82;
+                    window.speechSynthesis.speak(u);
+                  }
+                }}
+                className="text-xs font-bold text-[#0B534B] hover:underline inline-flex items-center gap-1.5 cursor-pointer"
+              >
+                <span>🎧</span>
+                <span>Listen to Friendly Hint</span>
+              </button>
+            </div>
+
+            {/* Action Buttons: Complete & View Results / Pause & Sip Tea */}
+            <div className="space-y-2.5 pt-2">
+              <button
+                type="button"
+                onClick={handleCompleteExercise}
+                className="w-full min-h-[50px] py-3 px-6 bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white rounded-full font-bold text-base shadow-xs hover:shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer focus-visible:ring-2 focus-visible:ring-[#0B534B]"
+              >
+                <span>Complete &amp; View Results</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  playChime('start');
+                  alert('Progress safely saved. Enjoy your tea break!');
+                }}
+                className="w-full min-h-[44px] py-2 px-4 bg-white hover:bg-[#F9FAFB] text-[#4B5563] hover:text-[#111615] rounded-full font-semibold text-xs border border-[#E5E7EB] transition-colors flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <Coffee className="w-3.5 h-3.5 text-[#B45309]" />
+                <span>Pause Game &amp; Sip Tea</span>
+              </button>
+            </div>
+          </aside>
+        )}
+      </div>
+
+      {/* ─── 3. COMPLETION MODAL ─── */}
+      {isCompletedModal && (
+        <div 
+          className="fixed inset-0 bg-[#042420]/75 backdrop-blur-xs flex items-center justify-center z-50 p-4 animate-fade-in"
+          role="dialog"
+          aria-modal="true"
         >
-          <span>Return to Dashboard</span>
-          <ArrowRight className="w-4 h-4" aria-hidden="true" />
-        </Link>
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full text-center space-y-5 shadow-2xl border-2 border-[#0B534B]">
+            <div className="w-16 h-16 rounded-full bg-[#ECFDF5] text-[#059669] border border-[#A7F3D0] mx-auto flex items-center justify-center">
+              <Check className="w-8 h-8 stroke-[3]" />
+            </div>
+
+            <div className="space-y-1.5">
+              <span className="text-xs font-black uppercase text-[#0B534B] bg-[#E6F4F1] px-3 py-1 rounded-full border border-[#93CEC5] inline-block">
+                Level 1 Completed
+              </span>
+              <h3 className="text-2xl font-black text-[#111615]">
+                Wonderful Accomplishment, {seniorName}!
+              </h3>
+              <p className="text-sm text-[#4B5563] leading-relaxed">
+                You matched all local bazaar staples with calm precision. Your daily consistency streak has advanced to {streakDays + 1} days!
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 bg-[#F9FAFB] p-3.5 rounded-2xl border border-[#E5E7EB]">
+              <div>
+                <span className="text-xs font-bold text-[#5A6A66] uppercase block">Accuracy</span>
+                <span className="text-2xl font-black text-[#059669]">100%</span>
+              </div>
+              <div>
+                <span className="text-xs font-bold text-[#5A6A66] uppercase block">Pace</span>
+                <span className="text-2xl font-black text-[#111615]">Unrushed</span>
+              </div>
+            </div>
+
+            <div className="space-y-2 pt-2">
+              <button
+                type="button"
+                onClick={() => setIsCompletedModal(false)}
+                className="w-full min-h-[48px] py-2.5 px-5 bg-[#0B534B] hover:bg-[#08433C] text-white rounded-full font-bold text-sm transition-all shadow-xs"
+              >
+                Continue Daily Session
+              </button>
+              <Link
+                href="/dashboard"
+                className="w-full min-h-[44px] py-2 px-4 bg-[#E6F4F1] hover:bg-[#d4ede7] text-[#0B534B] rounded-full font-bold text-xs inline-flex items-center justify-center"
+              >
+                Return to Dashboard
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ─── 4. FOOTER MATCHING SCREENSHOT ─── */}
+      <footer className="pt-8 border-t border-[#E6ECEB] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#5A6A66]">
+        <p>© 2025 Smitri NER Memory Care System. Gentle Brain Health for Elders.</p>
+        <div className="flex items-center gap-4">
+          <span className="cursor-pointer hover:text-[#0B534B] font-bold">Large Print View</span>
+        </div>
       </footer>
 
-      {/* ─── 6. Dedicated Clearance Buffer for Floating SOS Control ─── */}
+      {/* ─── 5. Dedicated Clearance Buffer for Floating SOS Control ─── */}
       <div className="h-10 sm:h-14 w-full pointer-events-none" aria-hidden="true" />
     </div>
   );
