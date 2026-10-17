@@ -450,7 +450,7 @@ export default function GamesHubPage() {
                 <button
                   type="button"
                   onClick={() => {
-                    playChime('chime');
+                    playChime('start');
                     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
                       stopVoicePrompt();
                       const u = new SpeechSynthesisUtterance(activeExercise.hintText);
@@ -571,7 +571,7 @@ export default function GamesHubPage() {
               <button
                 type="button"
                 onClick={() => {
-                  playChime('chime');
+                  playChime('start');
                   if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
                     stopVoicePrompt();
                     const u = new SpeechSynthesisUtterance(activeExercise.hintText);
