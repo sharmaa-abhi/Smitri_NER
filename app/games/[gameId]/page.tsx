@@ -154,6 +154,21 @@ function GameArenaContent() {
   const [completionData, setCompletionData] = useState<CompletionModalData | null>(null);
   const [audioEnabled, setAudioEnabled] = useState<boolean>(true);
   const [isSaving, setIsSaving] = useState<boolean>(false);
+  const [mounted, setMounted] = useState<boolean>(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const getIsLevelUnlocked = useCallback((lvl: DifficultyLevel) => {
+    if (!mounted) return lvl === 1;
+    return isLevelUnlocked(gameId, lvl, userId);
+  }, [mounted, gameId, userId]);
+
+  const getIsLevelCompleted = useCallback((lvl: DifficultyLevel) => {
+    if (!mounted) return false;
+    return isLevelCompleted(gameId, lvl, userId);
+  }, [mounted, gameId, userId]);
 
   useEffect(() => {
     setAudioEnabled(isGameAudioEnabled());
@@ -419,10 +434,10 @@ function GameArenaContent() {
             </span>
           </div>
 
-          <div className="grid grid-cols-5 gap-2 sm:gap-2.5 w-full sm:w-auto">
+          <div className="grid grid-cols-5 gap-2 sm:gap-2.5 w-full sm:w-auto" suppressHydrationWarning>
             {ALL_LEVELS.map((lvl) => {
-              const isUnlocked = isLevelUnlocked(gameId, lvl, userId);
-              const isCompleted = isLevelCompleted(gameId, lvl, userId);
+              const isUnlocked = getIsLevelUnlocked(lvl);
+              const isCompleted = getIsLevelCompleted(lvl);
               const isCurrent = difficulty === lvl;
 
               if (isCurrent) {

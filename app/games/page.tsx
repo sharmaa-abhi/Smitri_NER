@@ -343,8 +343,13 @@ export default function GamesHubPage() {
   const [completionData, setCompletionData] = useState<InPageCompletionData | null>(null);
   const [streakDays, setStreakDays] = useState<number>(6);
   const [progressMap, setProgressMap] = useState<AllGamesProgress>({});
+  const [mounted, setMounted] = useState<boolean>(false);
 
   const drawerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Sync Progress across all games
   const refreshProgress = useCallback(() => {
@@ -383,19 +388,33 @@ export default function GamesHubPage() {
     return () => clearInterval(interval);
   }, [startTime, gameFinished, isDrawerOpen]);
 
-  // Calculate overall mastery metrics across all 9 games (45 total levels)
+  // Calculate overall mastery metrics across all 12 games (60 total levels)
   const masteryStats = useMemo(() => {
+    if (!mounted) {
+      return { totalCompleted: 0, totalPossible: ALL_GAMES.length * 5, percentage: 0 };
+    }
     let totalCompleted = 0;
-    ALL_9_GAMES.forEach((g) => {
+    ALL_GAMES.forEach((g) => {
       const prog = progressMap[g.id];
       if (prog?.completedLevels) {
         totalCompleted += prog.completedLevels.length;
       }
     });
-    const totalPossible = ALL_9_GAMES.length * 5; // 45
+    const totalPossible = ALL_GAMES.length * 5; // 60
     const percentage = Math.round((totalCompleted / totalPossible) * 100);
     return { totalCompleted, totalPossible, percentage };
-  }, [progressMap]);
+  }, [progressMap, mounted]);
+
+  // Safe SSR level check helpers
+  const getIsLevelUnlocked = useCallback((gameId: GameId, level: DifficultyLevel) => {
+    if (!mounted) return level === 1;
+    return isLevelUnlocked(gameId, level, userId);
+  }, [mounted, userId]);
+
+  const getIsLevelCompleted = useCallback((gameId: GameId, level: DifficultyLevel) => {
+    if (!mounted) return false;
+    return isLevelCompleted(gameId, level, userId);
+  }, [mounted, userId]);
 
   // Active game metadata
   const activeGame = useMemo(() => {
@@ -752,22 +771,22 @@ export default function GamesHubPage() {
       {/* ─── 3. MAIN SPLIT / MASTER-DETAIL GAMEPLAY UX ─── */}
       <div className={`grid grid-cols-1 ${isDrawerOpen ? 'lg:grid-cols-12' : 'lg:grid-cols-1'} gap-6 items-start`}>
 
-        {/* ─── LEFT COLUMN: ALL 9 GAMES ROSTER ─── */}
+        {/* ─── LEFT COLUMN: ALL 12 GAMES ROSTER ─── */}
         <section 
-          aria-label="All 9 Senior Cognitive Games"
+          aria-label="All 12 Senior Cognitive Games"
           className={`${isDrawerOpen ? 'lg:col-span-7' : 'lg:col-span-12'} space-y-5`}
         >
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-xl sm:text-2xl font-black text-[#111615] tracking-tight">
-                All 9 Senior Cognitive Games
+                All 12 Senior Cognitive Games
               </h2>
               <p className="text-xs sm:text-sm text-[#5A6A66] font-medium">
                 Tap <strong className="text-[#0B534B]">Play Game</strong> to choose screen, or tap <strong className="text-[#065F46]">Right Screen (Auto)</strong> to play instantly on the side panel.
               </p>
             </div>
             <span className="text-xs font-bold text-[#0B534B] bg-[#E6F4F1] px-3 py-1 rounded-full border border-[#93CEC5]">
-              {filteredGames.length} of 9 Available
+              {filteredGames.length} of 12 Available
             </span>
           </div>
 
@@ -859,10 +878,10 @@ export default function GamesHubPage() {
                         </span>
                       </div>
 
-                      <div className="grid grid-cols-5 gap-1.5">
+                      <div className="grid grid-cols-5 gap-1.5" suppressHydrationWarning>
                         {ALL_LEVELS.map((lvl) => {
-                          const isUnlocked = isLevelUnlocked(game.id, lvl, userId);
-                          const isCompleted = isLevelCompleted(game.id, lvl, userId);
+                          const isUnlocked = getIsLevelUnlocked(game.id, lvl);
+                          const isCompleted = getIsLevelCompleted(game.id, lvl);
                           const isCurrentActive = unlockedLvl === lvl;
 
                           if (isCompleted) {
@@ -1076,10 +1095,10 @@ export default function GamesHubPage() {
             {/* In-Panel Level Selector (1 to 5) */}
             <div className="bg-[#F9FAFB] p-2.5 rounded-2xl border border-[#E5E7EB] flex items-center justify-between gap-2">
               <span className="text-xs font-black text-[#111615] pl-1">Level:</span>
-              <div className="grid grid-cols-5 gap-1.5 flex-1">
+              <div className="grid grid-cols-5 gap-1.5 flex-1" suppressHydrationWarning>
                 {ALL_LEVELS.map((lvl) => {
-                  const isUnlocked = isLevelUnlocked(activeGameId, lvl, userId);
-                  const isCompleted = isLevelCompleted(activeGameId, lvl, userId);
+                  const isUnlocked = getIsLevelUnlocked(activeGameId, lvl);
+                  const isCompleted = getIsLevelCompleted(activeGameId, lvl);
                   const isCurrent = activeDifficulty === lvl;
 
                   if (isCurrent) {
