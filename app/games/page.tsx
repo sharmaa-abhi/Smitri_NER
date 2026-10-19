@@ -621,11 +621,12 @@ export default function GamesHubPage() {
   const welcomeVoiceText = `Welcome to the Smitri Cognitive Games Hub, ${seniorName}. All 12 exercises are ready. You can play on the right side of the screen which is automatically set, or open full screen. Take your time with no timers or penalties.`;
 
   return (
-    <div className="space-y-6 pb-36 sm:pb-44 max-w-7xl mx-auto font-sans antialiased">
+    <div className="space-y-6 pb-36 sm:pb-44 max-w-7xl mx-auto font-sans antialiased" suppressHydrationWarning>
 
       {/* ─── 1. MORNING CALM SESSION STATUS BANNER & OVERALL MASTERY ─── */}
       <section 
         aria-label="Morning Calm Session Status"
+        suppressHydrationWarning
         className="bg-white rounded-3xl p-5 sm:p-7 border border-[#D5DFDC] shadow-[0_2px_14px_rgba(11,83,75,0.05)] flex flex-col lg:flex-row lg:items-center justify-between gap-5 transition-all"
       >
         <div className="space-y-2 max-w-2xl">
@@ -774,18 +775,19 @@ export default function GamesHubPage() {
         {/* ─── LEFT COLUMN: ALL 12 GAMES ROSTER ─── */}
         <section 
           aria-label="All 12 Senior Cognitive Games"
+          suppressHydrationWarning
           className={`${isDrawerOpen ? 'lg:col-span-7' : 'lg:col-span-12'} space-y-5`}
         >
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-xl sm:text-2xl font-black text-[#111615] tracking-tight">
+              <h2 className="text-xl sm:text-2xl font-black text-[#111615] tracking-tight" suppressHydrationWarning>
                 All 12 Senior Cognitive Games
               </h2>
               <p className="text-xs sm:text-sm text-[#5A6A66] font-medium">
                 Tap <strong className="text-[#0B534B]">Play Game</strong> to choose screen, or tap <strong className="text-[#065F46]">Right Screen (Auto)</strong> to play instantly on the side panel.
               </p>
             </div>
-            <span className="text-xs font-bold text-[#0B534B] bg-[#E6F4F1] px-3 py-1 rounded-full border border-[#93CEC5]">
+            <span className="text-xs font-bold text-[#0B534B] bg-[#E6F4F1] px-3 py-1 rounded-full border border-[#93CEC5]" suppressHydrationWarning>
               {filteredGames.length} of 12 Available
             </span>
           </div>
