@@ -7,3 +7,6 @@ export { default as MatrixPatternArena } from './MatrixPatternArena';
 export { default as SoundWordMatchArena } from './SoundWordMatchArena';
 export { default as ClockReadingArena } from './ClockReadingArena';
 export { default as RhymeCompletionArena } from './RhymeCompletionArena';
+export { default as RoutineTimelineArena } from './RoutineTimelineArena';
+export { default as CurrencyCalcArena } from './CurrencyCalcArena';
+export { default as ColorStroopArena } from './ColorStroopArena';

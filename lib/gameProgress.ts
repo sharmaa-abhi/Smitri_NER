@@ -158,6 +158,9 @@ export function getAllGamesProgress(userId?: string): AllGamesProgress {
     'sound-word-match',
     'clock-reading',
     'rhyme-completion',
+    'routine-timeline',
+    'currency-calc',
+    'color-stroop',
   ];
 
   const map: AllGamesProgress = {};

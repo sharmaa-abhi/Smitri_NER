@@ -252,6 +252,11 @@ interface InPageCompletionData {
   nextLevel: DifficultyLevel | null;
 }
 
+interface ScreenChoiceModalData {
+  game: SeniorGameDefinition;
+  level: DifficultyLevel;
+}
+
 export default function GamesHubPage() {
   const { t } = useLanguage();
   const { user } = useAuth();
@@ -261,9 +266,15 @@ export default function GamesHubPage() {
   // State management
   const [selectedCategory, setSelectedCategory] = useState<GameCategoryFilter>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
+  
+  // Right screen is automatically active by default
   const [activeGameId, setActiveGameId] = useState<GameId>('grocery-basket');
   const [activeDifficulty, setActiveDifficulty] = useState<DifficultyLevel>(1);
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(true);
+  
+  // Screen choice prompt modal state
+  const [screenChoiceModal, setScreenChoiceModal] = useState<ScreenChoiceModalData | null>(null);
+
   const [gameKey, setGameKey] = useState<number>(0);
   const [audioEnabled, setAudioEnabled] = useState<boolean>(true);
   const [startTime, setStartTime] = useState<number>(Date.now());
@@ -340,7 +351,7 @@ export default function GamesHubPage() {
     }
   }, [activeGameId, userId, activeDifficulty]);
 
-  // Switch active game in the right drawer/panel
+  // Switch active game in the right drawer/panel (Right Screen Play)
   const handleSelectGameForPanel = (game: SeniorGameDefinition, targetLevel?: DifficultyLevel) => {
     playChime('start');
     setActiveGameId(game.id);
@@ -361,6 +372,14 @@ export default function GamesHubPage() {
         drawerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 100);
     }
+  };
+
+  // Triggered when user initiates a game: asks Right Screen vs Full Screen
+  const handleStartGamePrompt = (game: SeniorGameDefinition, targetLevel?: DifficultyLevel) => {
+    playChime('start');
+    const highest = getHighestUnlockedLevel(game.id, userId);
+    const chosenLevel = targetLevel && isLevelUnlocked(game.id, targetLevel, userId) ? targetLevel : highest;
+    setScreenChoiceModal({ game, level: chosenLevel });
   };
 
   // Switch level in the active drawer
@@ -521,7 +540,7 @@ export default function GamesHubPage() {
 
   const currentLevelConfig = GAME_LEVEL_CONFIG[activeGameId]?.[activeDifficulty];
 
-  const welcomeVoiceText = `Welcome to the Smitri Cognitive Games Hub, ${seniorName}. All 9 exercises are ready for you. You have mastered ${masteryStats.totalCompleted} of 45 total levels. Take your time with no timers or penalties.`;
+  const welcomeVoiceText = `Welcome to the Smitri Cognitive Games Hub, ${seniorName}. All 9 exercises are ready. You can play on the right side of the screen which is automatically set, or open full screen. Take your time with no timers or penalties.`;
 
   return (
     <div className="space-y-6 pb-36 sm:pb-44 max-w-7xl mx-auto font-sans antialiased">
@@ -538,7 +557,7 @@ export default function GamesHubPage() {
               MORNING CALM SESSION • ALL 9 GAMES ACTIVE
             </span>
             <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#ECFDF5] text-[#059669] border border-[#A7F3D0]">
-              Gentle Focus
+              Right Screen Auto-Set
             </span>
           </div>
 
@@ -546,7 +565,7 @@ export default function GamesHubPage() {
             Welcome back, {seniorName}.
           </h1>
           <p className="text-sm sm:text-base text-[#4B5563] font-medium leading-relaxed">
-            All 9 cognitive games are designed for comfortable, unrushed recall. Play right in the panel or launch any game full screen.
+            All 9 cognitive games are ready. By default, games start on the <strong className="text-[#065F46]">Right Side of Screen</strong> so you can easily switch activities, or you can choose <strong className="text-[#0B534B]">Full Screen</strong> anytime.
           </p>
 
           {/* Overall 45-Level Mastery Progress Bar */}
@@ -579,7 +598,7 @@ export default function GamesHubPage() {
 
             <div className="flex items-center gap-1.5 text-[#065F46] bg-[#ECFDF5] px-3.5 py-2 rounded-2xl border border-[#A7F3D0] shadow-2xs">
               <CheckCircle2 className="w-4 h-4 text-[#059669]" />
-              <span>No Rush Timers</span>
+              <span>Right Screen Default</span>
             </div>
           </div>
 
@@ -653,17 +672,17 @@ export default function GamesHubPage() {
                   ? 'bg-[#E6F4F1] text-[#0B534B] border-[#93CEC5] hover:bg-[#D4EFEA]'
                   : 'bg-white text-[#374151] border-[#D5DFDC] hover:bg-[#F9FAFB]'
               }`}
-              title={isDrawerOpen ? 'Minimize Arena Panel for wide grid view' : 'Open Arena Panel to play on page'}
+              title={isDrawerOpen ? 'Minimize Arena Panel for wide grid view' : 'Open Right Arena Panel'}
             >
               {isDrawerOpen ? (
                 <>
                   <PanelRightClose className="w-4 h-4" />
-                  <span className="hidden sm:inline">Hide Arena</span>
+                  <span className="hidden sm:inline">Hide Right Panel</span>
                 </>
               ) : (
                 <>
                   <PanelRightOpen className="w-4 h-4 text-[#0B534B]" />
-                  <span className="text-[#0B534B]">Open Arena</span>
+                  <span className="text-[#0B534B]">Open Right Panel (Auto)</span>
                 </>
               )}
             </button>
@@ -685,7 +704,7 @@ export default function GamesHubPage() {
                 All 9 Senior Cognitive Games
               </h2>
               <p className="text-xs sm:text-sm text-[#5A6A66] font-medium">
-                Tap <strong className="text-[#0B534B]">Play Game</strong> to launch full screen, or tap <strong className="text-[#2563EB]">Play Here</strong> to enjoy right in the side panel.
+                Tap <strong className="text-[#0B534B]">Play Game</strong> to choose screen, or tap <strong className="text-[#065F46]">Right Screen (Auto)</strong> to play instantly on the side panel.
               </p>
             </div>
             <span className="text-xs font-bold text-[#0B534B] bg-[#E6F4F1] px-3 py-1 rounded-full border border-[#93CEC5]">
@@ -712,9 +731,9 @@ export default function GamesHubPage() {
               return (
                 <article
                   key={game.id}
-                  className={`rounded-3xl p-5 sm:p-6 transition-all duration-200 flex flex-col justify-between min-h-[340px] relative ${
+                  className={`rounded-3xl p-5 sm:p-6 transition-all duration-200 flex flex-col justify-between min-h-[350px] relative ${
                     isSelectedInPanel
-                      ? 'bg-white border-2 border-[#0B534B] shadow-[0_6px_24px_rgba(11,83,75,0.14)] ring-4 ring-[#0B534B]/10'
+                      ? 'bg-white border-2 border-[#059669] shadow-[0_6px_24px_rgba(5,150,105,0.14)] ring-4 ring-[#059669]/10'
                       : 'bg-white border border-[#D5DFDC] hover:border-[#93CEC5] shadow-[0_2px_12px_rgba(11,83,75,0.04)] hover:shadow-md'
                   }`}
                 >
@@ -744,8 +763,8 @@ export default function GamesHubPage() {
                         )}
 
                         {isSelectedInPanel && (
-                          <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#E6F4F1] text-[#0B534B] border border-[#93CEC5]">
-                            Active
+                          <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#ECFDF5] text-[#059669] border border-[#A7F3D0]">
+                            Right Screen Active
                           </span>
                         )}
                       </div>
@@ -792,9 +811,9 @@ export default function GamesHubPage() {
                               <button
                                 key={lvl}
                                 type="button"
-                                onClick={() => handleSelectGameForPanel(game, lvl)}
+                                onClick={() => handleStartGamePrompt(game, lvl)}
                                 className="h-8 rounded-lg bg-[#ECFDF5] hover:bg-[#D1FAE5] text-[#065F46] border border-[#A7F3D0] text-xs font-black flex items-center justify-center gap-0.5 cursor-pointer transition-colors"
-                                title={`Level ${lvl} Completed — Tap to replay in panel`}
+                                title={`Level ${lvl} Completed — Tap to choose screen`}
                                 aria-label={`Level ${lvl} completed`}
                               >
                                 <Check className="w-3 h-3 stroke-[3]" />
@@ -808,9 +827,9 @@ export default function GamesHubPage() {
                               <button
                                 key={lvl}
                                 type="button"
-                                onClick={() => handleSelectGameForPanel(game, lvl)}
+                                onClick={() => handleStartGamePrompt(game, lvl)}
                                 className="h-8 rounded-lg bg-[#0B534B] text-white border border-[#0B534B] text-xs font-black flex items-center justify-center gap-0.5 shadow-2xs ring-2 ring-[#0B534B]/20 cursor-pointer"
-                                title={`Level ${lvl} Unlocked — Tap to play in panel`}
+                                title={`Level ${lvl} Unlocked — Tap to choose screen`}
                                 aria-label={`Level ${lvl} current unlocked`}
                               >
                                 <Play className="w-2.5 h-2.5 fill-white" />
@@ -835,30 +854,43 @@ export default function GamesHubPage() {
                     </div>
                   </div>
 
-                  {/* Dual Play Action Buttons: Full Screen vs Play in Panel */}
+                  {/* Dual Play Action Buttons: Ask Screen Choice vs Instant Direct Buttons */}
                   <div className="pt-4 mt-3 border-t border-[#F3F4F6] space-y-2">
-                    {/* Primary Button: Fullscreen Play Route */}
-                    <Link
-                      href={`/games/${game.id}?level=${unlockedLvl}`}
-                      className="w-full min-h-[46px] px-4 py-2.5 bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white rounded-xl font-bold text-sm shadow-xs transition-all flex items-center justify-center gap-2 cursor-pointer focus-visible:ring-2 focus-visible:ring-[#0B534B]"
-                    >
-                      <Play className="w-4 h-4 fill-white" />
-                      <span>Play Fullscreen (Level {unlockedLvl})</span>
-                    </Link>
-
-                    {/* Secondary Action: Play directly inside the page drawer */}
+                    {/* Primary Button: Asks User Screen Choice (Right Screen is Pre-selected / Auto Default) */}
                     <button
                       type="button"
-                      onClick={() => handleSelectGameForPanel(game, unlockedLvl)}
-                      className={`w-full min-h-[40px] px-3.5 py-1.5 rounded-xl font-bold text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer border ${
-                        isSelectedInPanel
-                          ? 'bg-[#E6F4F1] text-[#0B534B] border-[#93CEC5]'
-                          : 'bg-[#F9FAFB] hover:bg-[#E6F4F1] text-[#374151] hover:text-[#0B534B] border-[#D5DFDC]'
-                      }`}
+                      onClick={() => handleStartGamePrompt(game, unlockedLvl)}
+                      className="w-full min-h-[48px] px-4 py-2.5 bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white rounded-xl font-bold text-sm shadow-xs transition-all flex items-center justify-center gap-2 cursor-pointer focus-visible:ring-2 focus-visible:ring-[#0B534B]"
                     >
-                      <Sparkles className="w-3.5 h-3.5 text-[#D97706]" />
-                      <span>{isSelectedInPanel ? 'Playing in Panel (Right)' : 'Play Here in Panel'}</span>
+                      <Play className="w-4 h-4 fill-white" />
+                      <span>Play Game (Level {unlockedLvl})</span>
                     </button>
+
+                    {/* Instant Direct Shortcuts: Right Screen (Auto) & Full Screen */}
+                    <div className="grid grid-cols-2 gap-2">
+                      <button
+                        type="button"
+                        onClick={() => handleSelectGameForPanel(game, unlockedLvl)}
+                        className={`min-h-[38px] px-2 py-1 rounded-xl font-bold text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer border ${
+                          isSelectedInPanel
+                            ? 'bg-[#ECFDF5] text-[#065F46] border-[#A7F3D0]'
+                            : 'bg-[#F9FAFB] hover:bg-[#E6F4F1] text-[#065F46] border-[#D5DFDC]'
+                        }`}
+                        title="Start immediately on the right side of the screen (Auto Default)"
+                      >
+                        <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
+                        <span>Right Screen (Auto)</span>
+                      </button>
+
+                      <Link
+                        href={`/games/${game.id}?level=${unlockedLvl}`}
+                        className="min-h-[38px] px-2 py-1 rounded-xl font-bold text-xs bg-[#F9FAFB] hover:bg-[#E6F4F1] text-[#374151] hover:text-[#0B534B] border border-[#D5DFDC] transition-colors flex items-center justify-center gap-1.5"
+                        title="Open directly in full screen arena"
+                      >
+                        <Maximize2 className="w-3.5 h-3.5 text-[#0B534B]" />
+                        <span>Full Screen</span>
+                      </Link>
+                    </div>
                   </div>
                 </article>
               );
@@ -888,15 +920,39 @@ export default function GamesHubPage() {
           </div>
         </section>
 
-        {/* ─── RIGHT COLUMN: INTERACTIVE GAMEPLAY ARENA DRAWER ─── */}
+        {/* ─── RIGHT COLUMN: INTERACTIVE GAMEPLAY ARENA DRAWER (AUTO SET BY DEFAULT) ─── */}
         {isDrawerOpen && (
           <aside 
             ref={drawerRef}
             aria-label="Active Exercise Interactive Panel"
-            className="lg:col-span-5 bg-white rounded-3xl border border-[#D5DFDC] shadow-[0_4px_24px_rgba(11,83,75,0.08)] p-5 sm:p-6 space-y-5 sticky top-20 transition-all"
+            className="lg:col-span-5 bg-white rounded-3xl border-2 border-[#A7F3D0] shadow-[0_4px_24px_rgba(11,83,75,0.08)] p-5 sm:p-6 space-y-4 sticky top-20 transition-all"
           >
+            {/* Auto-set Right Screen Active Indicator & Fullscreen Switcher */}
+            <div className="bg-[#ECFDF5] border border-[#A7F3D0] rounded-2xl p-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 shadow-2xs">
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#10B981] animate-pulse flex-shrink-0" />
+                <div>
+                  <span className="text-xs font-black text-[#065F46] uppercase tracking-wide block">
+                    Screen Mode: Right Side (Auto Set)
+                  </span>
+                  <span className="text-[11px] text-[#5A6A66]">
+                    Playing side-by-side with games list on left
+                  </span>
+                </div>
+              </div>
+
+              <Link
+                href={`/games/${activeGameId}?level=${activeDifficulty}`}
+                className="text-xs font-black text-[#0B534B] hover:text-[#08433C] bg-white px-3 py-1.5 rounded-xl border border-[#93CEC5] hover:bg-[#D4EFEA] transition-all flex items-center gap-1.5 shadow-2xs self-end sm:self-auto"
+                title="Switch to full screen mode"
+              >
+                <Maximize2 className="w-3.5 h-3.5 text-[#0B534B]" />
+                <span>Switch to Full Screen</span>
+              </Link>
+            </div>
+
             {/* Drawer Top Navigation & Controls */}
-            <div className="flex items-center justify-between pb-3 border-b border-[#F3F4F6] gap-2 flex-wrap">
+            <div className="flex items-center justify-between pb-2 border-b border-[#F3F4F6] gap-2 flex-wrap">
               <button
                 type="button"
                 onClick={() => setIsDrawerOpen(false)}
@@ -929,16 +985,6 @@ export default function GamesHubPage() {
                   <Clock className="w-3.5 h-3.5 text-[#0B534B]" />
                   <span>{elapsedTime}s</span>
                 </div>
-
-                {/* Fullscreen Route Link */}
-                <Link
-                  href={`/games/${activeGameId}?level=${activeDifficulty}`}
-                  className="p-2 rounded-xl bg-[#E6F4F1] hover:bg-[#D4EFEA] text-[#0B534B] border border-[#93CEC5] text-xs font-bold transition-all flex items-center gap-1"
-                  title="Expand to Fullscreen dedicated arena"
-                >
-                  <Maximize2 className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline">Fullscreen</span>
-                </Link>
 
                 {/* Restart Level */}
                 <button
@@ -1135,7 +1181,135 @@ export default function GamesHubPage() {
         )}
       </div>
 
-      {/* ─── 4. LEVEL COMPLETION MODAL FOR IN-PAGE PLAY ─── */}
+      {/* ─── 4. SCREEN CHOICE PROMPT MODAL (Right Screen vs Full Screen) ─── */}
+      {screenChoiceModal && (
+        <div
+          className="fixed inset-0 bg-[#042420]/75 backdrop-blur-xs flex items-center justify-center z-50 p-4 animate-fade-in"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="screen-choice-title"
+        >
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-xl w-full space-y-6 shadow-2xl border-2 border-[#0B534B] relative animate-in fade-in zoom-in-95 duration-200">
+            {/* Close Button */}
+            <button
+              type="button"
+              onClick={() => setScreenChoiceModal(null)}
+              className="absolute top-5 right-5 p-2 rounded-full hover:bg-[#F3F4F6] text-[#6B7280] hover:text-[#111615] transition-colors cursor-pointer"
+              aria-label="Close screen selection"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {/* Header */}
+            <div className="space-y-2 text-center sm:text-left">
+              <div className="flex items-center gap-2 justify-center sm:justify-start">
+                <span className="w-9 h-9 rounded-xl bg-[#E6F4F1] text-[#0B534B] flex items-center justify-center text-lg shadow-xs">
+                  🎮
+                </span>
+                <span className="text-xs font-black uppercase tracking-wider text-[#065F46] bg-[#ECFDF5] px-3 py-1 rounded-full border border-[#A7F3D0]">
+                  Choose Playing Screen • स्क्रीन मोड चुनें
+                </span>
+              </div>
+
+              <h3 id="screen-choice-title" className="text-2xl sm:text-3xl font-black text-[#111615] tracking-tight">
+                Where would you like to play {screenChoiceModal.game.title}?
+              </h3>
+              <p className="text-sm text-[#4B5563] font-medium leading-relaxed">
+                You can play on the <strong>Right Side of the Screen</strong> (automatically set as default) or open the dedicated <strong>Full Screen</strong> arena.
+              </p>
+            </div>
+
+            {/* Audio Voice Assistant */}
+            <div className="flex justify-start">
+              <VoiceButton
+                textToRead={`Where would you like to play ${screenChoiceModal.game.title}? Option 1: Right side of screen, which is set as auto default. Option 2: Full screen arena.`}
+                buttonLabel="Listen Options"
+                className="min-h-[38px] px-3 text-xs font-bold"
+              />
+            </div>
+
+            {/* Two Playing Mode Choice Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* OPTION 1: Right Side of Screen (Auto Default / Recommended) */}
+              <div className="bg-[#ECFDF5] border-2 border-[#059669] rounded-2xl p-5 space-y-4 relative flex flex-col justify-between shadow-xs ring-4 ring-[#059669]/10">
+                <div className="space-y-2.5">
+                  <div className="flex items-center justify-between">
+                    <div className="w-10 h-10 rounded-xl bg-[#059669] text-white flex items-center justify-center shadow-xs">
+                      <PanelRightOpen className="w-5 h-5" />
+                    </div>
+                    <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#D1FAE5] text-[#065F46] border border-[#6EE7B7]">
+                      ★ Auto Default
+                    </span>
+                  </div>
+
+                  <h4 className="text-lg font-black text-[#111615]">
+                    Right Side of Screen
+                  </h4>
+                  <p className="text-xs text-[#065F46] font-medium leading-relaxed">
+                    Play comfortably in the side panel while keeping the games list and stats open on the left.
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    handleSelectGameForPanel(screenChoiceModal.game, screenChoiceModal.level);
+                    setScreenChoiceModal(null);
+                  }}
+                  className="w-full min-h-[46px] py-2.5 px-4 bg-[#059669] hover:bg-[#047857] active:bg-[#065F46] text-white rounded-xl font-bold text-sm shadow-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                >
+                  <Play className="w-4 h-4 fill-white" />
+                  <span>Play on Right Screen (Default)</span>
+                </button>
+              </div>
+
+              {/* OPTION 2: Full Screen Arena */}
+              <div className="bg-white border-2 border-[#D5DFDC] hover:border-[#0B534B] rounded-2xl p-5 space-y-4 flex flex-col justify-between transition-colors shadow-xs">
+                <div className="space-y-2.5">
+                  <div className="flex items-center justify-between">
+                    <div className="w-10 h-10 rounded-xl bg-[#E6F4F1] text-[#0B534B] flex items-center justify-center">
+                      <Maximize2 className="w-5 h-5" />
+                    </div>
+                    <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#F3F4F6] text-[#5A6A66] border border-[#E5E7EB]">
+                      Full Focus
+                    </span>
+                  </div>
+
+                  <h4 className="text-lg font-black text-[#111615]">
+                    Full Screen Arena
+                  </h4>
+                  <p className="text-xs text-[#5A6A66] leading-relaxed">
+                    Dedicated full-page experience with larger interactive elements and zero distractions.
+                  </p>
+                </div>
+
+                <Link
+                  href={`/games/${screenChoiceModal.game.id}?level=${screenChoiceModal.level}`}
+                  onClick={() => setScreenChoiceModal(null)}
+                  className="w-full min-h-[46px] py-2.5 px-4 bg-[#0B534B] hover:bg-[#08433C] text-white rounded-xl font-bold text-sm shadow-xs transition-all flex items-center justify-center gap-1.5"
+                >
+                  <Maximize2 className="w-4 h-4" />
+                  <span>Open Full Screen</span>
+                </Link>
+              </div>
+            </div>
+
+            {/* Footer Reassurance */}
+            <div className="pt-2 border-t border-[#F3F4F6] flex items-center justify-between text-xs text-[#5A6A66]">
+              <span>Auto-set: <strong>Right Screen</strong> is currently active.</span>
+              <button
+                type="button"
+                onClick={() => setScreenChoiceModal(null)}
+                className="text-[#0B534B] font-bold hover:underline cursor-pointer"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ─── 5. LEVEL COMPLETION MODAL FOR IN-PAGE PLAY ─── */}
       {completionData && (
         <div 
           className="fixed inset-0 bg-[#042420]/75 backdrop-blur-xs flex items-center justify-center z-50 p-4 animate-fade-in"
@@ -1234,7 +1408,7 @@ export default function GamesHubPage() {
         </div>
       )}
 
-      {/* ─── 5. SENIOR ACCESSIBILITY FOOTER ─── */}
+      {/* ─── 6. SENIOR ACCESSIBILITY FOOTER ─── */}
       <footer className="pt-8 border-t border-[#E6ECEB] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#5A6A66]">
         <p>© 2025 Smitri NER Memory Care System. Gentle Brain Health for Elders.</p>
         <div className="flex items-center gap-4">
@@ -1250,7 +1424,7 @@ export default function GamesHubPage() {
         </div>
       </footer>
 
-      {/* ─── 6. Clearance Buffer for Floating Emergency & Caregiver Controls ─── */}
+      {/* ─── 7. Clearance Buffer for Floating Emergency & Caregiver Controls ─── */}
       <div className="h-10 sm:h-14 w-full pointer-events-none" aria-hidden="true" />
     </div>
   );

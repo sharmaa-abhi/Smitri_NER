@@ -7,7 +7,10 @@ export type GameId =
   | 'pattern-match' 
   | 'sound-word-match'
   | 'clock-reading'
-  | 'rhyme-completion';
+  | 'rhyme-completion'
+  | 'routine-timeline'
+  | 'currency-calc'
+  | 'color-stroop';
 
 export type DifficultyLevel = 1 | 2 | 3 | 4 | 5;
 export type GameLevel = 1 | 2 | 3 | 4 | 5;
