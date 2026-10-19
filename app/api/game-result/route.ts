@@ -38,6 +38,9 @@ export async function POST(req: Request) {
       'sound-word-match': 'Daily Word & Sound Match',
       'clock-reading': 'Clock Face Match',
       'rhyme-completion': 'Rhyme & Word Completion',
+      'routine-timeline': 'Daily Routine Timeline',
+      'currency-calc': 'Rupee Tally & Market Math',
+      'color-stroop': 'Color & Word Reflex',
     };
 
     const newSession: GameSession = {

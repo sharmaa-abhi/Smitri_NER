@@ -32,7 +32,10 @@ import {
   PanelRightClose,
   PanelRightOpen,
   ChevronRight,
-  Heart
+  Heart,
+  CalendarCheck,
+  Coins,
+  Palette
 } from 'lucide-react';
 import VoiceButton from '@/components/VoiceButton';
 import { useLanguage } from '@/lib/i18n';
@@ -62,6 +65,9 @@ import {
   SoundWordMatchArena,
   ClockReadingArena,
   RhymeCompletionArena,
+  RoutineTimelineArena,
+  CurrencyCalcArena,
+  ColorStroopArena,
 } from '@/components/games';
 
 export type GameCategoryFilter = 'all' | 'memory' | 'focus' | 'sound' | 'daily';
@@ -238,7 +244,60 @@ export const ALL_9_GAMES: SeniorGameDefinition[] = [
     instruction: 'Listen to the classic phrase or proverb, and tap the missing word that completes the rhythm.',
     hintVoice: 'Recite the rhythmic phrase in your mind to hear the word that rhymes.',
   },
+  {
+    id: 'routine-timeline',
+    title: 'Daily Routine Timeline',
+    subtitle: 'Daily Rhythms & Sequencing',
+    domain: 'Chronological & Executive Sequencing',
+    category: 'daily',
+    categoryBadge: 'ROUTINE TIMINGS',
+    tag: 'Daily Milestones',
+    description: 'Arrange familiar daily activities like morning puja, tea, medication, and evening walks into their natural chronological order.',
+    culturalNote: 'Preserving cherished daily rituals: morning tea, medication, and family gatherings',
+    icon: CalendarCheck,
+    accentColor: '#059669',
+    bgLight: '#ECFDF5',
+    borderLight: '#A7F3D0',
+    instruction: 'Arrange familiar daily activities from morning to evening in the correct sequential order.',
+    hintVoice: 'Start with morning habits like chai or puja, followed by lunch and evening strolls.',
+  },
+  {
+    id: 'currency-calc',
+    title: 'Rupee Tally & Market Math',
+    subtitle: 'Everyday Bazaar Transactions',
+    domain: 'Numerical Cognition & Daily Math',
+    category: 'daily',
+    categoryBadge: 'FINANCIAL COGNITION',
+    tag: 'Market Rupee Tally',
+    description: 'Calculate and match exact rupee notes and coins to buy fresh produce, ghee, milk, and household goods at the local bazaar.',
+    culturalNote: 'Familiar Indian currency coins and notes for everyday independence',
+    icon: Coins,
+    accentColor: '#D97706',
+    bgLight: '#FFFBEB',
+    borderLight: '#FDE68A',
+    instruction: 'Select rupee coins and notes to make the exact target amount for your market shopping.',
+    hintVoice: 'Tap the larger notes first, then add smaller coins to reach the exact amount.',
+  },
+  {
+    id: 'color-stroop',
+    title: 'Color & Word Reflex',
+    subtitle: 'Visual Attention & Reflex',
+    domain: 'Inhibitory Control & Executive Function',
+    category: 'focus',
+    categoryBadge: 'STROOP REFLEX',
+    tag: 'Mental Flexibility',
+    description: 'Test your brain reflex by naming the ink color of the word rather than reading the word itself. Keeps mental agility vibrant.',
+    culturalNote: 'Playful color discernment to sharpen focus and cognitive flexibility',
+    icon: Palette,
+    accentColor: '#7C3AED',
+    bgLight: '#F5F3FF',
+    borderLight: '#DDD6FE',
+    instruction: 'Pay close attention to the INK color of the word shown, not what the word reads. Tap the matching color.',
+    hintVoice: 'Focus on the color you see, ignore what the letters spell out.',
+  },
 ];
+
+export const ALL_GAMES = ALL_9_GAMES;
 
 const ALL_LEVELS: DifficultyLevel[] = [1, 2, 3, 4, 5];
 
@@ -500,9 +559,9 @@ export default function GamesHubPage() {
         selectedCategory === 'all' ||
         g.category === selectedCategory ||
         (selectedCategory === 'memory' && (g.id === 'grocery-basket' || g.id === 'memory-match' || g.id === 'pattern-match')) ||
-        (selectedCategory === 'focus' && (g.id === 'different-one' || g.id === 'number-trail' || g.id === 'sequence-memory')) ||
+        (selectedCategory === 'focus' && (g.id === 'different-one' || g.id === 'number-trail' || g.id === 'sequence-memory' || g.id === 'color-stroop')) ||
         (selectedCategory === 'sound' && (g.id === 'sound-word-match' || g.id === 'rhyme-completion' || g.id === 'sequence-memory')) ||
-        (selectedCategory === 'daily' && (g.id === 'grocery-basket' || g.id === 'clock-reading' || g.id === 'different-one'));
+        (selectedCategory === 'daily' && (g.id === 'grocery-basket' || g.id === 'clock-reading' || g.id === 'routine-timeline' || g.id === 'currency-calc' || g.id === 'different-one'));
 
       if (!matchesCategory) return false;
 
@@ -524,14 +583,14 @@ export default function GamesHubPage() {
     return {
       all: ALL_9_GAMES.length,
       memory: ALL_9_GAMES.filter((g) => g.id === 'memory-match' || g.id === 'grocery-basket' || g.id === 'pattern-match').length,
-      focus: ALL_9_GAMES.filter((g) => g.id === 'different-one' || g.id === 'number-trail' || g.id === 'sequence-memory').length,
+      focus: ALL_9_GAMES.filter((g) => g.id === 'different-one' || g.id === 'number-trail' || g.id === 'sequence-memory' || g.id === 'color-stroop').length,
       sound: ALL_9_GAMES.filter((g) => g.id === 'sound-word-match' || g.id === 'rhyme-completion' || g.id === 'sequence-memory').length,
-      daily: ALL_9_GAMES.filter((g) => g.id === 'grocery-basket' || g.id === 'clock-reading' || g.id === 'different-one').length,
+      daily: ALL_9_GAMES.filter((g) => g.id === 'grocery-basket' || g.id === 'clock-reading' || g.id === 'routine-timeline' || g.id === 'currency-calc' || g.id === 'different-one').length,
     };
   }, []);
 
   const categories = [
-    { id: 'all' as GameCategoryFilter, label: 'All 9 Games', count: categoryCounts.all, icon: '🌟' },
+    { id: 'all' as GameCategoryFilter, label: 'All 12 Games', count: categoryCounts.all, icon: '🌟' },
     { id: 'memory' as GameCategoryFilter, label: 'Memory & Recall', count: categoryCounts.memory, icon: '🧠' },
     { id: 'focus' as GameCategoryFilter, label: 'Focus & Speed', count: categoryCounts.focus, icon: '🎯' },
     { id: 'sound' as GameCategoryFilter, label: 'Sound & Melodies', count: categoryCounts.sound, icon: '🎵' },
@@ -540,7 +599,7 @@ export default function GamesHubPage() {
 
   const currentLevelConfig = GAME_LEVEL_CONFIG[activeGameId]?.[activeDifficulty];
 
-  const welcomeVoiceText = `Welcome to the Smitri Cognitive Games Hub, ${seniorName}. All 9 exercises are ready. You can play on the right side of the screen which is automatically set, or open full screen. Take your time with no timers or penalties.`;
+  const welcomeVoiceText = `Welcome to the Smitri Cognitive Games Hub, ${seniorName}. All 12 exercises are ready. You can play on the right side of the screen which is automatically set, or open full screen. Take your time with no timers or penalties.`;
 
   return (
     <div className="space-y-6 pb-36 sm:pb-44 max-w-7xl mx-auto font-sans antialiased">
@@ -554,7 +613,7 @@ export default function GamesHubPage() {
           <div className="flex items-center gap-2 flex-wrap">
             <span className="text-xl" aria-hidden="true">🌱</span>
             <span className="text-xs sm:text-sm font-black tracking-wider text-[#065F46] uppercase">
-              MORNING CALM SESSION • ALL 9 GAMES ACTIVE
+              MORNING CALM SESSION • ALL 12 GAMES ACTIVE
             </span>
             <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#ECFDF5] text-[#059669] border border-[#A7F3D0]">
               Right Screen Auto-Set
@@ -565,7 +624,7 @@ export default function GamesHubPage() {
             Welcome back, {seniorName}.
           </h1>
           <p className="text-sm sm:text-base text-[#4B5563] font-medium leading-relaxed">
-            All 9 cognitive games are ready. By default, games start on the <strong className="text-[#065F46]">Right Side of Screen</strong> so you can easily switch activities, or you can choose <strong className="text-[#0B534B]">Full Screen</strong> anytime.
+            All 12 cognitive games are ready. By default, games start on the <strong className="text-[#065F46]">Right Side of Screen</strong> so you can easily switch activities, or you can choose <strong className="text-[#0B534B]">Full Screen</strong> anytime.
           </p>
 
           {/* Overall 45-Level Mastery Progress Bar */}
@@ -1155,6 +1214,27 @@ export default function GamesHubPage() {
               )}
               {activeGameId === 'rhyme-completion' && (
                 <RhymeCompletionArena
+                  key={`${gameKey}-${activeDifficulty}`}
+                  difficulty={activeDifficulty}
+                  onFinish={handleFinishActiveGame}
+                />
+              )}
+              {activeGameId === 'routine-timeline' && (
+                <RoutineTimelineArena
+                  key={`${gameKey}-${activeDifficulty}`}
+                  difficulty={activeDifficulty}
+                  onFinish={handleFinishActiveGame}
+                />
+              )}
+              {activeGameId === 'currency-calc' && (
+                <CurrencyCalcArena
+                  key={`${gameKey}-${activeDifficulty}`}
+                  difficulty={activeDifficulty}
+                  onFinish={handleFinishActiveGame}
+                />
+              )}
+              {activeGameId === 'color-stroop' && (
+                <ColorStroopArena
                   key={`${gameKey}-${activeDifficulty}`}
                   difficulty={activeDifficulty}
                   onFinish={handleFinishActiveGame}

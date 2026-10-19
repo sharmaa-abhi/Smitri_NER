@@ -44,6 +44,9 @@ import {
   SoundWordMatchArena,
   ClockReadingArena,
   RhymeCompletionArena,
+  RoutineTimelineArena,
+  CurrencyCalcArena,
+  ColorStroopArena,
 } from '@/components/games';
 
 const GAME_METADATA: Record<string, { title: string; instruction: string }> = {
@@ -82,6 +85,18 @@ const GAME_METADATA: Record<string, { title: string; instruction: string }> = {
   'rhyme-completion': {
     title: 'Rhyme & Proverb Complete',
     instruction: 'Listen to the classic phrase or proverb, and tap the missing word that completes the rhythm.',
+  },
+  'routine-timeline': {
+    title: 'Daily Routine Timeline',
+    instruction: 'Arrange familiar daily activities from morning to evening in the correct sequential order.',
+  },
+  'currency-calc': {
+    title: 'Rupee Tally & Market Math',
+    instruction: 'Select rupee coins and notes to make the exact target amount for your market shopping.',
+  },
+  'color-stroop': {
+    title: 'Color & Word Reflex',
+    instruction: 'Pay close attention to the INK color of the word shown, not what the word reads. Tap the matching color.',
   },
 };
 
@@ -497,6 +512,15 @@ function GameArenaContent() {
         )}
         {gameId === 'rhyme-completion' && (
           <RhymeCompletionArena key={`${gameKey}-${difficulty}`} difficulty={difficulty} onFinish={handleFinishGame} />
+        )}
+        {gameId === 'routine-timeline' && (
+          <RoutineTimelineArena key={`${gameKey}-${difficulty}`} difficulty={difficulty} onFinish={handleFinishGame} />
+        )}
+        {gameId === 'currency-calc' && (
+          <CurrencyCalcArena key={`${gameKey}-${difficulty}`} difficulty={difficulty} onFinish={handleFinishGame} />
+        )}
+        {gameId === 'color-stroop' && (
+          <ColorStroopArena key={`${gameKey}-${difficulty}`} difficulty={difficulty} onFinish={handleFinishGame} />
         )}
       </main>
 
