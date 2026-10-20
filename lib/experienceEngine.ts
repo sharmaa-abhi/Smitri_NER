@@ -22,7 +22,7 @@ export const COGNITIVE_DOMAINS: Record<CognitiveDomainKey, DomainMetadata> = {
     icon: '🛒',
     color: '#0B534B',
     description: 'Grounding everyday temporal awareness and independent living routines.',
-    games: ['grocery-basket', 'clock-reading'],
+    games: ['grocery-basket', 'clock-reading', 'routine-timeline', 'currency-calc'],
   },
   memory: {
     key: 'memory',
@@ -40,7 +40,7 @@ export const COGNITIVE_DOMAINS: Record<CognitiveDomainKey, DomainMetadata> = {
     icon: '👀',
     color: '#D97706',
     description: 'Sharpens visual discrimination for safety labels and financial numeracy.',
-    games: ['different-one', 'number-trail'],
+    games: ['different-one', 'number-trail', 'color-stroop'],
   },
   verbal: {
     key: 'verbal',
@@ -420,6 +420,9 @@ function getPartnerGameId(gameId: string): string {
     'number-trail': 'different-one',
     'sound-word-match': 'rhyme-completion',
     'rhyme-completion': 'sound-word-match',
+    'routine-timeline': 'clock-reading',
+    'currency-calc': 'grocery-basket',
+    'color-stroop': 'different-one',
   };
   return map[gameId] || 'clock-reading';
 }
@@ -442,6 +445,9 @@ function formatTitle(id: string): string {
     'sound-word-match': 'Daily Word & Sound Match',
     'sequence-memory': 'Sequence Memory',
     'rhyme-completion': 'Rhyme & Proverb Complete',
+    'routine-timeline': 'Daily Routine Timeline',
+    'currency-calc': 'Rupee Tally & Market Math',
+    'color-stroop': 'Color & Word Reflex',
   };
   return titles[id] || 'Cognitive Quest';
 }

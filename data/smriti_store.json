@@ -12,7 +12,7 @@
       "emergencyName": "Amit Sharma (Son)",
       "emergencyPhone": "+91 98765 11223",
       "preferredLanguage": "English / Hindi / Assamese",
-      "difficultyLevel": 5,
+      "difficultyLevel": 4,
       "dailyHydrationTarget": 6,
       "currentHydrationGlasses": 5
     }
@@ -430,6 +430,76 @@
       "recommendedDifficulty": 1,
       "feedbackText": "Good steady pace! Keep enjoying your daily games.",
       "timestamp": "2026-10-15T14:18:11.520Z"
+    },
+    {
+      "id": "s-1792245751877",
+      "userId": "user_kamla",
+      "gameId": "clock-reading",
+      "gameTitle": "Clock Face & Timings",
+      "score": 100,
+      "accuracy": 100,
+      "responseTimeSec": 12,
+      "mistakes": 0,
+      "difficultyLevel": 1,
+      "recommendedDifficulty": 2,
+      "feedbackText": "You are doing great! Let's try a slightly higher level.",
+      "timestamp": "2026-10-17T14:02:31.877Z"
+    },
+    {
+      "id": "s-1792245770201",
+      "userId": "user_kamla",
+      "gameId": "clock-reading",
+      "gameTitle": "Clock Face & Timings",
+      "score": 90,
+      "accuracy": 88,
+      "responseTimeSec": 17,
+      "mistakes": 1,
+      "difficultyLevel": 2,
+      "recommendedDifficulty": 3,
+      "feedbackText": "You are doing great! Let's try a slightly higher level.",
+      "timestamp": "2026-10-17T14:02:50.201Z"
+    },
+    {
+      "id": "s-1792245791439",
+      "userId": "user_kamla",
+      "gameId": "clock-reading",
+      "gameTitle": "Clock Face & Timings",
+      "score": 90,
+      "accuracy": 88,
+      "responseTimeSec": 19,
+      "mistakes": 1,
+      "difficultyLevel": 3,
+      "recommendedDifficulty": 4,
+      "feedbackText": "You are doing great! Let's try a slightly higher level.",
+      "timestamp": "2026-10-17T14:03:11.439Z"
+    },
+    {
+      "id": "s-1792245820014",
+      "userId": "user_kamla",
+      "gameId": "clock-reading",
+      "gameTitle": "Clock Face & Timings",
+      "score": 69,
+      "accuracy": 64,
+      "responseTimeSec": 26,
+      "mistakes": 3,
+      "difficultyLevel": 4,
+      "recommendedDifficulty": 4,
+      "feedbackText": "Good steady pace! Keep enjoying your daily games.",
+      "timestamp": "2026-10-17T14:03:40.014Z"
+    },
+    {
+      "id": "s-1792245841925",
+      "userId": "user_kamla",
+      "gameId": "clock-reading",
+      "gameTitle": "Clock Face & Timings",
+      "score": 100,
+      "accuracy": 100,
+      "responseTimeSec": 19,
+      "mistakes": 0,
+      "difficultyLevel": 5,
+      "recommendedDifficulty": 5,
+      "feedbackText": "Outstanding focus! You are at your best pace.",
+      "timestamp": "2026-10-17T14:04:01.925Z"
     }
   ],
   "reminders": [

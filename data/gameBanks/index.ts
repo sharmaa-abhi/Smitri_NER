@@ -670,4 +670,365 @@ export const GAME_LEVEL_CONFIG: Record<
       color: '#B45309',
     },
   },
+  'routine-timeline': {
+    1: {
+      title: 'Level 1: Morning Routine Sequence',
+      subtitle: '3 Daily Steps • Natural Flow',
+      description: 'Place 3 morning events (Wake up, Drink warm chai, Morning stroll) in chronological order.',
+      badge: 'Level 1',
+      color: '#10B981',
+    },
+    2: {
+      title: 'Level 2: Day Milestones',
+      subtitle: '4 Milestones • Morning to Evening',
+      description: 'Arrange 4 essential milestones: Wake up, Lunch, Evening prayer, Night rest in sequence.',
+      badge: 'Level 2',
+      color: '#059669',
+    },
+    3: {
+      title: 'Level 3: Medicine & Routine Care',
+      subtitle: '4 Steps • Medication Timing',
+      description: 'Sequence morning BP medicine, wholesome breakfast, afternoon rest, and evening tea.',
+      badge: 'Level 3',
+      color: '#0B534B',
+    },
+    4: {
+      title: 'Level 4: Full Day Independence',
+      subtitle: '5 Daily Milestones',
+      description: 'Sequence 5 activities from morning garden stroll, bath, lunch, family phone call, to dinner.',
+      badge: 'Level 4',
+      color: '#D97706',
+    },
+    5: {
+      title: 'Level 5: Weekly Wellness Schedule',
+      subtitle: '5 Dynamic Events',
+      description: 'Order rich daily events with precise cultural and health routine steps.',
+      badge: 'Level 5',
+      color: '#B45309',
+    },
+  },
+  'currency-calc': {
+    1: {
+      title: 'Level 1: Morning Stall Purchases',
+      subtitle: 'Simple Amounts • Coins & Notes',
+      description: 'Match simple daily amounts (₹15, ₹20, ₹30) using ₹5, ₹10, and ₹20 denominations.',
+      badge: 'Level 1',
+      color: '#10B981',
+    },
+    2: {
+      title: 'Level 2: Vegetable Basket Tally',
+      subtitle: 'Medium Amounts • Exact Change',
+      description: 'Tally fresh vegetable purchases (₹45, ₹55, ₹70) using coins and notes.',
+      badge: 'Level 2',
+      color: '#059669',
+    },
+    3: {
+      title: 'Level 3: Grocery & Dairy Bill',
+      subtitle: 'Bills up to ₹150',
+      description: 'Count ₹10, ₹20, ₹50, and ₹100 notes for milk and pantry supplies.',
+      badge: 'Level 3',
+      color: '#0B534B',
+    },
+    4: {
+      title: 'Level 4: Local Bazaar Run',
+      subtitle: 'Multi-item Totals up to ₹250',
+      description: 'Select combined rupee notes for multi-item bazaar shopping with minimal change.',
+      badge: 'Level 4',
+      color: '#D97706',
+    },
+    5: {
+      title: 'Level 5: Festive Mandi Shopping',
+      subtitle: 'Fast Mental Currency Match',
+      description: 'Calculate and match larger purchases up to ₹400 with diverse denominations.',
+      badge: 'Level 5',
+      color: '#B45309',
+    },
+  },
+  'color-stroop': {
+    1: {
+      title: 'Level 1: Color Harmony Match',
+      subtitle: 'Congruent Colors • 2 Choices',
+      description: 'Identify the ink color where words and ink match to build comfortable confidence.',
+      badge: 'Level 1',
+      color: '#10B981',
+    },
+    2: {
+      title: 'Level 2: Gentle Color Contrast',
+      subtitle: '3 Color Options',
+      description: 'Choose the font ink color, gently training the brain to ignore misleading text.',
+      badge: 'Level 2',
+      color: '#059669',
+    },
+    3: {
+      title: 'Level 3: Inhibitory Resilience',
+      subtitle: '4 Vibrant Color Choices',
+      description: 'Focus purely on the visual ink color (e.g. Red, Blue, Green, Amber) despite conflicting words.',
+      badge: 'Level 3',
+      color: '#0B534B',
+    },
+    4: {
+      title: 'Level 4: Cultural Color Harmony',
+      subtitle: 'Sindoor, Mehendi, Neela, Haldi',
+      description: 'Identify traditional Indian hues rapidly across challenging ink combinations.',
+      badge: 'Level 4',
+      color: '#D97706',
+    },
+    5: {
+      title: 'Level 5: Master Cognitive Agility',
+      subtitle: 'Rapid Incongruent Streams',
+      description: 'Test sharp mental agility and selective attention with 5 continuous color trials.',
+      badge: 'Level 5',
+      color: '#B45309',
+    },
+  },
+};
+
+// ─── 10. Routine Timeline Questions ───
+export interface RoutineStep {
+  id: string;
+  order: number;
+  title: string;
+  timeHint: string;
+  icon: string;
+}
+
+export interface RoutineQuestion {
+  scenario: string;
+  steps: RoutineStep[];
+}
+
+export const ROUTINE_QUESTIONS_BY_LEVEL: Record<DifficultyLevel, RoutineQuestion[]> = {
+  1: [
+    {
+      scenario: 'Morning Routine Order',
+      steps: [
+        { id: 'wake', order: 1, title: 'Wake Up & Drink Warm Water', timeHint: '6:30 AM', icon: '🌅' },
+        { id: 'tea', order: 2, title: 'Sip Morning Masala Chai', timeHint: '7:30 AM', icon: '☕' },
+        { id: 'walk', order: 3, title: 'Gentle Stroll in the Verandah', timeHint: '8:30 AM', icon: '🚶' },
+      ],
+    },
+    {
+      scenario: 'Daily Meals Timing',
+      steps: [
+        { id: 'breakfast', order: 1, title: 'Warm Morning Idli & Poha', timeHint: '8:30 AM', icon: '🥣' },
+        { id: 'lunch', order: 2, title: 'Dal, Roti & Fresh Subzi', timeHint: '1:00 PM', icon: '🍛' },
+        { id: 'dinner', order: 3, title: 'Light Khichdi & Warm Milk', timeHint: '8:00 PM', icon: '🥛' },
+      ],
+    },
+  ],
+  2: [
+    {
+      scenario: 'Day Milestones in Order',
+      steps: [
+        { id: 'wake', order: 1, title: 'Wake Up & Fresh Up', timeHint: '6:30 AM', icon: '🌅' },
+        { id: 'prayer', order: 2, title: 'Morning Prayer & Puja Diya', timeHint: '7:30 AM', icon: '🪔' },
+        { id: 'lunch', order: 3, title: 'Afternoon Lunch with Family', timeHint: '1:30 PM', icon: '🍛' },
+        { id: 'evening', order: 4, title: 'Evening Bhajan & Sunset', timeHint: '6:30 PM', icon: '🔔' },
+      ],
+    },
+  ],
+  3: [
+    {
+      scenario: 'Medication & Health Schedule',
+      steps: [
+        { id: 'med_morning', order: 1, title: 'Morning BP Medicine with Water', timeHint: '7:00 AM', icon: '💊' },
+        { id: 'breakfast', order: 2, title: 'Wholesome Breakfast with Family', timeHint: '8:30 AM', icon: '🥣' },
+        { id: 'rest', order: 3, title: 'Afternoon Quiet Nap & Rest', timeHint: '2:30 PM', icon: '🛏️' },
+        { id: 'tea_med', order: 4, title: 'Evening Herbal Tea & Stroll', timeHint: '5:30 PM', icon: '🍵' },
+      ],
+    },
+  ],
+  4: [
+    {
+      scenario: 'Full Day Care & Connection',
+      steps: [
+        { id: 'bath', order: 1, title: 'Warm Bath & Fresh Clothes', timeHint: '8:00 AM', icon: '🧼' },
+        { id: 'market', order: 2, title: 'Local Vegetable Bazaar Visit', timeHint: '10:00 AM', icon: '🧺' },
+        { id: 'lunch', order: 3, title: 'Traditional Midday Meal', timeHint: '1:00 PM', icon: '🍛' },
+        { id: 'call', order: 4, title: 'Phone Call with Grandchildren', timeHint: '5:00 PM', icon: '📞' },
+        { id: 'sleep', order: 5, title: 'Soothing Classical Music & Sleep', timeHint: '9:30 PM', icon: '🌙' },
+      ],
+    },
+  ],
+  5: [
+    {
+      scenario: 'Master Independence Routine',
+      steps: [
+        { id: 'yoga', order: 1, title: 'Pranayama & Gentle Breathing', timeHint: '6:00 AM', icon: '🧘' },
+        { id: 'chai_news', order: 2, title: 'Morning Newspaper & Hot Chai', timeHint: '7:30 AM', icon: '📰' },
+        { id: 'medicine', order: 3, title: 'Daily Prescribed Health Routine', timeHint: '9:00 AM', icon: '💊' },
+        { id: 'social', order: 4, title: 'Park Bench Chat with Neighbours', timeHint: '5:30 PM', icon: '👥' },
+        { id: 'reading', order: 5, title: 'Comforting Book Reading', timeHint: '8:30 PM', icon: '📖' },
+      ],
+    },
+  ],
+};
+
+// ─── 11. Currency & Rupee Tally Questions ───
+export interface CurrencyQuestion {
+  item: string;
+  itemIcon: string;
+  targetAmount: number;
+  allowedDenominations: number[];
+}
+
+export const CURRENCY_QUESTIONS_BY_LEVEL: Record<DifficultyLevel, CurrencyQuestion[]> = {
+  1: [
+    { item: 'Morning Elaichi Chai', itemIcon: '☕', targetAmount: 15, allowedDenominations: [1, 2, 5, 10, 20] },
+    { item: 'Fresh Coriander & Mirchi', itemIcon: '🌿', targetAmount: 20, allowedDenominations: [2, 5, 10, 20] },
+    { item: 'Daily Morning Newspaper', itemIcon: '📰', targetAmount: 10, allowedDenominations: [1, 2, 5, 10] },
+    { item: 'Fresh Curd Dahi Pouch', itemIcon: '🥣', targetAmount: 30, allowedDenominations: [5, 10, 20] },
+  ],
+  2: [
+    { item: '1 Litre Cow Milk Pouch', itemIcon: '🥛', targetAmount: 55, allowedDenominations: [5, 10, 20, 50] },
+    { item: 'Ripe Alphonso Mangoes', itemIcon: '🥭', targetAmount: 75, allowedDenominations: [5, 10, 20, 50] },
+    { item: 'Brown Bread Loaf', itemIcon: '🍞', targetAmount: 45, allowedDenominations: [5, 10, 20] },
+  ],
+  3: [
+    { item: 'Pure Cow Ghee Jar (200g)', itemIcon: '🧈', targetAmount: 130, allowedDenominations: [10, 20, 50, 100] },
+    { item: 'Organic Honey Bottle', itemIcon: '🍯', targetAmount: 160, allowedDenominations: [10, 20, 50, 100] },
+    { item: 'Assam Gold Leaf Tea (250g)', itemIcon: '🍵', targetAmount: 125, allowedDenominations: [5, 10, 20, 50, 100] },
+  ],
+  4: [
+    { item: 'Weekly Produce Vegetable Bag', itemIcon: '🧺', targetAmount: 240, allowedDenominations: [10, 20, 50, 100, 200] },
+    { item: 'Almonds & Dry Fruit Pack', itemIcon: '🥜', targetAmount: 275, allowedDenominations: [5, 10, 20, 50, 100, 200] },
+  ],
+  5: [
+    { item: 'Festive Sweets & Mithai Box', itemIcon: '🪔', targetAmount: 380, allowedDenominations: [10, 20, 50, 100, 200] },
+    { item: 'Ayurvedic Chawanprash Jar', itemIcon: '✨', targetAmount: 350, allowedDenominations: [20, 50, 100, 200] },
+  ],
+};
+
+// ─── 12. Color & Word Stroop Questions ───
+export interface StroopQuestion {
+  word: string;
+  colorName: string;
+  colorHex: string;
+  options: Array<{ name: string; hex: string }>;
+}
+
+export const STROOP_QUESTIONS_BY_LEVEL: Record<DifficultyLevel, StroopQuestion[]> = {
+  1: [
+    {
+      word: 'RED',
+      colorName: 'Red',
+      colorHex: '#DC2626',
+      options: [
+        { name: 'Red', hex: '#DC2626' },
+        { name: 'Blue', hex: '#2563EB' },
+      ],
+    },
+    {
+      word: 'GREEN',
+      colorName: 'Green',
+      colorHex: '#059669',
+      options: [
+        { name: 'Green', hex: '#059669' },
+        { name: 'Yellow', hex: '#D97706' },
+      ],
+    },
+    {
+      word: 'BLUE',
+      colorName: 'Blue',
+      colorHex: '#2563EB',
+      options: [
+        { name: 'Blue', hex: '#2563EB' },
+        { name: 'Red', hex: '#DC2626' },
+      ],
+    },
+  ],
+  2: [
+    {
+      word: 'BLUE',
+      colorName: 'Green',
+      colorHex: '#059669',
+      options: [
+        { name: 'Green', hex: '#059669' },
+        { name: 'Blue', hex: '#2563EB' },
+        { name: 'Red', hex: '#DC2626' },
+      ],
+    },
+    {
+      word: 'RED',
+      colorName: 'Yellow',
+      colorHex: '#D97706',
+      options: [
+        { name: 'Yellow', hex: '#D97706' },
+        { name: 'Red', hex: '#DC2626' },
+        { name: 'Green', hex: '#059669' },
+      ],
+    },
+  ],
+  3: [
+    {
+      word: 'YELLOW',
+      colorName: 'Red',
+      colorHex: '#DC2626',
+      options: [
+        { name: 'Red', hex: '#DC2626' },
+        { name: 'Yellow', hex: '#D97706' },
+        { name: 'Green', hex: '#059669' },
+        { name: 'Blue', hex: '#2563EB' },
+      ],
+    },
+    {
+      word: 'GREEN',
+      colorName: 'Blue',
+      colorHex: '#2563EB',
+      options: [
+        { name: 'Blue', hex: '#2563EB' },
+        { name: 'Green', hex: '#059669' },
+        { name: 'Red', hex: '#DC2626' },
+        { name: 'Purple', hex: '#7C3AED' },
+      ],
+    },
+  ],
+  4: [
+    {
+      word: 'PURPLE',
+      colorName: 'Amber',
+      colorHex: '#D97706',
+      options: [
+        { name: 'Amber', hex: '#D97706' },
+        { name: 'Purple', hex: '#7C3AED' },
+        { name: 'Red', hex: '#DC2626' },
+        { name: 'Teal', hex: '#0B534B' },
+      ],
+    },
+    {
+      word: 'RED',
+      colorName: 'Teal',
+      colorHex: '#0B534B',
+      options: [
+        { name: 'Teal', hex: '#0B534B' },
+        { name: 'Red', hex: '#DC2626' },
+        { name: 'Blue', hex: '#2563EB' },
+        { name: 'Amber', hex: '#D97706' },
+      ],
+    },
+  ],
+  5: [
+    {
+      word: 'GREEN',
+      colorName: 'Rose Red',
+      colorHex: '#E11D48',
+      options: [
+        { name: 'Rose Red', hex: '#E11D48' },
+        { name: 'Green', hex: '#059669' },
+        { name: 'Deep Teal', hex: '#0B534B' },
+        { name: 'Violet', hex: '#7C3AED' },
+      ],
+    },
+    {
+      word: 'VIOLET',
+      colorName: 'Deep Teal',
+      colorHex: '#0B534B',
+      options: [
+        { name: 'Deep Teal', hex: '#0B534B' },
+        { name: 'Violet', hex: '#7C3AED' },
+        { name: 'Rose Red', hex: '#E11D48' },
+        { name: 'Amber', hex: '#D97706' },
+      ],
+    },
+  ],
 };

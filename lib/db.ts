@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { GameId } from '@/types/games';
 
 export interface User {
   id: string;
@@ -21,16 +22,7 @@ export interface User {
 export interface GameSession {
   id: string;
   userId: string;
-  gameId: 
-    | 'memory-match' 
-    | 'sequence-memory' 
-    | 'different-one' 
-    | 'grocery-basket' 
-    | 'number-trail' 
-    | 'pattern-match' 
-    | 'sound-word-match'
-    | 'clock-reading'
-    | 'rhyme-completion';
+  gameId: GameId;
   gameTitle: string;
   score: number;
   accuracy: number;

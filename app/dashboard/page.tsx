@@ -174,49 +174,49 @@ export default function DashboardPage() {
     `Namaste ${user.name}. You are doing wonderfully today in ${user.city || 'Guwahati'}. You have completed ${completedReminders} of ${totalReminders} daily routines, and your cognitive wellness score is ${cognitiveScore} out of 100.`;
 
   return (
-    <div className="space-y-8 pb-36 sm:pb-44">
+    <div className="space-y-8 pb-36 sm:pb-44 max-w-7xl mx-auto">
       {/* ─── 1. Senior Welcome & Daily Summary Header ─── */}
-      <header className="bg-white rounded-2xl p-6 sm:p-7 border border-[#D5DFDC] shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-5">
-        <div className="space-y-2">
-          <div className="flex flex-wrap items-center gap-2.5">
-            <span className="text-2xl sm:text-3xl" aria-hidden="true">🌸</span>
+      <header className="bg-white rounded-2xl p-6 sm:p-8 border border-[#D5DFDC] shadow-[0_2px_12px_rgba(11,83,75,0.06)] flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div className="space-y-3">
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-[#E6F4F1] border border-[#93CEC5] flex items-center justify-center text-[#0B534B] shadow-2xs">
+              <Activity className="w-5 h-5 text-[#0B534B]" />
+            </div>
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#111615] tracking-tight">
-              {t("Good day! Welcome back") || "Namaste"}, {user.name}
+              {t("Good day! Welcome back") || "Good day! Welcome back"}, {user.name}
             </h1>
-            <span className="text-xs font-bold px-3 py-1 rounded-full bg-[#ECFDF5] text-[#065F46] border border-[#A7F3D0] flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse"></span>
-              <span>Active Caregiver: {user.emergencyName?.split(' ')[0] || 'Rahul'}</span>
+            <span className="text-xs sm:text-sm font-bold px-3 py-1 rounded-full bg-[#ECFDF5] text-[#065F46] border border-[#A7F3D0] flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#10B981] animate-pulse"></span>
+              <span>Active Caregiver: {user.emergencyName?.split(' ')[0] || 'Amit'}</span>
             </span>
           </div>
           
-          <div className="flex flex-wrap items-center gap-3 text-sm sm:text-base text-[#4B5563] font-medium">
-            <span className="flex items-center gap-1.5">
-              <MapPin className="w-4 h-4 text-rose-500" />
-              {user.city || 'Guwahati, Assam'}
+          <div className="flex flex-wrap items-center gap-3 text-sm sm:text-base text-[#4B5563] font-medium pt-1">
+            <span className="flex items-center gap-1.5 bg-[#F6F8F7] px-3 py-1 rounded-lg border border-[#E6ECEB]">
+              <MapPin className="w-4 h-4 text-emerald-700" />
+              <span>{user.city || 'Guwahati, Assam'}</span>
             </span>
-            <span>•</span>
-            <span className="flex items-center gap-1.5">
+            <span className="flex items-center gap-1.5 bg-[#F6F8F7] px-3 py-1 rounded-lg border border-[#E6ECEB]">
               <Calendar className="w-4 h-4 text-[#0B534B]" />
-              {new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' })}
+              <span>{new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' })}</span>
             </span>
-            <span>•</span>
-            <span className="text-[#0B534B] font-bold">
-              Doctor: {user.doctorName || 'Dr. Manab Barua'}
+            <span className="flex items-center gap-1.5 bg-[#E6F4F1] text-[#0B534B] px-3 py-1 rounded-lg border border-[#93CEC5] font-bold">
+              <span>Doctor: {user.doctorName || 'Dr. Manab Barua (Neurologist / Geriatrician)'}</span>
             </span>
           </div>
         </div>
 
-        {/* Voice Assistant & Emergency Call */}
+        {/* Voice Assistant & Direct Caregiver Phone */}
         <div className="flex flex-wrap items-center gap-3 flex-shrink-0 pt-2 md:pt-0">
           <VoiceButton 
             textToRead={greetingInstruction}
             onSpeechResult={handleVoiceCommand}
-            buttonLabel={t("hero_voice_intro") || "Listen Summary"}
+            buttonLabel={t("hero_voice_intro") || "Listen Daily Summary"}
             className="min-h-[48px] px-5 text-base font-semibold"
           />
           <a
             href={`tel:${user.emergencyPhone || '+919876543210'}`}
-            className="min-h-[48px] inline-flex items-center gap-2 bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white px-5 py-2.5 rounded-xl font-bold text-base shadow-xs transition-all focus-visible:ring-2 focus-visible:ring-[#0B534B] focus-visible:ring-offset-2"
+            className="min-h-[48px] inline-flex items-center gap-2 bg-[#0B534B] hover:bg-[#08433C] active:bg-[#06342E] text-white px-5 py-2.5 rounded-xl font-bold text-base shadow-xs hover:shadow-sm transition-all focus-visible:ring-2 focus-visible:ring-[#0B534B] focus-visible:ring-offset-2"
             title="Call Primary Caregiver"
           >
             <PhoneCall className="w-4 h-4" />
@@ -227,16 +227,16 @@ export default function DashboardPage() {
 
       {/* ─── 2. Hero Feature: Cognitive Quest of the Day ─── */}
       <section aria-label="Personalized daily cognitive exercise">
-        <div className="bg-[#0B534B] text-white rounded-2xl p-6 sm:p-8 shadow-sm border border-[#0B534B] relative overflow-hidden">
+        <div className="bg-gradient-to-br from-[#0B534B] via-[#0E685E] to-[#08433C] text-white rounded-2xl p-6 sm:p-8 shadow-[0_4px_20px_rgba(11,83,75,0.18)] border border-[#0B534B] relative overflow-hidden">
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative z-10">
-            <div className="space-y-3 max-w-2xl">
-              <div className="flex flex-wrap items-center gap-2">
-                <div className="inline-flex items-center gap-1.5 bg-[#10B981]/20 border border-[#A7F3D0]/40 px-3 py-1 rounded-full text-xs font-black text-[#A7F3D0] tracking-wide">
+            <div className="space-y-3.5 max-w-2xl">
+              <div className="flex flex-wrap items-center gap-2.5">
+                <div className="inline-flex items-center gap-1.5 bg-[#10B981]/25 border border-[#A7F3D0]/50 px-3.5 py-1 rounded-full text-xs font-black text-[#A7F3D0] tracking-wide">
                   <Sparkles className="w-3.5 h-3.5 text-[#FCD34D]" />
                   <span>Personalized For Your Day</span>
                 </div>
                 {recommendedQuest && (
-                  <span className="px-2.5 py-0.5 rounded-full text-xs font-black uppercase tracking-wider bg-white/20 text-white border border-white/30">
+                  <span className="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-white/20 text-white border border-white/30">
                     Level {recommendedQuest.level}
                   </span>
                 )}
@@ -246,34 +246,34 @@ export default function DashboardPage() {
                 {recommendedQuest ? recommendedQuest.gameTitle : 'Cognitive Quest of the Day'}
               </h2>
 
-              <p className="text-[17px] sm:text-[18px] text-[#E6F4F1] font-normal leading-relaxed">
+              <p className="text-[17px] sm:text-[19px] text-[#E6F4F1] font-normal leading-relaxed">
                 {recommendedQuest 
                   ? recommendedQuest.reason 
                   : 'Handcrafted daily memory exercises designed for real-world elder routines.'}
               </p>
 
               {/* Dynamic Badges reflecting real scenario */}
-              <div className="flex flex-wrap gap-2 pt-1 text-xs sm:text-sm">
-                <span className="bg-white/10 px-3 py-1.5 rounded-lg border border-white/20 text-white font-medium flex items-center gap-1.5">
+              <div className="flex flex-wrap gap-2.5 pt-1 text-xs sm:text-sm">
+                <span className="bg-white/15 px-3.5 py-1.5 rounded-xl border border-white/25 text-white font-medium flex items-center gap-2">
                   <Check className="w-4 h-4 text-[#A7F3D0]" />
                   <span>{recommendedQuest?.realWorldScenario || 'Everyday Routine'}</span>
                 </span>
-                <span className="bg-white/10 px-3 py-1.5 rounded-lg border border-white/20 text-white font-medium flex items-center gap-1.5">
+                <span className="bg-white/15 px-3.5 py-1.5 rounded-xl border border-white/25 text-white font-medium flex items-center gap-2">
                   <Clock className="w-4 h-4 text-[#FCD34D]" />
                   <span>{recommendedQuest?.estimatedTimeMin || 2} Minutes • Calm Pace</span>
                 </span>
-                <span className="bg-white/10 px-3 py-1.5 rounded-lg border border-white/20 text-white font-medium flex items-center gap-1.5">
+                <span className="bg-white/15 px-3.5 py-1.5 rounded-xl border border-white/25 text-white font-medium flex items-center gap-2">
                   <Award className="w-4 h-4 text-[#A7F3D0]" />
                   <span>Level {recommendedQuest?.level || 1} • Self-Paced</span>
                 </span>
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row lg:flex-col gap-3 w-full lg:w-auto flex-shrink-0">
+            <div className="flex flex-col sm:flex-row lg:flex-col gap-3.5 w-full lg:w-auto flex-shrink-0">
               {recommendedQuest ? (
                 <Link
                   href={`/games/${recommendedQuest.gameId}?level=${recommendedQuest.level}`}
-                  className="min-h-[52px] inline-flex items-center justify-center gap-3 bg-[#D97706] hover:bg-[#B45309] text-white px-7 py-3.5 rounded-xl font-bold text-lg shadow-sm transition-all focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
+                  className="min-h-[52px] inline-flex items-center justify-center gap-3 bg-[#D97706] hover:bg-[#B45309] text-white px-8 py-3.5 rounded-xl font-extrabold text-lg shadow-sm hover:shadow-md transition-all focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
                 >
                   <Play className="w-5 h-5 fill-white" />
                   <span>Start Recommended Quest</span>
@@ -281,7 +281,7 @@ export default function DashboardPage() {
               ) : (
                 <Link
                   href="/games/grocery-basket"
-                  className="min-h-[52px] inline-flex items-center justify-center gap-3 bg-[#D97706] hover:bg-[#B45309] text-white px-7 py-3.5 rounded-xl font-bold text-lg shadow-sm transition-all text-center focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
+                  className="min-h-[52px] inline-flex items-center justify-center gap-3 bg-[#D97706] hover:bg-[#B45309] text-white px-8 py-3.5 rounded-xl font-extrabold text-lg shadow-sm hover:shadow-md transition-all text-center focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
                 >
                   <Play className="w-5 h-5 fill-white" />
                   <span>Start Daily Challenge</span>
@@ -290,9 +290,9 @@ export default function DashboardPage() {
 
               <Link
                 href="/games"
-                className="min-h-[48px] inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white px-5 py-3 rounded-xl font-bold text-base border border-white/20 transition-all text-center focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
+                className="min-h-[48px] inline-flex items-center justify-center gap-2 bg-white/15 hover:bg-white/25 text-white px-6 py-3 rounded-xl font-bold text-base border border-white/30 transition-all text-center focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
               >
-                <span>Browse All 9 Games & Levels</span>
+                <span>Browse All 9 Games &amp; Levels</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -304,13 +304,13 @@ export default function DashboardPage() {
       <section aria-label="Daily health summary metrics">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
           {/* Card 1: Cognitive Vitality */}
-          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-xs flex flex-col justify-between min-h-[148px]">
+          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-[0_2px_10px_rgba(11,83,75,0.04)] flex flex-col justify-between min-h-[156px]">
             <div className="flex items-center justify-between">
               <span className="text-xs sm:text-sm font-bold text-[#5A6A66] uppercase tracking-wider">
                 Cognitive Vitality
               </span>
               <div className="w-11 h-11 rounded-xl bg-[#E6F4F1] text-[#0B534B] border border-[#93CEC5] flex items-center justify-center flex-shrink-0 font-bold text-base">
-                ★
+                <Brain className="w-5 h-5 text-[#0B534B]" />
               </div>
             </div>
             <div className="pt-2">
@@ -325,13 +325,13 @@ export default function DashboardPage() {
           </div>
 
           {/* Card 2: Daily Routine Adherence */}
-          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-xs flex flex-col justify-between min-h-[148px]">
+          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-[0_2px_10px_rgba(11,83,75,0.04)] flex flex-col justify-between min-h-[156px]">
             <div className="flex items-center justify-between">
               <span className="text-xs sm:text-sm font-bold text-[#5A6A66] uppercase tracking-wider">
                 Routine Adherence
               </span>
               <div className="w-11 h-11 rounded-xl bg-[#ECFDF5] text-[#065F46] border border-[#A7F3D0] flex items-center justify-center flex-shrink-0 font-bold text-base">
-                ✓
+                <CheckCircle2 className="w-5 h-5 text-[#059669]" />
               </div>
             </div>
             <div className="pt-2">
@@ -339,20 +339,20 @@ export default function DashboardPage() {
                 <span className="text-3xl sm:text-4xl font-extrabold text-[#065F46]">{completedReminders}</span>
                 <span className="text-base font-bold text-[#5A6A66]">/ {totalReminders} Done</span>
               </div>
-              <div className="w-full bg-[#E5E7EB] h-2 rounded-full overflow-hidden mt-2">
+              <div className="w-full bg-[#E5E7EB] h-2.5 rounded-full overflow-hidden mt-2.5">
                 <div 
                   className="bg-[#059669] h-full rounded-full transition-all duration-500" 
                   style={{ width: `${routinePercent}%` }}
                 />
               </div>
-              <p className="text-sm font-medium text-[#065F46] mt-1">
+              <p className="text-sm font-medium text-[#065F46] mt-1.5">
                 {routinePercent}% completed today
               </p>
             </div>
           </div>
 
           {/* Card 3: Hydration Meter */}
-          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-xs flex flex-col justify-between min-h-[148px]">
+          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-[0_2px_10px_rgba(11,83,75,0.04)] flex flex-col justify-between min-h-[156px]">
             <div className="flex items-center justify-between">
               <span className="text-xs sm:text-sm font-bold text-[#5A6A66] uppercase tracking-wider">
                 Hydration Tracker
@@ -368,7 +368,7 @@ export default function DashboardPage() {
                 <span className="text-base font-bold text-[#5A6A66]">/ {user.dailyHydrationTarget || 6} Glasses</span>
               </div>
               <p className="text-sm font-medium text-[#4B5563] mt-1">
-                Warm water & herbal chai
+                Warm water &amp; herbal chai
               </p>
             </div>
 
@@ -393,7 +393,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Card 4: Next Scheduled Medicine / Routine */}
-          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-xs flex flex-col justify-between min-h-[148px]">
+          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-[0_2px_10px_rgba(11,83,75,0.04)] flex flex-col justify-between min-h-[156px]">
             <div className="flex items-center justify-between">
               <span className="text-xs sm:text-sm font-bold text-[#5A6A66] uppercase tracking-wider">
                 Up Next In Routine
@@ -436,7 +436,7 @@ export default function DashboardPage() {
         
         {/* Left Column: Real-World Daily Timeline (7 cols) */}
         <section aria-label="Daily timeline checklist" className="lg:col-span-7 space-y-6">
-          <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#D5DFDC] shadow-xs space-y-5">
+          <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#D5DFDC] shadow-[0_2px_12px_rgba(11,83,75,0.06)] space-y-5">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#E5E7EB]">
               <div>
                 <h3 className="text-xl sm:text-2xl font-extrabold text-[#111615] flex items-center gap-2">
@@ -497,7 +497,7 @@ export default function DashboardPage() {
                         {rem.dosage && (
                           <p className="text-sm font-semibold text-[#4B5563] flex items-center gap-1.5">
                             <Pill className="w-4 h-4 text-[#0B534B]" />
-                            Dosage: {rem.dosage}
+                            <span>Dosage: {rem.dosage}</span>
                           </p>
                         )}
 
@@ -508,7 +508,7 @@ export default function DashboardPage() {
                         )}
 
                         <span className="text-sm font-bold text-[#D97706] flex items-center gap-1.5 pt-0.5">
-                          <Clock className="w-4 h-4" /> {rem.time}
+                          <Clock className="w-4 h-4" /> <span>{rem.time}</span>
                         </span>
                       </div>
                     </div>
@@ -548,7 +548,7 @@ export default function DashboardPage() {
                       : 'bg-white border border-[#D5DFDC] text-[#111615] hover:bg-[#F0FDF4]'
                   }`}
                 >
-                  <span>😊</span> Energetic
+                  <span>😊</span> <span>Energetic</span>
                 </button>
                 <button
                   type="button"
@@ -559,7 +559,7 @@ export default function DashboardPage() {
                       : 'bg-white border border-[#D5DFDC] text-[#111615] hover:bg-[#F0FDF4]'
                   }`}
                 >
-                  <span>😌</span> Calm
+                  <span>😌</span> <span>Calm</span>
                 </button>
                 <button
                   type="button"
@@ -570,7 +570,7 @@ export default function DashboardPage() {
                       : 'bg-white border border-[#D5DFDC] text-[#111615] hover:bg-[#F0FDF4]'
                   }`}
                 >
-                  <span>😴</span> Rest Needed
+                  <span>😴</span> <span>Rest Needed</span>
                 </button>
               </div>
             </div>
@@ -579,7 +579,7 @@ export default function DashboardPage() {
 
         {/* Right Column: 7-Day Cognitive Analytics & Abilities (5 cols) */}
         <section aria-label="Cognitive trajectory and abilities" className="lg:col-span-5 space-y-6">
-          <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#D5DFDC] shadow-xs space-y-5">
+          <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#D5DFDC] shadow-[0_2px_12px_rgba(11,83,75,0.06)] space-y-5">
             <div className="flex items-center justify-between pb-3 border-b border-[#E5E7EB]">
               <div>
                 <h3 className="text-xl sm:text-2xl font-extrabold text-[#111615]">
@@ -686,7 +686,7 @@ export default function DashboardPage() {
                     <div className="p-3.5 rounded-xl bg-[#E6F4F1]/60 border border-[#93CEC5] flex items-center justify-between">
                       <div>
                         <span className="text-sm font-bold text-[#111615] block">Short-Term Memory Recall</span>
-                        <span className="text-xs text-[#5A6A66]">Market items & medicine strips</span>
+                        <span className="text-xs text-[#5A6A66]">Market items &amp; medicine strips</span>
                       </div>
                       <span className="text-sm font-black text-[#0B534B] bg-white px-2.5 py-1 rounded-md border border-[#93CEC5]">
                         90% Accuracy
@@ -694,8 +694,8 @@ export default function DashboardPage() {
                     </div>
                     <div className="p-3.5 rounded-xl bg-[#ECFDF5]/60 border border-[#A7F3D0] flex items-center justify-between">
                       <div>
-                        <span className="text-sm font-bold text-[#111615] block">Time & Routine Orientation</span>
-                        <span className="text-xs text-[#5A6A66]">Clock hands, prayer & doctor times</span>
+                        <span className="text-sm font-bold text-[#111615] block">Time &amp; Routine Orientation</span>
+                        <span className="text-xs text-[#5A6A66]">Clock hands, prayer &amp; doctor times</span>
                       </div>
                       <span className="text-sm font-black text-[#065F46] bg-white px-2.5 py-1 rounded-md border border-[#A7F3D0]">
                         96% Precision
@@ -712,7 +712,7 @@ export default function DashboardPage() {
               className="w-full min-h-[48px] py-3 bg-[#0B534B] hover:bg-[#08433C] text-white rounded-xl font-bold text-base text-center flex items-center justify-center gap-2 transition-all shadow-xs focus-visible:ring-2 focus-visible:ring-[#0B534B]"
             >
               <Award className="w-4 h-4 text-[#FCD34D]" />
-              <span>Open Game Dashboard & All 9 Games</span>
+              <span>Open Game Dashboard &amp; All 9 Games</span>
             </Link>
           </div>
         </section>
@@ -722,11 +722,11 @@ export default function DashboardPage() {
       {/* ─── 5. Recent Quests Experience Journey ─── */}
       {experienceProfile?.recentSessions && experienceProfile.recentSessions.length > 0 && (
         <section aria-label="Recent game sessions">
-          <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#D5DFDC] shadow-xs space-y-5">
+          <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#D5DFDC] shadow-[0_2px_12px_rgba(11,83,75,0.06)] space-y-5">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#E5E7EB] pb-3">
               <div>
                 <h3 className="text-xl sm:text-2xl font-extrabold text-[#111615] flex items-center gap-2">
-                  <span>🎮</span> Your Recent Game Experience & Progression
+                  <span>🎮</span> Your Recent Game Experience &amp; Progression
                 </h3>
                 <p className="text-sm sm:text-base text-[#4B5563] font-normal">
                   Past exercises tailored to your focus, with sequential level progression
@@ -784,11 +784,11 @@ export default function DashboardPage() {
       {/* ─── 6. Unlocked Experience Badges & Milestones ─── */}
       {experienceProfile?.earnedBadges && experienceProfile.earnedBadges.length > 0 && (
         <section aria-label="Earned milestones and badges">
-          <div className="bg-[#FAFCFB] rounded-2xl p-6 sm:p-7 border border-[#D5DFDC] shadow-xs space-y-4">
+          <div className="bg-[#FAFCFB] rounded-2xl p-6 sm:p-7 border border-[#D5DFDC] shadow-[0_2px_12px_rgba(11,83,75,0.06)] space-y-4">
             <div className="flex items-center gap-2">
               <Trophy className="w-5 h-5 text-[#D97706]" />
               <h3 className="text-xl sm:text-2xl font-extrabold text-[#111615]">
-                Unlocked Experience Badges & Milestones
+                Unlocked Experience Badges &amp; Milestones
               </h3>
             </div>
 
@@ -796,7 +796,7 @@ export default function DashboardPage() {
               {experienceProfile.earnedBadges.map((badge) => (
                 <div
                   key={badge.id}
-                  className="bg-white p-4 rounded-xl border border-[#D5DFDC] text-center space-y-1.5 hover:border-[#0B534B] transition-all flex flex-col items-center justify-center"
+                  className="bg-white p-4 rounded-xl border border-[#D5DFDC] text-center space-y-1.5 hover:border-[#0B534B] transition-all flex flex-col items-center justify-center shadow-2xs"
                 >
                   <span className="text-3xl block py-0.5" aria-hidden="true">{badge.icon}</span>
                   <span className="text-sm font-extrabold text-[#111615] block leading-tight">
@@ -814,7 +814,7 @@ export default function DashboardPage() {
 
       {/* ─── 7. Emergency Immediate Action Footer Banner ─── */}
       <section aria-label="Senior emergency quick call">
-        <div className="bg-[#FEF2F2] border border-[#FECACA] rounded-2xl p-6 sm:p-7 flex flex-col md:flex-row items-center justify-between gap-5 shadow-xs">
+        <div className="bg-[#FEF2F2] border border-[#FECACA] rounded-2xl p-6 sm:p-7 flex flex-col md:flex-row items-center justify-between gap-5 shadow-[0_2px_12px_rgba(220,38,38,0.06)]">
           <div className="flex items-center gap-4 text-center md:text-left">
             <div className="w-12 h-12 rounded-xl bg-[#DC2626] text-white flex items-center justify-center flex-shrink-0 shadow-sm">
               <ShieldAlert className="w-7 h-7" />

@@ -44,6 +44,9 @@ import {
   SoundWordMatchArena,
   ClockReadingArena,
   RhymeCompletionArena,
+  RoutineTimelineArena,
+  CurrencyCalcArena,
+  ColorStroopArena,
 } from '@/components/games';
 
 const GAME_METADATA: Record<string, { title: string; instruction: string }> = {
@@ -82,6 +85,18 @@ const GAME_METADATA: Record<string, { title: string; instruction: string }> = {
   'rhyme-completion': {
     title: 'Rhyme & Proverb Complete',
     instruction: 'Listen to the classic phrase or proverb, and tap the missing word that completes the rhythm.',
+  },
+  'routine-timeline': {
+    title: 'Daily Routine Timeline',
+    instruction: 'Arrange familiar daily activities from morning to evening in the correct sequential order.',
+  },
+  'currency-calc': {
+    title: 'Rupee Tally & Market Math',
+    instruction: 'Select rupee coins and notes to make the exact target amount for your market shopping.',
+  },
+  'color-stroop': {
+    title: 'Color & Word Reflex',
+    instruction: 'Pay close attention to the INK color of the word shown, not what the word reads. Tap the matching color.',
   },
 };
 
@@ -139,6 +154,21 @@ function GameArenaContent() {
   const [completionData, setCompletionData] = useState<CompletionModalData | null>(null);
   const [audioEnabled, setAudioEnabled] = useState<boolean>(true);
   const [isSaving, setIsSaving] = useState<boolean>(false);
+  const [mounted, setMounted] = useState<boolean>(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const getIsLevelUnlocked = useCallback((lvl: DifficultyLevel) => {
+    if (!mounted) return lvl === 1;
+    return isLevelUnlocked(gameId, lvl, userId);
+  }, [mounted, gameId, userId]);
+
+  const getIsLevelCompleted = useCallback((lvl: DifficultyLevel) => {
+    if (!mounted) return false;
+    return isLevelCompleted(gameId, lvl, userId);
+  }, [mounted, gameId, userId]);
 
   useEffect(() => {
     setAudioEnabled(isGameAudioEnabled());
@@ -314,7 +344,7 @@ function GameArenaContent() {
     <div className="space-y-6 pb-36 sm:pb-44 max-w-5xl mx-auto">
       
       {/* ─── 1. Spacious Top Header & Navigation Bar ─── */}
-      <header className="bg-white p-5 sm:p-6 rounded-2xl border border-[#D5DFDC] shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <header className="bg-white p-5 sm:p-6 rounded-2xl border border-[#D5DFDC] shadow-[0_2px_12px_rgba(11,83,75,0.06)] flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex items-center gap-3.5">
           <Link
             href="/games"
@@ -375,14 +405,14 @@ function GameArenaContent() {
       </header>
 
       {/* ─── 2. Clear Instruction & Voice Bar ─── */}
-      <section aria-label="Exercise instructions" className="bg-[#F0FDF4] border border-[#BBF7D0] p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div className="flex items-start gap-3">
+      <section aria-label="Exercise instructions" className="bg-[#ECFDF5] border border-[#A7F3D0] p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-[0_2px_10px_rgba(11,83,75,0.04)]">
+        <div className="flex items-start gap-3.5">
           <HelpCircle className="w-6 h-6 text-[#059669] flex-shrink-0 mt-0.5" />
           <div className="space-y-1">
             <span className="text-xs font-bold uppercase tracking-wider text-[#065F46] block">
               Exercise Instructions
             </span>
-            <p className="text-base sm:text-lg text-[#1F2937] font-medium leading-relaxed">
+            <p className="text-base sm:text-lg text-[#111615] font-medium leading-relaxed">
               {currentInfo.instruction}
             </p>
           </div>
@@ -396,7 +426,7 @@ function GameArenaContent() {
 
       {/* ─── 3. Compact 5-Stage Level Selector ─── */}
       <section aria-label="Level selection">
-        <div className="bg-white rounded-2xl p-4 sm:p-5 border border-[#D5DFDC] shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="bg-white rounded-2xl p-4 sm:p-5 border border-[#D5DFDC] shadow-[0_2px_10px_rgba(11,83,75,0.04)] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-[#D97706]" />
             <span className="text-sm font-extrabold text-[#111615]">
@@ -404,10 +434,10 @@ function GameArenaContent() {
             </span>
           </div>
 
-          <div className="grid grid-cols-5 gap-2 sm:gap-2.5 w-full sm:w-auto">
+          <div className="grid grid-cols-5 gap-2 sm:gap-2.5 w-full sm:w-auto" suppressHydrationWarning>
             {ALL_LEVELS.map((lvl) => {
-              const isUnlocked = isLevelUnlocked(gameId, lvl, userId);
-              const isCompleted = isLevelCompleted(gameId, lvl, userId);
+              const isUnlocked = getIsLevelUnlocked(lvl);
+              const isCompleted = getIsLevelCompleted(lvl);
               const isCurrent = difficulty === lvl;
 
               if (isCurrent) {
@@ -497,6 +527,15 @@ function GameArenaContent() {
         )}
         {gameId === 'rhyme-completion' && (
           <RhymeCompletionArena key={`${gameKey}-${difficulty}`} difficulty={difficulty} onFinish={handleFinishGame} />
+        )}
+        {gameId === 'routine-timeline' && (
+          <RoutineTimelineArena key={`${gameKey}-${difficulty}`} difficulty={difficulty} onFinish={handleFinishGame} />
+        )}
+        {gameId === 'currency-calc' && (
+          <CurrencyCalcArena key={`${gameKey}-${difficulty}`} difficulty={difficulty} onFinish={handleFinishGame} />
+        )}
+        {gameId === 'color-stroop' && (
+          <ColorStroopArena key={`${gameKey}-${difficulty}`} difficulty={difficulty} onFinish={handleFinishGame} />
         )}
       </main>
 

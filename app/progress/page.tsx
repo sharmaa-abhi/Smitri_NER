@@ -66,9 +66,9 @@ export default function ProgressPage() {
   return (
     <div className="space-y-8 pb-36 sm:pb-44 max-w-5xl mx-auto">
       {/* ─── 1. Header ─── */}
-      <header className="bg-white rounded-2xl p-6 sm:p-7 border border-[#D5DFDC] shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-5">
-        <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 bg-[#ECFDF5] text-[#065F46] px-3 py-1 rounded-full text-xs font-bold border border-[#A7F3D0]">
+      <header className="bg-white rounded-2xl p-6 sm:p-8 border border-[#D5DFDC] shadow-[0_2px_12px_rgba(11,83,75,0.06)] flex flex-col md:flex-row md:items-center justify-between gap-5">
+        <div className="space-y-2.5">
+          <div className="inline-flex items-center gap-2 bg-[#ECFDF5] text-[#065F46] px-3.5 py-1 rounded-full text-xs font-bold border border-[#A7F3D0]">
             <TrendingUp className="w-4 h-4 text-[#059669]" />
             <span>Cognitive History &amp; Vitality</span>
           </div>
@@ -114,13 +114,13 @@ export default function ProgressPage() {
       {/* ─── 2. Metric Overview Cards ─── */}
       <section aria-label="Progress metrics">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
-          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-xs flex flex-col justify-between min-h-[148px]">
+          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-[0_2px_10px_rgba(11,83,75,0.04)] flex flex-col justify-between min-h-[156px]">
             <div className="flex items-center justify-between">
               <span className="text-xs sm:text-sm font-bold text-[#5A6A66] uppercase tracking-wider">
                 Average Score
               </span>
-              <div className="w-11 h-11 rounded-xl bg-[#E6F4F1] text-[#0B534B] border border-[#93CEC5] flex items-center justify-center">
-                <Award className="w-5 h-5" />
+              <div className="w-11 h-11 rounded-xl bg-[#E6F4F1] text-[#0B534B] border border-[#93CEC5] flex items-center justify-center shadow-2xs">
+                <Award className="w-5 h-5 text-[#0B534B]" />
               </div>
             </div>
             <div className="pt-2">
@@ -132,13 +132,13 @@ export default function ProgressPage() {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-xs flex flex-col justify-between min-h-[148px]">
+          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-[0_2px_10px_rgba(11,83,75,0.04)] flex flex-col justify-between min-h-[156px]">
             <div className="flex items-center justify-between">
               <span className="text-xs sm:text-sm font-bold text-[#5A6A66] uppercase tracking-wider">
                 Average Accuracy
               </span>
-              <div className="w-11 h-11 rounded-xl bg-[#ECFDF5] text-[#059669] border border-[#A7F3D0] flex items-center justify-center">
-                <CheckCircle2 className="w-5 h-5" />
+              <div className="w-11 h-11 rounded-xl bg-[#ECFDF5] text-[#059669] border border-[#A7F3D0] flex items-center justify-center shadow-2xs">
+                <CheckCircle2 className="w-5 h-5 text-[#059669]" />
               </div>
             </div>
             <div className="pt-2">
@@ -147,13 +147,13 @@ export default function ProgressPage() {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-xs flex flex-col justify-between min-h-[148px]">
+          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-[#D5DFDC] shadow-[0_2px_10px_rgba(11,83,75,0.04)] flex flex-col justify-between min-h-[156px]">
             <div className="flex items-center justify-between">
               <span className="text-xs sm:text-sm font-bold text-[#5A6A66] uppercase tracking-wider">
                 Average Response Time
               </span>
-              <div className="w-11 h-11 rounded-xl bg-[#FFFBEB] text-[#D97706] border border-[#FDE68A] flex items-center justify-center">
-                <Clock className="w-5 h-5" />
+              <div className="w-11 h-11 rounded-xl bg-[#FFFBEB] text-[#D97706] border border-[#FDE68A] flex items-center justify-center shadow-2xs">
+                <Clock className="w-5 h-5 text-[#D97706]" />
               </div>
             </div>
             <div className="pt-2">
@@ -169,7 +169,7 @@ export default function ProgressPage() {
 
       {/* ─── 3. Score Trajectory Chart ─── */}
       <section aria-label="Score trajectory chart">
-        <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#D5DFDC] shadow-xs space-y-4">
+        <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#D5DFDC] shadow-[0_2px_12px_rgba(11,83,75,0.06)] space-y-4">
           <div className="flex items-center justify-between pb-3 border-b border-[#E5E7EB]">
             <div>
               <h2 className="text-xl sm:text-2xl font-extrabold text-[#111615]">
